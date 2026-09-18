@@ -244,11 +244,11 @@
         <form onsubmit="handleCitizenFormLogin(event)">
           <div class="auth-field">
             <label for="citizen-email">Resident Email / Phone</label>
-            <input type="email" id="citizen-email" placeholder="priya.patel@gmail.com" required value="priya.patel@gmail.com">
+            <input type="email" id="citizen-email" placeholder="e.g. name@gmail.com" required autocomplete="off">
           </div>
           <div class="auth-field">
             <label for="citizen-pass">Password</label>
-            <input type="password" id="citizen-pass" placeholder="••••••••" required value="civica2026">
+            <input type="password" id="citizen-pass" placeholder="Enter your password" required autocomplete="off">
           </div>
           <button type="submit" class="btn-auth-submit">
             Sign In to Citizen Dashboard &rarr;
@@ -271,11 +271,11 @@
           </div>
           <div class="auth-field">
             <label for="admin-email">Officer Gov Email</label>
-            <input type="email" id="admin-email" placeholder="r.patel@amc.gujarat.gov.in" required value="r.patel@amc.gujarat.gov.in">
+            <input type="email" id="admin-email" placeholder="e.g. officer@amc.gujarat.gov.in" required autocomplete="off">
           </div>
           <div class="auth-field">
             <label for="admin-token">Security PIN / Access Token</label>
-            <input type="password" id="admin-token" placeholder="••••••••" required value="officer-amc">
+            <input type="password" id="admin-token" placeholder="Enter Security PIN" required autocomplete="off">
           </div>
           <button type="submit" class="btn-auth-submit admin-btn">
             Authenticate Officer Dashboard &rarr;

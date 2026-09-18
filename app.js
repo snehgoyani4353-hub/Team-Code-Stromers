@@ -31,19 +31,19 @@ let appState = {
 function initMasterState() {
   const savedCity = localStorage.getItem('civica_active_city');
   const savedComplaints = localStorage.getItem('civica_complaints');
-  const savedUser = localStorage.getItem('civica_user');
   const savedWallet = localStorage.getItem('civica_wallet');
 
   if (savedCity) appState.activeCityId = savedCity;
   if (savedComplaints) {
     try { appState.complaints = JSON.parse(savedComplaints); } catch (e) {}
   }
-  if (savedUser) {
-    try { appState.currentUser = JSON.parse(savedUser); } catch (e) {}
-  }
   if (savedWallet) {
     try { appState.citizenWallet = JSON.parse(savedWallet); } catch (e) {}
   }
+
+  // Ensure fresh session: Always require explicit login first
+  appState.currentUser = null;
+  localStorage.removeItem('civica_user');
 
   // Preselect 18492
   appState.selectedOfficerTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
@@ -53,11 +53,6 @@ function saveMasterState() {
   localStorage.setItem('civica_active_city', appState.activeCityId);
   localStorage.setItem('civica_complaints', JSON.stringify(appState.complaints));
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
-  if (appState.currentUser) {
-    localStorage.setItem('civica_user', JSON.stringify(appState.currentUser));
-  } else {
-    localStorage.removeItem('civica_user');
-  }
 }
 
 // DOM Ready
@@ -209,7 +204,14 @@ window.loginWithGoogle = function() {
 window.handleCitizenFormLogin = function(e) {
   if (e) e.preventDefault();
   const emailInput = document.getElementById('citizen-email');
-  const emailVal = emailInput?.value.trim() || 'priya.patel@gmail.com';
+  const passInput = document.getElementById('citizen-pass');
+  const emailVal = emailInput?.value.trim();
+  const passVal = passInput?.value.trim();
+
+  if (!emailVal || !passVal) {
+    alert('Please enter your Resident Email/Phone and Password to log in.');
+    return;
+  }
   const displayName = emailVal.split('@')[0].replace('.', ' ');
 
   appState.currentUser = {
@@ -233,8 +235,16 @@ window.handleAdminFormLogin = function(e) {
   if (e) e.preventDefault();
   const citySelect = document.getElementById('admin-city-select');
   const emailInput = document.getElementById('admin-email');
+  const tokenInput = document.getElementById('admin-token');
+  const emailVal = emailInput?.value.trim();
+  const tokenVal = tokenInput?.value.trim();
+
+  if (!emailVal || !tokenVal) {
+    alert('Please enter your Officer Gov Email and Security PIN to authenticate.');
+    return;
+  }
+
   const selectedCityId = citySelect?.value || 'AMC';
-  const emailVal = emailInput?.value.trim() || `r.patel@${selectedCityId.toLowerCase()}.gujarat.gov.in`;
 
   // Switch to selected municipal corporation
   if (selectedCityId !== appState.activeCityId) {
@@ -255,10 +265,17 @@ window.handleAdminFormLogin = function(e) {
 };
 
 /**
- * 4. Switch Between Dashboard Modes (Citizen Desktop, Citizen Mobile, Municipal Officer)
- * @param {'citizen-desktop'|'citizen-mobile'|'officer'} mode
+ * 4. Switch Between Dashboard Modes (Citizen Desktop, Municipal Officer)
+ * Enforces authentication: must log in first!
+ * @param {'citizen-desktop'|'officer'} mode
  */
 window.switchDashboardMode = function(mode) {
+  // If user is not logged in, ask for login first!
+  if (!appState.currentUser) {
+    openLoginModal(mode === 'officer' ? 'admin' : 'citizen');
+    return;
+  }
+
   appState.currentView = mode;
 
   const landingView = document.getElementById('view-landing');
