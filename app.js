@@ -23,7 +23,7 @@ const I18N_DATA = {
     dash_signed_citizen: "Signed in as Citizen",
     dash_service_badge: "Gujarat Citizen Service",
     tab_track: "🔍 Track Complaint",
-    tab_report: "📝 File Complaint",
+    tab_report: "📝 Register Complaint",
     tab_wallet: "👛 Civic Wallet",
     tab_address: "📍 My Addresses",
     tab_wardmap: "📍 My Addresses",
@@ -168,7 +168,7 @@ let appState = {
   citizenWallet: { ...window.GUJARAT_CIVIC_DATA.citizenWallet },
   selectedEscrowGateway: 'Paytm',
   selectedTopupGateway: 'Paytm',
-  activeDesktopTab: 'track',
+  activeDesktopTab: 'report',
   activeOfficerTab: 'dashboard',
   activeCityId: 'AMC',
   selectedOfficerTicketId: 'GJ-AMC-2026-18492',
@@ -734,6 +734,7 @@ window.loginAsDemo = function(role = 'citizen') {
       phone: '98250 84920',
       zone: 'West Zone · Ward 7'
     };
+    appState.activeDesktopTab = 'report';
     saveMasterState();
     closeLoginModal();
     switchDashboardMode('citizen-desktop');
@@ -757,6 +758,7 @@ window.fillDemoCredentials = function(role = 'citizen') {
 
 window.handleCitizenFormLogin = function(e) {
   if (e) e.preventDefault();
+  appState.activeDesktopTab = 'report';
   loginAsDemo('citizen');
 };
 
@@ -843,6 +845,7 @@ window.switchDashboardMode = function(mode) {
     renderOfficerDashboard();
   } else {
     renderDesktopPortal();
+    switchDesktopTab(appState.activeDesktopTab || 'report');
   }
 
   updateSessionUI();
@@ -861,7 +864,7 @@ window.switchDesktopTab = function(tabName) {
   if (tabName === 'wardmap' || tabName === 'address') tabName = 'track';
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['track', 'report', 'wallet', 'community', 'transit', 'rules-dir'];
+  const tabs = ['report', 'track', 'wallet', 'community', 'transit', 'rules-dir'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
@@ -876,8 +879,8 @@ window.switchDesktopTab = function(tabName) {
   const breadcrumb = document.getElementById('citizen-breadcrumb-tab');
   if (breadcrumb) {
     const tabLabels = {
+      'report': 'Register Complaint (₹50 Escrow)',
       'track': 'Track Complaint',
-      'report': 'File Complaint (₹50 Escrow)',
       'wallet': 'Civic Wallet & Ledger',
       'community': 'Community Incident Feed',
       'transit': 'Transit Flow & Friction',

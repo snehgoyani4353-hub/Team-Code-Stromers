@@ -1078,8 +1078,8 @@ input, select, textarea { font-family: inherit; }
    ========================================================================== */
 .citizen-main-container {
   max-width: 1720px;
-  margin: 18px auto;
-  padding: 0 32px 80px 32px;
+  margin: 10px auto 16px auto;
+  padding: 0 28px;
 }
 
 /* Modern Sleek Breadcrumb Sub-Banner (Replaces heavy fake browser frames) */
@@ -1193,29 +1193,52 @@ input, select, textarea { font-family: inherit; }
   color: #38bdf8;
 }
 
-/* Spacious, Fluid 2-Column Portal Layouts */
+/* Spacious, Fluid 2-Column Portal Layouts with Dual Independent Scrollers */
 .desktop-portal-layout,
 .officer-portal-layout {
   display: grid;
-  grid-template-columns: 270px 1fr;
-  min-height: 820px;
+  grid-template-columns: 280px 1fr;
+  height: calc(100vh - 150px);
+  min-height: 620px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-top: none;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   box-shadow: 0 10px 40px -10px rgba(12, 26, 47, 0.08);
-  overflow: hidden;
+  overflow: hidden; /* Constrains the layout so sidebar and main scroll independently */
 }
 
-/* Refined Sidebar */
+/* Refined Sidebar — Independent Scroller 1 (Side Scroller) */
 .desktop-sidebar {
   background: #0b1528;
   color: #ffffff;
-  padding: 32px 20px;
+  padding: 24px 18px 24px 18px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 20px;
+  height: 100%;
+  overflow-y: auto; /* Independent Scroller #1 */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(197, 160, 89, 0.45) rgba(255, 255, 255, 0.04);
+}
+
+.desktop-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.desktop-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.desktop-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.45);
+  border-radius: 4px;
+}
+
+.desktop-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.8);
 }
 
 .sidebar-brand-box {
@@ -1301,6 +1324,7 @@ input, select, textarea { font-family: inherit; }
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.8rem;
+  margin-top: auto;
 }
 
 .ward-tag {
@@ -1313,12 +1337,37 @@ input, select, textarea { font-family: inherit; }
   margin-top: 3px;
 }
 
-/* Main Expansive Content Area */
+/* Main Expansive Content Area — Independent Scroller 2 (Main Scroller) */
 .desktop-main-content,
 .officer-main-content {
-  padding: 38px 48px;
+  padding: 34px 44px 70px 44px;
   background: #ffffff;
-  overflow-y: auto;
+  height: 100%;
+  overflow-y: auto; /* Independent Scroller #2 */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.desktop-main-content::-webkit-scrollbar,
+.officer-main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.desktop-main-content::-webkit-scrollbar-track,
+.officer-main-content::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.desktop-main-content::-webkit-scrollbar-thumb,
+.officer-main-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.desktop-main-content::-webkit-scrollbar-thumb:hover,
+.officer-main-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .desktop-header-area {
@@ -2441,8 +2490,21 @@ input, select, textarea { font-family: inherit; }
 }
 
 @media (max-width: 900px) {
-  .desktop-portal-layout, .officer-portal-layout { grid-template-columns: 1fr; }
-  .desktop-sidebar { display: none; }
+  .desktop-portal-layout, .officer-portal-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+  }
+  .desktop-sidebar {
+    height: auto;
+    overflow-y: visible;
+  }
+  .desktop-main-content, .officer-main-content {
+    height: auto;
+    overflow-y: visible;
+    padding: 24px 18px;
+  }
   .officer-kpis-grid { grid-template-columns: repeat(2, 1fr); }
   .dashboard-two-col-layout, .take-action-two-col, .notify-two-col-layout, .ward-reports-four-grid, .officer-rules-six-grid { grid-template-columns: 1fr; }
   .kanban-grid-4col { grid-template-columns: 1fr; }

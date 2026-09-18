@@ -652,7 +652,7 @@
             <span class="portal-badge-chip">GUJARAT CITIZEN SERVICE</span>
             <span class="breadcrumb-item">CIVICA</span>
             <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-item active" id="citizen-breadcrumb-tab">Track Complaint</span>
+            <span class="breadcrumb-item active" id="citizen-breadcrumb-tab">Register Complaint</span>
           </div>
           <div class="sub-banner-right">
             <span class="status-live-indicator"><span class="ping-circle green"></span> Navrangpura Ward 7 · Live Escrow Active</span>
@@ -667,8 +667,8 @@
               <div class="sidebar-sublogo">Gujarat Citizen Portal</div>
             </div>
             <nav class="sidebar-nav">
-              <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track Complaint</button>
-              <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 File Complaint</button>
+              <button class="sidebar-nav-item active" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 Register Complaint</button>
+              <button class="sidebar-nav-item" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track Complaint</button>
               <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')"><span data-i18n="tab_wallet">👛 Civic Wallet</span> (<span id="desktop-wallet-bal">₹150</span>)</button>
               <button class="sidebar-nav-item" id="btn-tab-community" onclick="switchDesktopTab('community')" data-i18n="tab_community">📢 Community Feed</button>
               <button class="sidebar-nav-item" id="btn-tab-transit" onclick="switchDesktopTab('transit')" data-i18n="tab_transit">🚍 Transit Flow</button>
@@ -683,84 +683,11 @@
           <!-- Citizen Content Tabs (Spacious & De-congested) -->
           <main class="desktop-main-content">
 
-            <!-- Tab 1: Track Complaint -->
-            <div id="dt-tab-track" class="desktop-tab-panel active">
+            <!-- Tab 1: Register / File Civic Complaint with ₹50 Refundable Escrow -->
+            <div id="dt-tab-report" class="desktop-tab-panel active">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title" data-i18n="track_page_title">Track Complaint</h1>
-                <p class="desktop-page-subtitle">Real-time status tracking, field engineer dispatches, and ₹50 escrow refunds</p>
-                <div class="desktop-search-row">
-                  <div class="track-input-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID (e.g. 18492, 18501, 18470)" onkeydown="if(event.key==='Enter')handleDesktopTrackLookup()">
-                  </div>
-                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK COMPLAINT</button>
-                </div>
-                <div class="track-example-hints">
-                  💡 Quick Demo IDs: <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18492';handleDesktopTrackLookup();">18492 (Streetlight)</button>
-                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18501';handleDesktopTrackLookup();">18501 (Waterlogging)</button>
-                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18470';handleDesktopTrackLookup();">18470 (Pothole)</button>
-                </div>
-              </div>
-
-              <!-- Municipal Status & Highlights Strip -->
-              <div class="citizen-highlights-bar">
-                <div class="highlight-strip-card escrow-accent">
-                  <span class="highlight-strip-icon">🛡️</span>
-                  <div>
-                    <strong data-i18n="side_escrow_title">100% Refundable Escrow Guarantee</strong>
-                    <p data-i18n="side_escrow_desc">₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.</p>
-                  </div>
-                </div>
-
-                <div class="highlight-strip-card">
-                  <span class="highlight-strip-icon">📱</span>
-                  <div>
-                    <strong data-i18n="side_sms_title">Real-Time SMS & WhatsApp Alerts</strong>
-                    <p data-i18n="side_sms_desc">Automated status notifications dispatched directly to your mobile in English & Gujarati as field crews progress.</p>
-                  </div>
-                </div>
-
-                <div class="highlight-strip-card">
-                  <span class="highlight-strip-icon">🏛️</span>
-                  <div>
-                    <strong data-i18n="side_support_title">AMC Ward 7 Navrangpura Desk</strong>
-                    <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong></p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Active Ticket Card (Full Width, Crisp & Legible) -->
-              <div class="active-ticket-detail-card" id="desktop-ticket-card">
-                <div class="ticket-top-headline">
-                  <div>
-                    <h2 class="ticket-subject" id="dt-ticket-title">Streetlight out · CG Road, Navrangpura</h2>
-                    <div class="ticket-meta-subtitle" id="dt-ticket-meta">AMC Street Lighting &bull; Ward 7 West Zone &bull; Filed 12 Sep 2026</div>
-                  </div>
-                  <span class="ticket-status-pill status-inprogress" id="dt-ticket-status-pill">IN PROGRESS</span>
-                </div>
-
-                <div class="desktop-step-progress-wrapper">
-                  <div class="progress-line-track"><div class="progress-line-fill" id="dt-progress-bar-fill" style="width: 72%;"></div></div>
-                  <div class="step-nodes-container" id="dt-step-nodes"></div>
-                </div>
-
-                <div class="desktop-note-box">
-                  <div class="note-box-title" data-i18n="latest_note_title">Latest Official Field Note</div>
-                  <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a notification when the light is back on. — R. Patel</p>
-                </div>
-
-                <div class="desktop-ticket-actions">
-                  <button class="btn-hero-primary" style="padding:8px 16px; font-size:0.85rem;" onclick="showCivicaToast('📷 Inspection photo docket opened.')">📷 Upload Photo</button>
-                  <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()">Reopen Complaint</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Tab 2: File Issue with ₹50 Refundable Escrow -->
-            <div id="dt-tab-report" class="desktop-tab-panel" style="display:none;">
-              <div class="desktop-header-area">
-                <h1 class="desktop-page-title">File a Civic Complaint</h1>
-                <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Direct dispatch to AMC Ward Control Room & Field Rapid Action Units</p>
+                <h1 class="desktop-page-title">Register a Civic Complaint</h1>
+                <p class="desktop-page-subtitle">Direct dispatch to AMC & SMC Ward Control Rooms & Rapid Response Units</p>
               </div>
 
               <form id="desktop-report-form" onsubmit="handleDesktopSubmitComplaint(event)">
@@ -863,6 +790,79 @@
                   </button>
                 </div>
               </form>
+            </div>
+
+            <!-- Tab 2: Track Complaint -->
+            <div id="dt-tab-track" class="desktop-tab-panel" style="display:none;">
+              <div class="desktop-header-area">
+                <h1 class="desktop-page-title" data-i18n="track_page_title">Track Complaint</h1>
+                <p class="desktop-page-subtitle">Real-time status tracking, field engineer dispatches, and ₹50 escrow refunds</p>
+                <div class="desktop-search-row">
+                  <div class="track-input-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID (e.g. 18492, 18501, 18470)" onkeydown="if(event.key==='Enter')handleDesktopTrackLookup()">
+                  </div>
+                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK COMPLAINT</button>
+                </div>
+                <div class="track-example-hints">
+                  💡 Quick Demo IDs: <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18492';handleDesktopTrackLookup();">18492 (Streetlight)</button>
+                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18501';handleDesktopTrackLookup();">18501 (Waterlogging)</button>
+                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18470';handleDesktopTrackLookup();">18470 (Pothole)</button>
+                </div>
+              </div>
+
+              <!-- Municipal Status & Highlights Strip -->
+              <div class="citizen-highlights-bar">
+                <div class="highlight-strip-card escrow-accent">
+                  <span class="highlight-strip-icon">🛡️</span>
+                  <div>
+                    <strong data-i18n="side_escrow_title">100% Refundable Escrow Guarantee</strong>
+                    <p data-i18n="side_escrow_desc">₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">📱</span>
+                  <div>
+                    <strong data-i18n="side_sms_title">Real-Time SMS & WhatsApp Alerts</strong>
+                    <p data-i18n="side_sms_desc">Automated status notifications dispatched directly to your mobile in English & Gujarati as field crews progress.</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">🏛️</span>
+                  <div>
+                    <strong data-i18n="side_support_title">AMC Ward 7 Navrangpura Desk</strong>
+                    <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active Ticket Card (Full Width, Crisp & Legible) -->
+              <div class="active-ticket-detail-card" id="desktop-ticket-card">
+                <div class="ticket-top-headline">
+                  <div>
+                    <h2 class="ticket-subject" id="dt-ticket-title">Streetlight out · CG Road, Navrangpura</h2>
+                    <div class="ticket-meta-subtitle" id="dt-ticket-meta">AMC Street Lighting &bull; Ward 7 West Zone &bull; Filed 12 Sep 2026</div>
+                  </div>
+                  <span class="ticket-status-pill status-inprogress" id="dt-ticket-status-pill">IN PROGRESS</span>
+                </div>
+
+                <div class="desktop-step-progress-wrapper">
+                  <div class="progress-line-track"><div class="progress-line-fill" id="dt-progress-bar-fill" style="width: 72%;"></div></div>
+                  <div class="step-nodes-container" id="dt-step-nodes"></div>
+                </div>
+
+                <div class="desktop-note-box">
+                  <div class="note-box-title" data-i18n="latest_note_title">Latest Official Field Note</div>
+                  <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a notification when the light is back on. — R. Patel</p>
+                </div>
+
+                <div class="desktop-ticket-actions">
+                  <button class="btn-hero-primary" style="padding:8px 16px; font-size:0.85rem;" onclick="showCivicaToast('📷 Inspection photo docket opened.')">📷 Upload Photo</button>
+                  <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()">Reopen Complaint</button>
+                </div>
+              </div>
             </div>
 
             <!-- Tab 3: Civic Wallet & Escrow Ledger -->
