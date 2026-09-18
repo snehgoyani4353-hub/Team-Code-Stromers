@@ -1,61 +1,60 @@
-$port = 5000
-$root = "d:\Code Stromers"
+$port = 8080
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
-
 try {
     $listener.Start()
-    Write-Host "MetroPulse 360 Local Web Server running at http://localhost:$port/"
-    
-    $mimeTypes = @{
-        ".html" = "text/html; charset=utf-8"
-        ".css"  = "text/css; charset=utf-8"
-        ".js"   = "application/javascript; charset=utf-8"
-        ".json" = "application/json; charset=utf-8"
-        ".png"  = "image/png"
-        ".jpg"  = "image/jpeg"
-        ".svg"  = "image/svg+xml"
-        ".ico"  = "image/x-icon"
-    }
+    Write-Output "CIVICA_SERVER_STARTED_OK on http://localhost:$port/"
+} catch {
+    Write-Output "Port $port in use or permission denied: $_"
+    exit 1
+}
 
-    while ($listener.IsListening) {
-        try {
-            $context = $listener.GetContext()
-            $request = $context.Request
-            $response = $context.Response
+$baseDir = "c:\Users\Dell\Desktop\hackathon"
 
-            $rawUrl = $request.Url.AbsolutePath
-            if ($rawUrl -eq "/" -or [string]::IsNullOrWhiteSpace($rawUrl)) {
-                $rawUrl = "/index.html"
-            }
+while ($listener.IsListening) {
+    try {
+        $context = $listener.GetContext()
+        $request = $context.Request
+        $response = $context.Response
 
-            $localPath = Join-Path $root ($rawUrl.TrimStart('/'))
+        $rawUrl = $request.Url.AbsolutePath
+        if ($rawUrl -eq "/" -or $rawUrl -eq "" -or $rawUrl -eq "/index.html") {
+            $targetFile = Join-Path $baseDir "index.html"
+            $contentType = "text/html; charset=utf-8"
+        } elseif ($rawUrl -eq "/rules-and-contact.html") {
+            $targetFile = Join-Path $baseDir "rules-and-contact.html"
+            $contentType = "text/html; charset=utf-8"
+        } else {
+            $fileName = $rawUrl.TrimStart('/')
+            $targetFile = Join-Path $baseDir $fileName
+            if ($fileName.EndsWith(".css")) { $contentType = "text/css" }
+            elseif ($fileName.EndsWith(".js")) { $contentType = "application/javascript" }
+            elseif ($fileName.EndsWith(".png")) { $contentType = "image/png" }
+            elseif ($fileName.EndsWith(".jpg") -or $fileName.EndsWith(".jpeg")) { $contentType = "image/jpeg" }
+            else { $contentType = "text/html; charset=utf-8" }
+        }
 
-            if (Test-Path $localPath -PathType Leaf) {
-                $ext = [System.IO.Path]::GetExtension($localPath).ToLower()
-                $contentType = if ($mimeTypes.ContainsKey($ext)) { $mimeTypes[$ext] } else { "application/octet-stream" }
-                
-                $response.ContentType = $contentType
-                $response.Headers.Add("Access-Control-Allow-Origin", "*")
-                $bytes = [System.IO.File]::ReadAllBytes($localPath)
+        if (Test-Path $targetFile) {
+            $bytes = [System.IO.File]::ReadAllBytes($targetFile)
+            $response.ContentType = $contentType
+            $response.ContentLength64 = $bytes.Length
+            $response.AddHeader("Access-Control-Allow-Origin", "*")
+            $response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate")
+            $response.OutputStream.Write($bytes, 0, $bytes.Length)
+        } else {
+            $targetFile = Join-Path $baseDir "index.html"
+            if (Test-Path $targetFile) {
+                $bytes = [System.IO.File]::ReadAllBytes($targetFile)
+                $response.ContentType = "text/html; charset=utf-8"
                 $response.ContentLength64 = $bytes.Length
-                if ($request.HttpMethod -ne "HEAD") {
-                    $response.OutputStream.Write($bytes, 0, $bytes.Length)
-                }
+                $response.AddHeader("Access-Control-Allow-Origin", "*")
+                $response.OutputStream.Write($bytes, 0, $bytes.Length)
             } else {
                 $response.StatusCode = 404
-                $errBytes = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
-                $response.ContentLength64 = $errBytes.Length
-                if ($request.HttpMethod -ne "HEAD") {
-                    $response.OutputStream.Write($errBytes, 0, $errBytes.Length)
-                }
             }
-            $response.OutputStream.Close()
-        } catch {
-            Write-Host "Request error: $_"
         }
+        $response.OutputStream.Close()
+    } catch {
+        # ignore client disconnects
     }
-} finally {
-    $listener.Stop()
-    $listener.Close()
 }
