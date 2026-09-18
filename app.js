@@ -341,10 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const galleryModal = document.getElementById('gallery-lightbox-modal');
+  if (galleryModal) {
+    galleryModal.addEventListener('click', (e) => {
+      if (e.target === galleryModal) closeGalleryLightbox();
+    });
+  }
+
   // Escape key to close modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLoginModal();
+      if (window.closeGalleryLightbox) window.closeGalleryLightbox();
       const langModal = document.getElementById('language-select-modal');
       if (langModal) langModal.style.display = 'none';
       if (window.closeEscrowModal) window.closeEscrowModal();
@@ -683,6 +691,10 @@ window.handleLogout = function() {
   appState.currentUser = null;
   localStorage.removeItem('civica_user');
   returnToLandingPage();
+  updateSessionUI();
+  if (typeof showCivicaToast === 'function') {
+    showCivicaToast('👋 Signed out successfully.');
+  }
 };
 
 /**
@@ -1901,6 +1913,7 @@ window.openGalleryLightbox = function(index) {
   document.getElementById('lightbox-sla').innerText = project.sla;
   modal.style.display = 'flex';
   modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 };
 
 window.closeGalleryLightbox = function() {
@@ -1908,6 +1921,7 @@ window.closeGalleryLightbox = function() {
   if (modal) {
     modal.style.display = 'none';
     modal.classList.remove('active');
+    document.body.style.overflow = '';
   }
 };
 

@@ -47,6 +47,10 @@
 }
 
 /* Reset & Global */
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -2908,5 +2912,36 @@ input, select, textarea { font-family: inherit; }
   font-size: 0.75rem;
   margin: 0;
   line-height: 1.4;
+}
+
+/* Small-Screen Mobile Layout Polish */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 18px;
+    align-items: center;
+  }
+  .header-right-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-demo-header, .btn-member-login {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  .demo-buttons-row {
+    grid-template-columns: 1fr;
+  }
+  .nav-inner {
+    overflow-x: auto;
+    padding: 10px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links {
+    gap: 18px;
+    white-space: nowrap;
+  }
 }
 
