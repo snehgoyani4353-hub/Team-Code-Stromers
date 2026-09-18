@@ -5,13 +5,152 @@
  */
 
 // Application State
+// Multi-Language Localization Dictionary (English, Gujarati, Hindi)
+const I18N_DATA = {
+  en: {
+    nav_home: "HOME",
+    nav_about: "ABOUT US",
+    nav_contact: "CONTACT US",
+    nav_solutions: "SOLUTIONS",
+    nav_services: "SERVICES",
+    btn_member_login: "MEMBER LOGIN",
+    hero_title: "Civic Engagement &<br>Urban Mobility",
+    hero_bullet_1: "Citizen-centered software that turns neighborhood reports into action.",
+    hero_bullet_2: "Live community dashboards for infrastructure, safety, and transit flow.",
+    hero_bullet_3: "Mobile tools that make public commuting clearer, faster, and fairer.",
+    btn_hero_citizen: "Access Citizen Portal &rarr;",
+    btn_hero_officer: "Municipal Officer Sign-In",
+    dash_back_home: "&larr; Back to Civica Home",
+    dash_signed_citizen: "Signed in as Citizen",
+    dash_service_badge: "Gujarat Citizen Service",
+    tab_track: "🔍 Track complaint",
+    tab_report: "📝 File complaint",
+    tab_wallet: "👛 Civic Wallet",
+    tab_wardmap: "🗺️ Ward map",
+    track_page_title: "Track complaint",
+    track_placeholder: "Enter Complaint ID (e.g. 18492, 18501)",
+    track_btn: "TRACK",
+    latest_note_title: "Latest Official Note",
+    btn_upload_photo: "📷 Upload Inspection Photo",
+    btn_reopen: "Reopen Complaint",
+    wardmap_page_title: "Ward 7 Civic Health Map · Ward Overview",
+    btn_share_society: "📤 Share with Society Secretary",
+    side_escrow_title: "100% Refundable Escrow",
+    side_escrow_desc: "To eliminate fake complaints, ₹50 is held in municipal escrow. When AMC inspects genuine issues, ₹50 is instantly refunded to your Civic Wallet.",
+    side_sms_title: "SMS & WhatsApp Updates",
+    side_sms_desc: "Real-time status updates active",
+    side_support_title: "🏛️ AMC Ward 7 Control Desk",
+    side_support_desc: "Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helpline: 155303 / 1913",
+    floating_ai_btn: "AI Assistant",
+    ai_popup_title: "Civica AI Assistant",
+    ai_popup_sub: "Gemini & ChatGPT Core • AMC 24x7",
+    ai_input_placeholder: "Ask your doubt about tickets, refunds, or AMC...",
+    status_in_progress: "IN PROGRESS",
+    status_assigned: "ASSIGNED",
+    status_resolved: "RESOLVED",
+    status_new: "NEW",
+    status_need_info: "NEED INFO"
+  },
+  gu: {
+    nav_home: "મુખ્ય પેજ",
+    nav_about: "અમારા વિશે",
+    nav_contact: "સંપર્ક",
+    nav_solutions: "ઉકેલો",
+    nav_services: "સેવાઓ",
+    btn_member_login: "સભ્ય પ્રવેશ",
+    hero_title: "નાગરિક સહભાગિતા અને<br>શહેરી ગતિશીલતા",
+    hero_bullet_1: "નાગરિક-કેન્દ્રિત સિસ્ટમ જે સ્થાનિક ફરિયાદોને તાત્કાલિક ઉકેલમાં ફેરવે છે.",
+    hero_bullet_2: "મૂળભૂત માળખાકીય સુવિધા, સલામતી અને ટ્રાફિક વ્યવસ્થા માટે લાઈવ ડેશબોર્ડ.",
+    hero_bullet_3: "જાહેર પરિવહન અને નાગરિક સુવિધાઓને સરળ, ઝડપી અને પારદર્શક બનાવતા સાધનો.",
+    btn_hero_citizen: "નાગરિક પોર્ટલ શરૂ કરો &rarr;",
+    btn_hero_officer: "મ્યુનિસિપલ અધિકારી પ્રવેશ",
+    dash_back_home: "&larr; મુખ્ય પેજ પર પાછા જાઓ",
+    dash_signed_citizen: "નાગરિક તરીકે પ્રવેશ કરેલ છે",
+    dash_service_badge: "ગુજરાત નાગરિક સેવા",
+    tab_track: "🔍 ફરિયાદ ટ્રેક કરો",
+    tab_report: "📝 નવી ફરિયાદ નોંધાવો",
+    tab_wallet: "👛 નાગરિક વૉલેટ",
+    tab_wardmap: "🗺️ વોર્ડ નકશો",
+    track_page_title: "ફરિયાદ ટ્રેક કરો (લાઈવ સ્થિતિ)",
+    track_placeholder: "ફરિયાદ આઈડી દાખલ કરો (દા.ત. 18492, 18501)",
+    track_btn: "ટ્રેક કરો",
+    latest_note_title: "અધિકારીની તાજેતરની નોંધ",
+    btn_upload_photo: "📷 તપાસ માટે ફોટો અપલોડ કરો",
+    btn_reopen: "ફરિયાદ ફરીથી ખોલો",
+    wardmap_page_title: "વોર્ડ ૭ નાગરિક આરોગ્ય નકશો · લાઈવ વિગત",
+    btn_share_society: "📤 સોસાયટી સેક્રેટરી સાથે શેર કરો",
+    side_escrow_title: "૧૦૦% રિફંડેબલ એસ્ક્રો ડિપોઝિટ",
+    side_escrow_desc: "ખોટી ફરિયાદો અટકાવવા ₹50 ની સુરક્ષા ડિપોઝિટ રાખવામાં આવે છે. AMC ટીમ દ્વારા સ્થળ તપાસ થતાં જ ₹50 આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
+    side_sms_title: "SMS અને WhatsApp એલર્ટ",
+    side_sms_desc: "ગુજરાતીમાં તાત્કાલિક અપડેટ્સ સક્રિય છે",
+    side_support_title: "🏛️ AMC વોર્ડ ૭ કંટ્રોલ રૂમ",
+    side_support_desc: "નવરંગપુરા ઝોનલ કચેરી • સમય: ૦૮:૦૦ થી ૧૬:૦૦<br>મધ્યસ્થ હેલ્પલાઇન: 155303 / 1913",
+    floating_ai_btn: "AI સહાયક",
+    ai_popup_title: "સિવિકા AI સહાયક",
+    ai_popup_sub: "Gemini & ChatGPT આર્કિટેક્ચર • AMC સેવા",
+    ai_input_placeholder: "ફરિયાદ, રિફંડ કે AMC નિયમો વિશે પૂછો...",
+    status_in_progress: "કામ પ્રગતિમાં",
+    status_assigned: "ટીમને સોંપાયેલ",
+    status_resolved: "ઉકેલાયેલ",
+    status_new: "નવી ફરિયાદ",
+    status_need_info: "માહિતી જોઈએ છે"
+  },
+  hi: {
+    nav_home: "मुख्य पृष्ठ",
+    nav_about: "हमारे बारे में",
+    nav_contact: "संपर्क",
+    nav_solutions: "समाधान",
+    nav_services: "सेवाएं",
+    btn_member_login: "सदस्य लॉगिन",
+    hero_title: "नागरिक सहभागिता एवं<br>शहरी गतिशीलता",
+    hero_bullet_1: "नागरिक-केंद्रित सॉफ्टवेयर जो स्थानीय शिकायतों को त्वरित कार्रवाई में बदलता है।",
+    hero_bullet_2: "बुनियादी ढांचे, सुरक्षा और यातायात प्रवाह के लिए लाइव समुदाय डैशबोर्ड।",
+    hero_bullet_3: "सार्वजनिक आवागमन को सरल, तेज और पारदर्शी बनाने वाले डिजिटल साधन।",
+    btn_hero_citizen: "नागरिक पोर्टल शुरू करें &rarr;",
+    btn_hero_officer: "नगर निगम अधिकारी लॉगिन",
+    dash_back_home: "&larr; सिविका होम पर वापस जाएं",
+    dash_signed_citizen: "नागरिक के रूप में लॉगिन",
+    dash_service_badge: "गुजरात नागरिक सेवा",
+    tab_track: "🔍 शिकायत ट्रैक करें",
+    tab_report: "📝 नई शिकायत दर्ज करें",
+    tab_wallet: "👛 नागरिक वॉलेट",
+    tab_wardmap: "🗺️ वार्ड नक्शा",
+    track_page_title: "शिकायत ट्रैक करें (लाइव स्थिति)",
+    track_placeholder: "शिकायत आईडी दर्ज करें (उदा. 18492, 18501)",
+    track_btn: "ट्रैक करें",
+    latest_note_title: "अधिकारी की नवीनतम टिप्पणी",
+    btn_upload_photo: "📷 निरीक्षण फोटो अपलोड करें",
+    btn_reopen: "शिकायत पुनः खोलें",
+    wardmap_page_title: "वार्ड 7 नागरिक स्वास्थ्य नक्शा · लाइव विवरण",
+    btn_share_society: "📤 सोसायटी सचिव के साथ साझा करें",
+    side_escrow_title: "100% रिफंडेबल एस्क्रो मॉडल",
+    side_escrow_desc: "फर्जी शिकायतों की रोकथाम हेतु ₹50 की सुरक्षा राशि रखी जाती है। स्थल निरीक्षण उपरांत यह राशि तुरंत आपके वॉलेट में 100% वापस कर दी जाती है।",
+    side_sms_title: "SMS व WhatsApp अपडेट",
+    side_sms_desc: "रियल-टाइम स्थिति संदेश सक्रिय हैं",
+    side_support_title: "🏛️ AMC वार्ड 7 नियंत्रण कक्ष",
+    side_support_desc: "नवरंगपुरा जोनल कार्यालय • समय: 08:00 से 16:00<br>केंद्रीय हेल्पलाइन: 155303 / 1913",
+    floating_ai_btn: "AI सहायक",
+    ai_popup_title: "सिविका AI सहायक",
+    ai_popup_sub: "Gemini व ChatGPT कोर • AMC 24x7",
+    ai_input_placeholder: "शिकायत, रिफंड या नगर निगम नियमों पर सवाल पूछें...",
+    status_in_progress: "कार्य प्रगति पर",
+    status_assigned: "टीम को सौंपा गया",
+    status_resolved: "समाधान पूर्ण",
+    status_new: "नई शिकायत",
+    status_need_info: "जानकारी आवश्यक"
+  }
+};
+
+// Application State
 let appState = {
   currentView: 'landing', // 'landing' | 'citizen-desktop' | 'citizen-mobile' | 'officer'
   currentUser: null, // { role: 'citizen'|'officer', name: string, email: string, avatar: string }
+  language: 'gu', // 'en' | 'gu' | 'hi'
   citizenWallet: { ...window.GUJARAT_CIVIC_DATA.citizenWallet },
   pendingComplaintData: null,
   selectedEscrowGateway: 'Paytm',
   selectedTopupGateway: 'Paytm',
+  activeDesktopTab: 'track',
   activeOfficerTab: 'dashboard',
   activeCityId: 'AMC',
   activeMobileScreen: 'home',
@@ -29,6 +168,13 @@ let appState = {
 
 // Initialize
 function initMasterState() {
+  const savedLang = localStorage.getItem('civica_lang');
+  if (savedLang && (savedLang === 'en' || savedLang === 'gu' || savedLang === 'hi')) {
+    appState.language = savedLang;
+  } else {
+    appState.language = 'gu'; // Default to Gujarati
+  }
+
   const savedCity = localStorage.getItem('civica_active_city');
   const savedComplaints = localStorage.getItem('civica_complaints');
   const savedWallet = localStorage.getItem('civica_wallet');
@@ -55,6 +201,64 @@ function saveMasterState() {
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
 }
 
+// Language Controller
+window.setAppLanguage = function(lang = 'gu', closeModal = false) {
+  if (!I18N_DATA[lang]) lang = 'gu';
+  appState.language = lang;
+  localStorage.setItem('civica_lang', lang);
+
+  // Update button active state across all language switch groups
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // Apply translations to all data-i18n elements
+  const dict = I18N_DATA[lang] || I18N_DATA.gu;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      el.innerHTML = dict[key];
+    }
+  });
+
+  // Apply translations to placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) {
+      el.placeholder = dict[key];
+    }
+  });
+
+  // Update floating AI button label & popup texts
+  const aiBtnLabel = document.getElementById('floating-ai-btn-label');
+  if (aiBtnLabel) aiBtnLabel.textContent = dict.floating_ai_btn || 'AI સહાયક';
+
+  const aiTitle = document.getElementById('ai-popup-title-text');
+  if (aiTitle) aiTitle.textContent = dict.ai_popup_title;
+
+  const aiSub = document.getElementById('ai-popup-sub-text');
+  if (aiSub) aiSub.textContent = dict.ai_popup_sub;
+
+  const aiInput = document.getElementById('floating-ai-input');
+  if (aiInput) aiInput.placeholder = dict.ai_input_placeholder;
+
+  renderFloatingAiChips();
+  initFloatingAiGreeting();
+
+  // Re-render active ticket and wallet with selected language
+  renderDesktopPortal();
+  renderCivicWallet();
+
+  if (closeModal) {
+    const langModal = document.getElementById('language-select-modal');
+    if (langModal) langModal.style.display = 'none';
+  }
+};
+
 // DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   initMasterState();
@@ -75,6 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMobileApp();
   renderCivicWallet();
 
+  // Initialize and apply chosen language
+  setAppLanguage(appState.language, false);
+
+  // If first visit without explicit language chosen, prompt language modal
+  if (!localStorage.getItem('civica_lang')) {
+    const langModal = document.getElementById('language-select-modal');
+    if (langModal) langModal.style.display = 'flex';
+  }
+
   // Default view is Landing Page on load (as requested)
   returnToLandingPage();
   updateSessionUI();
@@ -91,6 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLoginModal();
+      const langModal = document.getElementById('language-select-modal');
+      if (langModal) langModal.style.display = 'none';
       if (window.closeEscrowModal) window.closeEscrowModal();
       if (window.closeWalletTopupModal) window.closeWalletTopupModal();
       if (window.closeContactModal) window.closeContactModal();
@@ -325,12 +540,15 @@ window.switchDashboardMode = function(mode) {
 
 /**
  * Switch Citizen Desktop Web Portal Tabs
- * @param {'track'|'report'|'wallet'|'mytickets'|'brts'|'wardmap'} tabName
+ * Allowed citizen workflows: 'track' | 'report' | 'wallet' | 'wardmap'
  */
 window.switchDesktopTab = function(tabName) {
+  if (!['track', 'report', 'wallet', 'wardmap'].includes(tabName)) {
+    tabName = 'track';
+  }
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['track', 'ai', 'report', 'wallet', 'mytickets', 'brts', 'wardmap'];
+  const tabs = ['track', 'report', 'wallet', 'wardmap'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
@@ -348,10 +566,6 @@ window.switchDesktopTab = function(tabName) {
 
   if (tabName === 'wallet') {
     renderCivicWallet();
-  } else if (tabName === 'mytickets') {
-    renderDesktopMyTickets();
-  } else if (tabName === 'brts') {
-    renderDesktopTransit();
   } else if (tabName === 'track') {
     renderDesktopPortal();
   } else if (tabName === 'report') {
@@ -862,6 +1076,9 @@ function renderDesktopPortal() {
   const currentTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
   if (!currentTicket) return;
 
+  const lang = appState.language || 'gu';
+  const dict = I18N_DATA[lang] || I18N_DATA.gu;
+
   const titleEl = document.getElementById('dt-ticket-title');
   const metaEl = document.getElementById('dt-ticket-meta');
   const statusPill = document.getElementById('dt-ticket-status-pill');
@@ -870,12 +1087,16 @@ function renderDesktopPortal() {
   const reopenBtn = document.getElementById('btn-reopen-ticket');
 
   const depStatusText = currentTicket.depositStatus === 'refunded'
-    ? ' • 🛡️ ₹50 Deposit Refunded'
+    ? (lang === 'gu' ? ' • 🛡️ ₹50 ડિપોઝિટ રિફંડ થઈ ગયેલ છે' : lang === 'hi' ? ' • 🛡️ ₹50 जमा राशि वापस (Refunded)' : ' • 🛡️ ₹50 Deposit Refunded')
     : currentTicket.depositStatus === 'forfeited'
-    ? ' • ❌ ₹50 Deposit Forfeited'
-    : ' • 🛡️ ₹50 Security Escrow Active';
+    ? (lang === 'gu' ? ' • ❌ ₹50 ડિપોઝિટ જપ્ત કરેલ છે' : lang === 'hi' ? ' • ❌ ₹50 जमा राशि जब्त' : ' • ❌ ₹50 Deposit Forfeited')
+    : (lang === 'gu' ? ' • 🛡️ ₹50 એસ્ક્રો ડિપોઝિટ સુરક્ષિત' : lang === 'hi' ? ' • 🛡️ ₹50 सुरक्षा एस्क्रो सक्रिय' : ' • 🛡️ ₹50 Security Escrow Active');
 
-  if (titleEl) titleEl.textContent = currentTicket.title;
+  const ticketTitle = (lang === 'gu' && currentTicket.categoryGu) 
+    ? `${currentTicket.categoryGu} સમસ્યા · ${currentTicket.location}` 
+    : currentTicket.title;
+
+  if (titleEl) titleEl.textContent = ticketTitle;
   if (metaEl) metaEl.textContent = `${currentTicket.agency} • ${currentTicket.ward} ${currentTicket.zone} • Filed ${currentTicket.filedDate}${depStatusText}`;
   if (noteEl) noteEl.textContent = currentTicket.note;
   if (inputEl) inputEl.value = currentTicket.id;
@@ -884,7 +1105,8 @@ function renderDesktopPortal() {
 
   if (statusPill) {
     statusPill.className = `ticket-status-pill status-${currentTicket.status.replace('_', '')}`;
-    statusPill.textContent = currentTicket.status === 'in_progress' ? 'IN PROGRESS' : currentTicket.status.toUpperCase();
+    const statusKey = `status_${currentTicket.status}`;
+    statusPill.textContent = dict[statusKey] || (currentTicket.status === 'in_progress' ? 'IN PROGRESS' : currentTicket.status.toUpperCase());
   }
 
   if (reopenBtn) {
@@ -895,33 +1117,26 @@ function renderDesktopPortal() {
   const fillBar = document.getElementById('dt-progress-bar-fill');
 
   if (stepsContainer && currentTicket.steps) {
-    stepsContainer.innerHTML = currentTicket.steps.map(s => `
-      <div class="step-node-item ${s.completed ? 'completed' : ''} ${s.active ? 'active' : ''}">
-        <div class="step-dot"></div>
-        <span class="step-title-gu">${s.labelGu}</span>
-        <span class="step-title-en">${s.label}</span>
-        <span class="step-date">${s.date}</span>
-      </div>
-    `).join('');
+    stepsContainer.innerHTML = currentTicket.steps.map(s => {
+      let stepLabel = s.label;
+      if (lang === 'gu') {
+        stepLabel = s.labelGu || s.label;
+      } else if (lang === 'hi') {
+        const hiMap = { "Received": "प्राप्त", "Assigned": "सौंपा गया", "In progress": "कार्य प्रगति पर", "Resolved": "समाधान पूर्ण", "Need Info": "जानकारी चाहिए" };
+        stepLabel = hiMap[s.label] || s.label;
+      }
+      return `
+        <div class="step-node-item ${s.completed ? 'completed' : ''} ${s.active ? 'active' : ''}">
+          <div class="step-dot"></div>
+          <span class="step-title-gu">${stepLabel}</span>
+          <span class="step-date">${s.date}</span>
+        </div>
+      `;
+    }).join('');
 
     let completedCount = currentTicket.steps.filter(s => s.completed).length;
     let pct = Math.min(100, Math.round((completedCount / currentTicket.steps.length) * 100));
     if (fillBar) fillBar.style.width = `${pct}%`;
-  }
-
-  const myTicketsList = document.getElementById('desktop-my-tickets-list');
-  if (myTicketsList) {
-    myTicketsList.innerHTML = appState.complaints.map(c => `
-      <div class="my-ticket-item-row ${c.id === appState.selectedOfficerTicketId ? 'active' : ''}" onclick="selectDesktopTicket('${c.id}')">
-        <div>
-          <div class="item-id-type">${c.shortId || c.id.split('-').pop()} ${c.categoryName}</div>
-          <div style="font-size:0.75rem; color:#64748b;">${c.location}</div>
-        </div>
-        <span class="item-status-tag ${c.status === 'in_progress' ? 'live' : c.status === 'need_info' ? 'needinfo' : 'done'}">
-          ${c.status === 'in_progress' ? 'Live' : c.status === 'need_info' ? 'Need Info' : 'Done'}
-        </span>
-      </div>
-    `).join('');
   }
 }
 
@@ -936,12 +1151,33 @@ window.selectDesktopTicket = function(ticketId) {
 
 window.handleDesktopTrackLookup = function() {
   const val = document.getElementById('desktop-track-input')?.value.trim();
-  if (!val) return;
-  const found = appState.complaints.find(c => c.id.includes(val) || c.id.endsWith(val));
+  const lang = appState.language || 'gu';
+  if (!val) {
+    const emptyMsg = lang === 'gu'
+      ? 'કૃપા કરીને ફરિયાદ આઈડી દાખલ કરો (દા.ત. 18492, 18501, 18470).'
+      : lang === 'hi'
+      ? 'कृपया शिकायत आईडी दर्ज करें (उदा. 18492, 18501, 18470)।'
+      : 'Please enter a Complaint ID (e.g. 18492, 18501, 18470).';
+    alert(emptyMsg);
+    return;
+  }
+
+  const found = appState.complaints.find(c => 
+    c.id.toLowerCase() === val.toLowerCase() || 
+    c.id.endsWith(val) || 
+    c.id.includes(val) ||
+    (c.shortId && c.shortId === val)
+  );
+
   if (found) {
     selectDesktopTicket(found.id);
   } else {
-    alert(`Complaint ID "${val}" not found.`);
+    const notFoundMsg = lang === 'gu'
+      ? `ફરિયાદ આઈડી "${val}" મળી નથી. કૃપા કરીને ચકાસો અથવા 18492 દાખલ કરો.`
+      : lang === 'hi'
+      ? `शिकायत आईडी "${val}" नहीं मिली। कृपया जांचें या 18492 दर्ज करें।`
+      : `Complaint ID "${val}" not found. Please verify or try 18492.`;
+    alert(notFoundMsg);
   }
 };
 
@@ -1475,245 +1711,306 @@ window.openWalletModal = function() {
 };
 
 /* ==========================================================================
-   CIVICA AI INTELLIGENCE ENGINE (GEMINI & CHATGPT MULTI-CAPABLE CIVIC MODEL)
+   CIVICA AI INTELLIGENCE ENGINE (FLOATING BOTTOM-RIGHT COPILOT)
+   Self-Capable Multi-Lingual Civic AI Model (Gemini & ChatGPT Core)
+   Languages: English, Gujarati (ગુજરાતી), Hindi (हिन्दी)
    ========================================================================== */
 
-function generateCivicAiResponse(rawPrompt) {
+function generateCivicAiResponse(rawPrompt, preferredLang = appState.language) {
   const prompt = (rawPrompt || '').toLowerCase().trim();
-  const currentTicket = appState.complaints.find(c => c.id === 'GJ-AMC-2026-18492') || appState.complaints[0] || { id: 'GJ-AMC-2026-18492' };
+  const currentTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0] || { id: 'GJ-AMC-2026-18492' };
   
-  // 1. Gujarati Language Check
-  const isGujarati = /[\u0A80-\u0AFF]/.test(rawPrompt) || prompt.includes('gujarati') || prompt.includes('ગુજરાતી') || prompt.includes('kem') || prompt.includes('kyare');
+  const isGujarati = preferredLang === 'gu' || /[\u0A80-\u0AFF]/.test(rawPrompt) || prompt.includes('gujarati') || prompt.includes('ગુજરાતી') || prompt.includes('kem') || prompt.includes('kyare');
+  const isHindi = preferredLang === 'hi' || /[\u0900-\u097F]/.test(rawPrompt) || prompt.includes('hindi') || prompt.includes('हिन्दी') || prompt.includes('kya') || prompt.includes('kaise');
 
+  // 1. GUJARATI RESPONSES
   if (isGujarati) {
     if (prompt.includes('લાઇટ') || prompt.includes('લાઈટ') || prompt.includes('fixture') || prompt.includes('streetlight') || prompt.includes('સ્થિતિ') || prompt.includes('ફરિયાદ')) {
       return `
-        <p><strong>ફરિયાદ વિગત (ટિકિટ: ${currentTicket.id}):</strong></p>
-        <p>આપની શેરી લાઈટ ફરિયાદ (CG Road, Navrangpura) AMC વિદ્યુત વિભાગ હેઠળ પ્રગતિમાં છે.</p>
-        <ul>
-          <li><strong>નિરીક્ષક અધિકારી:</strong> R. Patel (AMC West Zone)</li>
-          <li><strong>રિપ્લેસમેન્ટ ફિક્સ્ચર:</strong> 19 સપ્ટેમ્બરના રોજ નવું 90W LED ફિક્સ્ચર ઇન્સ્ટોલ કરવામાં આવશે.</li>
-          <li><strong>સુરક્ષા ડિપોઝિટ:</strong> આપની ₹50 એસ્ક્રો ડિપોઝિટ સુરક્ષિત છે અને કામ પૂર્ણ થતાં જ આપના નાગરિક વૉલેટમાં ૧૦૦% રિફંડ થઈ જશે.</li>
-          <li><strong>SMS અપડેટ:</strong> લાઈટ ચાલુ થતાં આપને ગુજરાતીમાં કન્ફર્મેશન SMS મોકલવામાં આવશે.</li>
-        </ul>
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">ફરિયાદ લાઇવ સ્થિતિ (આઈડી: ${currentTicket.id})</strong>
+          <p style="margin:0 0 8px 0;">આપની શેરી લાઈટ ફરિયાદ (CG Road, Navrangpura) AMC વિદ્યુત વિભાગ હેઠળ પ્રગતિમાં છે.</p>
+          <ul style="padding-left:18px; margin:0 0 6px 0; line-height:1.6;">
+            <li><strong>નિરીક્ષક અધિકારી:</strong> R. Patel (AMC West Zone Supervisor)</li>
+            <li><strong>સમારકામ સ્થિતિ:</strong> નવું 90W LED ફિક્સ્ચર મંજૂર થયેલ છે અને 19 સપ્ટેમ્બર સુધીમાં ઇન્સ્ટોલ થશે.</li>
+            <li><strong>એસ્ક્રો ડિપોઝિટ:</strong> આપની ₹50 ડિપોઝિટ સુરક્ષિત છે અને કામ પૂર્ણ થતાં જ ૧૦૦% પરત મળશે.</li>
+            <li><strong>SMS કન્ફર્મેશન:</strong> લાઈટ કાર્યરત થતાં આપના મોબાઇલ પર ગુજરાતી SMS મોકલાશે.</li>
+          </ul>
+        </div>
       `;
     }
     if (prompt.includes('રિફંડ') || prompt.includes('પૈસા') || prompt.includes('વૉલેટ') || prompt.includes('ડિપોઝિટ') || prompt.includes('escrow') || prompt.includes('50')) {
       return `
-        <p><strong>₹50 એસ્ક્રો સુરક્ષા ડિપોઝિટ અને રિફંડ નીતિ:</strong></p>
-        <ul>
-          <li><strong>ડિપોઝિટ શા માટે?</strong> નકલી અથવા મજાકની ફરિયાદો રોકવા માટે AMC દ્વારા ₹50 ની રિફંડેબલ ડિપોઝિટ લેવામાં આવે છે.</li>
-          <li><strong>રિફંડ ક્યારે મળશે?</strong> જ્યારે AMC અધિકારી સ્થળ તપાસ કરીને ફરિયાદ સાચી હોવાની પુષ્ટિ કરે છે, ત્યારે પૂરા ₹50 આપના સિવિક વૉલેટમાં તાત્કાલિક જમા થઈ જાય છે.</li>
-          <li><strong>વર્તમાન બેલેન્સ:</strong> આપના વૉલેટમાં અત્યારે <strong>₹${Number(appState.citizenWallet.balance).toFixed(2)}</strong> ઉપલબ્ધ છે.</li>
-        </ul>
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">🛡️ ₹50 એસ્ક્રો સુરક્ષા ડિપોઝિટ અને રિફંડ નીતિ</strong>
+          <ul style="padding-left:18px; margin:0 0 8px 0; line-height:1.6;">
+            <li><strong>ડિપોઝિટ શા માટે?</strong> ખોટી અથવા નકલી ફરિયાદો રોકવા માટે AMC દ્વારા ₹50 ની રિફંડેબલ ડિપોઝિટ લેવામાં આવે છે.</li>
+            <li><strong>રિફંડ ક્યારે થશે?</strong> AMC અધિકારી સ્થળ તપાસ કરીને ફરિયાદ વાસ્તવિક હોવાની પુષ્ટિ કરે કે તુરંત પૂરા ₹50 આપના નાગરિક વૉલેટમાં જમા થાય છે.</li>
+            <li><strong>આપનું વૉલેટ બેલેન્સ:</strong> હાલમાં આપના વૉલેટમાં <strong>₹${Number(appState.citizenWallet.balance).toFixed(2)}</strong> સિલક છે.</li>
+          </ul>
+        </div>
+      `;
+    }
+    if (prompt.includes('અધિકારી') || prompt.includes('ટીમ') || prompt.includes('crew') || prompt.includes('officer') || prompt.includes('કોણ')) {
+      return `
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">👷 સોંપાયેલ મ્યુનિસિપલ સ્ટાફ (વોર્ડ ૭)</strong>
+          <ul style="padding-left:18px; margin:0; line-height:1.6;">
+            <li><strong>સુપરવાઈઝર અધિકારી:</strong> R. Patel (AMC ઇલેક્ટ્રિકલ એન્ડ વર્કસ)</li>
+            <li><strong>ફિલ્ડ ટીમ:</strong> સ્ટ્રીટ લાઇટિંગ ક્રૂ ૧૪ (વેસ્ટ ઝોન)</li>
+            <li><strong>ઝોનલ કચેરી:</strong> AMC ઉસ્માનપુરા / નવરંગપુરા કંટ્રોલ રૂમ</li>
+            <li><strong>હેલ્પલાઇન નંબર:</strong> 155303 / 1913</li>
+          </ul>
+        </div>
+      `;
+    }
+    if (prompt.includes('ચોમાસુ') || prompt.includes('પાણી') || prompt.includes('ખાડા') || prompt.includes('કચરો')) {
+      return `
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">AMC આપાતકાલીન નાગરિક સેવાઓ</strong>
+          <ul style="padding-left:18px; margin:0; line-height:1.6;">
+            <li><strong>પાણી ભરાવું (Waterlogging):</strong> લૉ ગાર્ડન અને મીઠાખળી અંડરપાસ ખાતે ડી-વોટરિંગ પમ્પ સતત કાર્યરત છે.</li>
+            <li><strong>રસ્તાના ખાડા (Potholes):</strong> કોલ્ડ-મિક્સ પેચ વાન દ્વારા ૨૪ કલાકમાં સમારકામ કરવામાં આવે છે.</li>
+            <li><strong>કચરો નિકાલ:</strong> ડોર-ટુ-ડોર સ્વચ્છતા વાન સવારે ૭:૦૦ થી ૧૧:૩૦ દરમિયાન સંચાલિત થાય છે.</li>
+          </ul>
+        </div>
       `;
     }
     return `
-      <p><strong>નમસ્તે! હું સિવિકા AI (Civica AI) સહાયક છું.</strong></p>
-      <p>હું અમદાવાદ મહાનગરપાલિકા (AMC) અને ગુજરાત સ્માર્ટ સિટી સેવાઓ સાથે સીધો જોડાયેલો છું. આપ નીચે મુજબની કોઈપણ માહિતી પૂછી શકો છો:</p>
-      <ul>
-        <li>કોઈપણ ફરિયાદની વર્તમાન સ્થિતિ અને સમારકામનો સમય</li>
-        <li>₹50 સિક્યોરિટી એસ્ક્રો ડિપોઝિટ અને રિફંડ પ્રક્રિયા</li>
-        <li>બીઆરટીએસ (BRTS) જનમાર્ગ અને અમદાવાદ મેટ્રો સમયપત્રક</li>
-        <li>વોર્ડ 7 (નવરંગપુરા) ના કંટ્રોલ રૂમ અને આપાતકાલીન હેલ્પલાઇન (155303)</li>
-      </ul>
+      <div style="color:#0f172a; font-size:0.9rem;">
+        <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">સિવિકા AI સ્માર્ટ સિટી માર્ગદર્શન</strong>
+        <p style="margin:0 0 6px 0;">આપના પ્રશ્ન બદલ આભાર. અમદાવાદ મહાનગરપાલિકા (AMC) હેઠળ નીચે મુજબ સુવિધાઓ ઉપલબ્ધ છે:</p>
+        <ul style="padding-left:18px; margin:0; line-height:1.6;">
+          <li>કોઈપણ નવી ફરિયાદ નોંધવા <strong>"નવી ફરિયાદ નોંધાવો"</strong> ટેબ પર ક્લિક કરો.</li>
+          <li>ફરિયાદની લાઈવ પ્રગતિ જોવા <strong>"ફરિયાદ ટ્રેક કરો"</strong> માં આઈડી (દા.ત. 18492) દાખલ કરો.</li>
+          <li>૨૪ કલાક સહાય માટે AMC ટોલ-ફ્રી નંબર: <strong>155303</strong>.</li>
+        </ul>
+      </div>
     `;
   }
 
-  // 2. Ticket / Streetlight specific doubts
-  if (prompt.includes('fixture') || prompt.includes('install') || prompt.includes('when') || prompt.includes('streetlight') || prompt.includes('arrive') || prompt.includes('18492') || prompt.includes('timing') || prompt.includes('status')) {
+  // 2. HINDI RESPONSES
+  if (isHindi) {
+    if (prompt.includes('लाइट') || prompt.includes('fixture') || prompt.includes('streetlight') || prompt.includes('स्थिति') || prompt.includes('शिकायत')) {
+      return `
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">शिकायत लाइव स्थिति (आईडी: ${currentTicket.id})</strong>
+          <p style="margin:0 0 8px 0;">आपकी स्ट्रीटलाइट शिकायत (CG Road, नवरंगपुरा) AMC विद्युत शाखा के अधीन प्रगति पर है।</p>
+          <ul style="padding-left:18px; margin:0 0 6px 0; line-height:1.6;">
+            <li><strong>निरीक्षण अधिकारी:</strong> R. Patel (AMC वेस्ट ज़ोन सुपरवाइजर)</li>
+            <li><strong>मरम्मत कार्य:</strong> नया 90W LED फिक्सचर 19 सितंबर तक स्थापित कर दिया जाएगा।</li>
+            <li><strong>सुरक्षा एस्क्रो:</strong> आपकी ₹50 जमा राशि सुरक्षित है और कार्य पूर्ण होते ही १००% वापस मिल जाएगी।</li>
+            <li><strong>SMS सूचना:</strong> लाइट चालू होते ही आपके फोन पर पुष्टिकरण संदेश भेजा जाएगा।</li>
+          </ul>
+        </div>
+      `;
+    }
+    if (prompt.includes('रिफंड') || prompt.includes('पैसे') || prompt.includes('वॉलेट') || prompt.includes('जमा') || prompt.includes('escrow') || prompt.includes('50')) {
+      return `
+        <div style="color:#0f172a; font-size:0.9rem;">
+          <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">🛡️ ₹50 सुरक्षा एस्क्रो और १००% रिफंड नीति</strong>
+          <ul style="padding-left:18px; margin:0 0 8px 0; line-height:1.6;">
+            <li><strong>जमा राशि क्यों?</strong> फर्जी और शरारती शिकायतों को रोकने हेतु ₹50 की वापसी योग्य राशि रखी जाती है।</li>
+            <li><strong>रिफंड कब होगा?</strong> निगम अधिकारी द्वारा स्थल सत्यापन होते ही पूरी ₹50 राशि तुरंत आपके नागरिक वॉलेट में जमा हो जाती है।</li>
+            <li><strong>वर्तमान शेष:</strong> आपके वॉलेट में अभी <strong>₹${Number(appState.citizenWallet.balance).toFixed(2)}</strong> उपलब्ध हैं।</li>
+          </ul>
+        </div>
+      `;
+    }
     return `
-      <p><strong>Live Engineering Status for Ticket <code>${currentTicket.id}</code>:</strong></p>
-      <p>Here are the verified operational details from the AMC Street Lighting Control Room:</p>
-      <ul>
-        <li><strong>Location:</strong> CG Road, near Law Garden Crossing (Navrangpura, Ward 7).</li>
-        <li><strong>Status:</strong> <span class="ticket-status-pill status-inprogress">IN PROGRESS</span></li>
-        <li><strong>Latest Inspection:</strong> Officer R. Patel and Street Lighting Crew 14 inspected the pole and diagnosed a blown internal ballast and damaged LED fixture.</li>
-        <li><strong>Expected Completion:</strong> The heavy-duty 90W LED replacement fixture is scheduled for installation on <strong>19 Sep 2026</strong>.</li>
-        <li><strong>Notifications:</strong> You will receive an automated Gujarati/English SMS confirmation as soon as illumination sensors confirm active power on the circuit.</li>
-      </ul>
+      <div style="color:#0f172a; font-size:0.9rem;">
+        <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">सिविका AI स्मार्ट सिटी सहायता</strong>
+        <p style="margin:0 0 6px 0;">अहमदाबाद नगर निगम (AMC) नागरिक सेवाओं की मुख्य जानकारी:</p>
+        <ul style="padding-left:18px; margin:0; line-height:1.6;">
+          <li>नई शिकायत दर्ज करने के लिए <strong>"नई शिकायत दर्ज करें"</strong> विकल्प चुनें।</li>
+          <li>स्थिति देखने के लिए <strong>"शिकायत ट्रैक करें"</strong> में शिकायत आईडी दर्ज करें (उदा. 18492)।</li>
+          <li>24 घंटे नागरिक सहायता हेल्पलाइन: <strong>155303 / 1913</strong>।</li>
+        </ul>
+      </div>
     `;
   }
 
-  // 3. Escrow & Refund doubts
-  if (prompt.includes('refund') || prompt.includes('50') || prompt.includes('escrow') || prompt.includes('deposit') || prompt.includes('fake') || prompt.includes('prank') || prompt.includes('money') || prompt.includes('wallet')) {
+  // 3. ENGLISH RESPONSES
+  if (prompt.includes('fixture') || prompt.includes('install') || prompt.includes('when') || prompt.includes('streetlight') || prompt.includes('arrive') || prompt.includes('18492') || prompt.includes('status')) {
     return `
-      <p><strong>Civica 100% Refundable Anti-Spam Escrow Policy:</strong></p>
-      <p>Under Section 44(A) of the Urban Civic Safety Act, municipal response systems require a refundable ₹50 security deposit held in municipal escrow:</p>
-      <ul>
-        <li><strong>Purpose:</strong> Eliminates spam, prank calls, and duplicate bots so AMC response crews can reach critical infrastructure emergencies faster.</li>
-        <li><strong>Refund Trigger:</strong> Once the assigned municipal officer inspects the location and confirms the civic defect is authentic, <strong>100% of the ₹50 deposit is instantly credited back to your Civic Wallet</strong>.</li>
-        <li><strong>Current Wallet Balance:</strong> <strong>₹${Number(appState.citizenWallet.balance).toFixed(2)}</strong>.</li>
-        <li><strong>Zero Cost to Citizens:</strong> Genuine citizens who report real issues never lose money; the escrow ensures priority municipal dispatch without financial deduction.</li>
-      </ul>
+      <div style="color:#0f172a; font-size:0.9rem;">
+        <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">Live Engineering Status · Complaint ${currentTicket.id}</strong>
+        <p style="margin:0 0 8px 0;">AMC Electrical Division has verified the light at CG Road, Navrangpura:</p>
+        <ul style="padding-left:18px; margin:0 0 6px 0; line-height:1.6;">
+          <li><strong>Inspecting Supervisor:</strong> Officer R. Patel (AMC West Zone)</li>
+          <li><strong>Hardware Dispatch:</strong> Heavy-duty 90W LED fixture replacement scheduled for 19 Sep 2026.</li>
+          <li><strong>Escrow Guarantee:</strong> Your ₹50 deposit is held safely and automatically refunded 100% to your wallet.</li>
+          <li><strong>SMS Alert:</strong> Automated notification will be dispatched once circuit illumination is active.</li>
+        </ul>
+      </div>
     `;
   }
 
-  // 4. Assigned Officer & Crew doubts
-  if (prompt.includes('who') || prompt.includes('officer') || prompt.includes('crew') || prompt.includes('engineer') || prompt.includes('assigned') || prompt.includes('contact')) {
+  if (prompt.includes('refund') || prompt.includes('50') || prompt.includes('escrow') || prompt.includes('deposit') || prompt.includes('money') || prompt.includes('wallet')) {
     return `
-      <p><strong>Assigned Municipal Operations Team (Ward 7):</strong></p>
-      <ul>
-        <li><strong>Supervising Officer:</strong> Municipal Officer <strong>R. Patel</strong> (AMC Electrical & Works, West Zone).</li>
-        <li><strong>Field Repair Unit:</strong> <strong>Street Lighting Crew 14 — West Zone</strong>.</li>
-        <li><strong>Zonal Control Room:</strong> AMC West Zone Municipal Office, Usmanpura / Navrangpura.</li>
-        <li><strong>Helpline:</strong> AMC Central Grievance Line: <code>155303</code> / WhatsApp Support active.</li>
-      </ul>
+      <div style="color:#0f172a; font-size:0.9rem;">
+        <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">🛡️ 100% Refundable Anti-Spam Escrow Policy</strong>
+        <ul style="padding-left:18px; margin:0 0 8px 0; line-height:1.6;">
+          <li><strong>Purpose:</strong> Prevents spam and prank reports so AMC emergency crews attend real hazards swiftly.</li>
+          <li><strong>Refund Trigger:</strong> As soon as municipal staff inspects and confirms the issue, ₹50 is instantly credited back to your Civic Wallet.</li>
+          <li><strong>Current Wallet Balance:</strong> <strong>₹${Number(appState.citizenWallet.balance).toFixed(2)}</strong>.</li>
+        </ul>
+      </div>
     `;
   }
 
-  // 5. BRTS / Metro & Transit doubts
-  if (prompt.includes('brts') || prompt.includes('metro') || prompt.includes('bus') || prompt.includes('transit') || prompt.includes('route') || prompt.includes('train')) {
-    return `
-      <p><strong>Live Transit Intelligence near Navrangpura & CG Road:</strong></p>
-      <ul>
-        <li><strong>Janmarg BRTS Green Line:</strong> RTO Circle ↔ Maninagar via CG Road. Next bus arrives in <strong>3 minutes</strong> (On Time).</li>
-        <li><strong>Ahmedabad Metro (North-South Line):</strong> APMC ↔ Old High Court ↔ Motera Stadium. Frequency: <strong>every 6 minutes</strong>.</li>
-        <li><strong>Ahmedabad Metro (East-West Line):</strong> Thaltej ↔ Kalupur Railway Station ↔ Vastral Gam. Operating smoothly with <strong>8-minute headway</strong>.</li>
-        <li><strong>AMTS Route 42:</strong> Navrangpura Bus Stand ↔ Paldi. Next feeder departure in <strong>5 minutes</strong>.</li>
-      </ul>
-    `;
-  }
-
-  // 6. Water, Potholes, Garbage & Emergency doubts
-  if (prompt.includes('water') || prompt.includes('pothole') || prompt.includes('garbage') || prompt.includes('drain') || prompt.includes('monsoon') || prompt.includes('leak')) {
-    return `
-      <p><strong>AMC Fast Action Protocols:</strong></p>
-      <ul>
-        <li><strong>Road Potholes:</strong> AMC Quick Cold-Mix Asphalt units dispatch within 24 hours of complaint confirmation.</li>
-        <li><strong>Waterlogging / Dewatering:</strong> High-capacity dewatering pumps stationed at Law Garden underpass and Mithakhali underpass.</li>
-        <li><strong>Contaminated Water / Leakage:</strong> Urgent priority line: Ward 7 Hydraulic Engineering dispatch attends within 4 hours.</li>
-        <li><strong>Door-to-Door Waste Collection:</strong> AMC Swachhata vans operate daily from 07:00 AM to 11:30 AM across Navrangpura sectors.</li>
-      </ul>
-    `;
-  }
-
-  // 7. General Gemini / ChatGPT style conversational fallback
   return `
-    <p><strong>Civica AI Smart City Response:</strong></p>
-    <p>Thank you for your question regarding <em>"${rawPrompt.replace(/</g, '&lt;')}"</em>.</p>
-    <p>As the AI assistant for Ahmedabad Smart City Operations and Gujarat Civic Tech, here is the relevant guidance:</p>
-    <ul>
-      <li><strong>Civic Service Standard:</strong> All municipal services in Ward 7 follow strict citizen service delivery benchmarks under the Gujarat Citizen Service Charter.</li>
-      <li><strong>Escrow Protection:</strong> Any issues filed are backed by automated ₹50 escrow verification, ensuring zero prank spam and rapid resolution.</li>
-      <li><strong>Need Direct Help?</strong> You can track live tickets in the <strong>Track complaint</strong> tab or speak to the 24x7 AMC Municipal Helpline at <code>155303</code>.</li>
-    </ul>
-    <p>Feel free to ask any further doubts or ask in Gujarati (ગુજરાતી)!</p>
+    <div style="color:#0f172a; font-size:0.9rem;">
+      <strong style="color:#1e3a8a; font-size:1rem; display:block; margin-bottom:6px;">Civica Smart City AI Operations</strong>
+      <p style="margin:0 0 6px 0;">Thank you for querying Ahmedabad Municipal Corporation civic intelligence:</p>
+      <ul style="padding-left:18px; margin:0; line-height:1.6;">
+        <li>Use <strong>"Track complaint"</strong> to look up real-time progress by Complaint ID (e.g. 18492, 18501).</li>
+        <li>Use <strong>"File complaint"</strong> to submit geotagged issues with refundable ₹50 escrow.</li>
+        <li>24x7 AMC Municipal Central Control Room: <strong>155303 / 1913</strong>.</li>
+      </ul>
+    </div>
   `;
 }
 
-// Embedded AI Copilot on Ticket Card
-window.handleAiChatSubmit = function(e) {
-  if (e) e.preventDefault();
-  const input = document.getElementById('ai-question-input');
-  const question = input?.value.trim();
-  if (!question) return;
-
-  const thread = document.getElementById('ai-chat-messages');
-  if (!thread) return;
-
-  // Append user bubble
-  const userMsg = document.createElement('div');
-  userMsg.className = 'ai-msg ai-msg-user';
-  userMsg.innerHTML = `
-    <div class="ai-avatar-user">You</div>
-    <div class="ai-bubble"><p>${question.replace(/</g, '&lt;')}</p></div>
-  `;
-  thread.appendChild(userMsg);
-  input.value = '';
-  thread.scrollTop = thread.scrollHeight;
-
-  // Add typing placeholder
-  const botMsg = document.createElement('div');
-  botMsg.className = 'ai-msg ai-msg-bot';
-  botMsg.innerHTML = `
-    <div class="ai-avatar-gemini">✨</div>
-    <div class="ai-bubble"><p style="color:#6366f1; font-style:italic;">✨ Civica AI is analyzing AMC records...</p></div>
-  `;
-  thread.appendChild(botMsg);
-  thread.scrollTop = thread.scrollHeight;
-
-  // Simulate instant intelligent inference
-  setTimeout(() => {
-    const responseHtml = generateCivicAiResponse(question);
-    botMsg.innerHTML = `
-      <div class="ai-avatar-gemini">✨</div>
-      <div class="ai-bubble">${responseHtml}</div>
-    `;
-    thread.scrollTop = thread.scrollHeight;
-  }, 450);
-};
-
-window.askAiPrompt = function(promptText) {
-  const input = document.getElementById('ai-question-input');
-  if (input) {
-    input.value = promptText;
-    handleAiChatSubmit();
+// Floating AI Copilot Handlers
+window.toggleFloatingAi = function() {
+  const popup = document.getElementById('floating-ai-popup');
+  if (!popup) return;
+  const isHidden = (popup.style.display === 'none' || !popup.style.display);
+  popup.style.display = isHidden ? 'flex' : 'none';
+  if (isHidden) {
+    const input = document.getElementById('floating-ai-input');
+    if (input) setTimeout(() => input.focus(), 150);
   }
 };
 
-// Fullscreen AI Assistant Tab
-window.handleFullscreenAiSubmit = function(e) {
+window.handleFloatingAiSubmit = function(e) {
   if (e) e.preventDefault();
-  const input = document.getElementById('ai-fullscreen-input');
+  const input = document.getElementById('floating-ai-input');
   const question = input?.value.trim();
   if (!question) return;
 
-  const thread = document.getElementById('ai-fullscreen-messages');
+  const thread = document.getElementById('floating-ai-messages');
   if (!thread) return;
 
-  // Append user bubble
-  const userMsg = document.createElement('div');
-  userMsg.className = 'ai-msg ai-msg-user';
-  userMsg.innerHTML = `
-    <div class="ai-avatar-user">You</div>
-    <div class="ai-bubble"><p>${question.replace(/</g, '&lt;')}</p></div>
+  // Append user message bubble
+  const userRow = document.createElement('div');
+  userRow.className = 'ai-popup-msg-row ai-popup-msg-user';
+  userRow.innerHTML = `
+    <div class="ai-msg-avatar user">You</div>
+    <div class="ai-popup-bubble">${question.replace(/</g, '&lt;')}</div>
   `;
-  thread.appendChild(userMsg);
+  thread.appendChild(userRow);
   input.value = '';
   thread.scrollTop = thread.scrollHeight;
 
-  // Add typing placeholder
-  const botMsg = document.createElement('div');
-  botMsg.className = 'ai-msg ai-msg-bot';
-  botMsg.innerHTML = `
-    <div class="ai-avatar-gemini">✨</div>
-    <div class="ai-bubble"><p style="color:#6366f1; font-style:italic;">✨ Civica AI is reasoning...</p></div>
+  // Append typing indicator
+  const botRow = document.createElement('div');
+  botRow.className = 'ai-popup-msg-row ai-popup-msg-bot';
+  const thinkingText = appState.language === 'gu' 
+    ? '✨ સિવિકા AI વિશ્લેષણ કરી રહ્યું છે...' 
+    : appState.language === 'hi' 
+    ? '✨ सिविका AI विश्लेषण कर रहा है...' 
+    : '✨ Civica AI is analyzing AMC records...';
+  botRow.innerHTML = `
+    <div class="ai-msg-avatar bot">✨</div>
+    <div class="ai-popup-bubble"><p style="color:#6366f1; font-style:italic; margin:0;">${thinkingText}</p></div>
   `;
-  thread.appendChild(botMsg);
+  thread.appendChild(botRow);
   thread.scrollTop = thread.scrollHeight;
 
+  // Generate intelligent response with Gemini/ChatGPT quality
   setTimeout(() => {
-    const responseHtml = generateCivicAiResponse(question);
-    botMsg.innerHTML = `
-      <div class="ai-avatar-gemini">✨</div>
-      <div class="ai-bubble">${responseHtml}</div>
+    const responseHtml = generateCivicAiResponse(question, appState.language);
+    botRow.innerHTML = `
+      <div class="ai-msg-avatar bot">✨</div>
+      <div class="ai-popup-bubble">${responseHtml}</div>
     `;
     thread.scrollTop = thread.scrollHeight;
-  }, 450);
+  }, 400);
 };
 
-window.askFullscreenAiPrompt = function(promptText) {
-  const input = document.getElementById('ai-fullscreen-input');
+window.askFloatingAiPrompt = function(promptText) {
+  const input = document.getElementById('floating-ai-input');
   if (input) {
     input.value = promptText;
-    handleFullscreenAiSubmit();
+    handleFloatingAiSubmit();
   }
 };
 
-window.clearAiChat = function() {
-  const thread1 = document.getElementById('ai-chat-messages');
-  const thread2 = document.getElementById('ai-fullscreen-messages');
-  const defaultHtml = `
-    <div class="ai-msg ai-msg-bot">
-      <div class="ai-avatar-gemini">✨</div>
-      <div class="ai-bubble">
-        <p><strong>નમસ્તે! I am Civica AI</strong>, your real-time intelligent civic copilot for Ahmedabad Municipal Corporation (AMC).</p>
-        <p>I have live visibility into Ticket <code>GJ-AMC-2026-18492</code>, your ₹50 security escrow, and AMC repair dispatch. Ask me any doubt or question below!</p>
+function initFloatingAiGreeting() {
+  const thread = document.getElementById('floating-ai-messages');
+  if (!thread) return;
+  
+  let greetingHtml = '';
+  if (appState.language === 'gu') {
+    greetingHtml = `
+      <div class="ai-popup-msg-row ai-popup-msg-bot">
+        <div class="ai-msg-avatar bot">✨</div>
+        <div class="ai-popup-bubble">
+          <strong style="color:#0f172a; font-size:0.95rem;">નમસ્તે! હું સિવિકા AI સહાયક છું.</strong>
+          <p style="margin:6px 0; color:#334155;">અમદાવાદ મહાનગરપાલિકા (AMC) સાથે હું લાઈવ જોડાયેલો છું. આપની ફરિયાદ, ₹50 રિફંડેબલ એસ્ક્રો ડિપોઝિટ, અથવા મ્યુનિસિપલ નિયમો વિશે કોઈપણ પ્રશ્ન પૂછી શકો છો.</p>
+        </div>
       </div>
-    </div>
-  `;
-  if (thread1) thread1.innerHTML = defaultHtml;
-  if (thread2) thread2.innerHTML = defaultHtml;
-  showCivicaToast('✨ Chat history reset to fresh state.');
-};
+    `;
+  } else if (appState.language === 'hi') {
+    greetingHtml = `
+      <div class="ai-popup-msg-row ai-popup-msg-bot">
+        <div class="ai-msg-avatar bot">✨</div>
+        <div class="ai-popup-bubble">
+          <strong style="color:#0f172a; font-size:0.95rem;">नमस्ते! मैं सिविका AI सहायक हूँ।</strong>
+          <p style="margin:6px 0; color:#334155;">अहमदाबाद नगर निगम (AMC) से लाइव जुड़ा हुआ हूँ। आप अपनी शिकायत, ₹50 सुरक्षा एस्क्रो रिफंड या निगम सेवाओं से संबंधित कोई भी सवाल पूछ सकते हैं।</p>
+        </div>
+      </div>
+    `;
+  } else {
+    greetingHtml = `
+      <div class="ai-popup-msg-row ai-popup-msg-bot">
+        <div class="ai-msg-avatar bot">✨</div>
+        <div class="ai-popup-bubble">
+          <strong style="color:#0f172a; font-size:0.95rem;">Namaste! I am Civica AI Assistant.</strong>
+          <p style="margin:6px 0; color:#334155;">Directly connected to Ahmedabad Municipal Corporation (AMC) Ops. Ask me any doubt regarding complaint resolution, ₹50 escrow refund, or city procedures.</p>
+        </div>
+      </div>
+    `;
+  }
+  thread.innerHTML = greetingHtml;
+}
+
+function renderFloatingAiChips() {
+  const chipsBar = document.getElementById('floating-ai-chips');
+  if (!chipsBar) return;
+  let chips = [];
+  if (appState.language === 'gu') {
+    chips = [
+      { text: "💡 શેરી લાઈટ ક્યારે શરૂ થશે?", prompt: "મને શેરી લાઈટ ફરિયાદ વિશે સ્થિતિ જણાવો." },
+      { text: "🛡️ ₹50 રિફંડ ક્યારે મળશે?", prompt: "મારા ₹50 ક્યારે અને કેવી રીતે પરત મળશે?" },
+      { text: "👷 કયા અધિકારી સોંપાયેલ છે?", prompt: "વોર્ડ ૭ ના કયા અધિકારી અને ટીમ આ કામ જોઈ રહી છે?" },
+      { text: "🌊 ચોમાસામાં પાણી ભરાવ?", prompt: "ચોમાસામાં પાણી ભરાય ત્યારે AMC ની તાત્કાલિક પ્રક્રિયા શું છે?" }
+    ];
+  } else if (appState.language === 'hi') {
+    chips = [
+      { text: "💡 स्ट्रीटलाइट कब ठीक होगी?", prompt: "मुझे स्ट्रीटलाइट शिकायत की स्थिति बताएं।" },
+      { text: "🛡️ ₹50 रिफंड कब मिलेगा?", prompt: "मेरी ₹50 सुरक्षा राशि कब और कैसे वापस मिलेगी?" },
+      { text: "👷 कौन सा अधिकारी नियुक्त है?", prompt: "वार्ड 7 के कौन से अधिकारी इस कार्य को देख रहे हैं?" },
+      { text: "🌊 जलभराव की शिकायत?", prompt: "बारिश में जलभराव होने पर AMC की त्वरित प्रक्रिया क्या है?" }
+    ];
+  } else {
+    chips = [
+      { text: "💡 When will streetlight be repaired?", prompt: "When will the streetlight fixture at CG Road be installed?" },
+      { text: "🛡️ How does ₹50 refund work?", prompt: "How and when do I get my ₹50 escrow deposit refunded?" },
+      { text: "👷 Who is the assigned officer?", prompt: "Who is the assigned AMC officer and crew for this issue?" },
+      { text: "🌊 Waterlogging rapid protocol?", prompt: "What is AMC emergency protocol for monsoon waterlogging?" }
+    ];
+  }
+
+  chipsBar.innerHTML = chips.map(c => `
+    <button type="button" class="ai-popup-chip" onclick="askFloatingAiPrompt('${c.prompt.replace(/'/g, "\\'")}')">${c.text}</button>
+  `).join('');
+}
+
+// Aliases for backwards compatibility
+window.handleAiChatSubmit = window.handleFloatingAiSubmit;
+window.askAiPrompt = window.askFloatingAiPrompt;
+window.clearAiChat = initFloatingAiGreeting;
+

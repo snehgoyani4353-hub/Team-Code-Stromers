@@ -19,32 +19,41 @@ try {
     }
 
     while ($listener.IsListening) {
-        $context = $listener.GetContext()
-        $request = $context.Request
-        $response = $context.Response
+        try {
+            $context = $listener.GetContext()
+            $request = $context.Request
+            $response = $context.Response
 
-        $rawUrl = $request.Url.AbsolutePath
-        if ($rawUrl -eq "/" -or [string]::IsNullOrWhiteSpace($rawUrl)) {
-            $rawUrl = "/index.html"
+            $rawUrl = $request.Url.AbsolutePath
+            if ($rawUrl -eq "/" -or [string]::IsNullOrWhiteSpace($rawUrl)) {
+                $rawUrl = "/index.html"
+            }
+
+            $localPath = Join-Path $root ($rawUrl.TrimStart('/'))
+
+            if (Test-Path $localPath -PathType Leaf) {
+                $ext = [System.IO.Path]::GetExtension($localPath).ToLower()
+                $contentType = if ($mimeTypes.ContainsKey($ext)) { $mimeTypes[$ext] } else { "application/octet-stream" }
+                
+                $response.ContentType = $contentType
+                $response.Headers.Add("Access-Control-Allow-Origin", "*")
+                $bytes = [System.IO.File]::ReadAllBytes($localPath)
+                $response.ContentLength64 = $bytes.Length
+                if ($request.HttpMethod -ne "HEAD") {
+                    $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                }
+            } else {
+                $response.StatusCode = 404
+                $errBytes = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
+                $response.ContentLength64 = $errBytes.Length
+                if ($request.HttpMethod -ne "HEAD") {
+                    $response.OutputStream.Write($errBytes, 0, $errBytes.Length)
+                }
+            }
+            $response.OutputStream.Close()
+        } catch {
+            Write-Host "Request error: $_"
         }
-
-        $localPath = Join-Path $root ($rawUrl.TrimStart('/'))
-
-        if (Test-Path $localPath -PathType Leaf) {
-            $ext = [System.IO.Path]::GetExtension($localPath).ToLower()
-            $contentType = if ($mimeTypes.ContainsKey($ext)) { $mimeTypes[$ext] } else { "application/octet-stream" }
-            
-            $response.ContentType = $contentType
-            $response.Headers.Add("Access-Control-Allow-Origin", "*")
-            $bytes = [System.IO.File]::ReadAllBytes($localPath)
-            $response.ContentLength64 = $bytes.Length
-            $response.OutputStream.Write($bytes, 0, $bytes.Length)
-        } else {
-            $response.StatusCode = 404
-            $errBytes = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
-            $response.OutputStream.Write($errBytes, 0, $errBytes.Length)
-        }
-        $response.OutputStream.Close()
     }
 } finally {
     $listener.Stop()

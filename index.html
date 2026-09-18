@@ -30,8 +30,15 @@
         </div>
 
         <div class="header-right-actions">
+          <!-- 3-LANGUAGE SELECTOR (English, Gujarati, Hindi) -->
+          <div class="lang-switch-group" id="header-lang-switch">
+            <button class="lang-btn" data-lang="en" onclick="setAppLanguage('en')">English</button>
+            <button class="lang-btn active" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+            <button class="lang-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
+          </div>
+
           <!-- MEMBER LOGIN BUTTON (Top Right Corner - Exactly as requested!) -->
-          <button class="btn-member-login" id="btn-header-login" onclick="openLoginModal('citizen')" aria-label="Member Login">
+          <button class="btn-member-login" id="btn-header-login" onclick="openLoginModal('citizen')" aria-label="Member Login" data-i18n="btn_member_login">
             MEMBER LOGIN
           </button>
         </div>
@@ -41,11 +48,11 @@
       <nav class="civica-nav-bar" aria-label="Primary Navigation">
         <div class="nav-inner">
           <ul class="nav-links">
-            <li><a href="#home" class="nav-link active">HOME</a></li>
-            <li><a href="#why-choose" class="nav-link">ABOUT US</a></li>
-            <li><a href="#contact" class="nav-link">CONTACT US</a></li>
-            <li><a href="#solutions" class="nav-link">SOLUTIONS</a></li>
-            <li><a href="#services" class="nav-link">SERVICES</a></li>
+            <li><a href="#home" class="nav-link active" data-i18n="nav_home">HOME</a></li>
+            <li><a href="#why-choose" class="nav-link" data-i18n="nav_about">ABOUT US</a></li>
+            <li><a href="#contact" class="nav-link" data-i18n="nav_contact">CONTACT US</a></li>
+            <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
+            <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
           </ul>
         </div>
       </nav>
@@ -55,30 +62,30 @@
     <section id="home" class="civica-section hero-section">
       <div class="hero-container">
         <div class="hero-left">
-          <h1 class="hero-main-title">
+          <h1 class="hero-main-title" data-i18n="hero_title">
             Civic Engagement &<br>Urban Mobility
           </h1>
           
           <ul class="hero-bullet-list">
             <li class="hero-bullet-item">
               <span class="bullet-arrow">&gt;</span>
-              <p>Citizen-centered software that turns neighborhood reports into action.</p>
+              <p data-i18n="hero_bullet_1">Citizen-centered software that turns neighborhood reports into action.</p>
             </li>
             <li class="hero-bullet-item">
               <span class="bullet-arrow">&gt;</span>
-              <p>Live community dashboards for infrastructure, safety, and transit flow.</p>
+              <p data-i18n="hero_bullet_2">Live community dashboards for infrastructure, safety, and transit flow.</p>
             </li>
             <li class="hero-bullet-item">
               <span class="bullet-arrow">&gt;</span>
-              <p>Mobile tools that make public commuting clearer, faster, and fairer.</p>
+              <p data-i18n="hero_bullet_3">Mobile tools that make public commuting clearer, faster, and fairer.</p>
             </li>
           </ul>
 
           <div class="hero-cta-buttons">
-            <button class="btn-hero-primary" onclick="openLoginModal('citizen')">
+            <button class="btn-hero-primary" onclick="openLoginModal('citizen')" data-i18n="btn_hero_citizen">
               Access Citizen Portal &rarr;
             </button>
-            <button class="btn-hero-secondary" onclick="openLoginModal('admin')">
+            <button class="btn-hero-secondary" onclick="openLoginModal('admin')" data-i18n="btn_hero_officer">
               Municipal Officer Sign-In
             </button>
           </div>
@@ -198,6 +205,38 @@
 
 
   <!-- ==========================================================================
+       SECTION 1.5: LANGUAGE SELECTION MODAL (PROMPTED ON FIRST ARRIVAL)
+       3 Languages: English / Gujarati / Hindi
+       ========================================================================== -->
+  <div class="civica-auth-overlay" id="language-select-modal" role="dialog" aria-modal="true" style="display:none;">
+    <div class="auth-modal-card" style="max-width: 520px;">
+      <div style="text-align: center; margin-bottom: 12px;">
+        <span style="font-size: 2.2rem;">🌐</span>
+        <h3 style="margin: 6px 0 4px 0; font-size: 1.35rem; color: var(--civica-navy);">Select Language · ભાષા પસંદ કરો · भाषा चुनें</h3>
+        <p style="color: #64748b; font-size: 0.85rem; margin: 0;">Choose your preferred language for the Civica Smart City Portal & Operational Dashboard</p>
+      </div>
+      <div class="lang-modal-grid">
+        <div class="lang-card-option" onclick="setAppLanguage('en', true)">
+          <span class="lang-flag-ico">🇬🇧</span>
+          <div class="lang-name-native">English</div>
+          <div class="lang-name-en">Default English</div>
+        </div>
+        <div class="lang-card-option recommended" onclick="setAppLanguage('gu', true)">
+          <span class="lang-card-badge">ગુજરાત સ્ટાન્ડર્ડ</span>
+          <span class="lang-flag-ico">🇮🇳</span>
+          <div class="lang-name-native">ગુજરાતી</div>
+          <div class="lang-name-en">ગુજરાતી પોર્ટલ</div>
+        </div>
+        <div class="lang-card-option" onclick="setAppLanguage('hi', true)">
+          <span class="lang-flag-ico">🇮🇳</span>
+          <div class="lang-name-native">हिन्दी</div>
+          <div class="lang-name-en">राष्ट्रीय भाषा</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        SECTION 2: DEDICATED LOGIN MODAL / PAGE (TRIGGERED BY "MEMBER LOGIN")
        Features Citizen Google / Gmail Sign-In & Municipal Admin Options
        ========================================================================== -->
@@ -296,18 +335,27 @@
     <header class="dashboard-top-navbar">
       <div class="dash-top-inner">
         <div class="dash-brand-area">
-          <button class="btn-back-home" onclick="returnToLandingPage()">
+          <button class="btn-back-home" onclick="returnToLandingPage()" data-i18n="dash_back_home">
             &larr; Back to Civica Home
           </button>
           <span class="dash-separator">|</span>
           <span class="dash-brand-title">CIVICA ગુજરાત &bull; Operational Hub</span>
         </div>
 
-        <!-- User Session Indicator -->
-        <div class="dash-user-badge">
-          <span class="indicator-dot"></span>
-          <span id="dash-session-user-text">Signed in as Citizen</span>
-          <button class="dash-logout-small" onclick="handleLogout()" title="Sign Out">✕</button>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <!-- 3-LANGUAGE SELECTOR (Dashboard) -->
+          <div class="lang-switch-group" id="dash-lang-switch">
+            <button class="lang-btn" data-lang="en" onclick="setAppLanguage('en')">English</button>
+            <button class="lang-btn active" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+            <button class="lang-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
+          </div>
+
+          <!-- User Session Indicator -->
+          <div class="dash-user-badge">
+            <span class="indicator-dot"></span>
+            <span id="dash-session-user-text" data-i18n="dash_signed_citizen">Signed in as Citizen</span>
+            <button class="dash-logout-small" onclick="handleLogout()" title="Sign Out">✕</button>
+          </div>
         </div>
       </div>
     </header>
@@ -318,7 +366,7 @@
         <div class="browser-window-header">
           <div class="window-controls"><span class="win-dot dot-red"></span><span class="win-dot dot-yellow"></span><span class="win-dot dot-green"></span></div>
           <div class="browser-url-bar"><span class="url-lock">🔒</span><span id="desktop-url-bar">https://civica.gujarat.in / portal / citizen</span></div>
-          <div class="browser-badge">ગુજરાત નાગરિક સેવા</div>
+          <div class="browser-badge" id="browser-badge-text" data-i18n="dash_service_badge">ગુજરાત નાગરિક સેવા</div>
         </div>
 
         <div class="desktop-portal-layout">
@@ -326,14 +374,10 @@
           <aside class="desktop-sidebar">
             <div class="sidebar-brand-box"><div class="sidebar-logo">CIVICA</div><div class="sidebar-sublogo">ગુજરાત</div></div>
             <nav class="sidebar-nav">
-              <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')">🔍 Track complaint</button>
-              <button class="sidebar-nav-item" id="btn-tab-ai" onclick="switchDesktopTab('ai')">✨ Civica AI Assistant</button>
-              <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')">📝 Report issue</button>
-              <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')">👛 Civic Wallet (<span id="desktop-wallet-bal">₹150</span>)</button>
-              <button class="sidebar-nav-item" id="btn-tab-mytickets" onclick="switchDesktopTab('mytickets')">📋 My tickets</button>
-              <button class="sidebar-nav-item" id="btn-tab-brts" onclick="switchDesktopTab('brts')">🚌 BRTS / Metro</button>
-              <button class="sidebar-nav-item" id="btn-tab-wardmap" onclick="switchDesktopTab('wardmap')">🗺️ Ward map</button>
-              <button class="sidebar-nav-item" onclick="openContactModal()">📞 Madad (મદદ)</button>
+              <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track complaint</button>
+              <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 File complaint</button>
+              <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')"><span data-i18n="tab_wallet">👛 Civic Wallet</span> (<span id="desktop-wallet-bal">₹150</span>)</button>
+              <button class="sidebar-nav-item" id="btn-tab-wardmap" onclick="switchDesktopTab('wardmap')" data-i18n="tab_wardmap">🗺️ Ward map</button>
             </nav>
             <div class="sidebar-footer-box"><div class="ward-tag">West Zone · Ward 7</div><div class="city-tag">AMC Ahmedabad</div></div>
           </aside>
@@ -344,13 +388,16 @@
             <!-- TAB 1: TRACK COMPLAINT -->
             <div id="dt-tab-track" class="desktop-tab-panel active">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title">Track complaint</h1>
+                <h1 class="desktop-page-title" data-i18n="track_page_title">Track complaint</h1>
                 <div class="desktop-search-row">
                   <div class="track-input-container">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID">
+                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID" data-i18n-placeholder="track_placeholder" onkeydown="if(event.key==='Enter')handleDesktopTrackLookup()">
                   </div>
-                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()">TRACK</button>
+                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK</button>
+                </div>
+                <div style="font-size:0.78rem; color:#64748b; margin-top:6px;" id="dt-track-hint">
+                  💡 Example IDs: <strong>18492</strong> (Streetlight), <strong>18501</strong> (Waterlogging), <strong>18470</strong> (Pothole), <strong>18388</strong> (Garbage)
                 </div>
               </div>
 
@@ -369,145 +416,14 @@
                 </div>
 
                 <div class="desktop-note-box">
-                  <div class="note-box-title">Latest note</div>
+                  <div class="note-box-title" data-i18n="latest_note_title">Latest note</div>
                   <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a Gujarati SMS when the light is back on. — R. Patel</p>
                 </div>
 
-                <!-- CIVICA AI MODEL COPILOT (Replaces old Add Photo & Ask AMC buttons) -->
-                <div class="civica-ai-copilot-card" id="civica-ai-copilot">
-                  <div class="ai-card-header">
-                    <div class="ai-header-brand">
-                      <div class="ai-gemini-sparkle">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#geminiGrad)" />
-                          <defs>
-                            <linearGradient id="geminiGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                              <stop stop-color="#4285F4"/>
-                              <stop offset="0.5" stop-color="#9B72CF"/>
-                              <stop offset="1" stop-color="#FF7769"/>
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                      <div>
-                        <div class="ai-title-row">
-                          <strong class="ai-model-name">Civica AI Assistant</strong>
-                          <span class="ai-powered-pill">Self-Capable AI Model · Gemini & ChatGPT Architecture</span>
-                        </div>
-                        <div class="ai-model-sub">Ask any doubts about this complaint, city operations, escrow refund, or AMC regulations in English or Gujarati</div>
-                      </div>
-                    </div>
-                    <div class="ai-status-indicator">
-                      <span class="ai-pulse-dot"></span>
-                      <span>AI Model Ready</span>
-                    </div>
-                  </div>
-
-                  <!-- Quick Doubt Prompt Chips -->
-                  <div class="ai-quick-prompts">
-                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('When will the streetlight fixture at CG Road be installed?')">💡 When will fixture arrive?</button>
-                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('How and when do I get my ₹50 escrow deposit refunded?')">🛡️ When do I get my ₹50 refund?</button>
-                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('Who is the assigned AMC officer and crew for this issue?')">👷 Assigned crew & officer?</button>
-                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('મને આ શેરી લાઈટ ફરિયાદ વિશે ગુજરાતીમાં સ્થિતિ જણાવો.')">🇮🇳 ગુજરાતીમાં વિગત આપો</button>
-                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('What is the schedule for BRTS buses near CG Road today?')">🚌 BRTS bus timings?</button>
-                  </div>
-
-                  <!-- AI Chat Stream / Log -->
-                  <div class="ai-chat-thread" id="ai-chat-messages">
-                    <div class="ai-msg ai-msg-bot">
-                      <div class="ai-avatar-gemini">✨</div>
-                      <div class="ai-bubble">
-                        <p><strong>નમસ્તે! I am Civica AI</strong>, your real-time intelligent civic copilot for Ahmedabad Municipal Corporation (AMC).</p>
-                        <p>I have live visibility into Ticket <code>GJ-AMC-2026-18492</code> (Streetlight at CG Road, Navrangpura), your ₹50 security escrow, and AMC West Zone repair dispatch. Ask me any doubt or question below!</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- AI Input Bar -->
-                  <form class="ai-input-form" onsubmit="handleAiChatSubmit(event)">
-                    <div class="ai-input-container">
-                      <input type="text" id="ai-question-input" class="ai-text-input" placeholder="Ask any doubt about your ticket, city services, civic wallet, or AMC rules..." autocomplete="off">
-                      <button type="submit" class="btn-send-ai" id="btn-ai-send">
-                        <span>Ask AI</span>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-
                 <div class="desktop-ticket-actions" style="margin-top: 14px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
-                  <button class="btn-action-white" onclick="openAddPhotoModal()">📷 Upload Additional Inspection Photo</button>
-                  <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()">Reopen Complaint</button>
+                  <button class="btn-action-white" onclick="openAddPhotoModal()" data-i18n="btn_upload_photo">📷 Upload Inspection Photo</button>
+                  <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()" data-i18n="btn_reopen">Reopen Complaint</button>
                 </div>
-              </div>
-            </div>
-
-            <!-- TAB: CIVICA AI ASSISTANT (FULL SCREEN AI COPILOT) -->
-            <div id="dt-tab-ai" class="desktop-tab-panel" style="display:none;">
-              <div class="desktop-header-area">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <div>
-                    <h1 class="desktop-page-title">✨ Civica AI Intelligence · સિવિકા AI</h1>
-                    <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">Conversational Civic Assistant powered by Gemini & ChatGPT Core Architecture</p>
-                  </div>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="ticket-status-pill status-resolved">● Self-Capable AI Active</span>
-                    <button type="button" class="btn-action-white" onclick="clearAiChat()">Clear Chat</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="ai-fullscreen-container">
-                <div class="ai-capabilities-banner">
-                  <div class="ai-cap-item">
-                    <span class="ai-cap-ico">⚡</span>
-                    <div><strong>Instant Doubt Solver</strong><span>Answers any questions on tickets, timelines, and AMC policies</span></div>
-                  </div>
-                  <div class="ai-cap-item">
-                    <span class="ai-cap-ico">🛡️</span>
-                    <div><strong>Escrow & Refund Clarity</strong><span>Explains ₹50 anti-spam security deposit and automatic refunds</span></div>
-                  </div>
-                  <div class="ai-cap-item">
-                    <span class="ai-cap-ico">🌐</span>
-                    <div><strong>Gujarati & English Bilingual</strong><span>Ask in ગુજરાતી or English for localized municipal support</span></div>
-                  </div>
-                </div>
-
-                <div class="ai-chat-thread ai-chat-thread-large" id="ai-fullscreen-messages">
-                  <div class="ai-msg ai-msg-bot">
-                    <div class="ai-avatar-gemini">✨</div>
-                    <div class="ai-bubble">
-                      <p><strong>Hello! I am Civica AI</strong>, your comprehensive AI assistant for Smart City Ahmedabad and AMC civic services.</p>
-                      <p>You can ask me about:</p>
-                      <ul style="margin: 6px 0; padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
-                        <li>Status and engineering details of your complaints (e.g. <code>GJ-AMC-2026-18492</code>)</li>
-                        <li>How the ₹50 anti-spam escrow deposit and 100% refund guarantee work</li>
-                        <li>Live BRTS Janmarg routes, Metro timings, and corridor frequencies</li>
-                        <li>AMC emergency helplines, monsoonal waterlogging dispatch, and ward guidelines</li>
-                        <li>Ask in <strong>English</strong> or <strong>ગુજરાતી</strong>!</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Suggested Chips -->
-                <div class="ai-quick-prompts" style="margin-top:14px;">
-                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('How does the ₹50 anti-spam escrow deposit prevent fake complaints?')">🛡️ How does ₹50 escrow prevent fake complaints?</button>
-                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('What is the procedure for an emergency pipeline leakage in Navrangpura?')">🚰 Emergency pipeline leakage procedure?</button>
-                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('અમદાવાદ બીઆરટીએસ અને મેટ્રોના સમય અને રૂટની વિગત આપો.')">🚌 BRTS/મેટ્રો રૂટની વિગત (ગુજરાતી)</button>
-                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('Explain AMC Ward 7 civic response turnaround time guarantees.')">⏱️ AMC SLA turnaround time guarantees?</button>
-                </div>
-
-                <!-- Input bar -->
-                <form class="ai-input-form" style="margin-top:14px;" onsubmit="handleFullscreenAiSubmit(event)">
-                  <div class="ai-input-container">
-                    <input type="text" id="ai-fullscreen-input" class="ai-text-input" placeholder="Type your doubt or question to Civica AI (e.g. How does refund work?)..." autocomplete="off">
-                    <button type="submit" class="btn-send-ai">
-                      <span>Ask AI</span>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
 
@@ -772,66 +688,15 @@
               </div>
             </div>
 
-            <!-- TAB 4: MY TICKETS (FULL WEB TABLE) -->
-            <div id="dt-tab-mytickets" class="desktop-tab-panel" style="display:none;">
-              <div class="desktop-header-area">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <div>
-                    <h1 class="desktop-page-title">My Filed Complaints · મારી ટિકિટ</h1>
-                    <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">All civic reports submitted by your citizen account with escrow verification</p>
-                  </div>
-                  <button class="btn-desktop-gold-track" onclick="switchDesktopTab('report')">+ File New Complaint</button>
-                </div>
-              </div>
-
-              <div class="active-ticket-detail-card" style="margin-top:0;">
-                <div class="dt-table-responsive">
-                  <table class="dt-web-table">
-                    <thead>
-                      <tr>
-                        <th>Complaint ID</th>
-                        <th>Category</th>
-                        <th>Location & Title</th>
-                        <th>Date Filed</th>
-                        <th>Escrow Deposit</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dt-mytickets-tbody">
-                      <!-- Dynamically populated -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- TAB 5: BRTS & METRO (TRANSIT FEED) -->
-            <div id="dt-tab-brts" class="desktop-tab-panel" style="display:none;">
-              <div class="desktop-header-area">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <div>
-                    <h1 class="desktop-page-title">BRTS & Metro Urban Mobility · બીઆરટીએસ અને મેટ્રો</h1>
-                    <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">Live transit feeds, next bus arrivals, and metro corridor timings</p>
-                  </div>
-                  <span class="ticket-status-pill status-inprogress">Live GPS Tracking Active</span>
-                </div>
-              </div>
-
-              <div class="dt-transit-grid" id="dt-transit-grid">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
-
-            <!-- TAB 6: WARD MAP & CIVIC HEALTH -->
+            <!-- TAB 3: WARD MAP & CIVIC HEALTH -->
             <div id="dt-tab-wardmap" class="desktop-tab-panel" style="display:none;">
               <div class="desktop-header-area">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <div>
-                    <h1 class="desktop-page-title">Ward 7 Civic Health Map · વોર્ડ નકશો</h1>
+                    <h1 class="desktop-page-title" data-i18n="wardmap_page_title">Ward 7 Civic Health Map · વોર્ડ નકશો</h1>
                     <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">Navrangpura &bull; AMC West Zone Live Infrastructure Overview</p>
                   </div>
-                  <button class="btn-action-navy" onclick="shareWithSociety()">📤 Share with Society Secretary</button>
+                  <button class="btn-action-navy" onclick="shareWithSociety()" data-i18n="btn_share_society">📤 Share with Society Secretary</button>
                 </div>
               </div>
 
@@ -866,13 +731,25 @@
 
           </main>
 
-          <!-- Right Sidebar -->
+          <!-- Right Sidebar (Escrow Guarantee, SMS Alerts & AMC Control Desk) -->
           <aside class="desktop-right-sidebar">
-            <h3 class="right-sidebar-title">My tickets</h3>
-            <div class="my-tickets-vertical-list" id="desktop-my-tickets-list"></div>
+            <div class="right-sidebar-escrow-card">
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+                <span style="font-size:1.2rem;">🛡️</span>
+                <strong data-i18n="side_escrow_title">100% Refundable Escrow</strong>
+              </div>
+              <p data-i18n="side_escrow_desc">To eliminate fake complaints, ₹50 is held in municipal escrow. When AMC inspects genuine issues, ₹50 is instantly refunded to your Civic Wallet.</p>
+            </div>
             <div class="desktop-alerts-card">
               <div class="alerts-icon">📱</div>
-              <div class="alerts-info"><strong>SMS & WhatsApp Updates</strong><p>Gujarati SMS updates active</p></div>
+              <div class="alerts-info">
+                <strong data-i18n="side_sms_title">SMS & WhatsApp Updates</strong>
+                <p data-i18n="side_sms_desc">Real-time status updates active</p>
+              </div>
+            </div>
+            <div class="right-sidebar-support-card">
+              <strong data-i18n="side_support_title">🏛️ AMC Ward 7 Control Desk</strong>
+              <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helpline: <strong>155303 / 1913</strong></p>
             </div>
           </aside>
         </div>
@@ -1234,6 +1111,50 @@
       <h2 style="font-size: 1.3rem; margin-bottom: 6px; font-family: 'Cinzel', serif;">Contact Civica Systems</h2>
       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">Ahmedabad Civic Helpline: 155303</p>
       <button type="button" class="btn-hero-primary" style="width: 100%; justify-content: center;" onclick="closeContactModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING CIVICA AI COPILOT (BOTTOM RIGHT CORNER)
+       Self-capable AI assistant for doubts, complaint tracking, and escrow clarity
+       ========================================================================== -->
+  <div class="floating-ai-container" id="floating-ai-container">
+    <!-- Trigger Button -->
+    <button class="btn-floating-ai" id="btn-floating-ai" onclick="toggleFloatingAi()" aria-label="Open Civica AI Assistant">
+      <span class="floating-ai-sparkle">✨</span>
+      <span class="floating-ai-label" id="floating-ai-btn-label">AI સહાયક</span>
+      <span class="floating-ai-pulse-pill">ONLINE</span>
+    </button>
+
+    <!-- Floating Chat Popup Window -->
+    <div class="floating-ai-popup" id="floating-ai-popup" style="display:none;">
+      <div class="ai-popup-header">
+        <div class="ai-popup-header-left">
+          <div class="ai-popup-avatar-box">✨</div>
+          <div>
+            <div class="ai-popup-title" id="ai-popup-title-text">Civica AI સહાયક</div>
+            <div class="ai-popup-subtitle" id="ai-popup-sub-text">Gemini & ChatGPT • AMC 24x7</div>
+          </div>
+        </div>
+        <button class="ai-popup-close-btn" onclick="toggleFloatingAi()" title="Close">✕</button>
+      </div>
+
+      <div class="ai-popup-messages" id="floating-ai-messages">
+        <!-- Dynamic localized greeting and chat messages appended here -->
+      </div>
+
+      <div class="ai-popup-chips-bar" id="floating-ai-chips">
+        <!-- Dynamic localized question chips -->
+      </div>
+
+      <div class="ai-popup-input-area">
+        <form class="ai-popup-input-form" onsubmit="handleFloatingAiSubmit(event)">
+          <input type="text" id="floating-ai-input" class="ai-popup-text-input" placeholder="તમારો પ્રશ્ન અહીં લખો..." autocomplete="off" />
+          <button type="submit" class="ai-popup-send-btn" title="Send Question">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 
