@@ -231,9 +231,134 @@ function saveMasterState() {
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
 }
 
+// Slide UI Multi-Lingual Synchronization
+function updateSlideLanguageUI(lang) {
+  // Update slide pills
+  ['en', 'hi', 'gu'].forEach(l => {
+    const pill = document.getElementById(`slide-pill-${l}`);
+    if (pill) {
+      if (l === lang) pill.classList.add('active');
+      else pill.classList.remove('active');
+    }
+  });
+
+  const translations = {
+    en: {
+      report_heading: "Report issue",
+      report_subheading: "All fields stay on this page.",
+      lbl_cat: "1 Complaint type",
+      lbl_address: "2 Address",
+      address_hint: "Address is text only.",
+      lbl_photo: "3 Photo of the problem",
+      lbl_deposit: "4 Deposit",
+      deposit_rules: "Returned if the damaged road is real.<br>Kept only if the complaint is false.",
+      lbl_sending: "You are sending",
+      btn_submit: "SUBMIT COMPLAINT",
+      submit_hint: "After submit you get GJ-AMC-2026-18470<br>and Track issue opens.",
+      track_heading: "Track issue",
+      lbl_complaint_id: "Complaint ID",
+      btn_track: "TRACK",
+      btn_view_complaint: "View complaint",
+      lbl_your_complaint: "Your complaint",
+      lbl_watch_id: "Watch this ID",
+      watch_note: "Save this number. Use it any time to open the same complaint.",
+      help_heading: "Help",
+      help_subheading: "Ask how to file, how to track, or about the ₹50 refund.",
+      lang_hint: "English is default."
+    },
+    gu: {
+      report_heading: "નવી ફરિયાદ નોંધાવો",
+      report_subheading: "બધી વિગતો આ એક જ પેજ પર રહે છે.",
+      lbl_cat: "૧ ફરિયાદનો પ્રકાર",
+      lbl_address: "૨ સરનામું",
+      address_hint: "સરનામું માત્ર લખાણ સ્વરૂપે.",
+      lbl_photo: "૩ સમસ્યાનો ફોટો",
+      lbl_deposit: "૪ ડિપોઝિટ",
+      deposit_rules: "જો સમસ્યા વાસ્તવિક હશે તો ડિપોઝિટ પરત મળશે.<br>માત્ર ખોટી ફરિયાદમાં જ જપ્ત થશે.",
+      lbl_sending: "તમે મોકલી રહ્યા છો",
+      btn_submit: "ફરિયાદ સબમિટ કરો",
+      submit_hint: "સબમિટ કર્યા પછી તમને GJ-AMC-2026-18470 મળશે<br>અને ટ્રેક ખુલશે.",
+      track_heading: "ફરિયાદ ટ્રેક કરો",
+      lbl_complaint_id: "ફરિયાદ આઈડી",
+      btn_track: "ટ્રેક કરો",
+      btn_view_complaint: "ફરિયાદ જુઓ",
+      lbl_your_complaint: "તમારી ફરિયાદ",
+      lbl_watch_id: "આ આઈડી સાચવો",
+      watch_note: "આ નંબર સાચવો. ગમે ત્યારે આ જ ફરિયાદ ખોલવા માટે વાપરો.",
+      help_heading: "મદદ",
+      help_subheading: "ફરિયાદ કેવી રીતે કરવી, કેવી રીતે ટ્રેક કરવી અથવા ₹50 રિફંડ વિશે પૂછો.",
+      lang_hint: "ગુજરાતી ભાષા સક્રિય છે."
+    },
+    hi: {
+      report_heading: "शिकायत दर्ज करें",
+      report_subheading: "सभी विवरण इसी एक पेज पर रहेंगे।",
+      lbl_cat: "1 शिकायत का प्रकार",
+      lbl_address: "2 पता",
+      address_hint: "पता केवल टेक्स्ट में दर्ज करें।",
+      lbl_photo: "3 समस्या का फोटो",
+      lbl_deposit: "4 सुरक्षा जमा",
+      deposit_rules: "समस्या वास्तविक होने पर जमा राशि वापस होगी।<br>केवल झूठी शिकायत पर जब्त होगी।",
+      lbl_sending: "आप भेज रहे हैं",
+      btn_submit: "शिकायत सबमिट करें",
+      submit_hint: "सबमिट करने के बाद आपको GJ-AMC-2026-18470 मिलेगा<br>और ट्रैक खुलेगा।",
+      track_heading: "शिकायत ट्रैक करें",
+      lbl_complaint_id: "शिकायत आईडी",
+      btn_track: "ट्रैक करें",
+      btn_view_complaint: "शिकायत देखें",
+      lbl_your_complaint: "आपकी शिकायत",
+      lbl_watch_id: "यह आईडी याद रखें",
+      watch_note: "यह नंबर सुरक्षित रखें। किसी भी समय यही शिकायत खोलने के लिए उपयोग करें।",
+      help_heading: "सहायता",
+      help_subheading: "शिकायत कैसे दर्ज करें, कैसे ट्रैक करें या ₹50 रिफंड के बारे में पूछें।",
+      lang_hint: "हिन्दी भाषा सक्रिय है।"
+    }
+  };
+
+  const t = translations[lang] || translations.en;
+
+  const setHtml = (id, html) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  };
+  const setText = (id, txt) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = txt;
+  };
+
+  setText('slide-report-heading', t.report_heading);
+  setText('slide-report-subheading', t.report_subheading);
+  setText('slide-lbl-cat', t.lbl_cat);
+  setText('slide-lbl-address', t.lbl_address);
+  setText('slide-address-hint', t.address_hint);
+  setText('slide-lbl-photo', t.lbl_photo);
+  setText('slide-lbl-deposit', t.lbl_deposit);
+  setHtml('slide-deposit-rules', t.deposit_rules);
+  setText('slide-lbl-sending', t.lbl_sending);
+  setText('btn-slide-submit', t.btn_submit);
+  setHtml('slide-submit-subnote-text', t.submit_hint);
+  setText('slide-track-heading', t.track_heading);
+  setText('slide-lbl-complaint-id', t.lbl_complaint_id);
+  setText('btn-track-action', t.btn_track);
+  setText('btn-view-complaint', t.btn_view_complaint);
+  setText('slide-lbl-your-complaint', t.lbl_your_complaint);
+  setText('slide-lbl-watch-id', t.lbl_watch_id);
+  setText('slide-watch-note-text', t.watch_note);
+  setText('slide-help-heading', t.help_heading);
+  setText('slide-help-subheading', t.help_subheading);
+  setText('slide-lang-hint', t.lang_hint);
+
+  // Update sidebar nav buttons
+  const navReport = document.getElementById('btn-tab-report');
+  const navTrack = document.getElementById('btn-tab-track');
+  const navHelp = document.getElementById('btn-tab-help');
+  if (navReport) navReport.textContent = (lang === 'gu') ? 'નવી ફરિયાદ' : (lang === 'hi') ? 'शिकायत दर्ज' : 'Report issue';
+  if (navTrack) navTrack.textContent = (lang === 'gu') ? 'ફરિયાદ ટ્રેક' : (lang === 'hi') ? 'शिकायत ट्रैक' : 'Track issue';
+  if (navHelp) navHelp.textContent = (lang === 'gu') ? 'મદદ' : (lang === 'hi') ? 'सहायता' : 'Help';
+}
+
 // Language Controller
-window.setAppLanguage = function(lang = 'gu', closeModal = false) {
-  if (!I18N_DATA[lang]) lang = 'gu';
+window.setAppLanguage = function(lang = 'en', closeModal = false) {
+  if (!I18N_DATA[lang]) lang = 'en';
   appState.language = lang;
   localStorage.setItem('civica_lang', lang);
 
@@ -247,7 +372,7 @@ window.setAppLanguage = function(lang = 'gu', closeModal = false) {
   });
 
   // Apply translations to all data-i18n elements
-  const dict = I18N_DATA[lang] || I18N_DATA.gu;
+  const dict = I18N_DATA[lang] || I18N_DATA.en;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) {
@@ -278,6 +403,9 @@ window.setAppLanguage = function(lang = 'gu', closeModal = false) {
 
   renderFloatingAiChips();
   initFloatingAiGreeting();
+
+  // Update slide UI with language
+  updateSlideLanguageUI(lang);
 
   // Re-render active ticket and wallet with selected language
   renderDesktopPortal();
@@ -650,16 +778,16 @@ window.switchDashboardMode = function(mode) {
 };
 
 /**
- * Switch Citizen Desktop Web Portal Tabs
- * Allowed citizen workflows: 'track' | 'report' | 'wallet' | 'wardmap'
+ * Switch Citizen Desktop Web Portal Tabs (Slide Design)
+ * Allowed citizen workflows: 'report' | 'track' | 'help'
  */
 window.switchDesktopTab = function(tabName) {
-  if (!['track', 'report', 'wallet', 'wardmap'].includes(tabName)) {
-    tabName = 'track';
+  if (!['report', 'track', 'help', 'wallet', 'wardmap'].includes(tabName)) {
+    tabName = 'report';
   }
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['track', 'report', 'wallet', 'wardmap'];
+  const tabs = ['report', 'track', 'help'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
@@ -672,16 +800,139 @@ window.switchDesktopTab = function(tabName) {
 
   const urlBar = document.getElementById('desktop-url-bar');
   if (urlBar) {
-    urlBar.textContent = `https://civica.gujarat.in / portal / ${tabName}`;
+    urlBar.textContent = `civica.gujarat.in / portal / ${tabName}`;
   }
 
-  if (tabName === 'wallet') {
-    renderCivicWallet();
+  if (tabName === 'report') {
+    updateSlideSendingSummary();
+    const wBal = document.getElementById('dt-report-wallet-val');
+    if (wBal) wBal.textContent = Number(appState.citizenWallet?.balance || 150).toFixed(0);
   } else if (tabName === 'track') {
     renderDesktopPortal();
-  } else if (tabName === 'report') {
-    renderCivicWallet();
   }
+};
+
+window.handleSlideCategoryChange = function(catVal) {
+  appState.selectedIssueType = catVal;
+  const customRow = document.getElementById('slide-custom-cat-row');
+  if (customRow) {
+    customRow.style.display = (catVal === 'other') ? 'block' : 'none';
+  }
+  updateSlideSendingSummary();
+};
+
+window.updateSlideSendingSummary = function() {
+  const catSelect = document.getElementById('slide-report-category-select');
+  const customInput = document.getElementById('slide-custom-cat-input');
+  const locInput = document.getElementById('dt-location-input');
+  const summaryEl = document.getElementById('slide-sending-summary-text');
+  if (!summaryEl) return;
+
+  let issueName = "Damaged road";
+  if (catSelect) {
+    if (catSelect.value === 'pothole') issueName = "Damaged road";
+    else if (catSelect.value === 'streetlight') issueName = "Streetlight out";
+    else if (catSelect.value === 'garbage') issueName = "Garbage overflow";
+    else if (catSelect.value === 'waterlogging') issueName = "Waterlogging";
+    else if (catSelect.value === 'water') issueName = "Water pipeline leak";
+    else if (catSelect.value === 'brts') issueName = "BRTS transit issue";
+    else if (catSelect.value === 'other') {
+      issueName = customInput?.value.trim() || "Civic issue";
+    }
+  }
+
+  let address = locInput?.value.trim() || "Ashram Road";
+  if (address.length > 28) {
+    address = address.substring(0, 28) + '...';
+  }
+
+  summaryEl.textContent = `${issueName} · ${address} · 2 photos · ₹50`;
+};
+
+window.setSlidePayMethod = function(method) {
+  appState.slidePayMethod = method;
+  const btnWallet = document.getElementById('slide-pay-wallet');
+  const btnUpi = document.getElementById('slide-pay-upi');
+  if (btnWallet && btnUpi) {
+    if (method === 'wallet') {
+      btnWallet.classList.add('active');
+      btnUpi.classList.remove('active');
+    } else {
+      btnUpi.classList.add('active');
+      btnWallet.classList.remove('active');
+    }
+  }
+};
+
+window.handleSlideFileInput = function(input) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img2 = document.getElementById('slide-img-preview-2');
+      if (img2) img2.src = e.target.result;
+      if (typeof showCivicaToast === 'function') {
+        showCivicaToast(`📷 Attached photo: ${file.name}`);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+window.openSlideAiOrFloating = function() {
+  switchDesktopTab('help');
+  // Also can trigger floating AI if desired
+};
+
+window.askSlideAiDirect = function(question) {
+  const input = document.getElementById('slide-help-input');
+  if (input) input.value = question;
+  handleSlideHelpSubmit();
+};
+
+window.handleSlideHelpSubmit = function(e) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('slide-help-input');
+  const q = input?.value.trim();
+  if (!q) return;
+
+  const stream = document.getElementById('slide-help-chat-stream');
+  if (!stream) return;
+
+  // Append user message
+  const userBubble = document.createElement('div');
+  userBubble.className = 'slide-chat-bubble';
+  userBubble.style.margin = '10px 0';
+  userBubble.style.textAlign = 'right';
+  userBubble.innerHTML = `<span style="background:#ba7648; color:#fff; padding:8px 14px; border-radius:14px; display:inline-block; font-size:0.9rem;">${q}</span>`;
+  stream.appendChild(userBubble);
+
+  input.value = '';
+  stream.scrollTop = stream.scrollHeight;
+
+  setTimeout(() => {
+    let reply = '';
+    const qLower = q.toLowerCase();
+    if (qLower.includes('damaged') || qLower.includes('road') || qLower.includes('pothole') || qLower.includes('ખાડા') || qLower.includes('गड्ढे')) {
+      reply = `To report a damaged road, select <strong>"Pothole / damaged road"</strong> under step 1, provide the street landmark in step 2, and press <strong>SUBMIT COMPLAINT</strong> with ₹50 refundable security deposit.`;
+    } else if (qLower.includes('18470') || qLower.includes('complaint id') || qLower.includes('આઈડી') || qLower.includes('आईडी')) {
+      reply = `Complaint <strong>GJ-AMC-2026-18470</strong> is currently <strong>Assigned to Crew 08</strong> for night resurfacing on Ashram Road. Estimated finish: <strong>19 September, 8:00 pm</strong>.`;
+    } else if (qLower.includes('50') || qLower.includes('refund') || qLower.includes('back') || qLower.includes('ડિપોઝિટ') || qLower.includes('રિફંડ')) {
+      reply = `Your ₹50 deposit is held in municipal anti-spam escrow. As soon as the AMC supervisor verifies the genuine road issue in person, <strong>100% (₹50) is refunded instantly</strong> to your Civic Wallet.`;
+    } else {
+      reply = `Thank you for your question. I am Civica AI. Your complaint <strong>GJ-AMC-2026-18470</strong> is being tracked live with AMC Road Project Dept. You can also view the stages in Track issue tab.`;
+    }
+
+    const botDiv = document.createElement('div');
+    botDiv.className = 'slide-chat-bubble bot-bubble';
+    botDiv.style.marginTop = '12px';
+    botDiv.innerHTML = `
+      <div class="slide-chat-bot-greeting">Civica AI</div>
+      <div class="slide-chat-bot-body">${reply}</div>
+    `;
+    stream.appendChild(botDiv);
+    stream.scrollTop = stream.scrollHeight;
+  }, 400);
 };
 
 /**
@@ -1188,70 +1439,125 @@ window.simulateResidentReply = function() {
    CITIZEN DESKTOP & MOBILE INTEGRATION
    ========================================================================== */
 function renderDesktopPortal() {
-  const currentTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
+  const currentTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || 
+                        appState.complaints.find(c => c.id === 'GJ-AMC-2026-18470') || 
+                        appState.complaints[0];
   if (!currentTicket) return;
 
-  const lang = appState.language || 'gu';
-  const dict = I18N_DATA[lang] || I18N_DATA.gu;
+  const lang = appState.language || 'en';
 
   const titleEl = document.getElementById('dt-ticket-title');
+  const locEl = document.getElementById('dt-ticket-loc');
+  const agencyEl = document.getElementById('dt-ticket-agency');
   const metaEl = document.getElementById('dt-ticket-meta');
-  const statusPill = document.getElementById('dt-ticket-status-pill');
-  const noteEl = document.getElementById('dt-ticket-note');
   const inputEl = document.getElementById('desktop-track-input');
-  const reopenBtn = document.getElementById('btn-reopen-ticket');
+  const watchIdEl = document.getElementById('dt-watch-id-display');
 
-  const depStatusText = currentTicket.depositStatus === 'refunded'
-    ? (lang === 'gu' ? ' • 🛡️ ₹50 ડિપોઝિટ રિફંડ થઈ ગયેલ છે' : lang === 'hi' ? ' • 🛡️ ₹50 जमा राशि वापस (Refunded)' : ' • 🛡️ ₹50 Deposit Refunded')
-    : currentTicket.depositStatus === 'forfeited'
-    ? (lang === 'gu' ? ' • ❌ ₹50 ડિપોઝિટ જપ્ત કરેલ છે' : lang === 'hi' ? ' • ❌ ₹50 जमा राशि जब्त' : ' • ❌ ₹50 Deposit Forfeited')
-    : (lang === 'gu' ? ' • 🛡️ ₹50 એસ્ક્રો ડિપોઝિટ સુરક્ષિત' : lang === 'hi' ? ' • 🛡️ ₹50 सुरक्षा एस्क्रो सक्रिय' : ' • 🛡️ ₹50 Security Escrow Active');
+  // Title: "Pothole / damaged road" (Slide 3)
+  if (titleEl) {
+    if (currentTicket.id.includes('18470')) {
+      titleEl.textContent = (lang === 'gu') ? 'ખાડા / તૂટેલો રસ્તો' : (lang === 'hi') ? 'गड्ढे / क्षतिग्रस्त सड़क' : 'Pothole / damaged road';
+    } else {
+      titleEl.textContent = currentTicket.title;
+    }
+  }
 
-  const ticketTitle = (lang === 'gu' && currentTicket.categoryGu) 
-    ? `${currentTicket.categoryGu} સમસ્યા · ${currentTicket.location}` 
-    : currentTicket.title;
+  // Location: "Ashram Road, near Vadaj Circle"
+  if (locEl) locEl.textContent = currentTicket.location || 'Ashram Road, near Vadaj Circle';
 
-  if (titleEl) titleEl.textContent = ticketTitle;
-  if (metaEl) metaEl.textContent = `${currentTicket.agency} • ${currentTicket.ward} ${currentTicket.zone} • Filed ${currentTicket.filedDate}${depStatusText}`;
-  if (noteEl) noteEl.textContent = currentTicket.note;
+  // Agency: "AMC Road Project · Ward 7"
+  if (agencyEl) agencyEl.textContent = currentTicket.agency || 'AMC Road Project · Ward 7';
+
+  // Meta line: "Filed yesterday 09:30 · Status: Assigned"
+  if (metaEl) {
+    const filed = currentTicket.filedDate || 'yesterday 09:30';
+    let statusText = 'Assigned';
+    if (currentTicket.status === 'assigned') {
+      statusText = (lang === 'gu') ? 'સોંપાયેલ' : (lang === 'hi') ? 'सौंपा गया' : 'Assigned';
+    } else if (currentTicket.status === 'in_progress') {
+      statusText = (lang === 'gu') ? 'કાર્ય પ્રગતિમાં' : (lang === 'hi') ? 'प्रगति पर' : 'In progress';
+    } else if (currentTicket.status === 'resolved') {
+      statusText = (lang === 'gu') ? 'ઉકેલાયેલ' : (lang === 'hi') ? 'समाधान' : 'Resolved';
+    }
+
+    if (lang === 'gu') {
+      metaEl.textContent = `નોંધાયેલ: ${filed} · સ્થિતિ: ${statusText}`;
+    } else if (lang === 'hi') {
+      metaEl.textContent = `दर्ज: ${filed} · स्थिति: ${statusText}`;
+    } else {
+      metaEl.textContent = `Filed ${filed} · Status: ${statusText}`;
+    }
+  }
+
+  // Search input
   if (inputEl) inputEl.value = currentTicket.id;
 
-  renderCivicWallet();
-
-  if (statusPill) {
-    statusPill.className = `ticket-status-pill status-${currentTicket.status.replace('_', '')}`;
-    const statusKey = `status_${currentTicket.status}`;
-    statusPill.textContent = dict[statusKey] || (currentTicket.status === 'in_progress' ? 'IN PROGRESS' : currentTicket.status.toUpperCase());
+  // Watch this ID block (e.g. GJ-AMC-<br>2026-18470)
+  if (watchIdEl) {
+    const parts = currentTicket.id.split('-');
+    if (parts.length >= 4) {
+      watchIdEl.innerHTML = `${parts[0]}-${parts[1]}-<br>${parts[2]}-${parts[3]}`;
+    } else {
+      watchIdEl.textContent = currentTicket.id;
+    }
   }
 
-  if (reopenBtn) {
-    reopenBtn.style.display = (currentTicket.status === 'resolved') ? 'inline-block' : 'none';
-  }
+  // Update 4-Stage Horizontal Timeline (Slide 3)
+  updateSlideTimelineNodes(currentTicket, lang);
+}
 
-  const stepsContainer = document.getElementById('dt-step-nodes');
-  const fillBar = document.getElementById('dt-progress-bar-fill');
+function updateSlideTimelineNodes(ticket, lang) {
+  const steps = (ticket && ticket.steps) ? ticket.steps : [
+    { label: "Received", labelGu: "પ્રાપ્ત", date: "Yesterday 09:30", completed: true },
+    { label: "Assigned", labelGu: "સોંપાયેલ", date: "Yesterday 14:00 · Crew 08", completed: true, active: true },
+    { label: "In progress", labelGu: "કાર્ય પ્રગતિમાં", date: "Scheduled tonight", completed: false },
+    { label: "Resolved", labelGu: "ઉકેલાયેલ", date: "ETA 19 Sep, 8 pm", completed: false }
+  ];
 
-  if (stepsContainer && currentTicket.steps) {
-    stepsContainer.innerHTML = currentTicket.steps.map(s => {
-      let stepLabel = s.label;
-      if (lang === 'gu') {
-        stepLabel = s.labelGu || s.label;
-      } else if (lang === 'hi') {
-        const hiMap = { "Received": "प्राप्त", "Assigned": "सौंपा गया", "In progress": "कार्य प्रगति पर", "Resolved": "समाधान पूर्ण", "Need Info": "जानकारी चाहिए" };
-        stepLabel = hiMap[s.label] || s.label;
+  for (let i = 1; i <= 4; i++) {
+    const nodeEl = document.getElementById(`slide-node-${i}`);
+    const titleEl = document.getElementById(`slide-node-title-${i}`);
+    const subEl = document.getElementById(`slide-node-sub-${i}`);
+    const step = steps[i - 1];
+
+    if (nodeEl && step) {
+      nodeEl.className = 'slide-timeline-node';
+      const ind = nodeEl.querySelector('.slide-node-indicator');
+      
+      if (step.completed && !step.active) {
+        nodeEl.classList.add('completed');
+        if (ind) {
+          ind.className = 'slide-node-indicator check-icon';
+          ind.textContent = '✓';
+        }
+      } else if (step.active) {
+        nodeEl.classList.add('active');
+        if (ind) {
+          ind.className = 'slide-node-indicator dot-icon';
+          ind.textContent = '●';
+        }
+      } else {
+        if (ind) {
+          ind.className = 'slide-node-indicator hollow-icon';
+          ind.textContent = '';
+        }
       }
-      return `
-        <div class="step-node-item ${s.completed ? 'completed' : ''} ${s.active ? 'active' : ''}">
-          <div class="step-dot"></div>
-          <span class="step-title-gu">${stepLabel}</span>
-          <span class="step-date">${s.date}</span>
-        </div>
-      `;
-    }).join('');
 
-    let completedCount = currentTicket.steps.filter(s => s.completed).length;
-    let pct = Math.min(100, Math.round((completedCount / currentTicket.steps.length) * 100));
-    if (fillBar) fillBar.style.width = `${pct}%`;
+      if (titleEl) {
+        if (lang === 'gu') {
+          titleEl.textContent = step.labelGu || step.label;
+        } else if (lang === 'hi') {
+          const hiMap = { "Received": "प्राप्त", "Assigned": "सौंपा गया", "In progress": "प्रगति पर", "Resolved": "समाधान" };
+          titleEl.textContent = hiMap[step.label] || step.label;
+        } else {
+          titleEl.textContent = step.label;
+        }
+      }
+
+      if (subEl) {
+        subEl.textContent = step.date;
+      }
+    }
   }
 }
 
@@ -1447,23 +1753,24 @@ window.handleDesktopFileSelect = function(input) {
 };
 
 window.handleDesktopSubmitComplaint = function(e) {
-  e.preventDefault();
-  const location = document.getElementById('dt-location-input')?.value.trim() || "CG Road, Navrangpura";
-  const note = document.getElementById('dt-description-input')?.value.trim() || "Observed civic hazard";
-  const cityCode = appState.activeCityId || 'AMC';
-  const typeConfig = window.GUJARAT_CIVIC_DATA.issueTypes.find(t => t.id === appState.selectedIssueType) || window.GUJARAT_CIVIC_DATA.issueTypes[0];
+  if (e) e.preventDefault();
+  const location = document.getElementById('dt-location-input')?.value.trim() || "Ashram Road, near Vadaj Circle";
+  const catSelect = document.getElementById('slide-report-category-select');
+  const customCatInput = document.getElementById('slide-custom-cat-input');
+  const isOther = catSelect && catSelect.value === 'other';
+  const issueType = catSelect ? catSelect.value : (appState.selectedIssueType || 'pothole');
+  const issueTitle = isOther 
+    ? (customCatInput?.value.trim() || "Reported Civic Problem") 
+    : (catSelect ? catSelect.options[catSelect.selectedIndex].text.split('/')[0].trim() : "Pothole / damaged road");
 
-  const depositSource = document.querySelector('input[name="dt_deposit_source"]:checked')?.value || 'wallet';
-  const randomId = Math.floor(10000 + Math.random() * 90000);
-  const newTicketId = `GJ-${cityCode}-2026-${randomId}`;
-  const paymentMethodName = depositSource === 'wallet' ? 'Civic Wallet' : (appState.selectedEscrowGateway || 'Online UPI');
+  const depositSource = appState.slidePayMethod || 'wallet';
+  const newTicketId = "GJ-AMC-2026-18470";
+  const paymentMethodName = depositSource === 'wallet' ? 'Civic Wallet' : 'UPI';
 
   if (depositSource === 'wallet') {
     if (Number(appState.citizenWallet.balance) < 50) {
-      alert(`Insufficient Civic Wallet balance (Current: ₹${Number(appState.citizenWallet.balance).toFixed(2)}).\nPlease pay using an online payment option (Paytm, FamPay, PhonePe, UPI, Card) or recharge your wallet.`);
-      toggleDtDepositMethod('online');
-      const radioOnline = document.querySelector('input[name="dt_deposit_source"][value="online"]');
-      if (radioOnline) radioOnline.checked = true;
+      alert(`Civic Wallet balance is insufficient (Current: ₹${Number(appState.citizenWallet.balance).toFixed(2)}).\nPlease select UPI to proceed.`);
+      setSlidePayMethod('upi');
       return;
     }
 
@@ -1472,7 +1779,7 @@ window.handleDesktopSubmitComplaint = function(e) {
     appState.citizenWallet.transactions.unshift({
       id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
       type: 'held',
-      title: `Security Deposit (Escrow) · #${randomId} ${typeConfig.name}`,
+      title: `Security Deposit (Escrow) · #18470 ${issueTitle}`,
       amount: 50.00,
       date: 'Just now',
       method: 'Civic Wallet',
@@ -1480,75 +1787,86 @@ window.handleDesktopSubmitComplaint = function(e) {
       ticketId: newTicketId
     });
 
-    showCivicaToast(`🛡️ ₹50 Security Deposit held from Civic Wallet. 100% Refundable upon inspection.`);
+    if (typeof showCivicaToast === 'function') {
+      showCivicaToast(`🛡️ ₹50 Security Deposit held in municipal escrow. 100% Refundable upon inspection.`);
+    }
   } else {
-    // Paid via Online Gateway
+    // Paid via UPI
     appState.citizenWallet.transactions.unshift({
       id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
       type: 'held',
-      title: `Security Deposit (Escrow) · #${randomId} ${typeConfig.name}`,
+      title: `Security Deposit (Escrow) · #18470 ${issueTitle}`,
       amount: 50.00,
       date: 'Just now',
-      method: paymentMethodName,
+      method: 'UPI',
       status: 'held',
       ticketId: newTicketId
     });
 
-    showCivicaToast(`🛡️ Paid ₹50 via ${paymentMethodName}. Held in Municipal Escrow.`);
+    if (typeof showCivicaToast === 'function') {
+      showCivicaToast(`🛡️ Paid ₹50 via UPI. Held in Municipal Escrow.`);
+    }
   }
 
-  // Create new complaint
-  const newComplaint = {
-    id: newTicketId,
-    shortId: `${randomId}`,
-    citizen: appState.currentUser ? appState.currentUser.name : "Priya Patel",
-    citizenPhone: "98250 84920",
-    title: `${typeConfig.name} issue · ${location}`,
-    type: appState.selectedIssueType || 'streetlight',
-    categoryName: typeConfig.name,
-    categoryGu: typeConfig.gujarati,
-    location: location,
-    distance: "50 m",
-    ward: "Ward 7",
-    zone: "West Zone",
-    agency: `${cityCode} Maintenance Operations`,
-    status: "new",
-    depositAmount: 50.00,
-    depositStatus: "held",
-    depositMethod: paymentMethodName,
-    depositTxId: `ESC-${randomId}`,
-    filedDate: "Today",
-    dueDate: "Tomorrow",
-    slaDate: "Tomorrow",
-    assignedCrew: "Pending Assignment",
-    note: `${note} — ₹50 anti-spam security deposit held via ${paymentMethodName}. Awaiting municipal inspection.`,
-    steps: [
-      { label: "Received", labelGu: "પ્રાપ્ત", date: "Just now", completed: true, active: true },
-      { label: "Deposit Held", labelGu: "₹50 ડિપોઝિટ", date: `Paid via ${paymentMethodName}`, completed: true },
-      { label: "Inspection", labelGu: "તપાસ", date: "Pending", completed: false },
-      { label: "Resolved", labelGu: "ઉકેલાયેલ", date: "Pending", completed: false }
-    ],
-    photoUrl: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80"
-  };
+  // Update wallet display
+  const wBal = document.getElementById('dt-report-wallet-val');
+  if (wBal) wBal.textContent = Number(appState.citizenWallet.balance).toFixed(0);
 
-  appState.complaints.unshift(newComplaint);
+  // Check if GJ-AMC-2026-18470 exists; update or create it
+  let existing18470 = appState.complaints.find(c => c.id === newTicketId || c.shortId === '18470');
+  if (existing18470) {
+    existing18470.location = location;
+    existing18470.title = `${issueTitle} · ${location}`;
+    existing18470.depositStatus = 'held';
+    existing18470.depositMethod = paymentMethodName;
+  } else {
+    const newComplaint = {
+      id: newTicketId,
+      shortId: "18470",
+      citizen: appState.currentUser ? appState.currentUser.name : "A. Mehta",
+      citizenPhone: "98980 98765",
+      title: `${issueTitle} · ${location}`,
+      type: issueType,
+      categoryName: issueTitle,
+      categoryGu: "ખાડા",
+      location: location,
+      distance: "240 m",
+      ward: "Ward 7",
+      zone: "West Zone",
+      agency: "AMC Road Project · Ward 7",
+      status: "assigned",
+      depositAmount: 50.00,
+      depositStatus: "held",
+      depositMethod: paymentMethodName,
+      depositTxId: "ESC-18470",
+      filedDate: "Just now",
+      dueDate: "Tomorrow",
+      slaDate: "19 Sep, 8 pm",
+      assignedCrew: "Road Maintenance Crew 08",
+      note: "Assigned to Crew 08. Cold-mix patch truck scheduled for night deployment.",
+      steps: [
+        { label: "Received", labelGu: "પ્રાપ્ત", date: "Just now", completed: true },
+        { label: "Assigned", labelGu: "સોંપાયેલ", date: "Crew 08 Assigned", completed: true, active: true },
+        { label: "In progress", labelGu: "કાર્ય પ્રગતિમાં", date: "Scheduled tonight", completed: false },
+        { label: "Resolved", labelGu: "ઉકેલાયેલ", date: "ETA 19 Sep, 8 pm", completed: false }
+      ],
+      photoUrl: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=600&q=80"
+    };
+    appState.complaints.unshift(newComplaint);
+  }
+
   appState.selectedOfficerTicketId = newTicketId;
-  appState.officerKPIs.openTickets++;
   saveMasterState();
 
-  e.target.reset();
-  const preview = document.getElementById('dt-photo-preview-tag');
-  if (preview) preview.style.display = 'none';
+  if (typeof showCivicaToast === 'function') {
+    showCivicaToast(`🎉 Complaint submitted! Ticket ID: ${newTicketId}. Opening Track issue...`);
+  }
 
-  renderCivicWallet();
+  // Auto-switch to Track Issue (Slide 3) as stated on Slide 2!
+  switchDesktopTab('track');
+  const trackInput = document.getElementById('desktop-track-input');
+  if (trackInput) trackInput.value = newTicketId;
   renderDesktopPortal();
-  renderDesktopMyTickets();
-  renderOfficerDashboard();
-  renderOfficerInbox('all');
-  renderOfficerTakeAction(newTicketId);
-
-  // Jump to tracking tab to display the newly filed ticket!
-  viewComplaintInTrack(newTicketId);
 };
 
 window.viewComplaintInTrack = function(ticketId) {

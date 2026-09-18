@@ -1171,6 +1171,821 @@ input, select, textarea { font-family: inherit; }
 
 .browser-badge, .officer-badge-text { font-size: 0.75rem; font-weight: 700; color: #0369a1; }
 
+/* ==========================================================================
+   CIVICA GUJARAT PRESENTATION SLIDE CITIZEN PORTAL (Slides 1, 2, 3, 4)
+   Aesthetic warm paper/sand theme, terracotta buttons, clean editorial styling
+   ========================================================================== */
+
+.civica-slide-browser-header {
+  background: #ede6dc;
+  border-bottom: 1px solid #dfd7cc;
+  padding: 10px 18px;
+}
+
+.civica-slide-browser-header .browser-url-bar {
+  background: #fbf9f5;
+  border: 1px solid #dcd3c6;
+  color: #4a4238;
+  font-family: 'Plus Jakarta Sans', monospace, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.civica-slide-portal-layout {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  min-height: 650px;
+  background: #f5f2eb;
+  border: 1px solid #ded6c9;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* Sidebar */
+.civica-slide-sidebar {
+  background: #eee7db;
+  border-right: 1px solid #ded5c7;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slide-sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.slide-brand-box {
+  margin-bottom: 6px;
+}
+
+.slide-brand-title {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #2b241e;
+  line-height: 1.1;
+}
+
+.slide-brand-subtitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #ba7648;
+  margin-top: 3px;
+}
+
+.slide-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slide-nav-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #5d554c;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slide-nav-btn:hover {
+  background: rgba(186, 118, 72, 0.08);
+  color: #2b241e;
+}
+
+.slide-nav-btn.active {
+  background: #f5dbce;
+  color: #7c3d25;
+  font-weight: 700;
+}
+
+/* Language selector in sidebar */
+.slide-lang-section {
+  padding-top: 16px;
+  border-top: 1px solid #ded5c7;
+}
+
+.slide-lang-label {
+  font-size: 0.8rem;
+  color: #787066;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.slide-lang-pills {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.slide-lang-pill {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #dcd4c7;
+  color: #4a4238;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.slide-lang-pill:hover {
+  background: #fdfbf7;
+  border-color: #ba7648;
+}
+
+.slide-lang-pill.active {
+  background: #ba7648;
+  color: #ffffff;
+  border-color: #ba7648;
+}
+
+.slide-lang-hint {
+  font-size: 0.75rem;
+  color: #8c8378;
+  margin-top: 4px;
+}
+
+/* Sidebar bottom button: Civica AI Chat with us */
+.slide-sidebar-bottom {
+  padding-top: 20px;
+}
+
+.btn-slide-civica-ai {
+  width: 100%;
+  background: #3d4e43;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(61, 78, 67, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-slide-civica-ai:hover {
+  background: #313f36;
+  transform: translateY(-1px);
+}
+
+.slide-ai-btn-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.slide-ai-btn-sub {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+/* Main Content Area */
+.civica-slide-main-content {
+  background: #f5f2eb;
+  padding: 36px 44px;
+  overflow-y: auto;
+}
+
+.civica-slide-panel {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.slide-page-header {
+  margin-bottom: 26px;
+}
+
+.slide-page-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #2b241e;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.slide-page-subtitle {
+  font-size: 0.95rem;
+  color: #7a7269;
+  margin: 6px 0 0 0;
+}
+
+/* Form Layout (Slide 2) */
+.slide-report-form-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.slide-field-group {
+  margin-bottom: 22px;
+}
+
+.slide-field-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2b241e;
+  margin-bottom: 8px;
+}
+
+.slide-form-select, .slide-form-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d4cbbe;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: #2b241e;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.slide-form-select:focus, .slide-form-input:focus {
+  border-color: #ba7648;
+  box-shadow: 0 0 0 2px rgba(186, 118, 72, 0.15);
+}
+
+.slide-field-micro-hint {
+  font-size: 0.75rem;
+  color: #8c8378;
+  margin-top: 4px;
+}
+
+/* Photos strip */
+.slide-photos-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.slide-photo-item {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #d4cbbe;
+  background: #e6dfd5;
+}
+
+.slide-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slide-photo-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.slide-photo-add-box {
+  width: 80px;
+  height: 100px;
+  border: 1px dashed #b8ad9e;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  color: #6b6359;
+  transition: all 0.2s ease;
+}
+
+.slide-photo-add-box:hover {
+  background: #ffffff;
+  border-color: #ba7648;
+  color: #ba7648;
+}
+
+.slide-add-plus {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.slide-add-txt {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Right column deposit card */
+.slide-deposit-box {
+  background: transparent;
+  padding: 4px 0;
+}
+
+.slide-deposit-val {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #2b241e;
+  line-height: 1.05;
+  margin: 4px 0 8px 0;
+}
+
+.slide-deposit-rule-text {
+  font-size: 0.88rem;
+  color: #6b6359;
+  line-height: 1.45;
+  margin: 0 0 16px 0;
+}
+
+.slide-payment-toggle-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.slide-pay-btn {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #d4cbbe;
+  color: #4a4238;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.slide-pay-btn.active {
+  background: #f5dbce;
+  border-color: #e2b9a7;
+  color: #7c3d25;
+}
+
+.slide-summary-box {
+  margin-bottom: 20px;
+}
+
+.slide-summary-eyebrow {
+  font-size: 0.85rem;
+  color: #7a7269;
+  margin-bottom: 4px;
+}
+
+.slide-summary-content {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2b241e;
+  line-height: 1.4;
+}
+
+.btn-slide-submit-complaint {
+  width: 100%;
+  background: #ba7648;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(186, 118, 72, 0.28);
+  transition: all 0.2s ease;
+}
+
+.btn-slide-submit-complaint:hover {
+  background: #a66539;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(186, 118, 72, 0.35);
+}
+
+.slide-submit-subnote {
+  font-size: 0.84rem;
+  color: #7a7269;
+  line-height: 1.45;
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   SLIDE 3: TRACK ISSUE STYLES
+   ========================================================================== */
+.slide-track-search-wrapper {
+  margin-bottom: 24px;
+}
+
+.slide-track-search-lbl {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b6359;
+  margin-bottom: 6px;
+}
+
+.slide-track-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slide-track-input {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #d4cbbe;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2b241e;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.slide-track-input:focus {
+  border-color: #ba7648;
+}
+
+.btn-slide-track-btn {
+  background: #ba7648;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-slide-track-btn:hover {
+  background: #a66539;
+}
+
+.slide-view-complaint-btn {
+  background: transparent;
+  border: none;
+  color: #6b6359;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 8px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.slide-view-complaint-btn:hover {
+  color: #ba7648;
+}
+
+/* Two Cards Grid */
+.slide-track-cards-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.slide-card {
+  background: #ffffff;
+  border: 1px solid #e6ded2;
+  border-radius: 8px;
+  padding: 24px 26px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.slide-card-label {
+  font-size: 0.8rem;
+  color: #7a7269;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.slide-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #2b241e;
+  line-height: 1.2;
+  margin: 0 0 10px 0;
+}
+
+.slide-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 16px;
+}
+
+.slide-loc-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #383028;
+}
+
+.slide-agency-text {
+  font-size: 0.88rem;
+  color: #6b6359;
+}
+
+.slide-meta-text {
+  font-size: 0.85rem;
+  color: #7a7269;
+}
+
+.slide-complaint-photos-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #f0e9df;
+}
+
+.slide-track-thumb {
+  width: 90px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #dcd4c7;
+}
+
+.slide-photos-count-text {
+  font-size: 0.85rem;
+  color: #6b6359;
+  font-weight: 500;
+}
+
+/* Watch this ID Card */
+.slide-watch-id-number {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #2b241e;
+  line-height: 1.15;
+  margin: 10px 0 8px 0;
+  letter-spacing: 0.02em;
+}
+
+.slide-watch-note {
+  font-size: 0.85rem;
+  color: #6b6359;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Horizontal 4-Stage Timeline */
+.slide-track-timeline-card {
+  background: #ffffff;
+  border: 1px solid #e6ded2;
+  border-radius: 8px;
+  padding: 30px 36px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.slide-timeline-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.slide-timeline-bar-bg {
+  position: absolute;
+  top: 12px;
+  left: 30px;
+  right: 30px;
+  height: 2px;
+  background: #ded5c7;
+  z-index: 1;
+}
+
+.slide-timeline-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 100px;
+}
+
+.slide-node-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+
+.slide-node-indicator.check-icon {
+  background: #ba7648;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.slide-node-indicator.dot-icon {
+  background: #2b241e;
+  color: #2b241e;
+  font-size: 0.9rem;
+}
+
+.slide-node-indicator.hollow-icon {
+  background: #ffffff;
+  border: 2px solid #ded5c7;
+}
+
+.slide-node-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2b241e;
+}
+
+.slide-timeline-node:not(.completed):not(.active) .slide-node-title {
+  color: #7a7269;
+  font-weight: 500;
+}
+
+.slide-node-sub {
+  font-size: 0.75rem;
+  color: #7a7269;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   SLIDE 4: HELP / CIVICA AI CHATBOT STYLES
+   ========================================================================== */
+.slide-help-card {
+  background: #ffffff;
+  border: 1px solid #e6ded2;
+  border-radius: 8px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.slide-chatbot-brand-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #383028;
+  margin-bottom: 14px;
+}
+
+.slide-chatbot-chips-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.slide-help-chip {
+  background: #eef2ed;
+  border: 1px solid #d6e0d4;
+  color: #2e4334;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.slide-help-chip:hover {
+  background: #e2ebd9;
+  border-color: #3d4e43;
+}
+
+.slide-help-chat-stream {
+  min-height: 180px;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid #eee7db;
+  border-radius: 6px;
+  padding: 16px 18px;
+  background: #faf8f5;
+  margin-bottom: 16px;
+}
+
+.slide-chat-bubble {
+  line-height: 1.55;
+  font-size: 0.95rem;
+  color: #2b241e;
+}
+
+.slide-chat-bot-greeting {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: #2b241e;
+}
+
+.slide-chat-bot-body {
+  color: #4a4238;
+  margin-bottom: 8px;
+}
+
+.slide-chat-bot-eta {
+  font-size: 0.9rem;
+  color: #6b6359;
+}
+
+.slide-help-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.slide-help-text-input {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #d4cbbe;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: #2b241e;
+  outline: none;
+}
+
+.slide-help-text-input:focus {
+  border-color: #3d4e43;
+}
+
+.btn-slide-help-send {
+  background: #3d4e43;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-slide-help-send:hover {
+  background: #313f36;
+}
+
+/* Responsiveness for Slides */
+@media (max-width: 900px) {
+  .civica-slide-portal-layout {
+    grid-template-columns: 1fr;
+  }
+  .civica-slide-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #ded5c7;
+    padding: 18px;
+  }
+  .slide-sidebar-top {
+    gap: 14px;
+  }
+  .slide-sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .slide-nav-btn {
+    width: auto;
+  }
+  .slide-report-form-grid, .slide-track-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .civica-slide-main-content {
+    padding: 24px 18px;
+  }
+}
+
 /* Desktop & Officer Layouts */
 .desktop-portal-layout, .officer-portal-layout {
   display: grid;
