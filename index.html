@@ -64,6 +64,11 @@
             <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
             <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
             <li>
+              <a href="javascript:void(0)" onclick="openCivicDirectoryModal()" class="nav-link" title="Explore 15 Citizens & 4 Admin Dashboards">
+                <i class="fa-solid fa-users-gear"></i> CIVIC DIRECTORY (15+4)
+              </a>
+            </li>
+            <li>
               <a href="javascript:void(0)" onclick="openCommandCenter()" class="nav-link highlight-command" data-i18n="nav_command">
                 <i class="fa-solid fa-satellite-dish"></i> COMMAND CENTER
               </a>
@@ -382,6 +387,14 @@
           </div>
           <button type="submit" class="btn-auth-submit">Sign In to Citizen Dashboard &rarr;</button>
           <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('citizen')">⚡ Auto-Fill Demo Credentials</button>
+
+          <!-- CREATE NEW ACCOUNT OPTION (AS REQUESTED) -->
+          <div class="auth-create-account-box">
+            <span class="create-acc-text">New to CIVICA or need a citizen account?</span>
+            <button type="button" class="btn-open-signup-wizard" onclick="openSignupModal()">
+              <i class="fa-solid fa-user-plus"></i> Create New Account
+            </button>
+          </div>
         </form>
       </div>
 
@@ -410,8 +423,252 @@
           <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('officer')">⚡ Auto-Fill Demo Credentials</button>
         </form>
       </div>
+
+      <!-- 15 Citizens & 4 Admins File Explorer Quick Link -->
+      <div class="auth-civic-directory-cta">
+        <button type="button" class="btn-open-directory" onclick="openCivicDirectoryModal()">
+          <i class="fa-solid fa-folder-open"></i> Browse 15 Citizen Folders & 4 Admin Consoles
+        </button>
+      </div>
     </div>
   </div>
+
+
+  <!-- ==========================================================================
+       SECTION 2B: MULTI-STEP USER SIGNUP WIZARD (FAITHFUL TO USER'S 3 IMAGES)
+       ========================================================================== -->
+  <div class="civica-auth-overlay" id="signup-modal-overlay" role="dialog" aria-modal="true" style="display:none;">
+    <div class="signup-modal-card">
+      <button class="auth-close-btn" onclick="closeSignupModal()">&times;</button>
+
+      <!-- ==================== STEP 1: USER LOGIN DETAILS (IMAGE 1) ==================== -->
+      <div id="signup-step-1" class="signup-step-pane active">
+        <div class="signup-step-header">
+          <h2>Step 1: User Login Details</h2>
+        </div>
+
+        <!-- Alert Banner as per Image 1 -->
+        <div class="signup-alert-box">
+          <div class="alert-title-bar">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <strong>Alert</strong>
+          </div>
+          <p>As per IT ACT 2000, it is an offence to furnish false or incorrect information in this registration. Giving false information may result in cancellation of account and legal action.</p>
+        </div>
+
+        <form id="form-signup-step-1" onsubmit="handleSignupStep1(event)">
+          <div class="signup-grid-2col">
+            <div class="signup-field">
+              <label for="signup-email">Email Address <span class="required-star">*</span></label>
+              <input type="email" id="signup-email" placeholder="example@domain.com" required>
+            </div>
+            <div class="signup-field">
+              <label for="signup-confirm-email">Confirm Email Address <span class="required-star">*</span></label>
+              <input type="email" id="signup-confirm-email" placeholder="example@domain.com" required>
+            </div>
+
+            <div class="signup-field">
+              <label for="signup-phone">Mobile Number <span class="required-star">*</span></label>
+              <input type="tel" id="signup-phone" maxlength="10" placeholder="10 digit mobile number" required pattern="[0-9]{10}">
+              <!-- Green Helper Note Matching Screenshot -->
+              <div class="signup-note-green">
+                <i class="fa-solid fa-circle-info"></i> Do not add any prefix, enter only 10 digit mobile number.
+              </div>
+            </div>
+            <div class="signup-field">
+              <label for="signup-confirm-phone">Confirm Mobile Number <span class="required-star">*</span></label>
+              <input type="tel" id="signup-confirm-phone" maxlength="10" placeholder="Confirm 10 digit mobile" required pattern="[0-9]{10}">
+            </div>
+          </div>
+
+          <!-- Terms Checkbox Matching Screenshot -->
+          <div class="signup-terms-box">
+            <label class="signup-checkbox-label">
+              <input type="checkbox" id="signup-terms-check" required>
+              <span>*By creating an account you agree to our <a href="rules-and-contact.html" target="_blank">Terms of Service</a> and our <a href="rules-and-contact.html" target="_blank">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <!-- Math Captcha Section Matching Screenshot -->
+          <div class="signup-captcha-section">
+            <div class="captcha-badge-display">
+              <div class="captcha-math-box" id="captcha-display-text">14 + 6 = ?</div>
+              <button type="button" class="btn-captcha-refresh" onclick="generateSignupCaptcha()" title="Refresh Captcha">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+              </button>
+            </div>
+            <div class="signup-field captcha-input-field">
+              <label for="signup-captcha-val">Enter Captcha <span class="required-star">*</span></label>
+              <input type="number" id="signup-captcha-val" placeholder="Captcha Answer" required>
+            </div>
+          </div>
+
+          <!-- Action Buttons Matching Screenshot -->
+          <div class="signup-actions-row">
+            <button type="submit" class="btn-signup-primary">
+              <i class="fa-solid fa-check"></i> SUBMIT
+            </button>
+            <button type="button" class="btn-signup-back" onclick="closeSignupModal()">
+              <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ==================== STEP 2: VERIFY MOBILE NUMBER (IMAGE 2) ==================== -->
+      <div id="signup-step-2" class="signup-step-pane" style="display:none;">
+        <div class="signup-step-header">
+          <h2>Step 2: Verify Mobile Number</h2>
+        </div>
+
+        <div class="signup-otp-info-card">
+          <p class="otp-instruction-text">
+            An OTP has been sent to your mobile number <strong id="display-otp-phone">+91 98251 00000</strong>. Please enter the 6-digit OTP to verify your account.
+          </p>
+
+          <div class="otp-input-wrapper">
+            <label for="signup-otp-code">Enter 6-Digit OTP <span class="required-star">*</span></label>
+            <input type="text" id="signup-otp-code" maxlength="6" class="otp-code-input" placeholder="• • • • • •" autocomplete="one-time-code">
+          </div>
+
+          <div class="otp-timer-row">
+            <span class="otp-timer-indicator"><i class="fa-regular fa-clock"></i> Resend OTP in <strong id="otp-countdown">01:58</strong></span>
+            <button type="button" id="btn-resend-otp" class="btn-link-resend" onclick="resendSignupOtp()" disabled>Resend OTP</button>
+          </div>
+
+          <!-- Quick Test Auto-fill -->
+          <div class="otp-quick-test-box">
+            <button type="button" class="btn-autofill-otp" onclick="autoFillSignupOtp()">
+              ⚡ Quick Test: Auto-fill OTP (123456)
+            </button>
+          </div>
+
+          <div class="signup-actions-row" style="margin-top:24px;">
+            <button type="button" class="btn-signup-primary" onclick="handleSignupStep2Verify()">
+              <i class="fa-solid fa-check"></i> VERIFY & CONTINUE
+            </button>
+            <button type="button" class="btn-signup-back" onclick="goToSignupStep(1)">
+              <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== STEP 3: ACCOUNT COMPLETION (IMAGE 3) ==================== -->
+      <div id="signup-step-3" class="signup-step-pane" style="display:none;">
+        <!-- Completed Step 1 Accordion Bar -->
+        <div class="signup-accordion-done" onclick="goToSignupStep(1)" title="Click to view details">
+          <div class="acc-done-title">
+            <i class="fa-solid fa-circle-check"></i> Step 1: User Login Details
+          </div>
+          <span class="acc-status-tag">Completed</span>
+        </div>
+
+        <!-- Completed Step 2 Accordion Bar -->
+        <div class="signup-accordion-done" onclick="goToSignupStep(2)" title="Click to view details">
+          <div class="acc-done-title">
+            <i class="fa-solid fa-circle-check"></i> Step 2: Verify Mobile Number.
+          </div>
+          <span class="acc-status-tag">Verified</span>
+        </div>
+
+        <!-- Active Step 3 Accordion Content -->
+        <div class="signup-accordion-active-box">
+          <div class="acc-active-header">
+            <h3>Step 3: Account completion</h3>
+          </div>
+
+          <form id="form-signup-step-3" onsubmit="handleSignupStep3Submit(event)">
+            <div class="signup-grid-2col">
+              <div class="signup-field">
+                <label for="signup-firstname">First name <span class="required-star">*</span></label>
+                <input type="text" id="signup-firstname" placeholder="Enter first name" required>
+              </div>
+              <div class="signup-field">
+                <label for="signup-lastname">Last name <span class="required-star">*</span></label>
+                <input type="text" id="signup-lastname" placeholder="Enter last name" required>
+              </div>
+
+              <div class="signup-field">
+                <label for="signup-password">Create a password <span class="required-star">*</span></label>
+                <input type="password" id="signup-password" placeholder="Create strong password" required minlength="6">
+              </div>
+              <div class="signup-field">
+                <label for="signup-confirm-password">Confirm your password <span class="required-star">*</span></label>
+                <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required minlength="6">
+              </div>
+
+              <div class="signup-field full-width">
+                <label for="signup-city-ward">Assigned Ward / Municipal Zone</label>
+                <select id="signup-city-ward" class="signup-select">
+                  <option value="Ward 04 - Athwa">SMC Ward 04 - Athwa Lines (Surat)</option>
+                  <option value="Ward 12 - Varachha">SMC Ward 12 - Varachha (Surat)</option>
+                  <option value="Ward 07 - Rander">SMC Ward 07 - Rander (Surat)</option>
+                  <option value="Ward 09 - Katargam">SMC Ward 09 - Katargam (Surat)</option>
+                  <option value="Ward 02 - Central">SMC Ward 02 - Central Zone (Surat)</option>
+                  <option value="Ward 03 - Vesu">SMC Ward 03 - Vesu (Surat)</option>
+                  <option value="Ward 08 - Limbayat">SMC Ward 08 - Limbayat (Surat)</option>
+                  <option value="Ward 11 - Adajan">SMC Ward 11 - Adajan Gam (Surat)</option>
+                  <option value="Ward 06 - Piplod">SMC Ward 06 - Piplod (Surat)</option>
+                  <option value="Ward 10 - Althan">SMC Ward 10 - Althan (Surat)</option>
+                  <option value="Ward 14 - Pandesara">SMC Ward 14 - Pandesara (Surat)</option>
+                  <option value="Ward 15 - Udhna">SMC Ward 15 - Udhna GIDC (Surat)</option>
+                  <option value="Ward 7 · Navrangpura">AMC Ward 7 - Navrangpura (Ahmedabad)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="signup-actions-row" style="margin-top: 24px;">
+              <button type="submit" class="btn-signup-primary" id="btn-final-signup-submit">
+                <i class="fa-solid fa-check"></i> SUBMIT
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       SECTION 2C: PERSONALIZED CIVIC DIRECTORY (15 CITIZENS & 4 ADMINS) MODAL
+       ========================================================================== -->
+  <div class="civica-auth-overlay" id="civic-directory-modal-overlay" role="dialog" aria-modal="true" style="display:none;">
+    <div class="signup-modal-card directory-modal-card">
+      <button class="auth-close-btn" onclick="closeCivicDirectoryModal()">&times;</button>
+      
+      <div class="directory-header">
+        <div class="auth-brand">C I V I C A &bull; F I L E S</div>
+        <h2>Personalized Civic Directory</h2>
+        <p>15 Citizens with individual files (profile, tickets, wallet, portal_view) & 4 Admin Dashboards with personal roster & queue</p>
+      </div>
+
+      <div class="directory-tabs">
+        <button type="button" class="dir-tab-btn active" id="dir-tab-citizens" onclick="switchDirectoryTab('citizens')">
+          <i class="fa-solid fa-users"></i> 15 Citizen Profiles & Folders
+        </button>
+        <button type="button" class="dir-tab-btn" id="dir-tab-admins" onclick="switchDirectoryTab('admins')">
+          <i class="fa-solid fa-user-shield"></i> 4 Executive Admin Dashboards
+        </button>
+      </div>
+
+      <!-- CITIZENS DIRECTORY LIST -->
+      <div id="dir-citizens-panel" class="dir-panel active">
+        <div class="dir-grid-container" id="dir-citizens-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- ADMINS DIRECTORY LIST -->
+      <div id="dir-admins-panel" class="dir-panel" style="display:none;">
+        <div class="dir-grid-container" id="dir-admins-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- ==========================================================================

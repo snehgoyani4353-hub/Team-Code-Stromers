@@ -1,0 +1,17 @@
+﻿{
+    "assignedWards":  [
+                          "Ward 07 - Rander",
+                          "Ward 09 - Katargam",
+                          "Ward 12 - Varachha"
+                      ],
+    "emergencyEscalation":  "Control Room Desk #4 (Ext 4012)",
+    "dutyOfficer":  "Sunita Desai",
+    "officerId":  "ADM-002",
+    "date":  "2026-09-18",
+    "shiftTime":  "09:00 - 17:00",
+    "activeCrews":  [
+                        "Door-to-Door Waste Fleet 04",
+                        "Vector Control Squad",
+                        "Market Disinfection Unit"
+                    ]
+}

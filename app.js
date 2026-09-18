@@ -288,6 +288,381 @@ window.closeLoginModal = function() {
   }
 };
 
+// ==========================================================================
+// MULTI-STEP SIGNUP WIZARD LOGIC (MATCHING USER'S 3 SCREENSHOTS)
+// ==========================================================================
+window.signupWizardState = {
+  step: 1,
+  email: '',
+  phone: '',
+  captchaAnswer: 20,
+  countdownSeconds: 118,
+  timerInterval: null
+};
+
+window.openSignupModal = function() {
+  closeLoginModal();
+  const overlay = document.getElementById('signup-modal-overlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  goToSignupStep(1);
+  generateSignupCaptcha();
+};
+
+window.closeSignupModal = function() {
+  const overlay = document.getElementById('signup-modal-overlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if (signupWizardState.timerInterval) {
+    clearInterval(signupWizardState.timerInterval);
+    signupWizardState.timerInterval = null;
+  }
+};
+
+window.generateSignupCaptcha = function() {
+  const num1 = Math.floor(Math.random() * 15) + 5;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  signupWizardState.captchaAnswer = num1 + num2;
+  const display = document.getElementById('captcha-display-text');
+  if (display) {
+    display.textContent = `${num1} + ${num2} = ?`;
+  }
+  const input = document.getElementById('signup-captcha-val');
+  if (input) input.value = '';
+};
+
+window.goToSignupStep = function(step) {
+  signupWizardState.step = step;
+  ['signup-step-1', 'signup-step-2', 'signup-step-3'].forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (el) {
+      if (idx + 1 === step) {
+        el.style.display = 'block';
+        el.classList.add('active');
+      } else {
+        el.style.display = 'none';
+        el.classList.remove('active');
+      }
+    }
+  });
+
+  if (step === 2) {
+    startOtpCountdown();
+  }
+};
+
+window.handleSignupStep1 = function(e) {
+  if (e) e.preventDefault();
+  const email = document.getElementById('signup-email').value.trim();
+  const confirmEmail = document.getElementById('signup-confirm-email').value.trim();
+  const phone = document.getElementById('signup-phone').value.trim();
+  const confirmPhone = document.getElementById('signup-confirm-phone').value.trim();
+  const terms = document.getElementById('signup-terms-check').checked;
+  const captchaInput = parseInt(document.getElementById('signup-captcha-val').value.trim(), 10);
+
+  if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
+    alert('Email Address and Confirm Email Address do not match.');
+    return;
+  }
+  if (phone !== confirmPhone) {
+    alert('Mobile Number and Confirm Mobile Number do not match.');
+    return;
+  }
+  if (phone.length !== 10 || !/^\d{10}$/.test(phone)) {
+    alert('Please enter a valid 10-digit mobile number without any prefix.');
+    return;
+  }
+  if (!terms) {
+    alert('You must agree to the Terms of Service and Privacy Policy to create an account.');
+    return;
+  }
+  if (captchaInput !== signupWizardState.captchaAnswer) {
+    alert('Captcha answer is incorrect. Please try again.');
+    generateSignupCaptcha();
+    return;
+  }
+
+  signupWizardState.email = email;
+  signupWizardState.phone = phone;
+
+  const displayPhone = document.getElementById('display-otp-phone');
+  if (displayPhone) {
+    displayPhone.textContent = `+91 ${phone.substring(0, 5)} ${phone.substring(5)}`;
+  }
+
+  goToSignupStep(2);
+};
+
+window.startOtpCountdown = function() {
+  if (signupWizardState.timerInterval) clearInterval(signupWizardState.timerInterval);
+  signupWizardState.countdownSeconds = 118;
+  const timerElem = document.getElementById('otp-countdown');
+  const resendBtn = document.getElementById('btn-resend-otp');
+  if (resendBtn) resendBtn.disabled = true;
+
+  const updateDisplay = () => {
+    const m = Math.floor(signupWizardState.countdownSeconds / 60);
+    const s = signupWizardState.countdownSeconds % 60;
+    if (timerElem) {
+      timerElem.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+  };
+  updateDisplay();
+
+  signupWizardState.timerInterval = setInterval(() => {
+    signupWizardState.countdownSeconds--;
+    updateDisplay();
+    if (signupWizardState.countdownSeconds <= 0) {
+      clearInterval(signupWizardState.timerInterval);
+      signupWizardState.timerInterval = null;
+      if (resendBtn) resendBtn.disabled = false;
+    }
+  }, 1000);
+};
+
+window.autoFillSignupOtp = function() {
+  const otpInput = document.getElementById('signup-otp-code');
+  if (otpInput) {
+    otpInput.value = '123456';
+    otpInput.focus();
+  }
+};
+
+window.resendSignupOtp = function() {
+  startOtpCountdown();
+  alert(`A new verification OTP has been sent to +91 ${signupWizardState.phone}.`);
+};
+
+window.handleSignupStep2Verify = async function() {
+  const otp = document.getElementById('signup-otp-code').value.trim();
+  if (!otp || otp.length !== 6) {
+    alert('Please enter the 6-digit OTP sent to your mobile number.');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/verify-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: signupWizardState.phone, otp })
+    });
+    const data = await res.json();
+    if (!data.success) {
+      alert(data.message || 'Invalid OTP code.');
+      return;
+    }
+  } catch (err) {
+    // offline/fallback: accept valid 6-digit OTP
+  }
+
+  if (signupWizardState.timerInterval) clearInterval(signupWizardState.timerInterval);
+  goToSignupStep(3);
+};
+
+window.handleSignupStep3Submit = async function(e) {
+  if (e) e.preventDefault();
+  const firstName = document.getElementById('signup-firstname').value.trim();
+  const lastName = document.getElementById('signup-lastname').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirmPassword = document.getElementById('signup-confirm-password').value;
+  const ward = document.getElementById('signup-city-ward').value;
+
+  if (password !== confirmPassword) {
+    alert('Password and Confirm Password do not match.');
+    return;
+  }
+  if (password.length < 6) {
+    alert('Password must be at least 6 characters long.');
+    return;
+  }
+
+  const payload = {
+    firstName,
+    lastName,
+    email: signupWizardState.email,
+    phone: signupWizardState.phone,
+    password,
+    ward
+  };
+
+  try {
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    console.log('Signup response:', data);
+  } catch (err) {
+    console.warn('Backend signup API notice:', err);
+  }
+
+  const fullName = `${firstName} ${lastName}`;
+  const initials = `${firstName[0]}${lastName[0]}`.toUpperCase();
+
+  appState.currentUser = {
+    role: 'citizen',
+    name: fullName,
+    email: signupWizardState.email,
+    phone: signupWizardState.phone,
+    ward: ward,
+    avatar: initials,
+    cityId: 'SMC'
+  };
+  saveMasterState();
+
+  closeSignupModal();
+
+  alert(`Congratulations ${fullName}!\nYour citizen account has been successfully created and verified via mobile OTP.\nWelcome to the CIVICA Urban Mobility & Governance Platform.`);
+
+  switchDashboardMode('citizen-desktop');
+};
+
+// ==========================================================================
+// PERSONALIZED CIVIC DIRECTORY LOGIC (15 CITIZENS & 4 ADMINS)
+// ==========================================================================
+window.openCivicDirectoryModal = function() {
+  const overlay = document.getElementById('civic-directory-modal-overlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  renderCivicDirectoryData();
+};
+
+window.closeCivicDirectoryModal = function() {
+  const overlay = document.getElementById('civic-directory-modal-overlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+};
+
+window.switchDirectoryTab = function(tab) {
+  const citizensTab = document.getElementById('dir-tab-citizens');
+  const adminsTab = document.getElementById('dir-tab-admins');
+  const citizensPanel = document.getElementById('dir-citizens-panel');
+  const adminsPanel = document.getElementById('dir-admins-panel');
+
+  if (tab === 'admins') {
+    citizensTab?.classList.remove('active');
+    adminsTab?.classList.add('active');
+    if (citizensPanel) citizensPanel.style.display = 'none';
+    if (adminsPanel) adminsPanel.style.display = 'block';
+  } else {
+    adminsTab?.classList.remove('active');
+    citizensTab?.classList.add('active');
+    if (adminsPanel) adminsPanel.style.display = 'none';
+    if (citizensPanel) citizensPanel.style.display = 'block';
+  }
+};
+
+window.renderCivicDirectoryData = function() {
+  const citizensGrid = document.getElementById('dir-citizens-grid');
+  const adminsGrid = document.getElementById('dir-admins-grid');
+
+  if (citizensGrid && window.GUJARAT_CIVIC_DATA && GUJARAT_CIVIC_DATA.citizens) {
+    citizensGrid.innerHTML = GUJARAT_CIVIC_DATA.citizens.map(c => `
+      <div class="dir-card">
+        <div class="dir-card-header">
+          <div class="dir-avatar">${c.name.split(' ').map(p=>p[0]).join('')}</div>
+          <div class="dir-meta">
+            <h4>${c.name} <span style="font-size:0.75rem; color:#10b981;">(${c.id})</span></h4>
+            <p>${c.ward}</p>
+            <p style="font-size:0.75rem; color:#64748b;">${c.email} &bull; ${c.phone}</p>
+          </div>
+        </div>
+        <div class="dir-files-row">
+          <span class="dir-file-badge">📁 profile.json</span>
+          <span class="dir-file-badge">📁 tickets.json</span>
+          <span class="dir-file-badge">📁 wallet.json</span>
+          <span class="dir-file-badge">🌐 portal_view.html</span>
+        </div>
+        <div class="dir-actions">
+          <a href="${c.portalUrl}" target="_blank" class="btn-dir-view" title="Open citizen standalone portal in new tab">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Portal View
+          </a>
+          <button type="button" class="btn-dir-login" onclick="loginDirectlyAsCitizen('${c.id}')" title="Log into main dashboard as this citizen">
+            <i class="fa-solid fa-right-to-bracket"></i> Login As
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  if (adminsGrid && window.GUJARAT_CIVIC_DATA && GUJARAT_CIVIC_DATA.admins) {
+    adminsGrid.innerHTML = GUJARAT_CIVIC_DATA.admins.map(a => `
+      <div class="dir-card" style="border-left: 3px solid #3b82f6;">
+        <div class="dir-card-header">
+          <div class="dir-avatar admin-badge">${a.badge.split('-')[1]}</div>
+          <div class="dir-meta">
+            <h4>${a.name} <span style="font-size:0.75rem; background:#1e3a8a; color:white; padding:2px 6px; border-radius:4px;">${a.badge}</span></h4>
+            <p style="font-weight:600; color:#1e40af;">${a.designation}</p>
+            <p style="font-size:0.75rem; color:#64748b;">${a.zone} &bull; Shift: ${a.shift}</p>
+          </div>
+        </div>
+        <div class="dir-files-row">
+          <span class="dir-file-badge">📁 officer_profile.json</span>
+          <span class="dir-file-badge">📁 shift_roster.json</span>
+          <span class="dir-file-badge">📁 ward_tickets.json</span>
+          <span class="dir-file-badge">🌐 admin_dashboard.html</span>
+        </div>
+        <div class="dir-actions">
+          <a href="${a.dashboardUrl}" target="_blank" class="btn-dir-view" style="background:#1e40af;" title="Open officer command console in new tab">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Console View
+          </a>
+          <button type="button" class="btn-dir-login" onclick="loginDirectlyAsAdmin('${a.id}')" title="Log into main dashboard as this officer">
+            <i class="fa-solid fa-right-to-bracket"></i> Login As
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+};
+
+window.loginDirectlyAsCitizen = function(citizenId) {
+  const c = GUJARAT_CIVIC_DATA.citizens.find(item => item.id === citizenId);
+  if (!c) return;
+  appState.currentUser = {
+    role: 'citizen',
+    name: c.name,
+    email: c.email,
+    phone: c.phone,
+    ward: c.ward,
+    avatar: c.name.split(' ').map(p => p[0]).join(''),
+    cityId: 'SMC'
+  };
+  saveMasterState();
+  closeCivicDirectoryModal();
+  closeLoginModal();
+  switchDashboardMode('citizen-desktop');
+};
+
+window.loginDirectlyAsAdmin = function(adminId) {
+  const a = GUJARAT_CIVIC_DATA.admins.find(item => item.id === adminId);
+  if (!a) return;
+  appState.currentUser = {
+    role: 'officer',
+    name: `${a.name} (${a.designation})`,
+    email: `${a.id.toLowerCase()}@suratadmin.gov.in`,
+    avatar: a.badge.substring(4, 8),
+    cityId: 'SMC',
+    zone: a.zone
+  };
+  saveMasterState();
+  closeCivicDirectoryModal();
+  closeLoginModal();
+  switchDashboardMode('officer');
+};
+
 window.switchAuthRole = function(role) {
   const citizenTab = document.getElementById('tab-role-citizen');
   const adminTab = document.getElementById('tab-role-admin');

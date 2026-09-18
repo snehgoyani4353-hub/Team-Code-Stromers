@@ -2431,4 +2431,650 @@ input, select, textarea { font-family: inherit; }
   .hero-main-title { font-size: 2.3rem; }
   .gallery-rules-banner { flex-direction: column; text-align: center; }
   .officer-kpis-grid { grid-template-columns: 1fr; }
+  .signup-grid-2col { grid-template-columns: 1fr !important; }
 }
+
+/* ==========================================================================
+   MULTI-STEP SIGNUP WIZARD STYLES (IMAGES 1, 2, 3) & CIVIC DIRECTORY
+   ========================================================================== */
+.auth-create-account-box {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed #cbd5e1;
+  text-align: center;
+}
+
+.create-acc-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.btn-open-signup-wizard {
+  width: 100%;
+  background: #f8fafc;
+  border: 1.5px solid #0c1a2f;
+  color: #0c1a2f;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-open-signup-wizard:hover {
+  background: #0c1a2f;
+  color: #ffffff;
+}
+
+.auth-civic-directory-cta {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.btn-open-directory {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-open-directory:hover {
+  color: #1d4ed8;
+}
+
+/* Signup Modal Card */
+.signup-modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  max-width: 680px;
+  width: 100%;
+  padding: 32px 36px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  max-height: 94vh;
+  overflow-y: auto;
+  color: #1e293b;
+}
+
+.signup-step-header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+.signup-step-header h2 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0c1a2f;
+  margin: 0;
+}
+
+/* Alert Banner as per Image 1 */
+.signup-alert-box {
+  background: #fffbeb;
+  border: 1px solid #fde047;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.alert-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b45309;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.signup-alert-box p {
+  font-size: 0.82rem;
+  color: #78350f;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Grid layout for form fields */
+.signup-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.signup-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.signup-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.required-star {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.signup-field input, .signup-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.signup-field input:focus, .signup-select:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+/* Helper note matching screenshot in green */
+.signup-note-green {
+  font-size: 0.76rem;
+  color: #16a34a;
+  font-weight: 600;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Terms Checkbox */
+.signup-terms-box {
+  margin: 14px 0 20px;
+  padding: 8px 0;
+}
+
+.signup-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #475569;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.signup-checkbox-label input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: #0c1a2f;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.signup-checkbox-label a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Math Captcha as per Image 1 */
+.signup-captcha-section {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+  background: #f8fafc;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.captcha-badge-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.captcha-math-box {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #0f172a;
+  background: repeating-linear-gradient(
+    45deg,
+    #e2e8f0,
+    #e2e8f0 10px,
+    #cbd5e1 10px,
+    #cbd5e1 20px
+  );
+  padding: 10px 18px;
+  border: 2px dashed #94a3b8;
+  border-radius: 6px;
+  user-select: none;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+}
+
+.btn-captcha-refresh {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-captcha-refresh:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.captcha-input-field {
+  flex-grow: 1;
+}
+
+/* Action Buttons */
+.signup-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.btn-signup-primary {
+  background: #0c1a2f;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 11px 28px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-signup-primary:hover {
+  background: #1e3a8a;
+  transform: translateY(-1px);
+}
+
+.btn-signup-back {
+  background: #ffffff;
+  border: 1.5px solid #0c1a2f;
+  color: #0c1a2f;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-signup-back:hover {
+  background: #f1f5f9;
+}
+
+/* STEP 2: OTP Verification Card (Image 2) */
+.signup-otp-info-card {
+  padding: 10px 0;
+}
+
+.otp-instruction-text {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 22px;
+}
+
+.otp-input-wrapper {
+  margin-bottom: 16px;
+}
+
+.otp-input-wrapper label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.otp-code-input {
+  font-family: 'Consolas', monospace;
+  font-size: 2rem;
+  letter-spacing: 14px;
+  text-align: center;
+  font-weight: 700;
+  padding: 12px 16px;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  max-width: 280px;
+  outline: none;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.otp-code-input:focus {
+  border-color: #1d4ed8;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.otp-timer-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.btn-link-resend {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.88rem;
+}
+
+.btn-link-resend:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.otp-quick-test-box {
+  background: #eff6ff;
+  border: 1px dashed #93c5fd;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 16px 0;
+}
+
+.btn-autofill-otp {
+  background: none;
+  border: none;
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-autofill-otp:hover {
+  text-decoration: underline;
+}
+
+/* STEP 3: Accordions as per Image 3 */
+.signup-accordion-done {
+  background: #0c1a2f;
+  color: #ffffff;
+  padding: 14px 20px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.signup-accordion-done:hover {
+  background: #162a4a;
+}
+
+.acc-done-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.acc-done-title i {
+  color: #34d399;
+}
+
+.acc-status-tag {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.signup-accordion-active-box {
+  border: 1.5px solid #0c1a2f;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 14px;
+  background: #ffffff;
+}
+
+.acc-active-header {
+  background: #f8fafc;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding: 14px 20px;
+}
+
+.acc-active-header h3 {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0c1a2f;
+  margin: 0;
+}
+
+#form-signup-step-3 {
+  padding: 20px;
+}
+
+/* CIVIC DIRECTORY MODAL STYLES */
+.directory-modal-card {
+  max-width: 960px;
+}
+
+.directory-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 16px;
+}
+
+.directory-header h2 {
+  font-size: 1.45rem;
+  color: #0c1a2f;
+  margin: 6px 0;
+}
+
+.directory-header p {
+  font-size: 0.86rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.directory-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dir-tab-btn {
+  flex: 1;
+  padding: 12px 18px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.dir-tab-btn.active {
+  background: #0c1a2f;
+  color: #ffffff;
+  border-color: #0c1a2f;
+  box-shadow: 0 4px 12px rgba(12, 26, 47, 0.15);
+}
+
+.dir-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  max-height: 58vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.dir-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.2s;
+}
+
+.dir-card:hover {
+  border-color: #3b82f6;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.dir-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dir-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.dir-avatar.admin-badge {
+  background: linear-gradient(135deg, #1e3a8a, #7c3aed);
+}
+
+.dir-meta h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.dir-meta p {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.dir-files-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dir-file-badge {
+  font-size: 0.72rem;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: monospace;
+}
+
+.dir-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-dir-view {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.btn-dir-view:hover {
+  background: #1d4ed8;
+}
+
+.btn-dir-login {
+  flex: 1;
+  padding: 7px 10px;
+  background: #0c1a2f;
+  color: #ffffff;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.btn-dir-login:hover {
+  background: #1e293b;
+}
+

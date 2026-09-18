@@ -386,6 +386,33 @@ const GUJARAT_CIVIC_DATA = {
     { id: "metro-ahmedabad", name: "Ahmedabad Metro (North-South)", nameGu: "અમદાવાદ મેટ્રો (ઉત્તર-દક્ષિણ)", status: "on time", eta: "7 min", corridor: "APMC → Old High Court ↔ Motera", crowd: "Moderate (65%)", delayMinutes: 0 },
     { id: "metro-eastwest", name: "Ahmedabad Metro (East-West)", nameGu: "અમદાવાદ મેટ્રો (પૂર્વ-પશ્ચિમ)", status: "on time", eta: "9 min", corridor: "Thaltej ↔ Kalupur ↔ Vastral Gam", crowd: "Optimal (40%)", delayMinutes: 1 },
     { id: "gsrtc-bus", name: "GSRTC Intercity 18:40", nameGu: "જીએસઆરટીસી ઇન્ટરસિટી", status: "Boarding", eta: "18:40", corridor: "Geeta Mandir stand → Vadodara", crowd: "High Load", delayMinutes: 12 }
+  ],
+
+  // 15 Personalized Citizen Directories
+  citizens: [
+    { id: "CIT-001", folder: "citizen_01_aarav_patel", name: "Aarav Patel", email: "aarav.patel@suratcivic.in", phone: "9825100101", ward: "Ward 12 - Varachha", kyc: "Verified", karma: 340, tier: "Civic Hero", balance: 120, portalUrl: "citizens/citizen_01_aarav_patel/portal_view.html" },
+    { id: "CIT-002", folder: "citizen_02_priya_sharma", name: "Priya Sharma", email: "priya.sharma@suratcivic.in", phone: "9825100102", ward: "Ward 04 - Athwa", kyc: "Verified", karma: 480, tier: "Civic Champion", balance: 210, portalUrl: "citizens/citizen_02_priya_sharma/portal_view.html" },
+    { id: "CIT-003", folder: "citizen_03_rohit_verma", name: "Rohit Verma", email: "rohit.verma@suratcivic.in", phone: "9825100103", ward: "Ward 07 - Rander", kyc: "Verified", karma: 260, tier: "Active Citizen", balance: 85, portalUrl: "citizens/citizen_03_rohit_verma/portal_view.html" },
+    { id: "CIT-004", folder: "citizen_04_ananya_deshmukh", name: "Ananya Deshmukh", email: "ananya.deshmukh@suratcivic.in", phone: "9825100104", ward: "Ward 09 - Katargam", kyc: "Verified", karma: 590, tier: "Civic Champion", balance: 310, portalUrl: "citizens/citizen_04_ananya_deshmukh/portal_view.html" },
+    { id: "CIT-005", folder: "citizen_05_vikram_singh", name: "Vikram Singh", email: "vikram.singh@suratcivic.in", phone: "9825100105", ward: "Ward 15 - Udhna", kyc: "Verified", karma: 310, tier: "Active Citizen", balance: 140, portalUrl: "citizens/citizen_05_vikram_singh/portal_view.html" },
+    { id: "CIT-006", folder: "citizen_06_neha_joshi", name: "Neha Joshi", email: "neha.joshi@suratcivic.in", phone: "9825100106", ward: "Ward 02 - Central", kyc: "Verified", karma: 410, tier: "Civic Hero", balance: 195, portalUrl: "citizens/citizen_06_neha_joshi/portal_view.html" },
+    { id: "CIT-007", folder: "citizen_07_karan_mehta", name: "Karan Mehta", email: "karan.mehta@suratcivic.in", phone: "9825100107", ward: "Ward 08 - Limbayat", kyc: "Verified", karma: 220, tier: "Active Citizen", balance: 60, portalUrl: "citizens/citizen_07_karan_mehta/portal_view.html" },
+    { id: "CIT-008", folder: "citizen_08_sneha_kulkarni", name: "Sneha Kulkarni", email: "sneha.kulkarni@suratcivic.in", phone: "9825100108", ward: "Ward 11 - Adajan", kyc: "Verified", karma: 530, tier: "Civic Champion", balance: 280, portalUrl: "citizens/citizen_08_sneha_kulkarni/portal_view.html" },
+    { id: "CIT-009", folder: "citizen_09_dev_shah", name: "Dev Shah", email: "dev.shah@suratcivic.in", phone: "9825100109", ward: "Ward 06 - Piplod", kyc: "Verified", karma: 375, tier: "Civic Hero", balance: 150, portalUrl: "citizens/citizen_09_dev_shah/portal_view.html" },
+    { id: "CIT-010", folder: "citizen_10_pooja_nair", name: "Pooja Nair", email: "pooja.nair@suratcivic.in", phone: "9825100110", ward: "Ward 03 - Vesu", kyc: "Verified", karma: 620, tier: "Civic Sentinel", balance: 390, portalUrl: "citizens/citizen_10_pooja_nair/portal_view.html" },
+    { id: "CIT-011", folder: "citizen_11_amit_gupta", name: "Amit Gupta", email: "amit.gupta@suratcivic.in", phone: "9825100111", ward: "Ward 14 - Pandesara", kyc: "Verified", karma: 190, tier: "Active Citizen", balance: 50, portalUrl: "citizens/citizen_11_amit_gupta/portal_view.html" },
+    { id: "CIT-012", folder: "citizen_12_kavita_reddy", name: "Kavita Reddy", email: "kavita.reddy@suratcivic.in", phone: "9825100112", ward: "Ward 05 - Majura", kyc: "Verified", karma: 345, tier: "Civic Hero", balance: 135, portalUrl: "citizens/citizen_12_kavita_reddy/portal_view.html" },
+    { id: "CIT-013", folder: "citizen_13_rahul_choudhary", name: "Rahul Choudhary", email: "rahul.choudhary@suratcivic.in", phone: "9825100113", ward: "Ward 10 - Althan", kyc: "Verified", karma: 280, tier: "Active Citizen", balance: 90, portalUrl: "citizens/citizen_13_rahul_choudhary/portal_view.html" },
+    { id: "CIT-014", folder: "citizen_14_divya_iyer", name: "Divya Iyer", email: "divya.iyer@suratcivic.in", phone: "9825100114", ward: "Ward 01 - City Light", kyc: "Verified", karma: 460, tier: "Civic Hero", balance: 220, portalUrl: "citizens/citizen_14_divya_iyer/portal_view.html" },
+    { id: "CIT-015", folder: "citizen_15_manish_trivedi", name: "Manish Trivedi", email: "manish.trivedi@suratcivic.in", phone: "9825100115", ward: "Ward 13 - Dindoli", kyc: "Verified", karma: 510, tier: "Civic Champion", balance: 265, portalUrl: "citizens/citizen_15_manish_trivedi/portal_view.html" }
+  ],
+
+  // 4 Municipal Officer Admin Consoles
+  admins: [
+    { id: "ADM-001", folder: "admin_01_rajesh_parmar", name: "Rajesh Parmar", designation: "Senior Ward Commissioner", dept: "Central Admin & Operations", zone: "Central Zone", badge: "SMC-COMM-01", shift: "08:00 - 16:00", openTickets: 28, dueToday: 9, dashboardUrl: "admins/admin_01_rajesh_parmar/admin_dashboard.html" },
+    { id: "ADM-002", folder: "admin_02_sunita_desai", name: "Sunita Desai", designation: "Executive Health & Sanitation Officer", dept: "Public Health & Waste", zone: "North Zone", badge: "SMC-HLTH-02", shift: "09:00 - 17:00", openTickets: 35, dueToday: 14, dashboardUrl: "admins/admin_02_sunita_desai/admin_dashboard.html" },
+    { id: "ADM-003", folder: "admin_03_mahesh_solanki", name: "Mahesh Solanki", designation: "Chief Road & Infrastructure Engineer", dept: "Engineering & Drainage", zone: "West Zone", badge: "SMC-ENGR-03", shift: "10:00 - 18:00", openTickets: 41, dueToday: 12, dashboardUrl: "admins/admin_03_mahesh_solanki/admin_dashboard.html" },
+    { id: "ADM-004", folder: "admin_04_farida_sheikh", name: "Farida Sheikh", designation: "Urban Grievance & Rapid Response Director", dept: "Command & Emergency Dispatch", zone: "South Zone", badge: "SMC-EMERG-04", shift: "14:00 - 22:00", openTickets: 52, dueToday: 18, dashboardUrl: "admins/admin_04_farida_sheikh/admin_dashboard.html" }
   ]
 };
 

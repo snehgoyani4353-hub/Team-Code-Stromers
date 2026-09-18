@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "Medium",
+        "id":  "TKT-1102",
+        "crew":  "Civil Works Unit 09",
+        "ward":  "Ward 09",
+        "category":  "Roads",
+        "upvotes":  19,
+        "date":  "2026-09-18",
+        "status":  "Open",
+        "title":  "Broken pavement slab on Gotalawadi road"
+    },
+    {
+        "urgency":  "Low",
+        "id":  "TKT-1060",
+        "crew":  "Horticulture Div 09",
+        "ward":  "Ward 09",
+        "category":  "Parks and Gardens",
+        "upvotes":  8,
+        "date":  "2026-09-14",
+        "status":  "Resolved",
+        "title":  "Public garden sprinkler leakage"
+    }
+]

@@ -1,0 +1,36 @@
+﻿{
+    "liveQueue":  [
+                      {
+                          "location":  "Ward 07 - Rander",
+                          "priority":  "High",
+                          "ticketId":  "TKT-URG-801",
+                          "slaRemaining":  "1h 45m",
+                          "category":  "Emergency Sanitation \u0026 Road",
+                          "status":  "Dispatched"
+                      },
+                      {
+                          "location":  "Ward 09 - Katargam",
+                          "priority":  "Critical",
+                          "ticketId":  "TKT-URG-802",
+                          "slaRemaining":  "42m",
+                          "category":  "Grid Electrical Fluctuation",
+                          "status":  "En Route"
+                      },
+                      {
+                          "location":  "Ward 07 - Rander",
+                          "priority":  "Medium",
+                          "ticketId":  "TKT-URG-803",
+                          "slaRemaining":  "4h 10m",
+                          "category":  "Water Mains Valve Leak",
+                          "status":  "Acknowledged"
+                      }
+                  ],
+    "metrics":  {
+                    "needOfficerReply":  8,
+                    "resolvedThisWeek":  62,
+                    "openTickets":  35,
+                    "dueToday":  14
+                },
+    "zone":  "North Zone (Wards 07, 09, 12)",
+    "assignedOfficer":  "Sunita Desai"
+}

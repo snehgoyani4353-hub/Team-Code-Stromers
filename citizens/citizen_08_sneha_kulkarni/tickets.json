@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "High",
+        "id":  "TKT-1099",
+        "crew":  "Emergency Tree Trimming 11",
+        "ward":  "Ward 11",
+        "category":  "Parks and Gardens",
+        "upvotes":  27,
+        "date":  "2026-09-18",
+        "status":  "Open",
+        "title":  "Dangerous tree branch overhang on pedestrian path"
+    },
+    {
+        "urgency":  "Low",
+        "id":  "TKT-1048",
+        "crew":  "Horticulture Div 11",
+        "ward":  "Ward 11",
+        "category":  "Parks and Gardens",
+        "upvotes":  15,
+        "date":  "2026-09-11",
+        "status":  "Resolved",
+        "title":  "Broken bench at Pal Lake Garden"
+    }
+]

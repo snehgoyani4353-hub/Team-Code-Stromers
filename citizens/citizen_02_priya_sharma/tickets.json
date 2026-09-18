@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "High",
+        "id":  "TKT-1092",
+        "crew":  "Asphalt Patch Unit 04",
+        "ward":  "Ward 04",
+        "category":  "Roads",
+        "upvotes":  38,
+        "date":  "2026-09-18",
+        "status":  "Open",
+        "title":  "Asphalt pothole outside Athwa Gate"
+    },
+    {
+        "urgency":  "Low",
+        "id":  "TKT-1033",
+        "crew":  "Water Works Unit 02",
+        "ward":  "Ward 04",
+        "category":  "Water Supply",
+        "upvotes":  12,
+        "date":  "2026-09-08",
+        "status":  "Resolved",
+        "title":  "Non-functional water tap at Joggers Park"
+    }
+]

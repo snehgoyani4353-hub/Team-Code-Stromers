@@ -1,0 +1,17 @@
+﻿{
+    "assignedWards":  [
+                          "Ward 01 - City Light",
+                          "Ward 02 - Central",
+                          "Ward 05 - Majura"
+                      ],
+    "emergencyEscalation":  "Control Room Desk #4 (Ext 4012)",
+    "dutyOfficer":  "Rajesh Parmar",
+    "officerId":  "ADM-001",
+    "date":  "2026-09-18",
+    "shiftTime":  "08:00 - 16:00",
+    "activeCrews":  [
+                        "Rapid Road Maintenance 01",
+                        "Central Electrical Squad",
+                        "Heritage Zone Sanitation"
+                    ]
+}

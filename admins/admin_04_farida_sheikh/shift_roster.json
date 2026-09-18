@@ -1,0 +1,20 @@
+﻿{
+    "assignedWards":  [
+                          "Ward 03 - Vesu",
+                          "Ward 08 - Limbayat",
+                          "Ward 11 - Adajan",
+                          "Ward 13 - Dindoli",
+                          "Ward 14 - Pandesara",
+                          "Ward 15 - Udhna"
+                      ],
+    "emergencyEscalation":  "Control Room Desk #4 (Ext 4012)",
+    "dutyOfficer":  "Farida Sheikh",
+    "officerId":  "ADM-004",
+    "date":  "2026-09-18",
+    "shiftTime":  "14:00 - 22:00",
+    "activeCrews":  [
+                        "Rapid Disaster Response 01",
+                        "High-Flow Dewatering Crew",
+                        "24/7 Mobile Civic Ambulance"
+                    ]
+}

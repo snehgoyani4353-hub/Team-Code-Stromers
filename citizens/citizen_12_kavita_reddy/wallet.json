@@ -1,0 +1,23 @@
+﻿{
+    "civicKarmaPoints":  345,
+    "citizenId":  "CIT-012",
+    "tokenBalance":  135,
+    "rewardTier":  "Civic Hero",
+    "history":  [
+                    {
+                        "date":  "2026-09-17",
+                        "points":  25,
+                        "action":  "Ticket Upvoted and Validated"
+                    },
+                    {
+                        "date":  "2026-09-12",
+                        "points":  50,
+                        "action":  "Resolution Confirmation Bonus"
+                    },
+                    {
+                        "date":  "2026-09-01",
+                        "points":  100,
+                        "action":  "Monthly Active Citizen Stipend"
+                    }
+                ]
+}

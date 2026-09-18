@@ -1,0 +1,36 @@
+﻿{
+    "liveQueue":  [
+                      {
+                          "location":  "Ward 04 - Athwa",
+                          "priority":  "High",
+                          "ticketId":  "TKT-URG-801",
+                          "slaRemaining":  "1h 45m",
+                          "category":  "Emergency Sanitation \u0026 Road",
+                          "status":  "Dispatched"
+                      },
+                      {
+                          "location":  "Ward 06 - Piplod",
+                          "priority":  "Critical",
+                          "ticketId":  "TKT-URG-802",
+                          "slaRemaining":  "42m",
+                          "category":  "Grid Electrical Fluctuation",
+                          "status":  "En Route"
+                      },
+                      {
+                          "location":  "Ward 04 - Athwa",
+                          "priority":  "Medium",
+                          "ticketId":  "TKT-URG-803",
+                          "slaRemaining":  "4h 10m",
+                          "category":  "Water Mains Valve Leak",
+                          "status":  "Acknowledged"
+                      }
+                  ],
+    "metrics":  {
+                    "needOfficerReply":  11,
+                    "resolvedThisWeek":  39,
+                    "openTickets":  41,
+                    "dueToday":  12
+                },
+    "zone":  "West \u0026 South-West Zone (Wards 04, 06, 10)",
+    "assignedOfficer":  "Mahesh Solanki"
+}

@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "Medium",
+        "id":  "TKT-1110",
+        "crew":  "Debris Clearance Unit 03",
+        "ward":  "Ward 03",
+        "category":  "Waste Management",
+        "upvotes":  23,
+        "date":  "2026-09-18",
+        "status":  "Open",
+        "title":  "Illegal construction debris dumped on vacant plot"
+    },
+    {
+        "urgency":  "High",
+        "id":  "TKT-1065",
+        "crew":  "Road Safety Division 03",
+        "ward":  "Ward 03",
+        "category":  "Roads",
+        "upvotes":  52,
+        "date":  "2026-09-15",
+        "status":  "Resolved",
+        "title":  "New speed breaker marking request near school zone"
+    }
+]

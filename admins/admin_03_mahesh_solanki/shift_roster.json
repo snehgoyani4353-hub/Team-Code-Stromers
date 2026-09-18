@@ -1,0 +1,17 @@
+﻿{
+    "assignedWards":  [
+                          "Ward 04 - Athwa",
+                          "Ward 06 - Piplod",
+                          "Ward 10 - Althan"
+                      ],
+    "emergencyEscalation":  "Control Room Desk #4 (Ext 4012)",
+    "dutyOfficer":  "Mahesh Solanki",
+    "officerId":  "ADM-003",
+    "date":  "2026-09-18",
+    "shiftTime":  "10:00 - 18:00",
+    "activeCrews":  [
+                        "Asphalt Jet Patcher 02",
+                        "Stormwater Jetting Machine 05",
+                        "Bridge \u0026 Flyover Inspection Team"
+                    ]
+}

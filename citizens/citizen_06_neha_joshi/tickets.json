@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "Low",
+        "id":  "TKT-1105",
+        "crew":  "Traffic Infrastructure 02",
+        "ward":  "Ward 02",
+        "category":  "Signage and Traffic",
+        "upvotes":  7,
+        "date":  "2026-09-18",
+        "status":  "Open",
+        "title":  "Street sign fallen near Tower Bazaar"
+    },
+    {
+        "urgency":  "Low",
+        "id":  "TKT-1051",
+        "crew":  "Cleanliness Taskforce 02",
+        "ward":  "Ward 02",
+        "category":  "Sanitation",
+        "upvotes":  11,
+        "date":  "2026-09-13",
+        "status":  "Resolved",
+        "title":  "Unauthorized wall poster removal required"
+    }
+]

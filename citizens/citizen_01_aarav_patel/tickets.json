@@ -1,0 +1,24 @@
+﻿[
+    {
+        "urgency":  "Medium",
+        "id":  "TKT-1081",
+        "crew":  "Electrical Unit 12",
+        "ward":  "Ward 12",
+        "category":  "Streetlight",
+        "upvotes":  14,
+        "date":  "2026-09-17",
+        "status":  "In Progress",
+        "title":  "Faulty LED street light on Pole #42"
+    },
+    {
+        "urgency":  "High",
+        "id":  "TKT-1045",
+        "crew":  "Drainage Rapid Crew",
+        "ward":  "Ward 12",
+        "category":  "Drainage",
+        "upvotes":  29,
+        "date":  "2026-09-12",
+        "status":  "Resolved",
+        "title":  "Clogged storm drain near Nilkanth Chowk"
+    }
+]
