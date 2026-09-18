@@ -858,19 +858,16 @@ window.openCommandCenter = function() {
    ========================================================================== */
 
 window.switchDesktopTab = function(tabName) {
-  if (tabName === 'wardmap') tabName = 'address';
+  if (tabName === 'wardmap' || tabName === 'address') tabName = 'track';
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['track', 'report', 'wallet', 'address', 'community', 'transit', 'rules-dir'];
+  const tabs = ['track', 'report', 'wallet', 'community', 'transit', 'rules-dir'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
     if (panel) panel.style.display = (t === tabName) ? 'block' : 'none';
     if (btn) btn.classList.toggle('active', t === tabName);
   });
-
-  const oldWardBtn = document.getElementById('btn-tab-wardmap');
-  if (oldWardBtn) oldWardBtn.classList.toggle('active', tabName === 'address');
 
   const urlBar = document.getElementById('desktop-url-bar');
   if (urlBar) {
@@ -882,7 +879,6 @@ window.switchDesktopTab = function(tabName) {
       'track': 'Track Complaint',
       'report': 'File Complaint (₹50 Escrow)',
       'wallet': 'Civic Wallet & Ledger',
-      'address': 'Saved Addresses & Ward Registry',
       'community': 'Community Incident Feed',
       'transit': 'Transit Flow & Friction',
       'rules-dir': 'Rules, SLAs & Helplines'
@@ -892,7 +888,6 @@ window.switchDesktopTab = function(tabName) {
 
   if (tabName === 'wallet') renderCivicWallet();
   else if (tabName === 'track') renderDesktopPortal();
-  else if (tabName === 'address') renderSavedAddresses();
   else if (tabName === 'community') renderCommunityIncidentFeed();
   else if (tabName === 'transit') renderTransitFriction();
 };
@@ -1298,6 +1293,10 @@ window.executeUpiWalletTopup = function(paymentMethod = 'UPI / QR Scan') {
 
 window.simulateInstantUpi = function() {
   executeUpiWalletTopup('UPI FastPay (Instant QR)');
+};
+
+window.executeWalletTopup = function(paymentMethod = 'UPI / QR Scan') {
+  executeUpiWalletTopup(paymentMethod);
 };
 
 /* ==========================================================================
@@ -2287,6 +2286,27 @@ window.filterGallery = function(category) {
 window.openGalleryLightbox = function(index) {
   const m = document.getElementById('gallery-lightbox-modal');
   if (!m) return;
+  const cards = document.querySelectorAll('.project-gallery-card');
+  if (cards && typeof index === 'number' && cards[index]) {
+    const card = cards[index];
+    const img = card.querySelector('.gallery-thumb-img');
+    const title = card.querySelector('.gallery-card-title');
+    const desc = card.querySelector('.gallery-card-desc');
+    const sla = card.querySelector('.gallery-sla-tag');
+
+    const mImg = m.querySelector('img');
+    const mTitle = m.querySelector('h3');
+    const mDesc = m.querySelector('p');
+    const mBadge = m.querySelector('span[style*="font-size:0.8rem"]');
+
+    if (mImg && img) {
+      mImg.src = img.src;
+      mImg.alt = img.alt || 'Gujarat Civic Project';
+    }
+    if (mTitle && title) mTitle.textContent = title.textContent;
+    if (mDesc && desc) mDesc.textContent = desc.textContent;
+    if (mBadge && sla) mBadge.textContent = sla.textContent;
+  }
   m.style.display = 'flex';
   m.classList.add('active');
 };
