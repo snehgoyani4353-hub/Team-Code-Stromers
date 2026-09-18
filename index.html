@@ -670,7 +670,7 @@
               <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track Complaint</button>
               <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 File Complaint</button>
               <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')"><span data-i18n="tab_wallet">👛 Civic Wallet</span> (<span id="desktop-wallet-bal">₹150</span>)</button>
-              <button class="sidebar-nav-item" id="btn-tab-wardmap" onclick="switchDesktopTab('wardmap')" data-i18n="tab_wardmap">🗺️ Ward Map</button>
+              <button class="sidebar-nav-item" id="btn-tab-address" onclick="switchDesktopTab('address')" data-i18n="tab_address">📍 My Addresses</button>
               <button class="sidebar-nav-item" id="btn-tab-community" onclick="switchDesktopTab('community')" data-i18n="tab_community">📢 Community Feed</button>
               <button class="sidebar-nav-item" id="btn-tab-transit" onclick="switchDesktopTab('transit')" data-i18n="tab_transit">🚍 Transit Flow</button>
               <button class="sidebar-nav-item" id="btn-tab-rules-dir" onclick="switchDesktopTab('rules-dir')" data-i18n="tab_rules_dir">📜 Rules & SLAs</button>
@@ -914,31 +914,49 @@
               </div>
             </div>
 
-            <!-- Tab 4: Ward 7 GIS Health Map -->
-            <div id="dt-tab-wardmap" class="desktop-tab-panel" style="display:none;">
+            <!-- Tab 4: My Saved Addresses & Municipal Ward Registry -->
+            <div id="dt-tab-address" class="desktop-tab-panel" style="display:none;">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title" data-i18n="wardmap_page_title">Ward 7 Civic Infrastructure Health Map</h1>
-                <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Navrangpura &bull; AMC West Zone Live Infrastructure Overview</p>
-              </div>
-
-              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:18px;">
-                <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:var(--radius-sm); padding:14px;">
-                  <div style="font-size:0.72rem; font-weight:700; color:#64748b; text-transform:uppercase;">Active Ward Reports</div>
-                  <div style="font-size:1.6rem; font-weight:800; color:var(--civica-navy);">6 Open</div>
-                </div>
-                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-sm); padding:14px;">
-                  <div style="font-size:0.72rem; font-weight:700; color:#166534; text-transform:uppercase;">Resolution Rate</div>
-                  <div style="font-size:1.6rem; font-weight:800; color:#166534;">94.2%</div>
-                </div>
-                <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius-sm); padding:14px;">
-                  <div style="font-size:0.72rem; font-weight:700; color:#92400e; text-transform:uppercase;">Duplicate Watch</div>
-                  <div style="font-size:1rem; font-weight:800; color:#92400e; margin-top:4px;">⚠️ Merged 140m away</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                  <div>
+                    <h1 class="desktop-page-title" data-i18n="address_page_title">My Saved Addresses & Ward Registry</h1>
+                    <p class="desktop-page-subtitle">Manage verified residential & commercial properties for municipal services, door-to-door sanitation, and localized civic dispatches</p>
+                  </div>
+                  <button type="button" class="btn-hero-primary" onclick="openAddAddressModal()">
+                    + Add New Address
+                  </button>
                 </div>
               </div>
 
-              <div class="active-ticket-detail-card" style="margin-top:0;">
-                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" alt="Ward Map View" style="width:100%; height:320px; object-fit:cover; border-radius:var(--radius-sm);" />
+              <!-- Municipal Verification & Service Metrics Strip -->
+              <div class="citizen-highlights-bar">
+                <div class="highlight-strip-card escrow-accent">
+                  <span class="highlight-strip-icon">🏛️</span>
+                  <div>
+                    <strong style="color:#166534;">Assigned Municipal Ward</strong>
+                    <p>Ward 7 · Navrangpura (West Zone)<br>Zonal Office: Navrangpura Municipal Market</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">🏠</span>
+                  <div>
+                    <strong style="color:var(--civica-navy);">Registered Properties</strong>
+                    <p id="addr-count-text">2 Active Addresses (1 Primary Home)<br>Property Tax UIDs linked & geo-tagged</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">🚛</span>
+                  <div>
+                    <strong style="color:var(--civica-navy);">Doorstep Civic Services</strong>
+                    <p>Solid Waste: 07:30 AM Daily (Shift A)<br>Drinking Water: 06:00 - 08:30 AM (Active)</p>
+                  </div>
+                </div>
               </div>
+
+              <!-- Dynamic Saved Addresses Cards Container -->
+              <div id="dt-saved-addresses-list" class="saved-addresses-grid"></div>
             </div>
 
             <!-- Tab 5: Community Crowdsource Incident Feed -->
@@ -1397,6 +1415,279 @@
           <button class="btn-hero-primary" onclick="closeGalleryLightbox()">Close &rarr;</button>
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       MODAL: CIVIC WALLET ADD FUNDS (WITH UPI & REALISTIC QR CODE)
+       ========================================================================== -->
+  <div class="civica-auth-overlay" id="wallet-topup-modal" role="dialog" aria-modal="true">
+    <div class="auth-modal-card wallet-modal-card" style="max-width:540px; padding:30px 28px;">
+      <button class="auth-close-btn" onclick="closeWalletTopupModal()" title="Close">&times;</button>
+      
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid #e2e8f0;">
+        <div style="width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, var(--civica-navy), #1e3a5f); display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--civica-gold);">
+          👛
+        </div>
+        <div>
+          <h2 style="font-family:var(--font-heading), var(--font-sans); font-size:1.3rem; font-weight:700; color:var(--civica-navy); margin:0;">Add Funds to Civic Wallet</h2>
+          <p style="font-size:0.8rem; color:#64748b; margin:2px 0 0 0;">Zero-fee municipal escrow deposit via UPI & QR code</p>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Amount -->
+      <div style="margin-bottom:16px;">
+        <label style="font-size:0.85rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:8px;">
+          1. Select or Enter Top-Up Amount (₹)
+        </label>
+        <div class="amount-chips-row">
+          <button type="button" class="amount-chip" onclick="setTopupAmount(50)">+ ₹50</button>
+          <button type="button" class="amount-chip active" onclick="setTopupAmount(100)">+ ₹100</button>
+          <button type="button" class="amount-chip" onclick="setTopupAmount(200)">+ ₹200</button>
+          <button type="button" class="amount-chip" onclick="setTopupAmount(500)">+ ₹500</button>
+        </div>
+        <div class="custom-amount-input-box" style="margin-top:10px; display:flex; align-items:center; gap:8px; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:var(--radius-sm); padding:6px 12px;">
+          <span style="font-weight:800; font-size:1.15rem; color:var(--civica-navy);">₹</span>
+          <input type="number" id="topup-amount-input" style="border:none; background:transparent; font-size:1.15rem; font-weight:800; color:var(--civica-navy); width:100%; outline:none;" value="100" min="10" step="10" oninput="updateQrAmountDisplay(this.value)">
+          <span style="font-size:0.72rem; color:#166534; font-weight:700; background:#dcfce7; padding:3px 8px; border-radius:var(--radius-full); white-space:nowrap;">100% Refundable</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Payment Method Tabs -->
+      <div style="margin-bottom:14px;">
+        <label style="font-size:0.85rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:8px;">
+          2. Payment Method
+        </label>
+        <div class="topup-method-pills">
+          <button type="button" class="topup-method-pill active" id="btn-method-upi" onclick="selectTopupMethod('upi')">
+            <span>⚡ UPI (Scan QR / Apps)</span>
+          </button>
+          <button type="button" class="topup-method-pill" id="btn-method-card" onclick="selectTopupMethod('card')">
+            <span>💳 Cards / Net Banking</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: UPI QR Code Display (Default / Primary) -->
+      <div id="topup-section-upi" class="upi-qr-card">
+        <div class="upi-qr-header">
+          <span style="font-weight:800; font-size:0.82rem; letter-spacing:0.04em; color:#0f172a;">🇮🇳 BHIM UPI &bull; INSTANT MUNICIPAL ESCROW</span>
+          <span class="upi-badge-pill">NPCI Regulated</span>
+        </div>
+
+        <!-- The Realistic Vector QR Code Frame -->
+        <div class="qr-code-center-frame">
+          <div class="qr-svg-wrapper">
+            <svg viewBox="0 0 200 200" width="175" height="175" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#ffffff"/>
+              <!-- Top-Left Finder Pattern -->
+              <rect x="14" y="14" width="46" height="46" rx="4" fill="#0c1a2f"/>
+              <rect x="22" y="22" width="30" height="30" rx="2" fill="#ffffff"/>
+              <rect x="28" y="28" width="18" height="18" rx="2" fill="#0c1a2f"/>
+              <!-- Top-Right Finder Pattern -->
+              <rect x="140" y="14" width="46" height="46" rx="4" fill="#0c1a2f"/>
+              <rect x="148" y="22" width="30" height="30" rx="2" fill="#ffffff"/>
+              <rect x="154" y="28" width="18" height="18" rx="2" fill="#0c1a2f"/>
+              <!-- Bottom-Left Finder Pattern -->
+              <rect x="14" y="140" width="46" height="46" rx="4" fill="#0c1a2f"/>
+              <rect x="22" y="148" width="30" height="30" rx="2" fill="#ffffff"/>
+              <rect x="28" y="154" width="18" height="18" rx="2" fill="#0c1a2f"/>
+              <!-- Alignment Pattern -->
+              <rect x="144" y="144" width="28" height="28" rx="2" fill="#0c1a2f"/>
+              <rect x="150" y="150" width="16" height="16" rx="1" fill="#ffffff"/>
+              <rect x="154" y="154" width="8" height="8" rx="1" fill="#0c1a2f"/>
+              <!-- Timing Patterns -->
+              <rect x="68" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="80" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="92" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="104" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="116" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="128" y="32" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="68" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="80" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="92" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="104" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="116" width="6" height="6" fill="#0c1a2f"/>
+              <rect x="32" y="128" width="6" height="6" fill="#0c1a2f"/>
+              <!-- Data Modules Matrix -->
+              <rect x="14" y="68" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="24" y="76" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="14" y="88" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="24" y="100" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="14" y="116" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="46" y="68" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="54" y="80" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="46" y="96" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="54" y="112" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="46" y="128" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="68" y="14" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="80" y="20" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="96" y="14" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="112" y="20" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="124" y="14" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="68" y="48" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="84" y="52" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="100" y="48" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="116" y="52" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="140" y="68" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="156" y="76" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="172" y="68" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="148" y="88" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="164" y="100" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="180" y="92" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="140" y="116" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="168" y="124" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="68" y="140" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="80" y="152" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="96" y="144" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="112" y="156" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="124" y="140" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="68" y="168" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="84" y="176" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="100" y="168" width="8" height="8" fill="#0c1a2f"/>
+              <rect x="116" y="180" width="8" height="8" fill="#0c1a2f"/>
+              <!-- Center UPI Badge -->
+              <rect x="74" y="74" width="52" height="52" rx="10" fill="#ffffff" stroke="#c5a059" stroke-width="2.5"/>
+              <text x="100" y="96" font-family="'Outfit', sans-serif" font-weight="900" font-size="14" fill="#0c1a2f" text-anchor="middle">UPI</text>
+              <text x="100" y="112" font-family="'Outfit', sans-serif" font-weight="800" font-size="9" fill="#16a34a" text-anchor="middle">BHIM</text>
+            </svg>
+          </div>
+
+          <div class="qr-amount-pill">
+            SCAN & PAY ₹<span id="qr-display-amount">100.00</span>
+          </div>
+        </div>
+
+        <!-- Merchant & UPI VPA Details -->
+        <div class="merchant-vpa-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Merchant Name:</div>
+              <div style="font-size:0.85rem; font-weight:700; color:var(--civica-navy);">AMC Ahmedabad Civic Escrow</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.75rem; color:#64748b; font-weight:600;">UPI ID (VPA):</div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <code style="font-size:0.85rem; font-weight:700; color:#0369a1;">amc.civica@sbi</code>
+                <button type="button" class="btn-copy-upi" onclick="copyUpiId()" title="Copy UPI ID">📋 Copy</button>
+              </div>
+            </div>
+          </div>
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1;">
+            <span style="font-size:0.75rem; color:#64748b;">Apps: GPay, PhonePe, Paytm, BHIM, Cred</span>
+            <span style="font-size:0.75rem; font-weight:700; color:#b45309;" id="upi-qr-timer">⏳ Expires: 04:59</span>
+          </div>
+        </div>
+
+        <!-- Optional UTR Input -->
+        <div style="margin-top:12px;">
+          <input type="text" id="upi-utr-input" class="dt-web-input" style="font-size:0.82rem; padding:8px 12px;" placeholder="Enter 12-digit UPI Ref / UTR No. (Optional)">
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+          <button type="button" class="btn-hero-primary" id="btn-confirm-upi-pay" style="width:100%; justify-content:center; padding:12px; font-size:0.95rem;" onclick="executeUpiWalletTopup()">
+            ✓ I Have Paid ₹<span id="btn-pay-amount-label">100.00</span> &bull; Confirm Top-Up
+          </button>
+          <button type="button" class="btn-hero-secondary" style="width:100%; justify-content:center; padding:8px; font-size:0.82rem;" onclick="simulateInstantUpi()">
+            ⚡ Simulate Instant UPI Success (Demo)
+          </button>
+        </div>
+      </div>
+
+      <!-- Alternative Payment Sections -->
+      <div id="topup-section-card" style="display:none; padding:20px; text-align:center; background:#f8fafc; border-radius:var(--radius-md); border:1px solid #e2e8f0; margin-top:10px;">
+        <p style="font-size:0.88rem; color:#475569; margin-bottom:14px;">Pay securely with any Visa, RuPay, or MasterCard.</p>
+        <button type="button" class="btn-hero-primary" style="margin:0 auto; padding:10px 24px;" onclick="executeUpiWalletTopup('Debit/Credit Card')">Proceed to Card Gateway &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       MODAL: ADD / EDIT CITIZEN ADDRESS
+       ========================================================================== -->
+  <div class="civica-auth-overlay" id="add-address-modal" role="dialog" aria-modal="true">
+    <div class="auth-modal-card" style="max-width:560px; padding:32px 30px;">
+      <button class="auth-close-btn" onclick="closeAddAddressModal()" title="Close">&times;</button>
+      
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid #e2e8f0;">
+        <div style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg, var(--civica-navy), #1e3a5f); display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:var(--civica-gold);">
+          📍
+        </div>
+        <div>
+          <h2 style="font-family:var(--font-heading), var(--font-sans); font-size:1.25rem; font-weight:700; color:var(--civica-navy); margin:0;" id="address-modal-title">Register New Civic Address</h2>
+          <p style="font-size:0.8rem; color:#64748b; margin:2px 0 0 0;">Link property to AMC Ward 7 registry for doorstep sanitation & services</p>
+        </div>
+      </div>
+
+      <form id="add-address-form" onsubmit="handleSaveAddress(event)">
+        <input type="hidden" id="edit-address-id" value="">
+        
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.82rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:6px;">Address Category</label>
+          <div style="display:flex; gap:10px;">
+            <label class="method-choice-label active" id="label-addr-home" style="flex:1; padding:8px 12px;">
+              <input type="radio" name="addr_type" value="Home" checked onchange="toggleAddressTypeRadio('Home')">
+              <span style="font-weight:700; font-size:0.85rem;">🏠 Home</span>
+            </label>
+            <label class="method-choice-label" id="label-addr-work" style="flex:1; padding:8px 12px;">
+              <input type="radio" name="addr_type" value="Workplace" onchange="toggleAddressTypeRadio('Workplace')">
+              <span style="font-weight:700; font-size:0.85rem;">💼 Workplace</span>
+            </label>
+            <label class="method-choice-label" id="label-addr-other" style="flex:1; padding:8px 12px;">
+              <input type="radio" name="addr_type" value="Other" onchange="toggleAddressTypeRadio('Other')">
+              <span style="font-weight:700; font-size:0.85rem;">🏢 Other</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Flat / House / Door No. *</label>
+            <input type="text" id="addr-flat-input" class="dt-web-input" placeholder="e.g. Flat 501, Block B" required>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Society / Building / Apartment *</label>
+            <input type="text" id="addr-building-input" class="dt-web-input" placeholder="e.g. Shaligram Heights" required>
+          </div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Street & Prominent Landmark *</label>
+          <input type="text" id="addr-street-input" class="dt-web-input" placeholder="e.g. Near Law Garden, CG Road" required>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; margin-bottom:12px;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Municipal Ward & Zone *</label>
+            <select id="addr-ward-select" class="dt-web-input">
+              <option value="Ward 7 · Navrangpura (West Zone)" selected>Ward 7 · Navrangpura (West Zone)</option>
+              <option value="Ward 4 · Naranpura (West Zone)">Ward 4 · Naranpura (West Zone)</option>
+              <option value="Ward 8 · Paldi (West Zone)">Ward 8 · Paldi (West Zone)</option>
+              <option value="Ward 10 · Stadium (West Zone)">Ward 10 · Stadium (West Zone)</option>
+              <option value="Ward 12 · Bodakdev (North-West Zone)">Ward 12 · Bodakdev (North-West Zone)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Pincode *</label>
+            <input type="text" id="addr-pincode-input" class="dt-web-input" placeholder="380009" maxlength="6" value="380009" required>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.78rem; font-weight:700; color:var(--civica-navy); display:block; margin-bottom:4px;">Property Tax Tenement No. (Optional)</label>
+          <input type="text" id="addr-tax-input" class="dt-web-input" placeholder="e.g. 07-04-192-0048">
+          <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Linking your property tax index unlocks automated water pressure & garbage schedules.</div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:18px;">
+          <button type="button" class="btn-hero-secondary" style="padding:8px 18px;" onclick="closeAddAddressModal()">Cancel</button>
+          <button type="submit" class="btn-hero-primary" style="padding:8px 22px;">Save Address to Ward Registry &rarr;</button>
+        </div>
+      </form>
     </div>
   </div>
 

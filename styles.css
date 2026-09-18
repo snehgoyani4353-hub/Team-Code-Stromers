@@ -3102,3 +3102,303 @@ input, select, textarea { font-family: inherit; }
   background: #1e293b;
 }
 
+/* ==========================================================================
+   SAVED ADDRESSES & WARD REGISTRY STYLES
+   ========================================================================== */
+.saved-addresses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.citizen-address-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.citizen-address-card:hover {
+  border-color: var(--civica-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.citizen-address-card.primary-address {
+  border-left: 5px solid var(--civica-gold);
+}
+
+.address-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.address-type-icon {
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.badge-primary-addr {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.badge-secondary-addr {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.badge-ward-verified {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.address-card-body {
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.address-line {
+  margin-bottom: 4px;
+}
+
+.address-linkages-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.linkage-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkage-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.linkage-value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  margin-top: 2px;
+}
+
+.address-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-address-action {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--civica-navy);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-address-action:hover {
+  background: #f8fafc;
+  border-color: var(--civica-gold);
+}
+
+.btn-address-action.primary-cta {
+  background: var(--civica-navy);
+  color: #ffffff;
+  border-color: var(--civica-navy);
+  font-weight: 700;
+}
+
+.btn-address-action.primary-cta:hover {
+  background: var(--civica-navy-light);
+}
+
+.btn-address-action.delete-cta {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+.btn-address-action.delete-cta:hover {
+  background: #fee2e2;
+}
+
+/* ==========================================================================
+   WALLET TOP-UP & UPI QR CODE MODAL STYLES
+   ========================================================================== */
+.amount-chips-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.amount-chip {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.amount-chip:hover {
+  border-color: var(--civica-gold);
+  background: #f1f5f9;
+}
+
+.amount-chip.active {
+  background: var(--civica-navy);
+  color: #ffffff;
+  border-color: var(--civica-navy);
+}
+
+.topup-method-pills {
+  display: flex;
+  gap: 10px;
+}
+
+.topup-method-pill {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topup-method-pill:hover {
+  border-color: var(--civica-gold);
+}
+
+.topup-method-pill.active {
+  border-color: var(--civica-gold);
+  background: #fffbeb;
+  color: #92400e;
+  box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
+}
+
+.upi-qr-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+}
+
+.upi-qr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.qr-code-center-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 14px 0;
+}
+
+.qr-svg-wrapper {
+  background: #ffffff;
+  padding: 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  display: inline-block;
+}
+
+.qr-amount-pill {
+  background: linear-gradient(90deg, var(--civica-gold), #eab308);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 5px 18px;
+  border-radius: var(--radius-full);
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 3px 10px rgba(197, 160, 89, 0.35);
+}
+
+.merchant-vpa-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.btn-copy-upi {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-copy-upi:hover {
+  background: #bae6fd;
+}
+
+

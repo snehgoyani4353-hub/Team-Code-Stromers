@@ -25,7 +25,8 @@ const I18N_DATA = {
     tab_track: "🔍 Track Complaint",
     tab_report: "📝 File Complaint",
     tab_wallet: "👛 Civic Wallet",
-    tab_wardmap: "🗺️ Ward Map",
+    tab_address: "📍 My Addresses",
+    tab_wardmap: "📍 My Addresses",
     tab_community: "📢 Community Feed",
     tab_transit: "🚍 Transit Flow",
     tab_rules_dir: "📜 Rules & SLAs",
@@ -35,7 +36,8 @@ const I18N_DATA = {
     latest_note_title: "Latest Official Field Note",
     btn_upload_photo: "📷 Upload Inspection Photo",
     btn_reopen: "Reopen Complaint",
-    wardmap_page_title: "Ward 7 Civic Infrastructure Health Map",
+    address_page_title: "My Saved Addresses & Ward Registry",
+    wardmap_page_title: "My Saved Addresses & Ward Registry",
     btn_share_society: "📤 Share with Society Secretary",
     side_escrow_title: "100% Refundable Escrow Guarantee",
     side_escrow_desc: "₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.",
@@ -179,6 +181,7 @@ let appState = {
   shiftActions: [...window.GUJARAT_CIVIC_DATA.shiftActions],
   complaints: [...window.GUJARAT_CIVIC_DATA.complaints],
   inboxTickets: [...window.GUJARAT_CIVIC_DATA.inboxTickets],
+  savedAddresses: [...(window.GUJARAT_CIVIC_DATA?.defaultAddresses || [])],
   selectedIssueType: 'streetlight',
   heatmapVisible: false
 };
@@ -200,12 +203,19 @@ function initMasterState() {
 
   const savedComplaints = localStorage.getItem('civica_complaints');
   const savedWallet = localStorage.getItem('civica_wallet');
+  const savedAddresses = localStorage.getItem('civica_addresses');
 
   if (savedComplaints) {
     try { appState.complaints = JSON.parse(savedComplaints); } catch (e) {}
   }
   if (savedWallet) {
     try { appState.citizenWallet = JSON.parse(savedWallet); } catch (e) {}
+  }
+  if (savedAddresses) {
+    try { appState.savedAddresses = JSON.parse(savedAddresses); } catch (e) {}
+  }
+  if (!appState.savedAddresses || appState.savedAddresses.length === 0) {
+    appState.savedAddresses = [...(window.GUJARAT_CIVIC_DATA?.defaultAddresses || [])];
   }
 
   appState.selectedOfficerTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
@@ -214,6 +224,7 @@ function initMasterState() {
 function saveMasterState() {
   localStorage.setItem('civica_complaints', JSON.stringify(appState.complaints));
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
+  localStorage.setItem('civica_addresses', JSON.stringify(appState.savedAddresses));
 }
 
 // Language Switcher (Clean English Default)
@@ -847,15 +858,19 @@ window.openCommandCenter = function() {
    ========================================================================== */
 
 window.switchDesktopTab = function(tabName) {
+  if (tabName === 'wardmap') tabName = 'address';
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['track', 'report', 'wallet', 'wardmap', 'community', 'transit', 'rules-dir'];
+  const tabs = ['track', 'report', 'wallet', 'address', 'community', 'transit', 'rules-dir'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
     if (panel) panel.style.display = (t === tabName) ? 'block' : 'none';
     if (btn) btn.classList.toggle('active', t === tabName);
   });
+
+  const oldWardBtn = document.getElementById('btn-tab-wardmap');
+  if (oldWardBtn) oldWardBtn.classList.toggle('active', tabName === 'address');
 
   const urlBar = document.getElementById('desktop-url-bar');
   if (urlBar) {
@@ -867,9 +882,9 @@ window.switchDesktopTab = function(tabName) {
       'track': 'Track Complaint',
       'report': 'File Complaint (₹50 Escrow)',
       'wallet': 'Civic Wallet & Ledger',
-      'wardmap': 'Ward 7 GIS Map',
+      'address': 'Saved Addresses & Ward Registry',
       'community': 'Community Incident Feed',
-      'transit': 'Transit & Commute Friction',
+      'transit': 'Transit Flow & Friction',
       'rules-dir': 'Rules, SLAs & Helplines'
     };
     breadcrumb.textContent = tabLabels[tabName] || tabName;
@@ -877,6 +892,7 @@ window.switchDesktopTab = function(tabName) {
 
   if (tabName === 'wallet') renderCivicWallet();
   else if (tabName === 'track') renderDesktopPortal();
+  else if (tabName === 'address') renderSavedAddresses();
   else if (tabName === 'community') renderCommunityIncidentFeed();
   else if (tabName === 'transit') renderTransitFriction();
 };
@@ -1145,49 +1161,393 @@ function renderCivicWallet() {
   }
 }
 
+/* ==========================================================================
+   WALLET TOP-UP & DYNAMIC UPI QR CODE CONTROLLER
+   ========================================================================== */
+let upiTimerInterval = null;
+let upiSecondsRemaining = 299; // 4 mins 59 secs
+
 window.openWalletTopupModal = function() {
   const m = document.getElementById('wallet-topup-modal');
   if (m) m.classList.add('active');
+  setTopupAmount(100);
+  selectTopupMethod('upi');
+  startUpiTimer();
 };
 
 window.closeWalletTopupModal = function() {
   const m = document.getElementById('wallet-topup-modal');
   if (m) m.classList.remove('active');
+  if (upiTimerInterval) clearInterval(upiTimerInterval);
 };
 
 window.setTopupAmount = function(amt) {
-  document.getElementById('topup-amount-input').value = amt;
+  const input = document.getElementById('topup-amount-input');
+  if (input) input.value = amt;
+  updateQrAmountDisplay(amt);
   document.querySelectorAll('.amount-chip').forEach(c => {
     c.classList.toggle('active', c.textContent.includes(amt));
   });
 };
 
-window.selectTopupGateway = function(el, gatewayName) {
-  document.querySelectorAll('#wallet-topup-modal .gateway-option-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  appState.selectedTopupGateway = gatewayName;
+window.updateQrAmountDisplay = function(amt) {
+  const parsed = parseFloat(amt) || 0;
+  const formatted = parsed.toFixed(2);
+  const qrDisplay = document.getElementById('qr-display-amount');
+  const btnLabel = document.getElementById('btn-pay-amount-label');
+  if (qrDisplay) qrDisplay.textContent = formatted;
+  if (btnLabel) btnLabel.textContent = formatted;
 };
 
-window.executeWalletTopup = function() {
+window.selectTopupMethod = function(method) {
+  const upiSec = document.getElementById('topup-section-upi');
+  const cardSec = document.getElementById('topup-section-card');
+  const btnUpi = document.getElementById('btn-method-upi');
+  const btnCard = document.getElementById('btn-method-card');
+
+  if (method === 'upi') {
+    if (upiSec) upiSec.style.display = 'block';
+    if (cardSec) cardSec.style.display = 'none';
+    if (btnUpi) btnUpi.classList.add('active');
+    if (btnCard) btnCard.classList.remove('active');
+  } else {
+    if (upiSec) upiSec.style.display = 'none';
+    if (cardSec) cardSec.style.display = 'block';
+    if (btnUpi) btnUpi.classList.remove('active');
+    if (btnCard) btnCard.classList.add('active');
+  }
+};
+
+window.copyUpiId = function() {
+  const vpa = 'amc.civica@sbi';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(vpa).then(() => {
+      showCivicaToast(`📋 Copied UPI ID "${vpa}" to clipboard!`);
+    }).catch(() => {
+      showCivicaToast(`📋 UPI ID: ${vpa}`);
+    });
+  } else {
+    showCivicaToast(`📋 UPI ID: ${vpa}`);
+  }
+};
+
+function startUpiTimer() {
+  if (upiTimerInterval) clearInterval(upiTimerInterval);
+  upiSecondsRemaining = 299;
+  updateTimerDisplay();
+  upiTimerInterval = setInterval(() => {
+    upiSecondsRemaining--;
+    if (upiSecondsRemaining <= 0) {
+      upiSecondsRemaining = 299; // auto-refresh dynamic QR
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const timerEl = document.getElementById('upi-qr-timer');
+  if (!timerEl) return;
+  const mins = String(Math.floor(upiSecondsRemaining / 60)).padStart(2, '0');
+  const secs = String(upiSecondsRemaining % 60).padStart(2, '0');
+  timerEl.textContent = `⏳ Expires: ${mins}:${secs}`;
+}
+
+window.executeUpiWalletTopup = function(paymentMethod = 'UPI / QR Scan') {
   const input = document.getElementById('topup-amount-input');
   const amount = parseFloat(input?.value) || 100;
-  if (amount <= 0) return;
+  if (amount <= 0) {
+    alert('Please enter a valid amount (minimum ₹10).');
+    return;
+  }
 
-  appState.citizenWallet.balance = (Number(appState.citizenWallet.balance) || 0) + amount;
-  appState.citizenWallet.transactions.unshift({
-    id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
-    type: 'credit',
-    title: `Wallet Top-Up via ${appState.selectedTopupGateway}`,
-    amount: amount,
-    date: 'Just now',
-    method: appState.selectedTopupGateway,
-    status: 'completed'
+  const utrInput = document.getElementById('upi-utr-input');
+  const utr = utrInput?.value.trim() || `${Math.floor(400000000000 + Math.random() * 900000000000)}`;
+
+  const btn = document.getElementById('btn-confirm-upi-pay');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Verifying Bank Gateway...`;
+  }
+
+  setTimeout(() => {
+    appState.citizenWallet.balance = (Number(appState.citizenWallet.balance) || 0) + amount;
+    appState.citizenWallet.transactions.unshift({
+      id: `TX-UPI-${Math.floor(100000 + Math.random() * 900000)}`,
+      type: 'credit',
+      title: `Wallet Top-Up via ${paymentMethod}`,
+      amount: amount,
+      date: 'Just now',
+      method: paymentMethod,
+      status: 'completed',
+      utr: utr
+    });
+
+    saveMasterState();
+    closeWalletTopupModal();
+    renderCivicWallet();
+
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `✓ I Have Paid ₹<span id="btn-pay-amount-label">${amount.toFixed(2)}</span> &bull; Confirm Top-Up`;
+    }
+    if (utrInput) utrInput.value = '';
+
+    showCivicaToast(`✅ ₹${amount.toFixed(2)} added to Civic Wallet via UPI QR! (UTR: ${utr.slice(0, 4)}...${utr.slice(-4)})`);
+  }, 700);
+};
+
+window.simulateInstantUpi = function() {
+  executeUpiWalletTopup('UPI FastPay (Instant QR)');
+};
+
+/* ==========================================================================
+   SAVED ADDRESSES & MUNICIPAL WARD REGISTRY CONTROLLER
+   ========================================================================== */
+window.renderSavedAddresses = function() {
+  const container = document.getElementById('dt-saved-addresses-list');
+  const countText = document.getElementById('addr-count-text');
+  if (!container) return;
+
+  const list = appState.savedAddresses || [];
+  if (countText) {
+    const primaryCount = list.filter(a => a.isPrimary).length;
+    countText.innerHTML = `${list.length} Active Addresses (${primaryCount} Primary Home)<br>Property Tax UIDs linked & geo-tagged`;
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:var(--radius-lg); padding:40px; text-align:center; grid-column:1/-1;">
+        <div style="font-size:2.5rem; margin-bottom:10px;">📍</div>
+        <h3 style="font-family:var(--font-heading); font-size:1.2rem; color:var(--civica-navy); margin-bottom:6px;">No Saved Addresses</h3>
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:16px;">Add your primary residence or workplace to unlock automated municipal dispatches and sanitation notifications.</p>
+        <button type="button" class="btn-hero-primary" onclick="openAddAddressModal()">+ Register First Address</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = list.map(addr => `
+    <div class="citizen-address-card ${addr.isPrimary ? 'primary-address' : ''}">
+      <div class="address-card-top">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="address-type-icon">${addr.label === 'Workplace' ? '💼' : addr.label === 'Other' ? '🏢' : '🏠'}</span>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="font-size:1.05rem; color:var(--civica-navy); font-family:var(--font-heading);">${addr.flatNo}</strong>
+              ${addr.isPrimary ? '<span class="badge-primary-addr">★ Primary Residence</span>' : `<span class="badge-secondary-addr">${addr.label}</span>`}
+            </div>
+            <span style="font-size:0.75rem; color:#64748b;">${addr.tag || 'Registered Civic Property'}</span>
+          </div>
+        </div>
+        <span class="badge-ward-verified">✓ AMC Ward Verified</span>
+      </div>
+
+      <div class="address-card-body">
+        <div class="address-line"><strong>Society / Bldg:</strong> ${addr.street}</div>
+        <div class="address-line"><strong>Landmark:</strong> ${addr.landmark || 'Navrangpura Central Area'}</div>
+        <div class="address-line"><strong>Ward & Zone:</strong> <span style="font-weight:700; color:#0369a1;">${addr.ward}</span> &bull; ${addr.zone || 'West Zone'}</div>
+        <div class="address-line"><strong>City & PIN:</strong> ${addr.city || 'AMC Ahmedabad'}, Gujarat — <strong>${addr.pincode}</strong></div>
+      </div>
+
+      <!-- Municipal Linkages Box -->
+      <div class="address-linkages-box">
+        <div class="linkage-item">
+          <span class="linkage-label">Property Tax Index</span>
+          <span class="linkage-value">${addr.taxIndexNo || '07-04-192-0048'}</span>
+        </div>
+        <div class="linkage-item">
+          <span class="linkage-label">Property UID</span>
+          <span class="linkage-value">${addr.propertyUid || 'AMC-W7-NV-4821'}</span>
+        </div>
+        <div class="linkage-item">
+          <span class="linkage-label">Doorstep Sanitation</span>
+          <span class="linkage-value" style="color:#166534;">${addr.garbageSchedule || 'Daily 07:30 AM (Shift A)'}</span>
+        </div>
+        <div class="linkage-item">
+          <span class="linkage-label">Municipal Water Supply</span>
+          <span class="linkage-value" style="color:#0369a1;">${addr.waterSupply || '06:00 - 08:30 AM'}</span>
+        </div>
+      </div>
+
+      <!-- Address Action Buttons -->
+      <div class="address-card-actions">
+        <button type="button" class="btn-address-action primary-cta" onclick="reportIssueAtAddress('${addr.id}')" title="File complaint for this location">
+          🚨 File Complaint Here
+        </button>
+        <button type="button" class="btn-address-action" onclick="copyAddressToClipboard('${addr.id}')" title="Copy address to clipboard">
+          📋 Copy
+        </button>
+        ${!addr.isPrimary ? `
+          <button type="button" class="btn-address-action" onclick="setPrimaryAddress('${addr.id}')" title="Make this your primary residence">
+            ⭐ Make Primary
+          </button>
+        ` : ''}
+        <button type="button" class="btn-address-action" onclick="openAddAddressModal('${addr.id}')" title="Edit address details">
+          ✏️ Edit
+        </button>
+        ${!addr.isPrimary ? `
+          <button type="button" class="btn-address-action delete-cta" onclick="deleteAddress('${addr.id}')" title="Delete address">
+            🗑️
+          </button>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+};
+
+window.reportIssueAtAddress = function(addrId) {
+  const addr = (appState.savedAddresses || []).find(a => a.id === addrId);
+  if (!addr) return;
+  const fullLoc = `${addr.flatNo}, ${addr.street}, ${addr.ward}`;
+  const locInput = document.getElementById('dt-location-input');
+  if (locInput) locInput.value = fullLoc;
+  switchDesktopTab('report');
+  showCivicaToast(`📍 Complaint location auto-filled with ${addr.label} address!`);
+};
+
+window.setPrimaryAddress = function(addrId) {
+  (appState.savedAddresses || []).forEach(a => {
+    a.isPrimary = (a.id === addrId);
   });
+  saveMasterState();
+  renderSavedAddresses();
+  showCivicaToast('⭐ Primary residential address updated!');
+};
+
+window.deleteAddress = function(addrId) {
+  if (confirm('Are you sure you want to remove this address from your municipal registry?')) {
+    appState.savedAddresses = (appState.savedAddresses || []).filter(a => a.id !== addrId);
+    saveMasterState();
+    renderSavedAddresses();
+    showCivicaToast('🗑️ Address removed from registry.');
+  }
+};
+
+window.copyAddressToClipboard = function(addrId) {
+  const addr = (appState.savedAddresses || []).find(a => a.id === addrId);
+  if (!addr) return;
+  const full = `${addr.flatNo}, ${addr.street}, Landmark: ${addr.landmark || 'Navrangpura'}, ${addr.ward}, ${addr.city || 'AMC Ahmedabad'} - ${addr.pincode}`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(full).then(() => {
+      showCivicaToast('📋 Full address copied to clipboard!');
+    }).catch(() => {
+      showCivicaToast(`📋 ${full}`);
+    });
+  } else {
+    showCivicaToast(`📋 ${full}`);
+  }
+};
+
+window.openAddAddressModal = function(editId = null) {
+  const m = document.getElementById('add-address-modal');
+  const title = document.getElementById('address-modal-title');
+  const editInput = document.getElementById('edit-address-id');
+  const form = document.getElementById('add-address-form');
+
+  if (form) form.reset();
+  if (editInput) editInput.value = editId || '';
+
+  if (editId) {
+    const existing = (appState.savedAddresses || []).find(a => a.id === editId);
+    if (existing) {
+      if (title) title.textContent = 'Edit Civic Address';
+      toggleAddressTypeRadio(existing.label || 'Home');
+      const flat = document.getElementById('addr-flat-input');
+      const bldg = document.getElementById('addr-building-input');
+      const street = document.getElementById('addr-street-input');
+      const ward = document.getElementById('addr-ward-select');
+      const pin = document.getElementById('addr-pincode-input');
+      const tax = document.getElementById('addr-tax-input');
+      if (flat) flat.value = existing.flatNo || '';
+      if (bldg) bldg.value = existing.street.split(',')[0] || '';
+      if (street) street.value = existing.landmark || existing.street || '';
+      if (ward) ward.value = existing.ward || 'Ward 7 · Navrangpura (West Zone)';
+      if (pin) pin.value = existing.pincode || '380009';
+      if (tax) tax.value = existing.taxIndexNo || '';
+    }
+  } else {
+    if (title) title.textContent = 'Register New Civic Address';
+    toggleAddressTypeRadio('Home');
+  }
+
+  if (m) m.classList.add('active');
+};
+
+window.closeAddAddressModal = function() {
+  const m = document.getElementById('add-address-modal');
+  if (m) m.classList.remove('active');
+};
+
+window.toggleAddressTypeRadio = function(type) {
+  ['home', 'work', 'other'].forEach(t => {
+    const lbl = document.getElementById(`label-addr-${t}`);
+    if (lbl) lbl.classList.remove('active');
+  });
+  if (type === 'Home') document.getElementById('label-addr-home')?.classList.add('active');
+  else if (type === 'Workplace') document.getElementById('label-addr-work')?.classList.add('active');
+  else document.getElementById('label-addr-other')?.classList.add('active');
+};
+
+window.handleSaveAddress = function(e) {
+  e.preventDefault();
+  const editId = document.getElementById('edit-address-id')?.value;
+  const typeRadio = document.querySelector('input[name="addr_type"]:checked')?.value || 'Home';
+  const flat = document.getElementById('addr-flat-input')?.value.trim();
+  const bldg = document.getElementById('addr-building-input')?.value.trim();
+  const street = document.getElementById('addr-street-input')?.value.trim();
+  const ward = document.getElementById('addr-ward-select')?.value || 'Ward 7 · Navrangpura (West Zone)';
+  const pin = document.getElementById('addr-pincode-input')?.value.trim() || '380009';
+  const tax = document.getElementById('addr-tax-input')?.value.trim() || `07-04-${Math.floor(100 + Math.random() * 900)}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+  if (!flat || !bldg || !street) {
+    alert('Please fill in all required address fields.');
+    return;
+  }
+
+  if (editId) {
+    const idx = (appState.savedAddresses || []).findIndex(a => a.id === editId);
+    if (idx !== -1) {
+      appState.savedAddresses[idx].label = typeRadio;
+      appState.savedAddresses[idx].flatNo = flat;
+      appState.savedAddresses[idx].street = `${bldg}, ${street}`;
+      appState.savedAddresses[idx].landmark = street;
+      appState.savedAddresses[idx].ward = ward;
+      appState.savedAddresses[idx].pincode = pin;
+      appState.savedAddresses[idx].taxIndexNo = tax;
+    }
+  } else {
+    const isFirst = (!appState.savedAddresses || appState.savedAddresses.length === 0);
+    const newAddr = {
+      id: `ADDR-${Math.floor(10 + Math.random() * 90)}`,
+      label: typeRadio,
+      isPrimary: isFirst || typeRadio === 'Home',
+      tag: typeRadio === 'Home' ? 'Primary Residence' : typeRadio === 'Workplace' ? 'Commercial Office' : 'Alternate Property',
+      recipient: 'Priya Patel',
+      flatNo: flat,
+      street: `${bldg}, ${street}`,
+      landmark: street,
+      locality: ward.split('·')[1]?.trim() || 'Navrangpura',
+      ward: ward,
+      zone: 'West Zone',
+      city: 'AMC Ahmedabad',
+      pincode: pin,
+      propertyUid: `AMC-W7-${Math.floor(1000 + Math.random() * 9000)}`,
+      taxIndexNo: tax,
+      electricityNo: `${Math.floor(10000000 + Math.random() * 90000000)} (Torrent Power)`,
+      garbageSchedule: 'Daily 07:30 AM (Shift A)',
+      waterSupply: '06:00 AM - 08:30 AM (Active)',
+      isVerified: true
+    };
+    if (newAddr.isPrimary) {
+      (appState.savedAddresses || []).forEach(a => a.isPrimary = false);
+    }
+    appState.savedAddresses.push(newAddr);
+  }
 
   saveMasterState();
-  closeWalletTopupModal();
-  renderCivicWallet();
-  showCivicaToast(`💳 Added ₹${amount.toFixed(2)} to Civic Wallet via ${appState.selectedTopupGateway}!`);
+  closeAddAddressModal();
+  renderSavedAddresses();
+  showCivicaToast(`✅ Address successfully saved to AMC Ward Registry!`);
 };
 
 // Community Feed & Commute Friction

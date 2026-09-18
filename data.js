@@ -413,6 +413,54 @@ const GUJARAT_CIVIC_DATA = {
     { id: "ADM-002", folder: "admin_02_sunita_desai", name: "Sunita Desai", designation: "Executive Health & Sanitation Officer", dept: "Public Health & Waste", zone: "North Zone", badge: "SMC-HLTH-02", shift: "09:00 - 17:00", openTickets: 35, dueToday: 14, dashboardUrl: "admins/admin_02_sunita_desai/admin_dashboard.html" },
     { id: "ADM-003", folder: "admin_03_mahesh_solanki", name: "Mahesh Solanki", designation: "Chief Road & Infrastructure Engineer", dept: "Engineering & Drainage", zone: "West Zone", badge: "SMC-ENGR-03", shift: "10:00 - 18:00", openTickets: 41, dueToday: 12, dashboardUrl: "admins/admin_03_mahesh_solanki/admin_dashboard.html" },
     { id: "ADM-004", folder: "admin_04_farida_sheikh", name: "Farida Sheikh", designation: "Urban Grievance & Rapid Response Director", dept: "Command & Emergency Dispatch", zone: "South Zone", badge: "SMC-EMERG-04", shift: "14:00 - 22:00", openTickets: 52, dueToday: 18, dashboardUrl: "admins/admin_04_farida_sheikh/admin_dashboard.html" }
+  ],
+
+  // Citizen Saved Municipal Addresses Registry
+  defaultAddresses: [
+    {
+      id: "ADDR-01",
+      label: "Home",
+      isPrimary: true,
+      tag: "Primary Residence",
+      recipient: "Priya Patel",
+      phone: "+91 98765 43210",
+      flatNo: "Flat 402, Shivalik Heights",
+      street: "Near St. Xavier's Corner, CG Road",
+      landmark: "Opp. Municipal Market",
+      locality: "Navrangpura",
+      ward: "Ward 7 · Navrangpura",
+      zone: "West Zone",
+      city: "AMC Ahmedabad",
+      pincode: "380009",
+      propertyUid: "AMC-W7-NV-4821",
+      taxIndexNo: "07-04-192-0048",
+      electricityNo: "10482910 (Torrent Power)",
+      garbageSchedule: "Daily 07:30 AM (Shift A)",
+      waterSupply: "06:00 AM - 08:30 AM (Active)",
+      isVerified: true
+    },
+    {
+      id: "ADDR-02",
+      label: "Workplace",
+      isPrimary: false,
+      tag: "Commercial Office",
+      recipient: "Priya Patel",
+      phone: "+91 98765 43210",
+      flatNo: "Suite 305, Pinnacle Business Hub",
+      street: "Law Garden Cross Roads, Ellisbridge",
+      landmark: "Behind Gujarat College Ground",
+      locality: "Ellisbridge",
+      ward: "Ward 7 · Navrangpura",
+      zone: "West Zone",
+      city: "AMC Ahmedabad",
+      pincode: "380006",
+      propertyUid: "AMC-W7-EB-9912",
+      taxIndexNo: "07-08-301-1120",
+      electricityNo: "10984421 (Torrent Power)",
+      garbageSchedule: "Commercial SWM 09:30 AM",
+      waterSupply: "Direct Municipal Pipeline",
+      isVerified: true
+    }
   ]
 };
 
