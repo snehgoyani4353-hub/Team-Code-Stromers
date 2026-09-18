@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIVICA | Rules, Regulations & Official Contact Directory</title>
+  <meta name="description" content="Official AMC Citizen Charter, Service Level Agreements (SLAs), ₹50 Refundable Security Escrow Rules, and 24x7 Emergency Contact Numbers.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dedicated Rules & Contact Page Styles */
+    .rules-contact-body {
+      background: #f8fafc;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rules-page-hero {
+      background: linear-gradient(135deg, var(--civica-navy-dark) 0%, var(--civica-navy) 60%, var(--civica-navy-light) 100%);
+      color: #ffffff;
+      padding: 60px 32px 50px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rules-page-hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--civica-gold-dark), var(--civica-gold), var(--civica-gold-light));
+    }
+
+    .rules-hero-title {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .rules-hero-subtitle {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      max-width: 820px;
+      margin: 0 auto 24px auto;
+      line-height: 1.6;
+    }
+
+    .rules-quick-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .quick-stat-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.35);
+      border-radius: var(--radius-full);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+
+    .quick-stat-pill strong {
+      color: var(--civica-gold-light);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+    }
+
+    /* Tabs Bar */
+    .rules-nav-tabs-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 73px;
+      z-index: 90;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .rules-tabs-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px 24px;
+    }
+
+    .rules-tab-btn {
+      padding: 10px 28px;
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rules-tab-btn:hover {
+      color: var(--civica-navy);
+      background: rgba(12, 26, 47, 0.04);
+    }
+
+    .rules-tab-btn.active {
+      background: var(--civica-navy);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(12, 26, 47, 0.18);
+    }
+
+    /* Main Container */
+    .rules-main-container {
+      max-width: 1300px;
+      margin: 40px auto;
+      padding: 0 24px;
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    .rules-section-panel {
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .rules-section-panel.active {
+      display: block;
+    }
+
+    /* Emergency Numbers Grid */
+    .emergency-banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .emergency-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .emergency-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .emergency-card.featured {
+      border: 2px solid var(--civica-gold);
+      background: linear-gradient(180deg, #fffcf5 0%, #ffffff 100%);
+    }
+
+    .emergency-icon-circle {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--civica-navy);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 12px auto;
+    }
+
+    .emergency-card.featured .emergency-icon-circle {
+      background: var(--civica-gold);
+      color: var(--civica-navy-dark);
+    }
+
+    .emergency-num-title {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--civica-navy);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .emergency-card.featured .emergency-num-title {
+      color: #9e7d38;
+    }
+
+    .emergency-service-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .emergency-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .btn-call-emergency {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--civica-navy);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: background 0.2s ease;
+      width: 100%;
+    }
+
+    .btn-call-emergency:hover {
+      background: var(--civica-navy-light);
+    }
+
+    .emergency-card.featured .btn-call-emergency {
+      background: var(--civica-gold);
+      color: var(--civica-navy-dark);
+    }
+
+    .emergency-card.featured .btn-call-emergency:hover {
+      background: var(--civica-gold-dark);
+      color: #ffffff;
+    }
+
+    /* Zonal Offices Two Columns */
+    .zonal-directory-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--civica-navy);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--civica-gold);
+    }
+
+    .zonal-offices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .zonal-office-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .zonal-badge {
+      align-self: flex-start;
+      background: rgba(12, 26, 47, 0.08);
+      color: var(--civica-navy);
+      font-family: var(--font-serif);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.08em;
+    }
+
+    .zonal-office-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--civica-navy);
+    }
+
+    .zonal-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #475569;
+    }
+
+    .zonal-info-row strong {
+      color: var(--text-main);
+      min-width: 65px;
+    }
+
+    .zonal-phone-link {
+      color: #0284c7;
+      font-weight: 600;
+    }
+    .zonal-phone-link:hover { text-decoration: underline; }
+
+    /* Rules & Regulations Cards */
+    .rules-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .rule-box-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .rule-box-card.highlighted {
+      border-left: 6px solid var(--civica-gold);
+    }
+
+    .rule-header-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .rule-number-pill {
+      background: var(--civica-navy);
+      color: var(--civica-gold-light);
+      font-family: var(--font-serif);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+    }
+
+    .rule-heading {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--civica-navy);
+    }
+
+    .rule-body-text {
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .rule-points-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .rule-point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #475569;
+    }
+
+    .rule-point-item::before {
+      content: "✓";
+      color: #10b981;
+      font-weight: 800;
+      margin-top: 1px;
+    }
+
+    .rule-alert-callout {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      color: #92400e;
+    }
+
+    /* SLA Table */
+    .sla-table-responsive {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .sla-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .sla-table th {
+      background: var(--civica-navy);
+      color: #ffffff;
+      padding: 12px 16px;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .sla-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: #334155;
+    }
+
+    .sla-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .sla-badge-fast {
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+    }
+
+    /* Interactive Inquiry Form */
+    .contact-form-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 40px;
+    }
+
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .contact-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contact-input-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--civica-navy);
+    }
+
+    .contact-input-field {
+      padding: 10px 14px;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+
+    .contact-input-field:focus {
+      outline: none;
+      border-color: var(--civica-navy);
+    }
+
+    .btn-submit-inquiry {
+      background: var(--civica-gold);
+      color: var(--civica-navy-dark);
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-submit-inquiry:hover {
+      background: var(--civica-gold-dark);
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.8rem; }
+      .form-grid-2col { grid-template-columns: 1fr; }
+      .rules-tabs-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body class="rules-contact-body">
+
+  <!-- Header matching CIVICA Master Branding -->
+  <header class="civica-top-header">
+    <div class="header-inner">
+      <div class="logo-area" style="display:flex; align-items:center; gap:16px;">
+        <a href="index.html" class="civica-brand-logo">C I V I C A</a>
+        <a href="index.html" class="btn-back-home" style="display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; font-weight:600; color:var(--civica-navy); padding:6px 14px; background:#f1f5f9; border-radius:var(--radius-sm);">
+          &larr; <span id="txt-back-home">Back to Civica Home</span>
+        </a>
+      </div>
+
+      <div class="header-right-actions">
+        <!-- 3-LANGUAGE SELECTOR -->
+        <div class="lang-switch-group">
+          <button class="lang-btn" id="lang-btn-en" onclick="setRulesLang('en')">English</button>
+          <button class="lang-btn active" id="lang-btn-gu" onclick="setRulesLang('gu')">ગુજરાતી</button>
+          <button class="lang-btn" id="lang-btn-hi" onclick="setRulesLang('hi')">हिन्दी</button>
+        </div>
+
+        <a href="index.html" class="btn-member-login" id="btn-login-redirect">
+          MEMBER LOGIN
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="rules-page-hero">
+    <div style="font-family: var(--font-serif); font-size: 0.95rem; letter-spacing: 0.35em; color: var(--civica-gold-light); margin-bottom: 8px; text-transform: uppercase;">
+      AHMEDABAD MUNICIPAL CORPORATION &bull; CIVIC GOVERNANCE
+    </div>
+    <h1 class="rules-hero-title" id="page-hero-title">
+      Rules, Regulations & AMC Emergency Contact Directory
+    </h1>
+    <p class="rules-hero-subtitle" id="page-hero-subtitle">
+      Citizen Charter Standards, 24-48 Hour SLA Redressal Guarantees, ₹50 Refundable Security Escrow Transparency, and 24x7 Direct Helplines for Municipal Operations.
+    </p>
+
+    <div class="rules-quick-stats-row">
+      <div class="quick-stat-pill">
+        <span>📞 Central Helpline:</span>
+        <strong>155303 (24x7)</strong>
+      </div>
+      <div class="quick-stat-pill">
+        <span>🌧️ Monsoon Emergency:</span>
+        <strong>1913</strong>
+      </div>
+      <div class="quick-stat-pill">
+        <span>⏱️ Road Pothole SLA:</span>
+        <strong>24 to 48 Hours</strong>
+      </div>
+      <div class="quick-stat-pill">
+        <span>👛 Escrow Refund:</span>
+        <strong>100% Guaranteed</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Switcher Tabs -->
+  <div class="rules-nav-tabs-bar">
+    <div class="rules-tabs-container">
+      <button class="rules-tab-btn active" id="tab-btn-rules" onclick="switchRulesTab('rules')">
+        📜 <span id="tab-label-rules">Rules & Regulations (નિયમો અને શરતો)</span>
+      </button>
+      <button class="rules-tab-btn" id="tab-btn-contacts" onclick="switchRulesTab('contacts')">
+        📞 <span id="tab-label-contacts">Emergency Helplines & Zonal Directory (સંપર્ક નંબરો)</span>
+      </button>
+      <button class="rules-tab-btn" id="tab-btn-inquiry" onclick="switchRulesTab('inquiry')">
+        ✉️ <span id="tab-label-inquiry">Send Official Inquiry (સત્તાવાર પૂછપરછ)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="rules-main-container">
+
+    <!-- =========================================================================
+         TAB 1: RULES & REGULATIONS (AMC CITIZEN CHARTER & POLICIES)
+         ========================================================================= -->
+    <div id="section-panel-rules" class="rules-section-panel active">
+      <div class="rules-grid-layout">
+        
+        <!-- RULE 1: SLA REDRESSAL TIMELINES -->
+        <div class="rule-box-card highlighted">
+          <div class="rule-header-row">
+            <span class="rule-number-pill">RULE 01</span>
+            <h2 class="rule-heading" id="rule1-title">Mandatory Service Level Agreements (SLAs) & Timelines</h2>
+          </div>
+          <p class="rule-body-text" id="rule1-desc">
+            Under the Gujarat Provincial Municipal Corporations (GPMC) Act and Civica Smart Operations Framework, every registered citizen grievance is legally bound to strict resolution timelines based on severity:
+          </p>
+
+          <div class="sla-table-responsive">
+            <table class="sla-table">
+              <thead>
+                <tr>
+                  <th>Civic Category</th>
+                  <th>Standard SLA Timeline</th>
+                  <th>Assigned Field Team</th>
+                  <th>Escalation Benchmark</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Potholes & Road Cratering</strong></td>
+                  <td><span class="sla-badge-fast">24 to 48 Hours</span></td>
+                  <td>Ward Highway & Asphalt Unit</td>
+                  <td>Level 2: Zonal Executive Engineer</td>
+                </tr>
+                <tr>
+                  <td><strong>Dark Spots & Defective Streetlights</strong></td>
+                  <td><span class="sla-badge-fast">24 Hours</span></td>
+                  <td>Light & Electrical Dept</td>
+                  <td>Level 2: Electrical Supervisor</td>
+                </tr>
+                <tr>
+                  <td><strong>Water Contamination / Burst Pipeline</strong></td>
+                  <td><span class="sla-badge-fast" style="background:#fee2e2; color:#991b1b;">4 Hours (Emergency)</span></td>
+                  <td>Hydraulics & Water Works</td>
+                  <td>Level 3: Deputy Municipal Commissioner</td>
+                </tr>
+                <tr>
+                  <td><strong>Monsoon Underpass Waterlogging</strong></td>
+                  <td><span class="sla-badge-fast" style="background:#fee2e2; color:#991b1b;">2 Hours (Rapid Action)</span></td>
+                  <td>Monsoon Control & Drainage</td>
+                  <td>Level 3: Central Control Room 1913</td>
+                </tr>
+                <tr>
+                  <td><strong>Illegal Garbage Dump & Solid Waste</strong></td>
+                  <td><span class="sla-badge-fast">12 Hours</span></td>
+                  <td>Solid Waste Management (SWM)</td>
+                  <td>Level 1: Ward Sanitary Inspector</td>
+                </tr>
+                <tr>
+                  <td><strong>Stray Cattle & Public Obstruction</strong></td>
+                  <td><span class="sla-badge-fast">6 Hours</span></td>
+                  <td>Cattle Nuisance Control (CNCD)</td>
+                  <td>Level 1: CNCD Flying Squad</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RULE 2: ₹50 REFUNDABLE SECURITY ESCROW POLICY -->
+        <div class="rule-box-card highlighted">
+          <div class="rule-header-row">
+            <span class="rule-number-pill">RULE 02</span>
+            <h2 class="rule-heading" id="rule2-title">₹50 Refundable Security Escrow Policy (100% Refundable)</h2>
+          </div>
+          <p class="rule-body-text" id="rule2-desc">
+            To prevent bot spam, automated vandalism, and duplicate prank complaints that exhaust civic field teams, a refundable token deposit of ₹50 is temporarily reserved in municipal escrow when filing a complaint:
+          </p>
+          <ul class="rule-points-list">
+            <li class="rule-point-item" id="rule2-p1"><strong>100% Automatic Refund:</strong> The entire ₹50 deposit is instantly credited back to your Civica Wallet as soon as the assigned municipal engineer verifies the photo and geo-location on site.</li>
+            <li class="rule-point-item" id="rule2-p2"><strong>Zero Cost for Genuine Citizens:</strong> No charges or fees are deducted for any legitimate complaint, regardless of how long repairs take.</li>
+            <li class="rule-point-item" id="rule2-p3"><strong>Instant Wallet Payout:</strong> Refunded wallet funds can be reused for future reports, BRTS transit rides, or withdrawn to UPI/Bank account.</li>
+            <li class="rule-point-item" id="rule2-p4"><strong>Malicious Spam Forfeiture:</strong> The deposit is only forfeited in cases of verified deliberate hoax photos or abusive spam submissions to compensate inspection transit costs.</li>
+          </ul>
+          <div class="rule-alert-callout" id="rule2-callout">
+            💡 <em>Citizen Guarantee: Over 99.4% of all citizen escrow deposits are refunded within 24 hours. Your civic participation is safe and protected.</em>
+          </div>
+        </div>
+
+        <!-- RULE 3: PHOTO & GEO-TAGGING EVIDENCE STANDARDS -->
+        <div class="rule-box-card">
+          <div class="rule-header-row">
+            <span class="rule-number-pill">RULE 03</span>
+            <h2 class="rule-heading" id="rule3-title">Evidence & Geo-Tagging Standards (Live GPS)</h2>
+          </div>
+          <p class="rule-body-text" id="rule3-desc">
+            To enable municipal contractors and repair vans to locate issues accurately without calling you repeatedly, reports must satisfy the following evidence criteria:
+          </p>
+          <ul class="rule-points-list">
+            <li class="rule-point-item"><strong>Clear Photograph:</strong> Capture the issue in daylight or illuminated street conditions clearly showing the surrounding landmarks.</li>
+            <li class="rule-point-item"><strong>GPS Accuracy within 50 Meters:</strong> Enable camera GPS or confirm your pin location on the interactive ward map.</li>
+            <li class="rule-point-item"><strong>Privacy Safeguards:</strong> Under privacy guidelines, avoid capturing recognizable human faces or private residential interiors. Civica automatically blurs vehicle license plates.</li>
+          </ul>
+        </div>
+
+        <!-- RULE 4: MULTI-TIER ESCALATION LADDER -->
+        <div class="rule-box-card">
+          <div class="rule-header-row">
+            <span class="rule-number-pill">RULE 04</span>
+            <h2 class="rule-heading" id="rule4-title">Automated Multi-Tier Escalation Ladder</h2>
+          </div>
+          <p class="rule-body-text" id="rule4-desc">
+            If a complaint is not acted upon within the stipulated SLA timeline, the Civica engine automatically escalates the ticket up the administrative hierarchy:
+          </p>
+          <ul class="rule-points-list">
+            <li class="rule-point-item"><strong>Level 1 (0 to 24 Hours):</strong> Assigned to Ward Junior Engineer & Field Line Supervisor.</li>
+            <li class="rule-point-item"><strong>Level 2 (24 to 48 Hours):</strong> Escalated to Assistant Municipal Commissioner (AMC Zonal Head) with automated red-flag alert.</li>
+            <li class="rule-point-item"><strong>Level 3 (Beyond 48 Hours):</strong> Placed on the Municipal Commissioner’s Morning Review Board for direct contractor review and inquiry.</li>
+          </ul>
+        </div>
+
+        <!-- RULE 5: CITIZEN REWARDS & CIVIC KARMA -->
+        <div class="rule-box-card">
+          <div class="rule-header-row">
+            <span class="rule-number-pill">RULE 05</span>
+            <h2 class="rule-heading" id="rule5-title">Civic Karma Points & Annual Property Tax Rebates</h2>
+          </div>
+          <p class="rule-body-text" id="rule5-desc">
+            Every genuine resolved report earns you <strong>+10 Civic Karma Points</strong>. Citizens maintaining top ward badges receive official AMC recognition certificates and up to <strong>5% rebate on annual municipal property tax</strong>!
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: EMERGENCY HELPLINES & ZONAL DIRECTORY
+         ========================================================================= -->
+    <div id="section-panel-contacts" class="rules-section-panel">
+      
+      <!-- 24x7 Hotlines Cards Grid -->
+      <h2 class="zonal-directory-title" id="hotline-section-title">24x7 Central Emergency & Helpline Numbers</h2>
+      
+      <div class="emergency-banner-grid">
+        <!-- 155303 -->
+        <div class="emergency-card featured">
+          <div class="emergency-icon-circle">📞</div>
+          <div class="emergency-num-title">155303</div>
+          <div class="emergency-service-name" id="h1-title">AMC Central Civic Control Room</div>
+          <div class="emergency-desc" id="h1-desc">Toll-Free, 24 Hours all 365 days. Direct dispatch for roads, streetlights, drainage & emergencies.</div>
+          <a href="tel:155303" class="btn-call-emergency">Direct Dial 155303 &rarr;</a>
+        </div>
+
+        <!-- 1913 -->
+        <div class="emergency-card featured">
+          <div class="emergency-icon-circle">🌧️</div>
+          <div class="emergency-num-title">1913</div>
+          <div class="emergency-service-name" id="h2-title">Monsoon & Flood Control Helpline</div>
+          <div class="emergency-desc" id="h2-desc">Immediate waterlogging, storm drain clogs, underpass dewatering & tree falling hazards.</div>
+          <a href="tel:1913" class="btn-call-emergency">Direct Dial 1913 &rarr;</a>
+        </div>
+
+        <!-- 181 -->
+        <div class="emergency-card">
+          <div class="emergency-icon-circle">🛡️</div>
+          <div class="emergency-num-title">181</div>
+          <div class="emergency-service-name" id="h3-title">Abhayam Women Helpline</div>
+          <div class="emergency-desc" id="h3-desc">24-hour dedicated emergency response, transit safety & protection across Gujarat.</div>
+          <a href="tel:181" class="btn-call-emergency">Call 181 Helpline &rarr;</a>
+        </div>
+
+        <!-- 112 -->
+        <div class="emergency-card">
+          <div class="emergency-icon-circle">🚨</div>
+          <div class="emergency-num-title">112</div>
+          <div class="emergency-service-name" id="h4-title">Unified National Emergency</div>
+          <div class="emergency-desc" id="h4-desc">All-in-one emergency dispatch for Police, Fire Brigade (101), and Ambulance (108).</div>
+          <a href="tel:112" class="btn-call-emergency">Call Emergency 112 &rarr;</a>
+        </div>
+
+        <!-- WhatsApp Bot -->
+        <div class="emergency-card">
+          <div class="emergency-icon-circle" style="background:#25D366; color:#ffffff;">💬</div>
+          <div class="emergency-num-title" style="font-size:1.3rem;">+91 97277 15530</div>
+          <div class="emergency-service-name" id="h5-title">Official AMC WhatsApp Civic Bot</div>
+          <div class="emergency-desc" id="h5-desc">Instant complaint registration and live photo upload directly on WhatsApp in Gujarati & English.</div>
+          <a href="https://wa.me/919727715530?text=Hi%20Civica%20AMC" target="_blank" class="btn-call-emergency" style="background:#25D366; color:#ffffff;">Open WhatsApp Chat &rarr;</a>
+        </div>
+
+        <!-- Central Headquarters -->
+        <div class="emergency-card">
+          <div class="emergency-icon-circle">🏛️</div>
+          <div class="emergency-num-title" style="font-size:1.3rem;">079-25391811</div>
+          <div class="emergency-service-name" id="h6-title">Mahanagar Seva Sadan HQ</div>
+          <div class="emergency-desc" id="h6-desc">Ahmedabad Municipal Corporation Headquarters, Danapith, Old City, Ahmedabad - 380001.</div>
+          <a href="tel:07925391811" class="btn-call-emergency">Call AMC HQ &rarr;</a>
+        </div>
+      </div>
+
+      <!-- AMC Zonal Offices Directory -->
+      <h2 class="zonal-directory-title" id="zonal-section-title">AMC Zonal Municipal Offices Directory</h2>
+
+      <div class="zonal-offices-grid">
+        <!-- West Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">WEST ZONE (પશ્ચિમ ઝોન)</span>
+          <div class="zonal-office-name">West Zone Civic Headquarters</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Navrangpura, Naranpura, Paldi, Vasna, Ranip, Sabarmati</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Dr. S. Radhakrishnan Marg, Usmanpura, Ahmedabad - 380013</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07927551221" class="zonal-phone-link">079-27551221</a> / <a href="tel:07927551222" class="zonal-phone-link">079-27551222</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>westzone@ahmedabadcity.gov.in</span></div>
+        </div>
+
+        <!-- North West Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">NORTH WEST ZONE (ઉત્તર પશ્ચિમ ઝોન)</span>
+          <div class="zonal-office-name">Bodakdev Zonal Seva Sadan</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Bodakdev, Thaltej, Ghatlodia, Chandlodia, Gota</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Near Judges Bungalow Cross Roads, Bodakdev, Ahmedabad - 380054</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07926871181" class="zonal-phone-link">079-26871181</a> / <a href="tel:07926871182" class="zonal-phone-link">079-26871182</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>nwzone@ahmedabadcity.gov.in</span></div>
+        </div>
+
+        <!-- South West Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">SOUTH WEST ZONE (દક્ષિણ પશ્ચિમ ઝોન)</span>
+          <div class="zonal-office-name">Jodhpur Ward & Zonal Office</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Jodhpur, Satellite, Vejalpur, Sarkhej, Maktampura</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Near Anandnagar Cross Roads, Jodhpur, Ahmedabad - 380015</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07926937220" class="zonal-phone-link">079-26937220</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>swzone@ahmedabadcity.gov.in</span></div>
+        </div>
+
+        <!-- North Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">NORTH ZONE (ઉત્તર ઝોન)</span>
+          <div class="zonal-office-name">Memco North Zonal Office</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Memco, Naroda, Saijpur, Kubernagar, Sardarnagar, Asarwa</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Near Rajiv Gandhi Bhavan, Memco Cross Roads, Naroda, Ahmedabad - 380025</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07922822180" class="zonal-phone-link">079-22822180</a> / <a href="tel:07922822182" class="zonal-phone-link">079-22822182</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>northzone@ahmedabadcity.gov.in</span></div>
+        </div>
+
+        <!-- East Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">EAST ZONE (પૂર્વ ઝોન)</span>
+          <div class="zonal-office-name">Viratnagar East Zonal Office</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Bapunagar, Amraiwadi, Gomtipur, Odhav, Nikol, Viratnagar</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Viratnagar Cross Roads, Odhav Road, Ahmedabad - 380038</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07922971200" class="zonal-phone-link">079-22971200</a> / <a href="tel:07922971201" class="zonal-phone-link">079-22971201</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>eastzone@ahmedabadcity.gov.in</span></div>
+        </div>
+
+        <!-- South Zone -->
+        <div class="zonal-office-card">
+          <span class="zonal-badge">SOUTH ZONE (દક્ષિણ ઝોન)</span>
+          <div class="zonal-office-name">Maninagar South Zonal Office</div>
+          <div class="zonal-info-row"><strong>Wards:</strong> <span>Maninagar, Kankaria, Behrampura, Danilimda, Isanpur, Vatva</span></div>
+          <div class="zonal-info-row"><strong>Address:</strong> <span>Rambaug Fire Station Complex, Maninagar, Ahmedabad - 380008</span></div>
+          <div class="zonal-info-row"><strong>Direct Tel:</strong> <a href="tel:07925464400" class="zonal-phone-link">079-25464400</a> / <a href="tel:07925464402" class="zonal-phone-link">079-25464402</a></div>
+          <div class="zonal-info-row"><strong>Email:</strong> <span>southzone@ahmedabadcity.gov.in</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: QUICK INQUIRY FORM
+         ========================================================================= -->
+    <div id="section-panel-inquiry" class="rules-section-panel">
+      <div class="contact-form-card">
+        <h2 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--civica-navy); margin-bottom: 8px;" id="inquiry-form-title">
+          Direct Citizen Inquiry & Administrative Support
+        </h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;" id="inquiry-form-subtitle">
+          Have an inquiry regarding escrow refunds, civic policy clarifications, or departmental operations? Submit below for a tracked response from the Municipal Commissioner’s Citizen Helpdesk.
+        </p>
+
+        <form id="official-inquiry-form" onsubmit="handleInquirySubmit(event)">
+          <div class="form-grid-2col">
+            <div class="contact-input-group">
+              <label for="inq-name" id="lbl-inq-name">Full Name *</label>
+              <input type="text" id="inq-name" class="contact-input-field" placeholder="e.g. Sneh Patel" required>
+            </div>
+            <div class="contact-input-group">
+              <label for="inq-phone" id="lbl-inq-phone">Contact Mobile Number *</label>
+              <input type="tel" id="inq-phone" class="contact-input-field" placeholder="e.g. +91 98980 12345" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="contact-input-group">
+              <label for="inq-email" id="lbl-inq-email">Email Address</label>
+              <input type="email" id="inq-email" class="contact-input-field" placeholder="e.g. citizen@gmail.com">
+            </div>
+            <div class="contact-input-group">
+              <label for="inq-category" id="lbl-inq-category">Inquiry Subject / Department *</label>
+              <select id="inq-category" class="contact-input-field" required>
+                <option value="escrow">₹50 Escrow Refund Status</option>
+                <option value="sla">SLA Delay & Escalation</option>
+                <option value="rules">Rules & Civic Charter Clarification</option>
+                <option value="ward">Ward Engineer Contact Request</option>
+                <option value="other">General Municipal Query</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="contact-input-group" style="margin-bottom: 20px;">
+            <label for="inq-message" id="lbl-inq-message">Your Message / Grievance Details *</label>
+            <textarea id="inq-message" class="contact-input-field" rows="4" placeholder="Describe your doubt, complaint ID, or inquiry in detail..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit-inquiry" id="btn-submit-inquiry">
+            Submit Official Inquiry &rarr;
+          </button>
+        </form>
+
+        <div id="inquiry-success-box" style="display:none; margin-top:20px; padding:18px 24px; background:#dcfce7; border:1px solid #86efac; border-radius:var(--radius-sm); color:#166534;">
+          <h4 style="margin:0 0 6px 0; font-size:1.05rem;">✓ Official Inquiry Acknowledged</h4>
+          <p style="margin:0; font-size:0.88rem;" id="inq-success-text">
+            Your inquiry has been submitted. Generated Reference Token: <strong id="inq-token-val">AMC-INQ-2026-9842</strong>. Our citizen desk officer will contact you within 24 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="civica-footer" style="margin-top:auto;">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">C I V I C A</div>
+        <p class="footer-tagline">Civic Engagement & Premier Urban Mobility Software.</p>
+        <p class="footer-copy">&copy; 2026 Civica Civic Systems & Ahmedabad Municipal Corporation. All rights reserved.</p>
+      </div>
+      <div class="footer-right">
+        <ul class="footer-nav">
+          <li><a href="index.html#home">HOME</a></li>
+          <li><a href="index.html#why-choose">ABOUT US</a></li>
+          <li><a href="index.html#solutions">SOLUTIONS</a></li>
+          <li><a href="index.html#services">SERVICES</a></li>
+          <li><a href="rules-and-contact.html" style="color:var(--civica-gold);">RULES & CONTACT</a></li>
+        </ul>
+        <button class="btn-footer-contact" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+          BACK TO TOP
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const RULES_I18N = {
+      en: {
+        back_home: "Back to Civica Home",
+        login_btn: "MEMBER LOGIN",
+        hero_title: "Rules, Regulations & AMC Emergency Contact Directory",
+        hero_subtitle: "Citizen Charter Standards, 24-48 Hour SLA Redressal Guarantees, ₹50 Refundable Security Escrow Transparency, and 24x7 Direct Helplines for Municipal Operations.",
+        tab_rules: "Rules & Regulations",
+        tab_contacts: "Emergency Helplines & Zonal Directory",
+        tab_inquiry: "Send Official Inquiry",
+        rule1_title: "Mandatory Service Level Agreements (SLAs) & Timelines",
+        rule2_title: "₹50 Refundable Security Escrow Policy (100% Refundable)",
+        rule3_title: "Evidence & Geo-Tagging Standards (Live GPS)",
+        rule4_title: "Automated Multi-Tier Escalation Ladder",
+        rule5_title: "Civic Karma Points & Annual Property Tax Rebates",
+        hotline_title: "24x7 Central Emergency & Helpline Numbers",
+        zonal_title: "AMC Zonal Municipal Offices Directory"
+      },
+      gu: {
+        back_home: "મુખ્ય પેજ પર પાછા જાઓ",
+        login_btn: "સભ્ય પ્રવેશ",
+        hero_title: "નિયમો, વિનિયમો અને AMC કટોકટી સંપર્ક ડિરેક્ટરી",
+        hero_subtitle: "નાગરિક ચાર્ટર ધોરણો, ૨૪-૪૮ કલાકની SLA નિવારણ ગેરંટી, ₹૫૦ પરતપાત્ર સુરક્ષા એસ્ક્રો પારદર્શિતા અને ૨૪x૭ મ્યુનિસિપલ હેલ્પલાઇન નંબરો.",
+        tab_rules: "નિયમો અને શરતો",
+        tab_contacts: "કટોકટી હેલ્પલાઇન અને ઝોનલ ડિરેક્ટરી",
+        tab_inquiry: "સત્તાવાર પૂછપરછ મોકલો",
+        rule1_title: "સેવા સ્તર કરાર (SLAs) અને ઉકેલ સમયમર્યાદા",
+        rule2_title: "₹૫૦ પરતપાત્ર સુરક્ષા એસ્ક્રો ડિપોઝિટ નીતિ (૧૦૦% રિફંડ)",
+        rule3_title: "પુરાવા અને જીપીએસ લોકેશન ધોરણો (લાઈવ ફોટો)",
+        rule4_title: "સ્વચાલિત બહુ-સ્તરીય ફરિયાદ નિવારણ વ્યવસ્થા",
+        rule5_title: "નાગરિક કર્મા પોઈન્ટ્સ અને મિલકત વેરામાં રિબેટ",
+        hotline_title: "૨૪x૭ સેન્ટ્રલ ઇમરજન્સી અને હેલ્પલાઇન નંબરો",
+        zonal_title: "AMC ઝોનલ મ્યુનિસિપલ કચેરીઓની યાદી"
+      },
+      hi: {
+        back_home: "सिविका होम पर वापस जाएं",
+        login_btn: "सदस्य लॉगिन",
+        hero_title: "नियम, विनियम एवं AMC आपातकालीन संपर्क निर्देशिका",
+        hero_subtitle: "नागरिक अधिकार पत्र मानक, 24-48 घंटे की SLA निवारण गारंटी, ₹50 प्रतिदेय सुरक्षा एस्क्रो और 24x7 नगर निगम हेल्पलाइन नंबर।",
+        tab_rules: "नियम एवं शर्तें",
+        tab_contacts: "आपातकालीन हेल्पलाइन एवं जोनल निर्देशिका",
+        tab_inquiry: "आधिकारिक पूछताछ भेजें",
+        rule1_title: "अनिवार्य सेवा स्तर समझौते (SLAs) व समयसीमा",
+        rule2_title: "₹50 प्रतिदेय सुरक्षा एस्क्रो नीति (100% रिफंडेबल)",
+        rule3_title: "साक्ष्य एवं जियो-टैगिंग मानक (लाइव जीपीएस)",
+        rule4_title: "स्वचालित बहु-स्तरीय शिकायत निवारण ढांचा",
+        rule5_title: "नागरिक कर्मा अंक एवं वार्षिक संपत्ति कर छूट",
+        hotline_title: "24x7 केंद्रीय आपातकालीन व हेल्पलाइन नंबर",
+        zonal_title: "AMC जोनल नगर निगम कार्यालय निर्देशिका"
+      }
+    };
+
+    let currentRulesLang = localStorage.getItem('civica_lang') || 'gu';
+
+    function setRulesLang(lang) {
+      currentRulesLang = lang;
+      localStorage.setItem('civica_lang', lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`lang-btn-${lang}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const dict = RULES_I18N[lang] || RULES_I18N.en;
+      document.getElementById('txt-back-home').innerText = dict.back_home;
+      document.getElementById('btn-login-redirect').innerText = dict.login_btn;
+      document.getElementById('page-hero-title').innerText = dict.hero_title;
+      document.getElementById('page-hero-subtitle').innerText = dict.hero_subtitle;
+      document.getElementById('tab-label-rules').innerText = dict.tab_rules;
+      document.getElementById('tab-label-contacts').innerText = dict.tab_contacts;
+      document.getElementById('tab-label-inquiry').innerText = dict.tab_inquiry;
+      document.getElementById('rule1-title').innerText = dict.rule1_title;
+      document.getElementById('rule2-title').innerText = dict.rule2_title;
+      document.getElementById('rule3-title').innerText = dict.rule3_title;
+      document.getElementById('rule4-title').innerText = dict.rule4_title;
+      document.getElementById('rule5-title').innerText = dict.rule5_title;
+      document.getElementById('hotline-section-title').innerText = dict.hotline_title;
+      document.getElementById('zonal-section-title').innerText = dict.zonal_title;
+    }
+
+    function switchRulesTab(tabKey) {
+      document.querySelectorAll('.rules-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.rules-section-panel').forEach(p => p.classList.remove('active'));
+
+      const activeBtn = document.getElementById(`tab-btn-${tabKey}`);
+      const activePanel = document.getElementById(`section-panel-${tabKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      if (activePanel) activePanel.classList.add('active');
+    }
+
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      const randomId = 'AMC-INQ-2026-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('inq-token-val').innerText = randomId;
+      document.getElementById('inquiry-success-box').style.display = 'block';
+      document.getElementById('official-inquiry-form').reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setRulesLang(currentRulesLang);
+    });
+  </script>
+</body>
+</html>

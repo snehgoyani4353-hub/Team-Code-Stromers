@@ -49,7 +49,12 @@ const I18N_DATA = {
     status_assigned: "ASSIGNED",
     status_resolved: "RESOLVED",
     status_new: "NEW",
-    status_need_info: "NEED INFO"
+    status_need_info: "NEED INFO",
+    gallery_title: "OUR PROJECT GALLERY & CIVIC INITIATIVES",
+    gallery_subtitle: "Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.",
+    gallery_banner_title: "📜 Citizen Civic Charter & Emergency Helplines Directory",
+    gallery_banner_desc: "Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.",
+    gallery_banner_btn: "View Rules, Regulations & Contact Numbers &rarr;"
   },
   gu: {
     nav_home: "મુખ્ય પેજ",
@@ -93,7 +98,12 @@ const I18N_DATA = {
     status_assigned: "ટીમને સોંપાયેલ",
     status_resolved: "ઉકેલાયેલ",
     status_new: "નવી ફરિયાદ",
-    status_need_info: "માહિતી જોઈએ છે"
+    status_need_info: "માહિતી જોઈએ છે",
+    gallery_title: "અમારી પ્રોજેક્ટ ગેલેરી અને નાગરિક પહેલ",
+    gallery_subtitle: "સમગ્ર ગુજરાતમાં લાઈવ મ્યુનિસિપલ પ્રોજેક્ટ્સ, સ્માર્ટ ટ્રાન્ઝિટ કોરિડોર, ઝડપી રોડ રિપેરિંગ ફ્લીટ અને કમાન્ડ કંટ્રોલ સેન્ટરની કામગીરી જુઓ.",
+    gallery_banner_title: "📜 નાગરિક ચાર્ટર, નિયમો અને કટોકટી હેલ્પલાઇન ડિરેક્ટરી",
+    gallery_banner_desc: "અમારી ફરજિયાત SLA સમયમર્યાદા, ૧૦૦% પરતપાત્ર ₹૫૦ એસ્ક્રો નીતિ વાંચો અને AMC ૨૪x૭ કંટ્રોલ રૂમ અને ઝોનલ કચેરીઓના સીધા ફોન નંબરો મેળવો.",
+    gallery_banner_btn: "નિયમો, વિનિયમો અને સંપર્ક નંબરો જુઓ &rarr;"
   },
   hi: {
     nav_home: "मुख्य पृष्ठ",
@@ -137,7 +147,12 @@ const I18N_DATA = {
     status_assigned: "टीम को सौंपा गया",
     status_resolved: "समाधान पूर्ण",
     status_new: "नई शिकायत",
-    status_need_info: "जानकारी आवश्यक"
+    status_need_info: "जानकारी आवश्यक",
+    gallery_title: "हमारी परियोजना गैलरी एवं नागरिक पहल",
+    gallery_subtitle: "गुजरात भर में लाइव नगर निगम परियोजनाएं, स्मार्ट ट्रांजिट कॉरिडोर, रैपिड रोड रिपेयरिंग फ्लीट और कमांड कंट्रोल सेंटर संचालन देखें।",
+    gallery_banner_title: "📜 नागरिक अधिकार पत्र, नियम एवं आपातकालीन हेल्पलाइन निर्देशिका",
+    gallery_banner_desc: "हमारी अनिवार्य SLA समयसीमा, 100% प्रतिदेय ₹50 एस्क्रो नीति पढ़ें और AMC 24x7 नियंत्रण कक्ष और जोनल कार्यालयों के सीधे फोन नंबर प्राप्त करें।",
+    gallery_banner_btn: "नियम, विनियम एवं संपर्क नंबर देखें &rarr;"
   }
 };
 
@@ -1695,14 +1710,129 @@ window.shareWithSociety = function() {
   }
 };
 
+/* ==========================================================================
+   PROJECT GALLERY DATA & LIGHTBOX CONTROLLER
+   ========================================================================== */
+const CIVICA_GALLERY_PROJECTS = [
+  {
+    category: 'transit',
+    badge: 'Transit & Mobility',
+    title: 'Electric BRTS Transit Corridors',
+    image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Dedicated zero-emission BRTS corridor fleet with synchronized GPS telemetry, sub-second RFID tap ticketing, and dedicated lane clearance sensors across Ahmedabad and Surat.',
+    sla: '⚡ 99.8% On-Time SLA • 120 Fleet Units'
+  },
+  {
+    category: 'transit',
+    badge: 'Smart Mobility',
+    title: 'Expressway Traffic Synchronization',
+    image: 'https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=1200&q=80',
+    desc: 'AI-managed adaptive traffic signals reducing commuter gridlocks by 34% in peak rush hours across SG Highway and Ashram Road corridors.',
+    sla: '🟢 Live Synchronized Corridor • 42 Junctions'
+  },
+  {
+    category: 'transit',
+    badge: 'Urban Infrastructure',
+    title: 'Pedestrian Safety & Smart Boulevard',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Sensory crosswalks and illuminated pedestrian safety islands across high-density markets and heritage city zones ensuring pedestrian priority.',
+    sla: '🚶 Zero Pedestrian Incidents • Ward 7'
+  },
+  {
+    category: 'roads',
+    badge: 'Roads & Potholes',
+    title: '24-Hour Rapid Pothole Patching Fleet',
+    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Infrared hot-asphalt repair vans dispatched automatically on geotagged citizen reports, achieving guaranteed 24-hour permanent road leveling.',
+    sla: '⏱️ 24h Mandatory SLA • Infrared Compaction'
+  },
+  {
+    category: 'sanitation',
+    badge: 'Cleanliness & Waste',
+    title: 'GPS Door-to-Door Waste Collection',
+    image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=80',
+    desc: '100% route verification and smart bin fill-level ultrasound sensors across 48 municipal wards, powering zero-landfill segregated processing.',
+    sla: '♻️ 100% Ward Route Verification • SWM Unit'
+  },
+  {
+    category: 'utilities',
+    badge: 'Smart Lighting',
+    title: 'Automated IoT Streetlight Network',
+    image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Centralized luminaire monitoring detecting bulb blackouts instantly with automated ticket assignment and energy-saving daylight dimming curves.',
+    sla: '💡 24h Replacement SLA • 85,000 Connected Poles'
+  },
+  {
+    category: 'tech',
+    badge: 'Command Centre',
+    title: 'Integrated Command & Control Centre (ICCC)',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+    desc: '24x7 municipal nerve centre orchestrating emergency response, CCTV video feeds, water pressure telemetry, and field engineering dispatches.',
+    sla: '🖥️ 24x7 Active Nerve Centre • Danapith HQ'
+  },
+  {
+    category: 'utilities',
+    badge: 'Water & Drainage',
+    title: 'Monsoon Sump & Underpass Dewatering',
+    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1200&q=80',
+    desc: 'High-capacity automated dewatering pumps and water-level telemetry across all city underpasses ensuring uninterrupted traffic flow during heavy rains.',
+    sla: '🌧️ 2h Emergency Response • SCADA Monitored'
+  },
+  {
+    category: 'tech',
+    badge: 'Citizen Technology',
+    title: 'GPS Geo-Tagging & Escrow Verification',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Live camera GPS verification protecting citizen reports from false flags and ensuring 100% automatic ₹50 escrow security refund upon field inspection.',
+    sla: '👛 100% Escrow Protected • Instant Refund'
+  }
+];
+
+window.filterGallery = function(category) {
+  document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === category);
+  });
+  document.querySelectorAll('.project-gallery-card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+};
+
+window.openGalleryLightbox = function(index) {
+  const project = CIVICA_GALLERY_PROJECTS[index];
+  if (!project) return;
+  const modal = document.getElementById('gallery-lightbox-modal');
+  if (!modal) return;
+  document.getElementById('lightbox-img').src = project.image;
+  document.getElementById('lightbox-badge').innerText = project.badge;
+  document.getElementById('lightbox-title').innerText = project.title;
+  document.getElementById('lightbox-desc').innerText = project.desc;
+  document.getElementById('lightbox-sla').innerText = project.sla;
+  modal.style.display = 'flex';
+  modal.classList.add('active');
+};
+
+window.closeGalleryLightbox = function() {
+  const modal = document.getElementById('gallery-lightbox-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.classList.remove('active');
+  }
+};
+
 window.openContactModal = function() {
-  const modal = document.getElementById('contact-modal');
-  if (modal) modal.classList.add('active');
+  window.location.href = 'rules-and-contact.html';
 };
 
 window.closeContactModal = function() {
-  const modal = document.getElementById('contact-modal');
-  if (modal) modal.classList.remove('active');
+  const modal = document.getElementById('gallery-lightbox-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.classList.remove('active');
+  }
 };
 
 window.openWalletModal = function() {

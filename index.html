@@ -50,7 +50,7 @@
           <ul class="nav-links">
             <li><a href="#home" class="nav-link active" data-i18n="nav_home">HOME</a></li>
             <li><a href="#why-choose" class="nav-link" data-i18n="nav_about">ABOUT US</a></li>
-            <li><a href="#contact" class="nav-link" data-i18n="nav_contact">CONTACT US</a></li>
+            <li><a href="rules-and-contact.html" class="nav-link" data-i18n="nav_contact">CONTACT US</a></li>
             <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
             <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
           </ul>
@@ -102,29 +102,219 @@
       </div>
     </section>
 
-    <!-- PAGE 2: SOLUTIONS GALLERY SECTION -->
+    <!-- PAGE 2: SOLUTIONS GALLERY SECTION (EXPANDED WITH RICH IMAGES & CATEGORIES) -->
     <section id="solutions" class="civica-section solutions-gallery-section">
       <div class="section-top-brand">C I V I C A</div>
-      <h2 class="section-heading-title">OUR SOLUTIONS GALLERY</h2>
+      <h2 class="section-heading-title" data-i18n="gallery_title">OUR PROJECT GALLERY & CIVIC INITIATIVES</h2>
+      <p class="gallery-section-intro" data-i18n="gallery_subtitle">
+        Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.
+      </p>
 
-      <div class="gallery-showcase-container">
-        <div class="gallery-side-card left-card">
-          <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=800&q=80" alt="Public Bus Transit" class="gallery-img" />
-        </div>
+      <!-- Category Filter Pills -->
+      <div class="gallery-filter-bar">
+        <button class="gallery-filter-btn active" data-filter="all" onclick="filterGallery('all')">
+          All Projects (બધા પ્રોજેક્ટ)
+        </button>
+        <button class="gallery-filter-btn" data-filter="transit" onclick="filterGallery('transit')">
+          🚍 Smart Transit & BRTS
+        </button>
+        <button class="gallery-filter-btn" data-filter="roads" onclick="filterGallery('roads')">
+          🛣️ Roads & Potholes
+        </button>
+        <button class="gallery-filter-btn" data-filter="sanitation" onclick="filterGallery('sanitation')">
+          ♻️ Cleanliness & Waste
+        </button>
+        <button class="gallery-filter-btn" data-filter="utilities" onclick="filterGallery('utilities')">
+          💡 Lighting & Water SCADA
+        </button>
+        <button class="gallery-filter-btn" data-filter="tech" onclick="filterGallery('tech')">
+          🖥️ Command & Control Centre
+        </button>
+      </div>
 
-        <div class="gallery-center-card">
-          <div class="gallery-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=1000&q=80" alt="Urban Mobility Highway" class="gallery-img-center" />
-            <div class="gallery-center-banner">
-              <h3 class="banner-title">CIVICA MOBILITY</h3>
-              <p class="banner-subtitle">Realtime Transit & Commute Intelligence</p>
+      <!-- Rich Gallery Grid -->
+      <div class="project-gallery-grid">
+        <!-- Item 1 -->
+        <div class="project-gallery-card" data-category="transit" onclick="openGalleryLightbox(0)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=800&q=80" alt="Public Bus Transit" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge">Transit & Mobility</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Electric BRTS Transit Corridors</h3>
+            <p class="gallery-card-desc">Real-time GPS bus tracking, dedicated lane enforcement & contactless fare integration.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag">⚡ 99.8% On-Time SLA</span>
+              <span class="gallery-view-link">Details &rarr;</span>
             </div>
           </div>
         </div>
 
-        <div class="gallery-side-card right-card">
-          <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80" alt="Downtown Street" class="gallery-img" />
+        <!-- Item 2 -->
+        <div class="project-gallery-card" data-category="transit" onclick="openGalleryLightbox(1)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=800&q=80" alt="Urban Mobility Highway" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge">Smart Mobility</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Expressway Traffic Synchronization</h3>
+            <p class="gallery-card-desc">AI-managed adaptive traffic signals reducing commuter gridlocks by 34% in peak rush hours.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag">🟢 Live Synchronized</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Item 3 -->
+        <div class="project-gallery-card" data-category="transit" onclick="openGalleryLightbox(2)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80" alt="Downtown Street" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge">Urban Infrastructure</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Pedestrian Safety & Smart Boulevard</h3>
+            <p class="gallery-card-desc">Sensory crosswalks and illuminated pedestrian safety islands across high-density markets.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag">🚶 Zero Pedestrian Incidents</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="project-gallery-card" data-category="roads" onclick="openGalleryLightbox(3)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80" alt="Road Resurfacing" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#ea580c;">Roads & Potholes</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">24-Hour Rapid Pothole Patching</h3>
+            <p class="gallery-card-desc">Infrared hot-asphalt repair vans dispatched automatically on geotagged citizen reports.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#c2410c;">⏱️ 24h SLA Guarantee</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="project-gallery-card" data-category="sanitation" onclick="openGalleryLightbox(4)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80" alt="Waste Management" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#16a34a;">Cleanliness & Waste</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">GPS Door-to-Door Waste Collection</h3>
+            <p class="gallery-card-desc">100% route verification and smart bin fill-level ultrasound sensors across 48 municipal wards.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#15803d;">♻️ 100% Ward Coverage</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="project-gallery-card" data-category="utilities" onclick="openGalleryLightbox(5)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80" alt="Smart Streetlighting" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#0284c7;">Smart Lighting</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Automated IoT Streetlight Network</h3>
+            <p class="gallery-card-desc">Centralized luminaire monitoring detecting bulb blackouts instantly with automated ticket assignment.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#0369a1;">💡 24h Replacement SLA</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 7 -->
+        <div class="project-gallery-card" data-category="tech" onclick="openGalleryLightbox(6)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Integrated Command Control Centre" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#7c3aed;">Command Centre</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Integrated Command & Control Centre (ICCC)</h3>
+            <p class="gallery-card-desc">24x7 municipal nerve centre orchestrating emergency response, CCTV video feeds, and field teams.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#6d28d9;">🖥️ 24x7 Active Nerve Centre</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 8 -->
+        <div class="project-gallery-card" data-category="utilities" onclick="openGalleryLightbox(7)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=800&q=80" alt="Monsoon Water Drainage" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#0891b2;">Water & Drainage</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">Monsoon Sump & Underpass Dewatering</h3>
+            <p class="gallery-card-desc">High-capacity automated dewatering pumps and water-level telemetry across all city underpasses.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#0e7490;">🌧️ 2h Rapid Response</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 9 -->
+        <div class="project-gallery-card" data-category="tech" onclick="openGalleryLightbox(8)">
+          <div class="gallery-card-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" alt="Citizen Mobile Verification" class="gallery-thumb-img" />
+            <span class="gallery-cat-badge" style="background:#d97706;">Citizen Technology</span>
+            <div class="gallery-hover-overlay">
+              <span class="gallery-zoom-icon">🔍 View Inspection</span>
+            </div>
+          </div>
+          <div class="gallery-card-meta">
+            <h3 class="gallery-card-title">GPS Geo-Tagging & Escrow Verification</h3>
+            <p class="gallery-card-desc">Live camera GPS verification protecting citizen reports and ensuring 100% escrow refund.</p>
+            <div class="gallery-card-footer">
+              <span class="gallery-sla-tag" style="color:#b45309;">👛 100% Escrow Protected</span>
+              <span class="gallery-view-link">Details &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Callout Banner inside Gallery leading to Rules & Regulations and Contact -->
+      <div class="gallery-rules-banner">
+        <div class="gallery-rules-banner-text">
+          <h3 data-i18n="gallery_banner_title">📜 Citizen Civic Charter & Emergency Helplines Directory</h3>
+          <p data-i18n="gallery_banner_desc">Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.</p>
+        </div>
+        <a href="rules-and-contact.html" class="btn-gallery-rules-action" data-i18n="gallery_banner_btn">
+          View Rules, Regulations & Contact Numbers &rarr;
+        </a>
       </div>
     </section>
 
@@ -188,16 +378,17 @@
         <div class="footer-left">
           <div class="footer-logo">C I V I C A</div>
           <p class="footer-tagline">Civic Engagement & Premier Urban Mobility Software.</p>
-          <p class="footer-copy">&copy; 2026 Civica Civic Systems. All rights reserved.</p>
+          <p class="footer-copy">&copy; 2026 Civica Civic Systems & Ahmedabad Municipal Corporation. All rights reserved.</p>
         </div>
         <div class="footer-right">
           <ul class="footer-nav">
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#why-choose">ABOUT US</a></li>
-            <li><a href="#solutions">SOLUTIONS</a></li>
-            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#home" data-i18n="nav_home">HOME</a></li>
+            <li><a href="#why-choose" data-i18n="nav_about">ABOUT US</a></li>
+            <li><a href="#solutions" data-i18n="nav_solutions">SOLUTIONS</a></li>
+            <li><a href="#services" data-i18n="nav_services">SERVICES</a></li>
+            <li><a href="rules-and-contact.html" style="color:var(--civica-gold); font-weight:700;">RULES & CONTACT</a></li>
           </ul>
-          <button class="btn-footer-contact" onclick="openContactModal()">CONTACT US</button>
+          <button class="btn-footer-contact" onclick="window.location.href='rules-and-contact.html'">CONTACT US</button>
         </div>
       </div>
     </footer>
@@ -1105,12 +1296,24 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="contact-modal" role="dialog" aria-modal="true">
-    <div class="modal-card" style="max-width: 460px;">
-      <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
-      <h2 style="font-size: 1.3rem; margin-bottom: 6px; font-family: 'Cinzel', serif;">Contact Civica Systems</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">Ahmedabad Civic Helpline: 155303</p>
-      <button type="button" class="btn-hero-primary" style="width: 100%; justify-content: center;" onclick="closeContactModal()">Close</button>
+  <!-- GALLERY LIGHTBOX MODAL -->
+  <div class="civica-auth-overlay" id="gallery-lightbox-modal" role="dialog" aria-modal="true" style="display:none;">
+    <div class="auth-modal-card" style="max-width: 720px; padding: 0; overflow: hidden;">
+      <div style="position: relative;">
+        <img id="lightbox-img" src="" alt="Project Photo" style="width: 100%; height: 360px; object-fit: cover; display: block;" />
+        <button class="auth-close-btn" onclick="closeGalleryLightbox()" style="position: absolute; top: 14px; right: 14px; background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">&times;</button>
+        <span id="lightbox-badge" style="position: absolute; bottom: 14px; left: 16px; background: var(--civica-navy); color: #fff; padding: 4px 12px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em;"></span>
+      </div>
+      <div style="padding: 24px 28px;">
+        <h3 id="lightbox-title" style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--civica-navy); margin-bottom: 8px;"></h3>
+        <p id="lightbox-desc" style="font-size: 0.95rem; color: #475569; line-height: 1.6; margin-bottom: 16px;"></p>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 12px;">
+          <span id="lightbox-sla" style="font-size: 0.85rem; font-weight: 700; color: #166534; background: #dcfce7; padding: 4px 10px; border-radius: var(--radius-sm);"></span>
+          <a href="rules-and-contact.html" class="btn-hero-primary" style="padding: 8px 18px; font-size: 0.85rem;">
+            View Rules, SLAs & Contacts &rarr;
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
