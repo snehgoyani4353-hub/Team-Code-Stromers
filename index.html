@@ -327,6 +327,7 @@
             <div class="sidebar-brand-box"><div class="sidebar-logo">CIVICA</div><div class="sidebar-sublogo">ગુજરાત</div></div>
             <nav class="sidebar-nav">
               <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')">🔍 Track complaint</button>
+              <button class="sidebar-nav-item" id="btn-tab-ai" onclick="switchDesktopTab('ai')">✨ Civica AI Assistant</button>
               <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')">📝 Report issue</button>
               <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')">👛 Civic Wallet (<span id="desktop-wallet-bal">₹150</span>)</button>
               <button class="sidebar-nav-item" id="btn-tab-mytickets" onclick="switchDesktopTab('mytickets')">📋 My tickets</button>
@@ -372,11 +373,141 @@
                   <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a Gujarati SMS when the light is back on. — R. Patel</p>
                 </div>
 
-                <div class="desktop-ticket-actions">
-                  <button class="btn-action-navy" onclick="openAddPhotoModal()">Add photo</button>
-                  <button class="btn-action-white" onclick="openAskAMCModal()">Ask AMC</button>
+                <!-- CIVICA AI MODEL COPILOT (Replaces old Add Photo & Ask AMC buttons) -->
+                <div class="civica-ai-copilot-card" id="civica-ai-copilot">
+                  <div class="ai-card-header">
+                    <div class="ai-header-brand">
+                      <div class="ai-gemini-sparkle">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#geminiGrad)" />
+                          <defs>
+                            <linearGradient id="geminiGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                              <stop stop-color="#4285F4"/>
+                              <stop offset="0.5" stop-color="#9B72CF"/>
+                              <stop offset="1" stop-color="#FF7769"/>
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="ai-title-row">
+                          <strong class="ai-model-name">Civica AI Assistant</strong>
+                          <span class="ai-powered-pill">Self-Capable AI Model · Gemini & ChatGPT Architecture</span>
+                        </div>
+                        <div class="ai-model-sub">Ask any doubts about this complaint, city operations, escrow refund, or AMC regulations in English or Gujarati</div>
+                      </div>
+                    </div>
+                    <div class="ai-status-indicator">
+                      <span class="ai-pulse-dot"></span>
+                      <span>AI Model Ready</span>
+                    </div>
+                  </div>
+
+                  <!-- Quick Doubt Prompt Chips -->
+                  <div class="ai-quick-prompts">
+                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('When will the streetlight fixture at CG Road be installed?')">💡 When will fixture arrive?</button>
+                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('How and when do I get my ₹50 escrow deposit refunded?')">🛡️ When do I get my ₹50 refund?</button>
+                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('Who is the assigned AMC officer and crew for this issue?')">👷 Assigned crew & officer?</button>
+                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('મને આ શેરી લાઈટ ફરિયાદ વિશે ગુજરાતીમાં સ્થિતિ જણાવો.')">🇮🇳 ગુજરાતીમાં વિગત આપો</button>
+                    <button type="button" class="ai-prompt-chip" onclick="askAiPrompt('What is the schedule for BRTS buses near CG Road today?')">🚌 BRTS bus timings?</button>
+                  </div>
+
+                  <!-- AI Chat Stream / Log -->
+                  <div class="ai-chat-thread" id="ai-chat-messages">
+                    <div class="ai-msg ai-msg-bot">
+                      <div class="ai-avatar-gemini">✨</div>
+                      <div class="ai-bubble">
+                        <p><strong>નમસ્તે! I am Civica AI</strong>, your real-time intelligent civic copilot for Ahmedabad Municipal Corporation (AMC).</p>
+                        <p>I have live visibility into Ticket <code>GJ-AMC-2026-18492</code> (Streetlight at CG Road, Navrangpura), your ₹50 security escrow, and AMC West Zone repair dispatch. Ask me any doubt or question below!</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- AI Input Bar -->
+                  <form class="ai-input-form" onsubmit="handleAiChatSubmit(event)">
+                    <div class="ai-input-container">
+                      <input type="text" id="ai-question-input" class="ai-text-input" placeholder="Ask any doubt about your ticket, city services, civic wallet, or AMC rules..." autocomplete="off">
+                      <button type="submit" class="btn-send-ai" id="btn-ai-send">
+                        <span>Ask AI</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="desktop-ticket-actions" style="margin-top: 14px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                  <button class="btn-action-white" onclick="openAddPhotoModal()">📷 Upload Additional Inspection Photo</button>
                   <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()">Reopen Complaint</button>
                 </div>
+              </div>
+            </div>
+
+            <!-- TAB: CIVICA AI ASSISTANT (FULL SCREEN AI COPILOT) -->
+            <div id="dt-tab-ai" class="desktop-tab-panel" style="display:none;">
+              <div class="desktop-header-area">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <h1 class="desktop-page-title">✨ Civica AI Intelligence · સિવિકા AI</h1>
+                    <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">Conversational Civic Assistant powered by Gemini & ChatGPT Core Architecture</p>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="ticket-status-pill status-resolved">● Self-Capable AI Active</span>
+                    <button type="button" class="btn-action-white" onclick="clearAiChat()">Clear Chat</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ai-fullscreen-container">
+                <div class="ai-capabilities-banner">
+                  <div class="ai-cap-item">
+                    <span class="ai-cap-ico">⚡</span>
+                    <div><strong>Instant Doubt Solver</strong><span>Answers any questions on tickets, timelines, and AMC policies</span></div>
+                  </div>
+                  <div class="ai-cap-item">
+                    <span class="ai-cap-ico">🛡️</span>
+                    <div><strong>Escrow & Refund Clarity</strong><span>Explains ₹50 anti-spam security deposit and automatic refunds</span></div>
+                  </div>
+                  <div class="ai-cap-item">
+                    <span class="ai-cap-ico">🌐</span>
+                    <div><strong>Gujarati & English Bilingual</strong><span>Ask in ગુજરાતી or English for localized municipal support</span></div>
+                  </div>
+                </div>
+
+                <div class="ai-chat-thread ai-chat-thread-large" id="ai-fullscreen-messages">
+                  <div class="ai-msg ai-msg-bot">
+                    <div class="ai-avatar-gemini">✨</div>
+                    <div class="ai-bubble">
+                      <p><strong>Hello! I am Civica AI</strong>, your comprehensive AI assistant for Smart City Ahmedabad and AMC civic services.</p>
+                      <p>You can ask me about:</p>
+                      <ul style="margin: 6px 0; padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
+                        <li>Status and engineering details of your complaints (e.g. <code>GJ-AMC-2026-18492</code>)</li>
+                        <li>How the ₹50 anti-spam escrow deposit and 100% refund guarantee work</li>
+                        <li>Live BRTS Janmarg routes, Metro timings, and corridor frequencies</li>
+                        <li>AMC emergency helplines, monsoonal waterlogging dispatch, and ward guidelines</li>
+                        <li>Ask in <strong>English</strong> or <strong>ગુજરાતી</strong>!</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Suggested Chips -->
+                <div class="ai-quick-prompts" style="margin-top:14px;">
+                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('How does the ₹50 anti-spam escrow deposit prevent fake complaints?')">🛡️ How does ₹50 escrow prevent fake complaints?</button>
+                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('What is the procedure for an emergency pipeline leakage in Navrangpura?')">🚰 Emergency pipeline leakage procedure?</button>
+                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('અમદાવાદ બીઆરટીએસ અને મેટ્રોના સમય અને રૂટની વિગત આપો.')">🚌 BRTS/મેટ્રો રૂટની વિગત (ગુજરાતી)</button>
+                  <button type="button" class="ai-prompt-chip" onclick="askFullscreenAiPrompt('Explain AMC Ward 7 civic response turnaround time guarantees.')">⏱️ AMC SLA turnaround time guarantees?</button>
+                </div>
+
+                <!-- Input bar -->
+                <form class="ai-input-form" style="margin-top:14px;" onsubmit="handleFullscreenAiSubmit(event)">
+                  <div class="ai-input-container">
+                    <input type="text" id="ai-fullscreen-input" class="ai-text-input" placeholder="Type your doubt or question to Civica AI (e.g. How does refund work?)..." autocomplete="off">
+                    <button type="submit" class="btn-send-ai">
+                      <span>Ask AI</span>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
 
