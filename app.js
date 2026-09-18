@@ -703,14 +703,14 @@ window.loginAsDemo = function(role = 'citizen') {
   } else if (role === 'command') {
     appState.currentUser = {
       role: 'officer',
-      name: 'R. Patel (Command Dispatcher)',
-      email: 'dispatcher.amc@gujarat.gov.in',
-      avatar: 'CD',
+      name: 'R. Patel (Municipal Officer)',
+      email: 'officer.amc@gujarat.gov.in',
+      avatar: 'RP',
       cityId: 'AMC'
     };
     saveMasterState();
     closeLoginModal();
-    switchDashboardMode('command-center');
+    switchDashboardMode('officer');
   } else {
     appState.currentUser = {
       role: 'citizen',
@@ -836,7 +836,7 @@ window.switchDashboardMode = function(mode) {
 };
 
 window.openCommandCenter = function() {
-  switchDashboardMode('command-center');
+  switchDashboardMode('officer');
 };
 
 /* ==========================================================================

@@ -63,16 +63,6 @@
             <li><a href="rules-and-contact.html" class="nav-link" data-i18n="nav_contact">RULES & CONTACT</a></li>
             <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
             <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
-            <li>
-              <a href="javascript:void(0)" onclick="openCivicDirectoryModal()" class="nav-link" title="Explore 15 Citizens & 4 Admin Dashboards">
-                <i class="fa-solid fa-users-gear"></i> CIVIC DIRECTORY (15+4)
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" onclick="openCommandCenter()" class="nav-link highlight-command" data-i18n="nav_command">
-                <i class="fa-solid fa-satellite-dish"></i> COMMAND CENTER
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
@@ -110,9 +100,6 @@
             </button>
             <button class="btn-hero-secondary" onclick="loginAsDemo('officer')" data-i18n="btn_hero_officer">
               Municipal Officer Sign-In
-            </button>
-            <button class="btn-hero-command" onclick="openCommandCenter()" data-i18n="btn_hero_command">
-              <i class="fa-solid fa-satellite"></i> Launch Command Center
             </button>
           </div>
         </div>
@@ -423,13 +410,6 @@
           <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('officer')">⚡ Auto-Fill Demo Credentials</button>
         </form>
       </div>
-
-      <!-- 15 Citizens & 4 Admins File Explorer Quick Link -->
-      <div class="auth-civic-directory-cta">
-        <button type="button" class="btn-open-directory" onclick="openCivicDirectoryModal()">
-          <i class="fa-solid fa-folder-open"></i> Browse 15 Citizen Folders & 4 Admin Consoles
-        </button>
-      </div>
     </div>
   </div>
 
@@ -631,45 +611,6 @@
   </div>
 
 
-  <!-- ==========================================================================
-       SECTION 2C: PERSONALIZED CIVIC DIRECTORY (15 CITIZENS & 4 ADMINS) MODAL
-       ========================================================================== -->
-  <div class="civica-auth-overlay" id="civic-directory-modal-overlay" role="dialog" aria-modal="true" style="display:none;">
-    <div class="signup-modal-card directory-modal-card">
-      <button class="auth-close-btn" onclick="closeCivicDirectoryModal()">&times;</button>
-      
-      <div class="directory-header">
-        <div class="auth-brand">C I V I C A &bull; F I L E S</div>
-        <h2>Personalized Civic Directory</h2>
-        <p>15 Citizens with individual files (profile, tickets, wallet, portal_view) & 4 Admin Dashboards with personal roster & queue</p>
-      </div>
-
-      <div class="directory-tabs">
-        <button type="button" class="dir-tab-btn active" id="dir-tab-citizens" onclick="switchDirectoryTab('citizens')">
-          <i class="fa-solid fa-users"></i> 15 Citizen Profiles & Folders
-        </button>
-        <button type="button" class="dir-tab-btn" id="dir-tab-admins" onclick="switchDirectoryTab('admins')">
-          <i class="fa-solid fa-user-shield"></i> 4 Executive Admin Dashboards
-        </button>
-      </div>
-
-      <!-- CITIZENS DIRECTORY LIST -->
-      <div id="dir-citizens-panel" class="dir-panel active">
-        <div class="dir-grid-container" id="dir-citizens-grid">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-
-      <!-- ADMINS DIRECTORY LIST -->
-      <div id="dir-admins-panel" class="dir-panel" style="display:none;">
-        <div class="dir-grid-container" id="dir-admins-grid">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 
   <!-- ==========================================================================
        SECTION 3: ACTIVE DASHBOARDS (CITIZEN, OFFICER & COMMAND CENTER)
@@ -687,16 +628,13 @@
           <span class="dash-brand-title">CIVICA ગુજરાત &bull; Operational Hub</span>
         </div>
 
-        <!-- Universal Mode Switcher: Citizen Dashboard <-> Officer Portal <-> Command Center -->
+        <!-- Universal Mode Switcher: Citizen Dashboard <-> Officer Portal -->
         <div class="dash-mode-switcher-pills">
           <button class="dash-mode-pill active" data-mode="citizen-desktop" onclick="switchDashboardMode('citizen-desktop')">
             <i class="fa-solid fa-user-check"></i> <span>Citizen Portal</span>
           </button>
           <button class="dash-mode-pill" data-mode="officer" onclick="switchDashboardMode('officer')">
             <i class="fa-solid fa-user-shield"></i> <span>Municipal Officer</span>
-          </button>
-          <button class="dash-mode-pill command-pill" data-mode="command-center" onclick="switchDashboardMode('command-center')">
-            <i class="fa-solid fa-satellite-dish"></i> <span>Command Center</span>
           </button>
         </div>
 
@@ -1180,10 +1118,6 @@
                 <button class="sidebar-nav-item" id="of-nav-preview" onclick="switchOfficerTab('preview')">05 Citizen preview</button>
                 <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')">06 Ward reports</button>
                 <button class="sidebar-nav-item" id="of-nav-rules" onclick="switchOfficerTab('rules')">07 Officer rules</button>
-                <!-- CONNECTED COMMAND CENTER IN OFFICER SIDEBAR -->
-                <button class="sidebar-nav-item command-tab" id="of-nav-command" onclick="switchOfficerTab('command')">
-                  <i class="fa-solid fa-satellite-dish"></i> 08 Command Center
-                </button>
               </nav>
             </div>
             <div class="sidebar-footer-box">
@@ -1203,9 +1137,6 @@
                   <h1 class="officer-headline">Today in Ward 7, AMC Ahmedabad</h1>
                 </div>
                 <div style="display:flex; gap:8px;">
-                  <button class="btn-hero-command" style="padding:6px 14px; font-size:0.78rem;" onclick="openCommandCenter()">
-                    <i class="fa-solid fa-satellite"></i> Open Tactical Command Center
-                  </button>
                   <button class="btn-shift-refresh" onclick="showCivicaToast('Feed synchronized with AMC central database.')">🔄 Live Feed</button>
                 </div>
               </div>
@@ -1371,165 +1302,6 @@
             </div>
 
           </main>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- SUBVIEW C: TACTICAL COMMAND CENTER (CONNECTED & FULLY FUNCTIONAL) -->
-    <div id="subview-command-center" class="dash-subview" style="display:none;">
-      <div class="citizen-main-container">
-        <!-- Sleek SaaS Breadcrumb & Status Sub-Banner -->
-        <div class="portal-sub-banner command-sub-banner">
-          <div class="sub-banner-left">
-            <span class="portal-badge-chip command">TACTICAL COMMAND RADAR</span>
-            <span class="breadcrumb-item">Ahmedabad Municipal Corporation</span>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-item active">Operations Triage Radar</span>
-          </div>
-          <div class="sub-banner-right">
-            <span class="status-live-indicator"><span class="ping-circle blue"></span> Satellite Telemetry & Dispatch Fleet Online</span>
-          </div>
-        </div>
-
-        <div class="command-center-container">
-          <!-- Command Bar -->
-          <div class="command-top-bar">
-            <div>
-              <span class="command-badge-tag">TACTICAL DISPATCH TERMINAL</span>
-              <h2 class="command-title">Municipal Operations Command & Triage Radar</h2>
-              <p style="font-size:0.8rem; color:#94a3b8; margin-top:2px;">Live GPS telemetry, department dispatching, heatmap clusters & broadcast alert engine.</p>
-            </div>
-
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-              <select id="command-dept-filter" class="officer-field-select" style="background:#0f172a; color:#f1f5f9; border-color:#334155; width:auto;" onchange="filterKanbanByDept(this.value)">
-                <option value="all">All Departments (Public Works, Electrical, Monsoon, Transit)</option>
-                <option value="Light & Electrical">Light & Electrical Dept</option>
-                <option value="Public Works & Roads">Public Works & Roads</option>
-                <option value="Monsoon & Drainage">Monsoon & Drainage Control</option>
-                <option value="Solid Waste Management">Solid Waste (SWM)</option>
-                <option value="Transit Authority">Janmarg Transit & BRTS</option>
-                <option value="Hydraulics & Water Works">Hydraulics & Water Works</option>
-              </select>
-
-              <button class="btn-hero-primary" style="background:#dc2626; padding:8px 14px; font-size:0.8rem;" onclick="openBroadcastModal()">
-                <i class="fa-solid fa-bullhorn"></i> Broadcast Alert
-              </button>
-
-              <button class="btn-hero-secondary" style="color:#e2e8f0; border-color:#334155; padding:8px 14px; font-size:0.8rem;" onclick="openDispatchCrewModal()">
-                <i class="fa-solid fa-truck-fast"></i> Dispatch Crew
-              </button>
-
-              <button class="btn-hero-secondary" style="color:#f59e0b; border-color:#f59e0b; padding:8px 14px; font-size:0.8rem;" onclick="switchDashboardMode('officer')">
-                <i class="fa-solid fa-user-shield"></i> Officer View
-              </button>
-            </div>
-          </div>
-
-          <!-- Command KPIs -->
-          <div class="command-kpi-grid">
-            <div class="command-kpi-card">
-              <div class="kpi-head-row"><span class="kpi-title-sub">Active Incidents</span><span style="color:#38bdf8;">⚠️</span></div>
-              <div class="kpi-stat-huge" id="cmd-kpi-active">6 Open</div>
-              <div style="font-size:0.75rem; color:#f43f5e; font-weight:700; margin-top:4px;">2 Critical (Monsoon & Water)</div>
-            </div>
-
-            <div class="command-kpi-card">
-              <div class="kpi-head-row"><span class="kpi-title-sub">MTTR Resolution SLA</span><span style="color:#10b981;">⏱️</span></div>
-              <div class="kpi-stat-huge" style="color:#10b981;">3.8h</div>
-              <div style="font-size:0.75rem; color:#6ee7b7; margin-top:4px;">SLA Benchmark: 24h</div>
-            </div>
-
-            <div class="command-kpi-card">
-              <div class="kpi-head-row"><span class="kpi-title-sub">Crowdsource Accuracy</span><span style="color:#a78bfa;">🛡️</span></div>
-              <div class="kpi-stat-huge" style="color:#c4b5fd;">92.4%</div>
-              <div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Verified real issues</div>
-            </div>
-
-            <div class="command-kpi-card">
-              <div class="kpi-head-row"><span class="kpi-title-sub">Active Field Crews</span><span style="color:#f59e0b;">🚒</span></div>
-              <div class="kpi-stat-huge" style="color:#fcd34d;">6 Teams</div>
-              <div style="font-size:0.75rem; color:#cbd5e1; margin-top:4px;">Dispatched with live GPS</div>
-            </div>
-          </div>
-
-          <!-- Tactical Geospatial Leaflet Map -->
-          <div class="tactical-map-card">
-            <div class="map-card-header">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <i class="fa-solid fa-crosshairs text-cyan-400"></i>
-                <strong style="color:#ffffff; font-size:0.95rem;">Tactical Geospatial Grid (AMC Ahmedabad Metropolitan Region)</strong>
-                <span class="command-badge-tag" style="background:#064e3b; color:#a7f3d0; border-color:#10b981;">LIVE GIS RADAR</span>
-              </div>
-
-              <div class="map-controls-group">
-                <button id="btn-toggle-heatmap" class="btn-map-ctl" onclick="toggleMapHeatmap()">
-                  <i class="fa-solid fa-fire"></i> Heatmap Toggle
-                </button>
-                <button class="btn-map-ctl" onclick="recenterMap()" title="Recenter on Navrangpura">
-                  <i class="fa-solid fa-location-crosshairs"></i> Recenter
-                </button>
-                <div class="map-layer-toggles">
-                  <span style="color:#94a3b8; font-weight:700;">LAYERS:</span>
-                  <label style="cursor:pointer;"><input type="checkbox" checked onchange="refreshMapMarkers()"> Roads</label>
-                  <label style="cursor:pointer;"><input type="checkbox" checked onchange="refreshMapMarkers()"> Electrical</label>
-                  <label style="cursor:pointer;"><input type="checkbox" checked onchange="refreshMapMarkers()"> Drainage</label>
-                </div>
-              </div>
-            </div>
-
-            <div id="map"></div>
-          </div>
-
-          <!-- 4-Lane Incident Kanban Dispatch Board -->
-          <div style="margin-top:24px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <div>
-                <h3 style="font-family:var(--font-heading); font-size:1.25rem; font-weight:800; color:#ffffff;">Incident Dispatch Pipeline & Kanban</h3>
-                <span style="font-size:0.78rem; color:#94a3b8;">Advance tickets or click inspect to assign field units</span>
-              </div>
-              <span style="font-size:0.75rem; color:#38bdf8; font-family:monospace;">● Live Dispatch Channel Synchronized</span>
-            </div>
-
-            <div class="kanban-grid-4col">
-              <!-- Lane 1 -->
-              <div class="kanban-lane">
-                <div class="kanban-lane-header">
-                  <span class="lane-title-text"><span style="color:#38bdf8;">●</span> 1. Incoming Backlog</span>
-                  <span class="lane-card-badge" id="badge-lane-backlog">0</span>
-                </div>
-                <div class="kanban-cards-stack" id="cards-lane-backlog"></div>
-              </div>
-
-              <!-- Lane 2 -->
-              <div class="kanban-lane">
-                <div class="kanban-lane-header">
-                  <span class="lane-title-text"><span style="color:#f59e0b;">●</span> 2. Field Triage</span>
-                  <span class="lane-card-badge" id="badge-lane-investigation">0</span>
-                </div>
-                <div class="kanban-cards-stack" id="cards-lane-investigation"></div>
-              </div>
-
-              <!-- Lane 3 -->
-              <div class="kanban-lane">
-                <div class="kanban-lane-header">
-                  <span class="lane-title-text"><span style="color:#818cf8;">●</span> 3. Crew Dispatched</span>
-                  <span class="lane-card-badge" id="badge-lane-dispatched">0</span>
-                </div>
-                <div class="kanban-cards-stack" id="cards-lane-dispatched"></div>
-              </div>
-
-              <!-- Lane 4 -->
-              <div class="kanban-lane">
-                <div class="kanban-lane-header">
-                  <span class="lane-title-text"><span style="color:#10b981;">●</span> 4. Verified Resolved</span>
-                  <span class="lane-card-badge" id="badge-lane-resolved">0</span>
-                </div>
-                <div class="kanban-cards-stack" id="cards-lane-resolved"></div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
