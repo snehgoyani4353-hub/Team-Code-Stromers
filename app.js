@@ -54,7 +54,12 @@ const I18N_DATA = {
     gallery_subtitle: "Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.",
     gallery_banner_title: "📜 Citizen Civic Charter & Emergency Helplines Directory",
     gallery_banner_desc: "Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.",
-    gallery_banner_btn: "View Rules, Regulations & Contact Numbers &rarr;"
+    gallery_banner_btn: "View Rules, Regulations & Contact Numbers &rarr;",
+    btn_demo_login: "⚡ DEMO LOGIN",
+    btn_hero_demo: "⚡ Instant Demo Login &rarr;",
+    demo_box_title: "1-Click Direct Demo Login",
+    demo_box_sub: "Access full portal features immediately without entering credentials:",
+    btn_autofill_demo: "⚡ Auto-Fill Demo Credentials"
   },
   gu: {
     nav_home: "મુખ્ય પેજ",
@@ -103,7 +108,12 @@ const I18N_DATA = {
     gallery_subtitle: "સમગ્ર ગુજરાતમાં લાઈવ મ્યુનિસિપલ પ્રોજેક્ટ્સ, સ્માર્ટ ટ્રાન્ઝિટ કોરિડોર, ઝડપી રોડ રિપેરિંગ ફ્લીટ અને કમાન્ડ કંટ્રોલ સેન્ટરની કામગીરી જુઓ.",
     gallery_banner_title: "📜 નાગરિક ચાર્ટર, નિયમો અને કટોકટી હેલ્પલાઇન ડિરેક્ટરી",
     gallery_banner_desc: "અમારી ફરજિયાત SLA સમયમર્યાદા, ૧૦૦% પરતપાત્ર ₹૫૦ એસ્ક્રો નીતિ વાંચો અને AMC ૨૪x૭ કંટ્રોલ રૂમ અને ઝોનલ કચેરીઓના સીધા ફોન નંબરો મેળવો.",
-    gallery_banner_btn: "નિયમો, વિનિયમો અને સંપર્ક નંબરો જુઓ &rarr;"
+    gallery_banner_btn: "નિયમો, વિનિયમો અને સંપર્ક નંબરો જુઓ &rarr;",
+    btn_demo_login: "⚡ ડેમો લોગિન",
+    btn_hero_demo: "⚡ સીધો ડેમો પ્રવેશ &rarr;",
+    demo_box_title: "૧-ક્લિક સીધો ડેમો પ્રવેશ (પાસવર્ડ વગર)",
+    demo_box_sub: "પાસવર્ડ વગર સીધા પોર્ટલમાં પ્રવેશવા માટે નીચે આપેલ એકાઉન્ટ પસંદ કરો:",
+    btn_autofill_demo: "⚡ ડેમો આઈડી/પાસવર્ડ ઓટો-ભરો"
   },
   hi: {
     nav_home: "मुख्य पृष्ठ",
@@ -152,7 +162,12 @@ const I18N_DATA = {
     gallery_subtitle: "गुजरात भर में लाइव नगर निगम परियोजनाएं, स्मार्ट ट्रांजिट कॉरिडोर, रैपिड रोड रिपेयरिंग फ्लीट और कमांड कंट्रोल सेंटर संचालन देखें।",
     gallery_banner_title: "📜 नागरिक अधिकार पत्र, नियम एवं आपातकालीन हेल्पलाइन निर्देशिका",
     gallery_banner_desc: "हमारी अनिवार्य SLA समयसीमा, 100% प्रतिदेय ₹50 एस्क्रो नीति पढ़ें और AMC 24x7 नियंत्रण कक्ष और जोनल कार्यालयों के सीधे फोन नंबर प्राप्त करें।",
-    gallery_banner_btn: "नियम, विनियम एवं संपर्क नंबर देखें &rarr;"
+    gallery_banner_btn: "नियम, विनियम एवं संपर्क नंबर देखें &rarr;",
+    btn_demo_login: "⚡ डेमो लॉगिन",
+    btn_hero_demo: "⚡ सीधा डेमो प्रवेश &rarr;",
+    demo_box_title: "1-क्लिक सीधा डेमो प्रवेश (बिना पासवर्ड)",
+    demo_box_sub: "बिना पासवर्ड पोर्टल में सीधे प्रवेश के लिए नीचे दिए गए डेमो खाते पर क्लिक करें:",
+    btn_autofill_demo: "⚡ डेमो क्रेडेंशियल्स स्वतः भरें"
   }
 };
 
@@ -303,6 +318,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (langModal) langModal.style.display = 'flex';
   }
 
+  // Check for 1-Click Demo Login URL parameters (?demo=citizen or ?demo=officer)
+  const urlParams = new URLSearchParams(window.location.search);
+  const demoParam = urlParams.get('demo');
+  if (demoParam) {
+    window.loginAsDemo(demoParam);
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    return;
+  }
+
   // Default view is Landing Page on load (as requested)
   returnToLandingPage();
   updateSessionUI();
@@ -426,6 +452,68 @@ window.loginWithGoogle = function() {
 
   closeLoginModal();
   switchDashboardMode('citizen-desktop');
+};
+
+/**
+ * 1-Click Instant Demo Login for Evaluators & Users
+ * Directly authenticates and routes to active dashboard
+ * @param {'citizen'|'officer'} role
+ */
+window.loginAsDemo = function(role = 'citizen') {
+  if (role === 'officer' || role === 'admin') {
+    appState.currentUser = {
+      role: 'officer',
+      name: 'R. Patel · Municipal Officer',
+      email: 'officer.amc@gujarat.gov.in',
+      avatar: 'RP',
+      cityId: 'AMC'
+    };
+    saveMasterState();
+    closeLoginModal();
+
+    if (window.location.pathname.includes('rules-and-contact.html')) {
+      window.location.href = 'index.html?demo=officer';
+      return;
+    }
+    switchDashboardMode('officer');
+  } else {
+    appState.currentUser = {
+      role: 'citizen',
+      name: 'પ્રિયા પટેલ (Priya Patel)',
+      email: 'demo.citizen@civica.gujarat.in',
+      avatar: 'P',
+      phone: '98250 84920',
+      zone: 'West Zone · Ward 7'
+    };
+    saveMasterState();
+    closeLoginModal();
+
+    if (window.location.pathname.includes('rules-and-contact.html')) {
+      window.location.href = 'index.html?demo=citizen';
+      return;
+    }
+    switchDashboardMode('citizen-desktop');
+  }
+};
+
+/**
+ * Auto-fill demo credentials in the login forms
+ * @param {'citizen'|'officer'} role
+ */
+window.fillDemoCredentials = function(role = 'citizen') {
+  if (role === 'officer' || role === 'admin') {
+    const citySelect = document.getElementById('admin-city-select');
+    const emailInput = document.getElementById('admin-email');
+    const tokenInput = document.getElementById('admin-token');
+    if (citySelect) citySelect.value = 'AMC';
+    if (emailInput) emailInput.value = 'officer@amc.gujarat.gov.in';
+    if (tokenInput) tokenInput.value = '2026';
+  } else {
+    const emailInput = document.getElementById('citizen-email');
+    const passInput = document.getElementById('citizen-pass');
+    if (emailInput) emailInput.value = 'demo.citizen@civica.gujarat.in';
+    if (passInput) passInput.value = 'civica2026';
+  }
 };
 
 /**
