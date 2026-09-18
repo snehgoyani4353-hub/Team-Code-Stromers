@@ -1327,17 +1327,29 @@ input, select, textarea { font-family: inherit; }
 
 .desktop-page-title,
 .officer-headline {
-  font-family: var(--font-serif);
-  font-size: 2rem;
+  font-family: var(--font-heading), var(--font-sans);
+  font-size: 1.85rem;
   font-weight: 700;
   color: var(--civica-navy);
   line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.dt-section-heading {
+  font-family: var(--font-heading), var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
 }
 
 .desktop-page-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
   color: #64748b;
   margin-top: 6px;
+  line-height: 1.45;
 }
 
 /* Municipal Highlights Strip */
@@ -1495,15 +1507,20 @@ input, select, textarea { font-family: inherit; }
 }
 
 .ticket-subject {
-  font-size: 1.55rem;
+  font-family: var(--font-heading), var(--font-sans);
+  font-size: 1.45rem;
   font-weight: 700;
   color: var(--civica-navy);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .ticket-meta-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-top: 5px;
+  color: #475569;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 .ticket-status-pill {
@@ -1512,6 +1529,7 @@ input, select, textarea { font-family: inherit; }
   padding: 5px 14px;
   border-radius: var(--radius-full);
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .status-inprogress { background: #e0f2fe; color: #0369a1; }
@@ -1585,37 +1603,43 @@ input, select, textarea { font-family: inherit; }
 }
 
 .step-title-gu {
-  font-size: 0.9rem;
+  font-family: var(--font-heading), var(--font-sans);
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--civica-navy);
+  letter-spacing: -0.01em;
 }
 
 .step-date {
-  font-size: 0.76rem;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: #64748b;
   margin-top: 4px;
 }
 
 .desktop-note-box {
   background: #f8fafc;
-  border-left: 5px solid var(--civica-gold);
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--civica-gold);
   padding: 22px 28px;
   margin: 28px 0;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .note-box-title {
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.05em;
+  color: var(--civica-navy);
+  margin-bottom: 8px;
+  letter-spacing: 0.06em;
 }
 
 .note-box-text {
-  font-size: 1.02rem;
-  color: #334155;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: #1e293b;
   line-height: 1.65;
 }
 

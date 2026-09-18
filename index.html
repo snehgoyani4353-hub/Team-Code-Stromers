@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,8 +37,8 @@
         <div class="header-right-actions">
           <!-- 3-Language Selector -->
           <div class="lang-switch-group">
-            <button class="lang-btn" data-lang="en" onclick="setAppLanguage('en')">English</button>
-            <button class="lang-btn active" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+            <button class="lang-btn active" data-lang="en" onclick="setAppLanguage('en')">English</button>
+            <button class="lang-btn" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
             <button class="lang-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
           </div>
 
@@ -628,8 +628,8 @@
 
         <div style="display:flex; align-items:center; gap:12px;">
           <div class="lang-switch-group">
-            <button class="lang-btn" data-lang="en" onclick="setAppLanguage('en')">English</button>
-            <button class="lang-btn active" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
+            <button class="lang-btn active" data-lang="en" onclick="setAppLanguage('en')">English</button>
+            <button class="lang-btn" data-lang="gu" onclick="setAppLanguage('gu')">ગુજરાતી</button>
             <button class="lang-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
           </div>
 
@@ -664,15 +664,15 @@
           <aside class="desktop-sidebar">
             <div class="sidebar-brand-box">
               <div class="sidebar-logo">CIVICA</div>
-              <div class="sidebar-sublogo">ગુજરાત નાગરિક પોર્ટલ</div>
+              <div class="sidebar-sublogo">Gujarat Citizen Portal</div>
             </div>
             <nav class="sidebar-nav">
-              <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track complaint</button>
-              <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 File complaint</button>
+              <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track Complaint</button>
+              <button class="sidebar-nav-item" id="btn-tab-report" onclick="switchDesktopTab('report')" data-i18n="tab_report">📝 File Complaint</button>
               <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')"><span data-i18n="tab_wallet">👛 Civic Wallet</span> (<span id="desktop-wallet-bal">₹150</span>)</button>
-              <button class="sidebar-nav-item" id="btn-tab-wardmap" onclick="switchDesktopTab('wardmap')" data-i18n="tab_wardmap">🗺️ Ward map</button>
+              <button class="sidebar-nav-item" id="btn-tab-wardmap" onclick="switchDesktopTab('wardmap')" data-i18n="tab_wardmap">🗺️ Ward Map</button>
               <button class="sidebar-nav-item" id="btn-tab-community" onclick="switchDesktopTab('community')" data-i18n="tab_community">📢 Community Feed</button>
-              <button class="sidebar-nav-item" id="btn-tab-transit" onclick="switchDesktopTab('transit')" data-i18n="tab_transit">🚍 Transit & Friction</button>
+              <button class="sidebar-nav-item" id="btn-tab-transit" onclick="switchDesktopTab('transit')" data-i18n="tab_transit">🚍 Transit Flow</button>
               <button class="sidebar-nav-item" id="btn-tab-rules-dir" onclick="switchDesktopTab('rules-dir')" data-i18n="tab_rules_dir">📜 Rules & SLAs</button>
             </nav>
             <div class="sidebar-footer-box">
@@ -687,14 +687,14 @@
             <!-- Tab 1: Track Complaint -->
             <div id="dt-tab-track" class="desktop-tab-panel active">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title" data-i18n="track_page_title">Track complaint</h1>
-                <p class="desktop-page-subtitle">Track real-time progress, field engineer dispatches, and ₹50 escrow refunds</p>
+                <h1 class="desktop-page-title" data-i18n="track_page_title">Track Complaint</h1>
+                <p class="desktop-page-subtitle">Real-time status tracking, field engineer dispatches, and ₹50 escrow refunds</p>
                 <div class="desktop-search-row">
                   <div class="track-input-container">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID" onkeydown="if(event.key==='Enter')handleDesktopTrackLookup()">
+                    <input type="text" id="desktop-track-input" class="track-search-input" value="GJ-AMC-2026-18492" placeholder="Enter Complaint ID (e.g. 18492, 18501, 18470)" onkeydown="if(event.key==='Enter')handleDesktopTrackLookup()">
                   </div>
-                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK</button>
+                  <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK COMPLAINT</button>
                 </div>
                 <div class="track-example-hints">
                   💡 Quick Demo IDs: <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18492';handleDesktopTrackLookup();">18492 (Streetlight)</button>
@@ -703,7 +703,7 @@
                 </div>
               </div>
 
-              <!-- Municipal Status & Highlights Strip (Placed inside Track Overview so other tabs are completely free & spacious) -->
+              <!-- Municipal Status & Highlights Strip -->
               <div class="citizen-highlights-bar">
                 <div class="highlight-strip-card escrow-accent">
                   <span class="highlight-strip-icon">🛡️</span>
@@ -717,7 +717,7 @@
                   <span class="highlight-strip-icon">📱</span>
                   <div>
                     <strong data-i18n="side_sms_title">Real-Time SMS & WhatsApp Alerts</strong>
-                    <p data-i18n="side_sms_desc">Automated status notifications dispatched directly to your mobile in Gujarati & English as field crews progress.</p>
+                    <p data-i18n="side_sms_desc">Automated status notifications dispatched directly to your mobile in English & Gujarati as field crews progress.</p>
                   </div>
                 </div>
 
@@ -726,8 +726,11 @@
                   <div>
                     <strong data-i18n="side_support_title">AMC Ward 7 Navrangpura Desk</strong>
                     <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong></p>
+                  </div>
+                </div>
               </div>
 
+              <!-- Active Ticket Card (Full Width, Crisp & Legible) -->
               <div class="active-ticket-detail-card" id="desktop-ticket-card">
                 <div class="ticket-top-headline">
                   <div>
@@ -743,8 +746,8 @@
                 </div>
 
                 <div class="desktop-note-box">
-                  <div class="note-box-title" data-i18n="latest_note_title">Latest Official Note</div>
-                  <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a Gujarati SMS when the light is back on. — R. Patel</p>
+                  <div class="note-box-title" data-i18n="latest_note_title">Latest Official Field Note</div>
+                  <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a notification when the light is back on. — R. Patel</p>
                 </div>
 
                 <div class="desktop-ticket-actions">
@@ -757,51 +760,51 @@
             <!-- Tab 2: File Issue with ₹50 Refundable Escrow -->
             <div id="dt-tab-report" class="desktop-tab-panel" style="display:none;">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title">Report Civic Issue · નવી ફરિયાદ</h1>
-                <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Direct dispatch to AMC Ward Control Room & Field Action Units</p>
+                <h1 class="desktop-page-title">File a Civic Complaint</h1>
+                <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Direct dispatch to AMC Ward Control Room & Field Rapid Action Units</p>
               </div>
 
               <form id="desktop-report-form" onsubmit="handleDesktopSubmitComplaint(event)">
                 <div class="form-section-card">
-                  <label class="section-card-title">1. Select Category / ફરિયાદનો પ્રકાર</label>
+                  <label class="section-card-title">1. Select Issue Category</label>
                   <div class="desktop-category-grid">
                     <div class="dt-cat-card active" onclick="selectDesktopCategory(this, 'streetlight')">
                       <span class="dt-cat-icon">💡</span>
-                      <div class="dt-cat-info"><strong>Streetlight (શેરી લાઈટ)</strong><span>Dark pole, faulty fixture</span></div>
+                      <div class="dt-cat-info"><strong>Streetlight</strong><span>Dark pole, faulty fixture</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'pothole')">
                       <span class="dt-cat-icon">🚧</span>
-                      <div class="dt-cat-info"><strong>Road Pothole (ખાડા)</strong><span>Damaged asphalt, crater</span></div>
+                      <div class="dt-cat-info"><strong>Road Pothole</strong><span>Damaged asphalt, road crater</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'garbage')">
                       <span class="dt-cat-icon">🗑️</span>
-                      <div class="dt-cat-info"><strong>Garbage & Waste (કચરો)</strong><span>Uncleared solid waste</span></div>
+                      <div class="dt-cat-info"><strong>Garbage & Waste</strong><span>Uncleared solid waste or bin overflow</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'waterlogging')">
                       <span class="dt-cat-icon">🌊</span>
-                      <div class="dt-cat-info"><strong>Waterlogging (પાણી ભરાવ)</strong><span>Monsoon drain blockage</span></div>
+                      <div class="dt-cat-info"><strong>Waterlogging</strong><span>Monsoon drain blockage, road flooding</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'brts')">
                       <span class="dt-cat-icon">🚌</span>
-                      <div class="dt-cat-info"><strong>BRTS / Transit (બસ સ્ટેન્ડ)</strong><span>Shelter or bus hazard</span></div>
+                      <div class="dt-cat-info"><strong>BRTS / Transit</strong><span>Bus shelter or transit hazard</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'water')">
                       <span class="dt-cat-icon">💧</span>
-                      <div class="dt-cat-info"><strong>Water Supply (પાણી)</strong><span>Contamination, low pressure</span></div>
+                      <div class="dt-cat-info"><strong>Water Supply</strong><span>Contamination, burst pipeline, low pressure</span></div>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-two-col-grid">
                   <div class="form-section-card">
-                    <label class="section-card-title">2. Exact Location / સ્થળ</label>
+                    <label class="section-card-title">2. Exact Incident Location</label>
                     <input type="text" id="dt-location-input" class="dt-web-input" placeholder="e.g. CG Road, opposite Municipal Market" value="CG Road, near Law Garden" required>
                     <div style="font-size:0.75rem; color:#0284c7; margin-top:8px;">📍 GPS Tagged: Ward 7 Navrangpura (Coordinates confirmed)</div>
                   </div>
 
                   <div class="form-section-card">
-                    <label class="section-card-title">3. Description / વિગત</label>
-                    <textarea id="dt-description-input" class="dt-web-textarea" rows="3" placeholder="Describe the hazard in Gujarati or English..." required></textarea>
+                    <label class="section-card-title">3. Description & Evidence</label>
+                    <textarea id="dt-description-input" class="dt-web-textarea" rows="3" placeholder="Describe the hazard, landmark, and current condition..." required></textarea>
                     <div style="margin-top:8px;">
                       <button type="button" class="btn-hero-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="document.getElementById('dt-file-input').click()">📷 Attach Photo</button>
                       <input type="file" id="dt-file-input" style="display:none;" onchange="handleDesktopFileSelect(this)">
@@ -901,7 +904,7 @@
               </div>
 
               <div class="active-ticket-detail-card" style="margin-top:0;">
-                <h3 style="font-family:var(--font-serif); font-size:1.15rem; color:var(--civica-navy); margin-bottom:12px;">Transaction & Escrow Ledger</h3>
+                <h3 class="dt-section-heading">Transaction & Escrow Ledger</h3>
                 <div class="dt-table-responsive">
                   <table class="dt-web-table">
                     <thead><tr><th>Date</th><th>Tx ID</th><th>Reference Issue</th><th>Type</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead>
@@ -914,7 +917,7 @@
             <!-- Tab 4: Ward 7 GIS Health Map -->
             <div id="dt-tab-wardmap" class="desktop-tab-panel" style="display:none;">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title" data-i18n="wardmap_page_title">Ward 7 Civic Health Map · વોર્ડ નકશો</h1>
+                <h1 class="desktop-page-title" data-i18n="wardmap_page_title">Ward 7 Civic Infrastructure Health Map</h1>
                 <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Navrangpura &bull; AMC West Zone Live Infrastructure Overview</p>
               </div>
 
@@ -1038,7 +1041,7 @@
 
               <!-- Embedded SLA Table -->
               <div class="active-ticket-detail-card" style="margin-top:0; margin-bottom:20px;">
-                <h3 style="font-family:var(--font-serif); font-size:1.15rem; color:var(--civica-navy); margin-bottom:12px;">Mandatory SLA Timelines (Gujarat Municipal Corporations Act)</h3>
+                <h3 class="dt-section-heading">Mandatory SLA Timelines (Gujarat Municipal Corporations Act)</h3>
                 <div class="dt-table-responsive">
                   <table class="dt-web-table">
                     <thead><tr><th>Civic Category</th><th>SLA Guarantee</th><th>Assigned Unit</th><th>Escalation Level</th></tr></thead>

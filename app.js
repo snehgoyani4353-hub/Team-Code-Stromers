@@ -22,27 +22,27 @@ const I18N_DATA = {
     dash_back_home: "&larr; Back to Civica Home",
     dash_signed_citizen: "Signed in as Citizen",
     dash_service_badge: "Gujarat Citizen Service",
-    tab_track: "🔍 Track complaint",
-    tab_report: "📝 File complaint",
+    tab_track: "🔍 Track Complaint",
+    tab_report: "📝 File Complaint",
     tab_wallet: "👛 Civic Wallet",
-    tab_wardmap: "🗺️ Ward map",
+    tab_wardmap: "🗺️ Ward Map",
     tab_community: "📢 Community Feed",
-    tab_transit: "🚍 Transit & Friction",
-    tab_rules_dir: "📜 Rules & Directory",
-    track_page_title: "Track complaint",
-    track_placeholder: "Enter Complaint ID (e.g. 18492, 18501)",
-    track_btn: "TRACK",
-    latest_note_title: "Latest Official Note",
+    tab_transit: "🚍 Transit Flow",
+    tab_rules_dir: "📜 Rules & SLAs",
+    track_page_title: "Track Complaint",
+    track_placeholder: "Enter Complaint ID (e.g. 18492, 18501, 18470)",
+    track_btn: "TRACK COMPLAINT",
+    latest_note_title: "Latest Official Field Note",
     btn_upload_photo: "📷 Upload Inspection Photo",
     btn_reopen: "Reopen Complaint",
-    wardmap_page_title: "Ward 7 Civic Health Map · Ward Overview",
+    wardmap_page_title: "Ward 7 Civic Infrastructure Health Map",
     btn_share_society: "📤 Share with Society Secretary",
-    side_escrow_title: "100% Refundable Escrow",
-    side_escrow_desc: "To eliminate fake complaints, ₹50 is held in municipal escrow. When AMC inspects genuine issues, ₹50 is instantly refunded to your Civic Wallet.",
-    side_sms_title: "SMS & WhatsApp Updates",
-    side_sms_desc: "Real-time status updates active",
-    side_support_title: "🏛️ AMC Ward 7 Control Desk",
-    side_support_desc: "Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helpline: 155303 / 1913",
+    side_escrow_title: "100% Refundable Escrow Guarantee",
+    side_escrow_desc: "₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.",
+    side_sms_title: "Real-Time SMS & WhatsApp Alerts",
+    side_sms_desc: "Automated status notifications dispatched directly to your mobile in English & Gujarati as field crews progress.",
+    side_support_title: "AMC Ward 7 Navrangpura Desk",
+    side_support_desc: "Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong>",
     floating_ai_btn: "AI Assistant",
     ai_popup_title: "Civica AI Assistant",
     ai_popup_sub: "Gemini & ChatGPT Core • AMC 24x7",
@@ -160,9 +160,9 @@ const I18N_DATA = {
 };
 
 let appState = {
-  currentView: 'landing', // 'landing' | 'citizen-desktop' | 'officer' | 'command-center'
+  currentView: 'landing', // 'landing' | 'citizen-desktop' | 'officer'
   currentUser: null,
-  language: 'gu',
+  language: 'en',
   citizenWallet: { ...window.GUJARAT_CIVIC_DATA.citizenWallet },
   selectedEscrowGateway: 'Paytm',
   selectedTopupGateway: 'Paytm',
@@ -173,7 +173,7 @@ let appState = {
   selectedOfficerTicket: null,
   inboxFilter: 'assigned_to_me',
   kanbanDeptFilter: 'all',
-  notifyLang: 'gu',
+  notifyLang: 'en',
   activeTemplateKey: 'parts_ordered',
   officerKPIs: { ...window.GUJARAT_CIVIC_DATA.officerKPIs },
   shiftActions: [...window.GUJARAT_CIVIC_DATA.shiftActions],
@@ -193,6 +193,9 @@ function initMasterState() {
   const savedLang = localStorage.getItem('civica_lang');
   if (savedLang && (savedLang === 'en' || savedLang === 'gu' || savedLang === 'hi')) {
     appState.language = savedLang;
+  } else {
+    appState.language = 'en';
+    localStorage.setItem('civica_lang', 'en');
   }
 
   const savedComplaints = localStorage.getItem('civica_complaints');
@@ -213,9 +216,9 @@ function saveMasterState() {
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
 }
 
-// Language Switcher
-window.setAppLanguage = function(lang = 'gu', closeModal = false) {
-  if (!I18N_DATA[lang]) lang = 'gu';
+// Language Switcher (Clean English Default)
+window.setAppLanguage = function(lang = 'en', closeModal = false) {
+  if (!I18N_DATA[lang]) lang = 'en';
   appState.language = lang;
   localStorage.setItem('civica_lang', lang);
 
@@ -223,7 +226,7 @@ window.setAppLanguage = function(lang = 'gu', closeModal = false) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
 
-  const dict = I18N_DATA[lang] || I18N_DATA.gu;
+  const dict = I18N_DATA[lang] || I18N_DATA.en;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) el.innerHTML = dict[key];
@@ -882,7 +885,7 @@ function renderDesktopPortal() {
   const currentTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
   if (!currentTicket) return;
 
-  const lang = appState.language || 'gu';
+  const lang = appState.language || 'en';
   const titleEl = document.getElementById('dt-ticket-title');
   const metaEl = document.getElementById('dt-ticket-meta');
   const statusPill = document.getElementById('dt-ticket-status-pill');
