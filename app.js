@@ -483,6 +483,19 @@ window.switchDesktopTab = function(tabName) {
   if (urlBar) {
     urlBar.textContent = `https://civica.gujarat.in / portal / ${tabName}`;
   }
+  const breadcrumb = document.getElementById('citizen-breadcrumb-tab');
+  if (breadcrumb) {
+    const tabLabels = {
+      'track': 'Track Complaint',
+      'report': 'File Complaint (₹50 Escrow)',
+      'wallet': 'Civic Wallet & Ledger',
+      'wardmap': 'Ward 7 GIS Map',
+      'community': 'Community Incident Feed',
+      'transit': 'Transit & Commute Friction',
+      'rules-dir': 'Rules, SLAs & Helplines'
+    };
+    breadcrumb.textContent = tabLabels[tabName] || tabName;
+  }
 
   if (tabName === 'wallet') renderCivicWallet();
   else if (tabName === 'track') renderDesktopPortal();
@@ -905,6 +918,19 @@ window.switchOfficerTab = function(tabKey) {
   const urlBar = document.getElementById('officer-url-bar');
   if (urlBar) {
     urlBar.textContent = `https://civica.gujarat.in / officer / ${tabKey}`;
+  }
+  const officerBreadcrumb = document.getElementById('officer-breadcrumb-tab');
+  if (officerBreadcrumb) {
+    const officerLabels = {
+      'dashboard': '01 Today\'s Shift',
+      'inbox': '02 Complaint Inbox',
+      'action': '03 Take Action & Escrow',
+      'notify': '04 Notify Citizen',
+      'preview': '05 Citizen Preview',
+      'reports': '06 Ward Audit',
+      'rules': '07 Officer Rules'
+    };
+    officerBreadcrumb.textContent = officerLabels[tabKey] || tabKey;
   }
 };
 

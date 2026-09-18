@@ -463,10 +463,17 @@
     <!-- SUBVIEW A: CITIZEN PORTAL ("NORMAL DASHBOARD") -->
     <div id="subview-citizen-desktop" class="dash-subview active">
       <div class="citizen-main-container">
-        <div class="browser-window-header">
-          <div class="window-controls"><span class="win-dot dot-red"></span><span class="win-dot dot-yellow"></span><span class="win-dot dot-green"></span></div>
-          <div class="browser-url-bar"><span class="url-lock">🔒</span><span id="desktop-url-bar">https://civica.gujarat.in / portal / citizen</span></div>
-          <div class="browser-badge" data-i18n="dash_service_badge">ગુજરાત નાગરિક સેવા</div>
+        <!-- Sleek SaaS Breadcrumb & Status Sub-Banner -->
+        <div class="portal-sub-banner">
+          <div class="sub-banner-left">
+            <span class="portal-badge-chip">GUJARAT CITIZEN SERVICE</span>
+            <span class="breadcrumb-item">CIVICA</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item active" id="citizen-breadcrumb-tab">Track Complaint</span>
+          </div>
+          <div class="sub-banner-right">
+            <span class="status-live-indicator"><span class="ping-circle green"></span> Navrangpura Ward 7 · Live Escrow Active</span>
+          </div>
         </div>
 
         <div class="desktop-portal-layout">
@@ -474,7 +481,7 @@
           <aside class="desktop-sidebar">
             <div class="sidebar-brand-box">
               <div class="sidebar-logo">CIVICA</div>
-              <div class="sidebar-sublogo">ગુજરાત નાગરિક</div>
+              <div class="sidebar-sublogo">ગુજરાત નાગરિક પોર્ટલ</div>
             </div>
             <nav class="sidebar-nav">
               <button class="sidebar-nav-item active" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track complaint</button>
@@ -487,17 +494,18 @@
             </nav>
             <div class="sidebar-footer-box">
               <div class="ward-tag">West Zone · Ward 7</div>
-              <div class="city-tag">AMC Ahmedabad</div>
+              <div class="city-tag">AMC Ahmedabad · Citizen Desk</div>
             </div>
           </aside>
 
-          <!-- Citizen Content Tabs -->
+          <!-- Citizen Content Tabs (Spacious & De-congested) -->
           <main class="desktop-main-content">
-            
+
             <!-- Tab 1: Track Complaint -->
             <div id="dt-tab-track" class="desktop-tab-panel active">
               <div class="desktop-header-area">
                 <h1 class="desktop-page-title" data-i18n="track_page_title">Track complaint</h1>
+                <p class="desktop-page-subtitle">Track real-time progress, field engineer dispatches, and ₹50 escrow refunds</p>
                 <div class="desktop-search-row">
                   <div class="track-input-container">
                     <span class="search-icon">🔍</span>
@@ -505,9 +513,36 @@
                   </div>
                   <button class="btn-desktop-gold-track" onclick="handleDesktopTrackLookup()" data-i18n="track_btn">TRACK</button>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; margin-top:6px;">
-                  💡 Example IDs: <strong>18492</strong> (Streetlight), <strong>18501</strong> (Waterlogging), <strong>18470</strong> (Pothole)
+                <div class="track-example-hints">
+                  💡 Quick Demo IDs: <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18492';handleDesktopTrackLookup();">18492 (Streetlight)</button>
+                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18501';handleDesktopTrackLookup();">18501 (Waterlogging)</button>
+                  <button type="button" class="btn-id-hint" onclick="document.getElementById('desktop-track-input').value='GJ-AMC-2026-18470';handleDesktopTrackLookup();">18470 (Pothole)</button>
                 </div>
+              </div>
+
+              <!-- Municipal Status & Highlights Strip (Placed inside Track Overview so other tabs are completely free & spacious) -->
+              <div class="citizen-highlights-bar">
+                <div class="highlight-strip-card escrow-accent">
+                  <span class="highlight-strip-icon">🛡️</span>
+                  <div>
+                    <strong data-i18n="side_escrow_title">100% Refundable Escrow Guarantee</strong>
+                    <p data-i18n="side_escrow_desc">₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">📱</span>
+                  <div>
+                    <strong data-i18n="side_sms_title">Real-Time SMS & WhatsApp Alerts</strong>
+                    <p data-i18n="side_sms_desc">Automated status notifications dispatched directly to your mobile in Gujarati & English as field crews progress.</p>
+                  </div>
+                </div>
+
+                <div class="highlight-strip-card">
+                  <span class="highlight-strip-icon">🏛️</span>
+                  <div>
+                    <strong data-i18n="side_support_title">AMC Ward 7 Navrangpura Desk</strong>
+                    <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong></p>
               </div>
 
               <div class="active-ticket-detail-card" id="desktop-ticket-card">
@@ -795,50 +830,58 @@
               </div>
 
               <!-- Emergency 24x7 Quick Call Grid -->
-              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:20px;">
-                <div style="background:#ffffff; border:2px solid var(--civica-gold); border-radius:var(--radius-sm); padding:16px; text-align:center;">
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+                <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
                   <span style="font-size:1.8rem;">📞</span>
                   <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">155303</div>
-                  <div style="font-size:0.8rem; font-weight:700;">AMC Central Control Room (24x7)</div>
-                  <a href="tel:155303" class="btn-hero-primary" style="margin-top:8px; width:100%; justify-content:center; padding:6px; font-size:0.78rem;">Call 155303</a>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">AMC Central Control Room (24x7)</div>
+                  <a href="tel:155303" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 155303</a>
                 </div>
 
-                <div style="background:#ffffff; border:2px solid var(--civica-gold); border-radius:var(--radius-sm); padding:16px; text-align:center;">
+                <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
                   <span style="font-size:1.8rem;">🌧️</span>
                   <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">1913</div>
-                  <div style="font-size:0.8rem; font-weight:700;">Monsoon Flood & Waterlogging</div>
-                  <a href="tel:1913" class="btn-hero-primary" style="margin-top:8px; width:100%; justify-content:center; padding:6px; font-size:0.78rem;">Call 1913</a>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">Monsoon Flood & Waterlogging</div>
+                  <a href="tel:1913" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 1913</a>
                 </div>
 
-                <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:var(--radius-sm); padding:16px; text-align:center;">
-                  <span style="font-size:1.8rem; color:#25D366;">💬</span>
-                  <div style="font-family:var(--font-serif); font-size:1.15rem; font-weight:800; color:var(--civica-navy);">+91 97277 15530</div>
-                  <div style="font-size:0.8rem; font-weight:700;">Official AMC WhatsApp Bot</div>
-                  <a href="https://wa.me/919727715530" target="_blank" class="btn-hero-secondary" style="margin-top:8px; width:100%; justify-content:center; padding:6px; font-size:0.78rem;">Open WhatsApp</a>
+                <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
+                  <span style="font-size:1.8rem;">🚨</span>
+                  <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">112</div>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">All-India Emergency & Police</div>
+                  <a href="tel:112" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 112</a>
                 </div>
+              </div>
+
+              <!-- Embedded SLA Table -->
+              <div class="active-ticket-detail-card" style="margin-top:0; margin-bottom:20px;">
+                <h3 style="font-family:var(--font-serif); font-size:1.15rem; color:var(--civica-navy); margin-bottom:12px;">Mandatory SLA Timelines (Gujarat Municipal Corporations Act)</h3>
+                <div class="dt-table-responsive">
+                  <table class="dt-web-table">
+                    <thead><tr><th>Civic Category</th><th>SLA Guarantee</th><th>Assigned Unit</th><th>Escalation Level</th></tr></thead>
+                    <tbody>
+                      <tr><td><strong>Potholes & Road Surface</strong></td><td><span class="ticket-status-pill status-resolved">24 to 48 Hours</span></td><td>Ward Highway & Asphalt Unit</td><td>Level 2: Zonal Executive Engineer</td></tr>
+                      <tr><td><strong>Streetlights & Dark Spots</strong></td><td><span class="ticket-status-pill status-resolved">24 Hours</span></td><td>Light & Electrical Dept</td><td>Level 2: Electrical Supervisor</td></tr>
+                      <tr><td><strong>Water Contamination / Burst Line</strong></td><td><span class="ticket-status-pill" style="background:#fee2e2; color:#991b1b;">4 Hours (Emergency)</span></td><td>Hydraulics & Water Works</td><td>Level 3: Deputy Municipal Commissioner</td></tr>
+                      <tr><td><strong>Monsoon Underpass Waterlogging</strong></td><td><span class="ticket-status-pill" style="background:#fee2e2; color:#991b1b;">2 Hours (Rapid Action)</span></td><td>Monsoon Control Room 1913</td><td>Level 3: Central Control Room</td></tr>
+                      <tr><td><strong>Garbage Dump & Solid Waste</strong></td><td><span class="ticket-status-pill status-resolved">12 Hours</span></td><td>Solid Waste Management (SWM)</td><td>Level 1: Ward Sanitary Inspector</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Escrow Guarantee Card -->
+              <div style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:var(--radius-md); padding:20px;">
+                <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">🛡️ ₹50 Refundable Security Escrow Transparency</strong>
+                <p style="font-size:0.88rem; color:#334155; line-height:1.6; margin:0 0 10px 0;">
+                  A refundable deposit of ₹50 is temporarily held in municipal escrow when filing a complaint to prevent bot spam and false reports.
+                  The entire ₹50 deposit is instantly credited back to your Civica Wallet as soon as the assigned municipal engineer verifies the photo and geo-location on site.
+                </p>
+                <div style="font-size:0.8rem; color:#15803d; font-weight:700;">Over 99.4% of all citizen escrow deposits are refunded within 24 hours. Your civic participation is safe and protected.</div>
               </div>
             </div>
 
           </main>
-
-          <!-- Right Sidebar -->
-          <aside class="desktop-right-sidebar">
-            <div class="right-sidebar-escrow-card">
-              <strong data-i18n="side_escrow_title">100% Refundable Escrow</strong>
-              <p data-i18n="side_escrow_desc">To eliminate fake complaints, ₹50 is held in municipal escrow. When AMC inspects genuine issues, ₹50 is instantly refunded to your Civic Wallet.</p>
-            </div>
-            <div class="desktop-alerts-card">
-              <div class="alerts-icon">📱</div>
-              <div class="alerts-info">
-                <strong data-i18n="side_sms_title">SMS & WhatsApp Updates</strong>
-                <p data-i18n="side_sms_desc">Real-time status updates active</p>
-              </div>
-            </div>
-            <div class="right-sidebar-support-card">
-              <strong data-i18n="side_support_title">🏛️ AMC Ward 7 Control Desk</strong>
-              <p data-i18n="side_support_desc">Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helpline: <strong>155303 / 1913</strong></p>
-            </div>
-          </aside>
         </div>
       </div>
     </div>
@@ -847,10 +890,17 @@
     <!-- SUBVIEW B: MUNICIPAL OFFICER PORTAL -->
     <div id="subview-officer" class="dash-subview" style="display:none;">
       <div class="citizen-main-container">
-        <div class="browser-window-header">
-          <div class="window-controls"><span class="win-dot dot-red"></span><span class="win-dot dot-yellow"></span><span class="win-dot dot-green"></span></div>
-          <div class="browser-url-bar"><span class="url-lock">🔒</span><span id="officer-url-bar">https://civica.gujarat.in / officer / dashboard</span></div>
-          <div class="browser-badge officer-badge-text">અધિકારી પેનલ · AMC Ward 7</div>
+        <!-- Sleek SaaS Breadcrumb & Status Sub-Banner -->
+        <div class="portal-sub-banner officer-sub-banner">
+          <div class="sub-banner-left">
+            <span class="portal-badge-chip officer">AMC OFFICER CONSOLE</span>
+            <span class="breadcrumb-item">Ward 7 West Zone</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item active" id="officer-breadcrumb-tab">01 Dashboard</span>
+          </div>
+          <div class="sub-banner-right">
+            <span class="status-live-indicator"><span class="ping-circle green"></span> Active Shift · 08:00–16:00 · Central DB Connected</span>
+          </div>
         </div>
 
         <div class="officer-portal-layout">
@@ -1072,10 +1122,17 @@
     <!-- SUBVIEW C: TACTICAL COMMAND CENTER (CONNECTED & FULLY FUNCTIONAL) -->
     <div id="subview-command-center" class="dash-subview" style="display:none;">
       <div class="citizen-main-container">
-        <div class="browser-window-header" style="background:#0b1120; border-color:#1e293b;">
-          <div class="window-controls"><span class="win-dot dot-red"></span><span class="win-dot dot-yellow"></span><span class="win-dot dot-green"></span></div>
-          <div class="browser-url-bar" style="background:#060913; color:#38bdf8;"><span class="url-lock">🔒</span><span>https://civica.gujarat.in / dispatch / command-terminal</span></div>
-          <div style="font-size:0.75rem; font-weight:800; color:#10b981;">LIVE DISPATCH RADAR ACTIVE</div>
+        <!-- Sleek SaaS Breadcrumb & Status Sub-Banner -->
+        <div class="portal-sub-banner command-sub-banner">
+          <div class="sub-banner-left">
+            <span class="portal-badge-chip command">TACTICAL COMMAND RADAR</span>
+            <span class="breadcrumb-item">Ahmedabad Municipal Corporation</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item active">Operations Triage Radar</span>
+          </div>
+          <div class="sub-banner-right">
+            <span class="status-live-indicator"><span class="ping-circle blue"></span> Satellite Telemetry & Dispatch Fleet Online</span>
+          </div>
         </div>
 
         <div class="command-center-container">
