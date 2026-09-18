@@ -273,41 +273,73 @@ window.switchDashboardMode = function(mode) {
     dashContainer.style.display = 'block';
   }
 
-  // Subview elements
   const subviews = {
     'citizen-desktop': document.getElementById('subview-citizen-desktop'),
-    'citizen-mobile': document.getElementById('subview-citizen-mobile'),
     'officer': document.getElementById('subview-officer')
   };
 
-  // Switch pill buttons in top bar
-  const pillButtons = {
-    'citizen-desktop': document.getElementById('btn-dash-citizen-desktop'),
-    'citizen-mobile': document.getElementById('btn-dash-citizen-mobile'),
-    'officer': document.getElementById('btn-dash-officer')
-  };
-
-  // Toggle subviews
-  Object.keys(subviews).forEach(key => {
-    const el = subviews[key];
-    const btn = pillButtons[key];
-    if (el) {
-      if (key === mode) {
-        el.style.display = 'block';
-        el.classList.add('active');
-      } else {
-        el.style.display = 'none';
-        el.classList.remove('active');
-      }
+  // Route to the appropriate subview
+  if (mode === 'officer') {
+    if (subviews['officer']) {
+      subviews['officer'].style.display = 'block';
+      subviews['officer'].classList.add('active');
     }
+    if (subviews['citizen-desktop']) {
+      subviews['citizen-desktop'].style.display = 'none';
+      subviews['citizen-desktop'].classList.remove('active');
+    }
+    renderOfficerDashboard();
+  } else {
+    // Default to Citizen Desktop Web Portal
+    if (subviews['citizen-desktop']) {
+      subviews['citizen-desktop'].style.display = 'block';
+      subviews['citizen-desktop'].classList.add('active');
+    }
+    if (subviews['officer']) {
+      subviews['officer'].style.display = 'none';
+      subviews['officer'].classList.remove('active');
+    }
+    renderDesktopPortal();
+  }
+
+  updateSessionUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+/**
+ * Switch Citizen Desktop Web Portal Tabs
+ * @param {'track'|'report'|'wallet'|'mytickets'|'brts'|'wardmap'} tabName
+ */
+window.switchDesktopTab = function(tabName) {
+  appState.activeDesktopTab = tabName;
+
+  const tabs = ['track', 'report', 'wallet', 'mytickets', 'brts', 'wardmap'];
+  tabs.forEach(t => {
+    const panel = document.getElementById(`dt-tab-${t}`);
+    const btn = document.getElementById(`btn-tab-${t}`);
+    if (panel) panel.style.display = (t === tabName) ? 'block' : 'none';
     if (btn) {
-      if (key === mode) btn.classList.add('active');
+      if (t === tabName) btn.classList.add('active');
       else btn.classList.remove('active');
     }
   });
 
-  updateSessionUI();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const urlBar = document.getElementById('desktop-url-bar');
+  if (urlBar) {
+    urlBar.textContent = `https://civica.gujarat.in / portal / ${tabName}`;
+  }
+
+  if (tabName === 'wallet') {
+    renderCivicWallet();
+  } else if (tabName === 'mytickets') {
+    renderDesktopMyTickets();
+  } else if (tabName === 'brts') {
+    renderDesktopTransit();
+  } else if (tabName === 'track') {
+    renderDesktopPortal();
+  } else if (tabName === 'report') {
+    renderCivicWallet();
+  }
 };
 
 /**
@@ -323,17 +355,10 @@ window.handleLogout = function() {
  * Synchronize User Avatar & Session Pills across Landing & Dashboard Top Bar
  */
 function updateSessionUI() {
-  const landingUserPill = document.getElementById('landing-user-pill');
-  const landingAvatar = document.getElementById('landing-avatar');
-  const landingUserName = document.getElementById('landing-user-name');
   const btnHeaderLogin = document.getElementById('btn-header-login');
   const dashSessionUserText = document.getElementById('dash-session-user-text');
 
   if (appState.currentUser) {
-    // User is authenticated
-    if (landingUserPill) landingUserPill.style.display = 'inline-flex';
-    if (landingAvatar) landingAvatar.textContent = appState.currentUser.avatar;
-    if (landingUserName) landingUserName.textContent = appState.currentUser.name;
     if (btnHeaderLogin) {
       btnHeaderLogin.textContent = 'ENTER DASHBOARD ⚡';
       btnHeaderLogin.onclick = () => {
@@ -348,8 +373,6 @@ function updateSessionUI() {
       dashSessionUserText.textContent = `${appState.currentUser.name} (${appState.currentUser.role === 'officer' ? 'Officer' : 'Citizen'})`;
     }
   } else {
-    // No active user session
-    if (landingUserPill) landingUserPill.style.display = 'none';
     if (btnHeaderLogin) {
       btnHeaderLogin.textContent = 'MEMBER LOGIN';
       btnHeaderLogin.onclick = () => openLoginModal('citizen');
@@ -364,8 +387,7 @@ function updateSessionUI() {
 window.switchMainView = function(viewName) {
   if (viewName === 'landing') returnToLandingPage();
   else if (viewName === 'officer-portal') switchDashboardMode('officer');
-  else if (viewName === 'desktop-portal') switchDashboardMode('citizen-desktop');
-  else if (viewName === 'mobile-app') switchDashboardMode('citizen-mobile');
+  else switchDashboardMode('citizen-desktop');
 };
 
 window.handleCitySwitch = function(cityId) {
@@ -1009,136 +1031,71 @@ function renderMobileTransitScreen() {
   `).join('');
 }
 
-window.switchMobileScreen = function(screenName) {
-  appState.activeMobileScreen = screenName;
-  const screens = ['home', 'report', 'track', 'wallet', 'mytickets', 'wardmap', 'brts'];
-  screens.forEach(s => {
-    const el = document.getElementById(`screen-mobile-${s}`);
-    if (el) el.style.display = (s === screenName) ? 'block' : 'none';
-  });
-
-  const chips = document.querySelectorAll('.screen-nav-chip');
-  chips.forEach(c => {
-    if (c.textContent.toLowerCase().includes(screenName)) c.classList.add('active');
-    else c.classList.remove('active');
-  });
-
-  const tabs = document.querySelectorAll('.mb-tab-btn');
-  tabs.forEach(t => t.classList.remove('active'));
-  const tabId = screenName === 'wallet' ? 'mb-tab-wallet' : screenName === 'mytickets' ? 'mb-tab-me' : screenName === 'wardmap' ? 'mb-tab-home' : `mb-tab-${screenName}`;
-  const activeTab = document.getElementById(tabId);
-  if (activeTab) activeTab.classList.add('active');
-
-  if (screenName === 'wallet') {
-    renderCivicWallet();
-  }
-};
-
 /* ==========================================================================
-   CIVIC WALLET & ANTI-SPAM SECURITY ESCROW CONTROLLER
+   DESKTOP WEB PORTAL: COMPLAINT & WALLET CONTROLLERS
    ========================================================================== */
 
-function renderCivicWallet() {
-  const mbBal = document.getElementById('mb-wallet-balance-val');
-  const dtBal = document.getElementById('desktop-wallet-bal');
-  const modalBal = document.getElementById('escrow-wallet-balance-val');
-  const btnPayWallet = document.getElementById('btn-pay-escrow-wallet');
-  const txList = document.getElementById('mb-wallet-tx-list');
-
-  const currentBal = Number(appState.citizenWallet.balance || 0);
-  const balFormatted = currentBal.toFixed(2);
-
-  if (mbBal) mbBal.textContent = balFormatted;
-  if (dtBal) dtBal.textContent = `₹${balFormatted}`;
-  if (modalBal) modalBal.textContent = balFormatted;
-
-  if (btnPayWallet) {
-    if (currentBal >= 50) {
-      btnPayWallet.disabled = false;
-      btnPayWallet.style.opacity = '1';
-      btnPayWallet.textContent = `Pay ₹50 from Civic Wallet & Submit Ticket →`;
-    } else {
-      btnPayWallet.disabled = true;
-      btnPayWallet.style.opacity = '0.6';
-      btnPayWallet.textContent = `Insufficient Balance (₹${balFormatted} / ₹50 required)`;
-    }
-  }
-
-  if (txList) {
-    const txs = appState.citizenWallet.transactions || [];
-    if (txs.length === 0) {
-      txList.innerHTML = `<div style="text-align:center; padding:12px; color:#94a3b8; font-size:0.8rem;">No transactions yet.</div>`;
-    } else {
-      txList.innerHTML = txs.map(tx => `
-        <div class="wallet-tx-item">
-          <div class="tx-main">
-            <strong>${tx.title}</strong>
-            <span>${tx.date} • ${tx.method}</span>
-          </div>
-          <div class="tx-amount ${tx.type}">
-            ${tx.type === 'credit' ? '+' : tx.type === 'held' ? '⏳ ' : '-' }₹${Number(tx.amount).toFixed(2)}
-          </div>
-        </div>
-      `).join('');
-    }
-  }
-}
-
-// 1. Complaint Filing with Anti-Spam Security Deposit Escrow
-window.handleMobileSubmitComplaint = function(e) {
-  e.preventDefault();
-  const note = document.getElementById('mb-note-input')?.value.trim() || "Observed civic hazard";
-  const cityCode = appState.activeCityId;
-  const typeConfig = window.GUJARAT_CIVIC_DATA.issueTypes.find(t => t.id === appState.selectedIssueType) || window.GUJARAT_CIVIC_DATA.issueTypes[0];
-
-  // Hold pending complaint data and prompt for ₹50 anti-spam security deposit
-  appState.pendingComplaintData = {
-    note,
-    cityCode,
-    typeConfig,
-    formEl: e.target
-  };
-
-  openEscrowModal();
+window.selectDesktopCategory = function(el, catId) {
+  const cards = document.querySelectorAll('.dt-cat-card');
+  cards.forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  appState.selectedIssueType = catId;
 };
 
-window.openEscrowModal = function() {
-  const m = document.getElementById('escrow-deposit-modal');
-  if (m) {
-    m.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  renderCivicWallet();
-};
-
-window.closeEscrowModal = function() {
-  const m = document.getElementById('escrow-deposit-modal');
-  if (m) {
-    m.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-};
-
-window.selectGatewayOption = function(el, gatewayName) {
-  const cards = document.querySelectorAll('#escrow-deposit-modal .gateway-option-card');
-  cards.forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  appState.selectedEscrowGateway = gatewayName;
-  const nameDisplay = document.getElementById('selected-gateway-name');
-  if (nameDisplay) nameDisplay.textContent = gatewayName;
-};
-
-window.confirmEscrowPayment = function(method) {
-  if (!appState.pendingComplaintData) return;
-
-  const { note, cityCode, typeConfig, formEl } = appState.pendingComplaintData;
-  const randomId = Math.floor(10000 + Math.random() * 90000);
-  const newTicketId = `GJ-${cityCode}-2026-${randomId}`;
-  const paymentMethodName = method === 'wallet' ? 'Civic Wallet' : appState.selectedEscrowGateway;
+window.toggleDtDepositMethod = function(method) {
+  const lblWallet = document.getElementById('label-method-wallet');
+  const lblOnline = document.getElementById('label-method-online');
+  const onlineContainer = document.getElementById('dt-online-gateways-container');
+  const btnSubmit = document.getElementById('btn-dt-submit-report');
 
   if (method === 'wallet') {
-    if (appState.citizenWallet.balance < 50) {
-      alert(`Insufficient Civic Wallet balance (Current: ₹${Number(appState.citizenWallet.balance).toFixed(2)}).\nPlease pay using an online payment gateway (Paytm, FamPay, PhonePe, UPI, Card) or recharge your wallet.`);
+    if (lblWallet) lblWallet.classList.add('active');
+    if (lblOnline) lblOnline.classList.remove('active');
+    if (onlineContainer) onlineContainer.style.display = 'none';
+    if (btnSubmit) btnSubmit.textContent = 'Pay ₹50 Escrow from Wallet & Submit →';
+  } else {
+    if (lblOnline) lblOnline.classList.add('active');
+    if (lblWallet) lblWallet.classList.remove('active');
+    if (onlineContainer) onlineContainer.style.display = 'block';
+    if (btnSubmit) btnSubmit.textContent = `Pay ₹50 Escrow via ${appState.selectedEscrowGateway || 'Online'} & Submit →`;
+  }
+};
+
+window.selectDtGateway = function(el, gatewayName) {
+  const cards = document.querySelectorAll('#dt-online-gateways-container .gateway-option-card');
+  cards.forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  appState.selectedEscrowGateway = gatewayName.toUpperCase();
+  const btnSubmit = document.getElementById('btn-dt-submit-report');
+  if (btnSubmit) btnSubmit.textContent = `Pay ₹50 Escrow via ${appState.selectedEscrowGateway} & Submit →`;
+};
+
+window.handleDesktopFileSelect = function(input) {
+  const preview = document.getElementById('dt-photo-preview-tag');
+  if (input.files && input.files[0] && preview) {
+    preview.textContent = `✓ Photo attached: ${input.files[0].name}`;
+    preview.style.display = 'block';
+  }
+};
+
+window.handleDesktopSubmitComplaint = function(e) {
+  e.preventDefault();
+  const location = document.getElementById('dt-location-input')?.value.trim() || "CG Road, Navrangpura";
+  const note = document.getElementById('dt-description-input')?.value.trim() || "Observed civic hazard";
+  const cityCode = appState.activeCityId || 'AMC';
+  const typeConfig = window.GUJARAT_CIVIC_DATA.issueTypes.find(t => t.id === appState.selectedIssueType) || window.GUJARAT_CIVIC_DATA.issueTypes[0];
+
+  const depositSource = document.querySelector('input[name="dt_deposit_source"]:checked')?.value || 'wallet';
+  const randomId = Math.floor(10000 + Math.random() * 90000);
+  const newTicketId = `GJ-${cityCode}-2026-${randomId}`;
+  const paymentMethodName = depositSource === 'wallet' ? 'Civic Wallet' : (appState.selectedEscrowGateway || 'Online UPI');
+
+  if (depositSource === 'wallet') {
+    if (Number(appState.citizenWallet.balance) < 50) {
+      alert(`Insufficient Civic Wallet balance (Current: ₹${Number(appState.citizenWallet.balance).toFixed(2)}).\nPlease pay using an online payment option (Paytm, FamPay, PhonePe, UPI, Card) or recharge your wallet.`);
+      toggleDtDepositMethod('online');
+      const radioOnline = document.querySelector('input[name="dt_deposit_source"][value="online"]');
+      if (radioOnline) radioOnline.checked = true;
       return;
     }
 
@@ -1157,7 +1114,7 @@ window.confirmEscrowPayment = function(method) {
 
     showCivicaToast(`🛡️ ₹50 Security Deposit held from Civic Wallet. 100% Refundable upon inspection.`);
   } else {
-    // Direct Online Gateway (Paytm, FamPay, PhonePe, UPI, Card, Net Banking)
+    // Paid via Online Gateway
     appState.citizenWallet.transactions.unshift({
       id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
       type: 'held',
@@ -1172,31 +1129,31 @@ window.confirmEscrowPayment = function(method) {
     showCivicaToast(`🛡️ Paid ₹50 via ${paymentMethodName}. Held in Municipal Escrow.`);
   }
 
-  // Create new verified complaint
+  // Create new complaint
   const newComplaint = {
     id: newTicketId,
     shortId: `${randomId}`,
     citizen: appState.currentUser ? appState.currentUser.name : "Priya Patel",
     citizenPhone: "98250 84920",
-    title: `${typeConfig.name} out · CG Road, near Law Garden`,
-    type: appState.selectedIssueType,
+    title: `${typeConfig.name} issue · ${location}`,
+    type: appState.selectedIssueType || 'streetlight',
     categoryName: typeConfig.name,
     categoryGu: typeConfig.gujarati,
-    location: "CG Road, near Law Garden",
+    location: location,
     distance: "50 m",
     ward: "Ward 7",
     zone: "West Zone",
     agency: `${cityCode} Maintenance Operations`,
     status: "new",
     depositAmount: 50.00,
-    depositStatus: "held", // 'held' | 'refunded' | 'forfeited'
+    depositStatus: "held",
     depositMethod: paymentMethodName,
     depositTxId: `ESC-${randomId}`,
     filedDate: "Today",
     dueDate: "Tomorrow",
     slaDate: "Tomorrow",
     assignedCrew: "Pending Assignment",
-    note: `New complaint registered with ₹50 anti-spam security deposit held via ${paymentMethodName}. Awaiting municipal inspection.`,
+    note: `${note} — ₹50 anti-spam security deposit held via ${paymentMethodName}. Awaiting municipal inspection.`,
     steps: [
       { label: "Received", labelGu: "પ્રાપ્ત", date: "Just now", completed: true, active: true },
       { label: "Deposit Held", labelGu: "₹50 ડિપોઝિટ", date: `Paid via ${paymentMethodName}`, completed: true },
@@ -1211,19 +1168,162 @@ window.confirmEscrowPayment = function(method) {
   appState.officerKPIs.openTickets++;
   saveMasterState();
 
-  if (formEl && formEl.reset) formEl.reset();
-  appState.pendingComplaintData = null;
-  closeEscrowModal();
+  e.target.reset();
+  const preview = document.getElementById('dt-photo-preview-tag');
+  if (preview) preview.style.display = 'none';
 
   renderCivicWallet();
   renderDesktopPortal();
-  renderMobileApp();
+  renderDesktopMyTickets();
   renderOfficerDashboard();
   renderOfficerInbox('all');
   renderOfficerTakeAction(newTicketId);
 
-  switchMobileScreen('track');
+  // Jump to tracking tab to display the newly filed ticket!
+  viewComplaintInTrack(newTicketId);
 };
+
+window.viewComplaintInTrack = function(ticketId) {
+  const input = document.getElementById('desktop-track-input');
+  if (input) input.value = ticketId;
+  switchDesktopTab('track');
+  handleDesktopTrackLookup();
+};
+
+window.renderDesktopMyTickets = function() {
+  const tbody = document.getElementById('dt-mytickets-tbody');
+  if (!tbody) return;
+
+  const tickets = appState.complaints || [];
+  if (tickets.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; color:#94a3b8;">No complaints filed yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = tickets.map(t => {
+    let depositBadge = `<span class="ticket-status-pill status-inprogress">⏳ ₹50 Held</span>`;
+    if (t.depositStatus === 'refunded') {
+      depositBadge = `<span class="ticket-status-pill status-resolved">✓ ₹50 Refunded</span>`;
+    } else if (t.depositStatus === 'prank_forfeited') {
+      depositBadge = `<span class="ticket-status-pill" style="background:#fee2e2; color:#991b1b;">✕ Forfeited (Prank)</span>`;
+    }
+
+    let statusClass = 'status-inprogress';
+    if (t.status === 'Resolved' || t.status === 'નિરાકરણ થયેલ') statusClass = 'status-resolved';
+    else if (t.status === 'New' || t.status === 'new' || t.status === 'નવી') statusClass = 'status-assigned';
+
+    return `
+      <tr>
+        <td><strong>${t.id}</strong></td>
+        <td><span style="font-size:1.1rem; margin-right:4px;">${t.icon || '📍'}</span> ${t.categoryName || t.type || 'Civic'}</td>
+        <td>
+          <div style="font-weight:700; color:var(--civica-navy);">${t.location || 'Ward 7'}</div>
+          <div style="font-size:0.78rem; color:#64748b;">${(t.note || '').substring(0, 55)}...</div>
+        </td>
+        <td>${t.filedDate || '12 Sep 2026'}</td>
+        <td>${depositBadge}</td>
+        <td><span class="ticket-status-pill ${statusClass}">${t.status.toUpperCase()}</span></td>
+        <td>
+          <button class="btn-table-action" onclick="viewComplaintInTrack('${t.id}')">Track &rarr;</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+};
+
+window.renderDesktopTransit = function() {
+  const grid = document.getElementById('dt-transit-grid');
+  if (!grid) return;
+
+  const transitData = window.GUJARAT_CIVIC_DATA.transitRoutes || [
+    { line: 'Janmarg Green Line (BRTS)', route: 'RTO Circle ↔ Maninagar via CG Road', eta: '3 min', status: 'On Time', icon: '🚌' },
+    { line: 'Ahmedabad Metro (North-South)', route: 'APMC ↔ Old High Court ↔ Motera', eta: '6 min', status: 'On Time', icon: '🚇' },
+    { line: 'Ahmedabad Metro (East-West)', route: 'Thaltej ↔ Kalupur Railway Station ↔ Vastral Gam', eta: '8 min', status: 'On Time', icon: '🚇' },
+    { line: 'Janmarg Purple Line (BRTS)', route: 'Science City ↔ Iskcon ↔ Shivranjani', eta: '11 min', status: 'Moderate Traffic', icon: '🚌' },
+    { line: 'GSRTC Intercity Express', route: 'Geeta Mandir Central Bus Port ↔ Vadodara', eta: '18:40 Dep', status: 'Boarding Bay 4', icon: '🚍' },
+    { line: 'AMTS Feeder Route 42', route: 'Navrangpura Bus Stand ↔ Paldi', eta: '5 min', status: 'On Time', icon: '🚌' }
+  ];
+
+  grid.innerHTML = transitData.map(t => `
+    <div class="dt-transit-card">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <span style="font-size:2rem;">${t.icon || '🚌'}</span>
+        <div>
+          <strong style="display:block; font-size:1.05rem; color:var(--civica-navy);">${t.line}</strong>
+          <span style="font-size:0.8rem; color:#64748b;">${t.route}</span>
+          <div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:2px;">Route Corridor: West Zone</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:1.25rem; font-weight:800; color:var(--civica-gold-dark);">${t.eta}</div>
+        <div style="font-size:0.75rem; color:#10b981; font-weight:700;">● ${t.status}</div>
+      </div>
+    </div>
+  `).join('');
+};
+
+/* ==========================================================================
+   CIVIC WALLET & ANTI-SPAM SECURITY ESCROW CONTROLLER
+   ========================================================================== */
+
+function renderCivicWallet() {
+  const dtBal = document.getElementById('desktop-wallet-bal');
+  const dtVal = document.getElementById('dt-wallet-balance-val');
+  const dtReportVal = document.getElementById('dt-report-wallet-val');
+  const dtPayStatus = document.getElementById('dt-wallet-pay-status');
+  const dtTableBody = document.getElementById('dt-wallet-tx-tbody');
+  const modalBal = document.getElementById('escrow-wallet-balance-val');
+  const btnPayWallet = document.getElementById('btn-pay-escrow-wallet');
+
+  const currentBal = Number(appState.citizenWallet.balance || 0);
+  const balFormatted = currentBal.toFixed(2);
+
+  if (dtBal) dtBal.textContent = `₹${balFormatted}`;
+  if (dtVal) dtVal.textContent = balFormatted;
+  if (dtReportVal) dtReportVal.textContent = `₹${balFormatted}`;
+  if (modalBal) modalBal.textContent = balFormatted;
+
+  if (dtPayStatus) {
+    if (currentBal >= 50) {
+      dtPayStatus.style.color = '#10b981';
+      dtPayStatus.textContent = `Balance Sufficient (₹${balFormatted})`;
+    } else {
+      dtPayStatus.style.color = '#ef4444';
+      dtPayStatus.textContent = `Insufficient Balance (₹${balFormatted} / ₹50 required)`;
+    }
+  }
+
+  if (btnPayWallet) {
+    if (currentBal >= 50) {
+      btnPayWallet.disabled = false;
+      btnPayWallet.style.opacity = '1';
+      btnPayWallet.textContent = `Pay ₹50 from Civic Wallet & Submit Ticket →`;
+    } else {
+      btnPayWallet.disabled = true;
+      btnPayWallet.style.opacity = '0.6';
+      btnPayWallet.textContent = `Insufficient Balance (₹${balFormatted} / ₹50 required)`;
+    }
+  }
+
+  if (dtTableBody) {
+    const txs = appState.citizenWallet.transactions || [];
+    if (txs.length === 0) {
+      dtTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:20px; color:#94a3b8;">No escrow transactions found.</td></tr>`;
+    } else {
+      dtTableBody.innerHTML = txs.map(tx => `
+        <tr>
+          <td>${tx.date}</td>
+          <td><code>${tx.id}</code></td>
+          <td><strong>${tx.title}</strong></td>
+          <td><span class="ticket-status-pill ${tx.type === 'credit' ? 'status-resolved' : tx.type === 'held' ? 'status-inprogress' : 'status-assigned'}">${tx.type.toUpperCase()}</span></td>
+          <td>${tx.method}</td>
+          <td style="font-weight:700; color:${tx.type === 'credit' ? '#166534' : tx.type === 'held' ? '#0369a1' : '#b91c1c'};">${tx.type === 'credit' ? '+' : tx.type === 'held' ? '⏳ ' : '-'}₹${Number(tx.amount).toFixed(2)}</td>
+          <td><span style="font-size:0.75rem; font-weight:700; color:${tx.type === 'credit' ? '#166534' : tx.type === 'held' ? '#b45309' : '#475569'};">${tx.type === 'held' ? 'Escrow Protected' : tx.type === 'credit' ? 'Refunded / Added' : 'Deducted'}</span></td>
+        </tr>
+      `).join('');
+    }
+  }
+}
 
 // 2. Civic Wallet Top-Up
 window.openWalletTopupModal = function() {
@@ -1353,6 +1453,6 @@ window.closeContactModal = function() {
 };
 
 window.openWalletModal = function() {
-  switchDashboardMode('citizen-mobile');
-  switchMobileScreen('wallet');
+  switchDashboardMode('citizen-desktop');
+  switchDesktopTab('wallet');
 };

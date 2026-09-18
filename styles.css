@@ -1538,6 +1538,292 @@ input, select, textarea { font-family: inherit; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ==========================================================================
+   CITIZEN DESKTOP WEB PORTAL EXTENSIONS (FULL WEB FORMAT)
+   ========================================================================== */
+.desktop-tab-panel { display: none; animation: fadeIn 0.25s ease; }
+.desktop-tab-panel.active { display: block; }
+
+.desktop-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.dt-cat-card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.dt-cat-card:hover {
+  border-color: var(--civica-navy);
+  background: #f8fafc;
+}
+
+.dt-cat-card.active {
+  border-color: var(--civica-gold);
+  background: rgba(197, 160, 89, 0.1);
+  box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.25);
+}
+
+.dt-cat-icon { font-size: 1.6rem; flex-shrink: 0; }
+.dt-cat-info strong { display: block; font-size: 0.88rem; color: var(--civica-navy); font-weight: 700; }
+.dt-cat-info span { font-size: 0.74rem; color: #64748b; }
+
+.form-section-card {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.form-two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dt-web-input, .dt-web-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dt-web-input:focus, .dt-web-textarea:focus {
+  border-color: var(--civica-navy);
+  box-shadow: 0 0 0 3px rgba(12, 26, 47, 0.08);
+}
+
+.dt-map-preview-box {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  height: 160px;
+  border: 1px solid #cbd5e1;
+}
+
+.dt-map-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dt-map-caption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  background: rgba(12, 26, 47, 0.85);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.dt-upload-box {
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8fafc;
+}
+
+.dt-upload-ico { font-size: 1.8rem; color: var(--civica-navy); }
+.btn-dt-browse {
+  margin-left: auto;
+  background: var(--civica-navy);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.escrow-highlight-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+  border: 1.5px solid #86efac;
+}
+
+.escrow-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.escrow-badge-pill {
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.escrow-wallet-quick-badge {
+  text-align: right;
+  background: #ffffff;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.deposit-payment-options-box {
+  margin-top: 14px;
+  border-top: 1px solid #dcfce7;
+  padding-top: 14px;
+}
+
+.payment-selection-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  margin-bottom: 10px;
+}
+
+.deposit-methods-row {
+  display: flex;
+  gap: 16px;
+}
+
+.method-choice-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.method-choice-label.active {
+  border-color: var(--civica-navy);
+  background: #f8fafc;
+  box-shadow: var(--shadow-sm);
+}
+
+.method-choice-label input[type="radio"] { display: none; }
+.method-custom-radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.method-choice-label.active .method-custom-radio {
+  border-color: var(--civica-gold-dark);
+  background: var(--civica-gold-dark);
+}
+
+.method-ico { font-size: 1.4rem; }
+
+.dt-table-responsive {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.dt-web-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.dt-web-table th {
+  background: #f8fafc;
+  color: var(--civica-navy);
+  font-weight: 700;
+  padding: 12px 14px;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dt-web-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+  color: #334155;
+}
+
+.dt-web-table tr:hover td { background: #f8fafc; }
+
+.dt-transit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.dt-transit-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.dt-transit-card:hover {
+  border-color: var(--civica-gold);
+  transform: translateY(-2px);
+}
+
+.btn-table-action {
+  background: var(--civica-navy);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-table-action:hover {
+  background: var(--civica-gold-dark);
+}
+
 @media (max-width: 1024px) {
   .hero-container { grid-template-columns: 1fr; }
   .gallery-showcase-container { grid-template-columns: 1fr; }
