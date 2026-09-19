@@ -709,7 +709,6 @@
               <button class="sidebar-nav-item" id="btn-tab-track" onclick="switchDesktopTab('track')" data-i18n="tab_track">🔍 Track Complaint</button>
               <button class="sidebar-nav-item" id="btn-tab-wallet" onclick="switchDesktopTab('wallet')"><span data-i18n="tab_wallet">👛 Civic Wallet</span> (<span id="desktop-wallet-bal">₹150</span>)</button>
               <button class="sidebar-nav-item" id="btn-tab-community" onclick="switchDesktopTab('community')" data-i18n="tab_community">📢 Community Feed</button>
-              <button class="sidebar-nav-item" id="btn-tab-transit" onclick="switchDesktopTab('transit')" data-i18n="tab_transit">🚍 Transit Flow</button>
               <button class="sidebar-nav-item" id="btn-tab-rules-dir" onclick="switchDesktopTab('rules-dir')" data-i18n="tab_rules_dir">📜 Rules & SLAs</button>
             </nav>
             <div class="sidebar-footer-box">
@@ -748,13 +747,28 @@
                       <span class="dt-cat-icon">🌊</span>
                       <div class="dt-cat-info"><strong>Waterlogging</strong><span>Monsoon drain blockage, road flooding</span></div>
                     </div>
-                    <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'brts')">
-                      <span class="dt-cat-icon">🚌</span>
-                      <div class="dt-cat-info"><strong>BRTS / Transit</strong><span>Bus shelter or transit hazard</span></div>
-                    </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'water')">
                       <span class="dt-cat-icon">💧</span>
                       <div class="dt-cat-info"><strong>Water Supply</strong><span>Contamination, burst pipeline, low pressure</span></div>
+                    </div>
+                    <div class="dt-cat-card" id="dt-cat-card-others" onclick="selectDesktopCategory(this, 'others')">
+                      <span class="dt-cat-icon">📋</span>
+                      <div class="dt-cat-info"><strong>Others</strong><span>Specify custom issue or problem</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Dynamic Custom Problem Input Section (Appears when 'Others' is selected) -->
+                  <div id="dt-custom-issue-section" style="display:none; margin-top:16px; padding:18px 20px; background:#f0f9ff; border:1.5px solid #0284c7; border-radius:var(--radius-md); box-shadow:0 4px 14px rgba(2,132,199,0.08); animation:fadeIn 0.3s ease;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                      <label for="dt-custom-issue-input" style="font-size:0.92rem; font-weight:700; color:var(--civica-navy); display:flex; align-items:center; gap:8px;">
+                        <span>✍️</span> <span>Type Your Specific Problem / Grievance:</span>
+                      </label>
+                      <span style="font-size:0.75rem; color:#0284c7; background:#e0f2fe; padding:3px 10px; border-radius:12px; font-weight:600;">Custom Category</span>
+                    </div>
+                    <input type="text" id="dt-custom-issue-input" class="dt-web-input" placeholder="e.g. Broken pavement slab, stray animal menace, tree branch hazard, park maintenance..." style="background:#ffffff; border:1.5px solid #7dd3fc; font-size:0.9rem; padding:12px 14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.75rem; color:#0369a1;">
+                      <span>Please type the details of your problem so AMC dispatchers can classify it.</span>
+                      <span style="color:#059669; font-weight:600;">✓ Routed to Ward Rapid Triage Desk</span>
                     </div>
                   </div>
                 </div>
@@ -979,39 +993,7 @@
               </div>
             </div>
 
-            <!-- Tab 6: Smart Transit & Friction Index -->
-            <div id="dt-tab-transit" class="desktop-tab-panel" style="display:none;">
-              <div class="desktop-header-area">
-                <h1 class="desktop-page-title">Multimodal Transit Flow & Friction Index</h1>
-                <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Real-time BRTS Janmarg, Ahmedabad Metro, and route congestion telemetry</p>
-              </div>
-
-              <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:18px; margin-bottom:20px;">
-                <div class="friction-calculator-box">
-                  <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <strong style="color:var(--civica-navy); font-size:0.95rem;">Commute Delay & Friction Index</strong>
-                    <button class="btn-hero-primary" style="padding:4px 10px; font-size:0.75rem;" onclick="computeTransitFriction()">Recalculate</button>
-                  </div>
-                  <div class="friction-gauge-row">
-                    <div class="friction-score-circle" id="friction-score-num">48</div>
-                    <div>
-                      <strong id="friction-label-text" style="font-size:0.95rem; color:#0369a1;">Optimal Commute Flow</strong>
-                      <p style="font-size:0.75rem; color:#64748b; margin:2px 0 0 0;">Derived from BRTS telemetry, bus loop times & reported delays.</p>
-                    </div>
-                  </div>
-                  <div class="pulse-conditions-grid">
-                    <button class="btn-pulse-condition" onclick="recordCommuterPulse('overcrowded')">🚌 Overcrowded BRTS</button>
-                    <button class="btn-pulse-condition" onclick="recordCommuterPulse('ac_broken')">❄️ AC Defective</button>
-                    <button class="btn-pulse-condition" onclick="recordCommuterPulse('signal_delay')">🚦 Signal Gridlock</button>
-                    <button class="btn-pulse-condition" onclick="recordCommuterPulse('waterlogged_stop')">🌊 Flooded Stop</button>
-                  </div>
-                </div>
-
-                <div style="display:flex; flex-direction:column; gap:10px;" id="transit-corridors-list"></div>
-              </div>
-            </div>
-
-            <!-- Tab 7: Rules, SLAs & Helplines -->
+            <!-- Tab 6: Rules, SLAs & Helplines -->
             <div id="dt-tab-rules-dir" class="desktop-tab-panel" style="display:none;">
               <div class="desktop-header-area">
                 <div style="display:flex; justify-content:space-between; align-items:center;">

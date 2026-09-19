@@ -921,10 +921,10 @@ window.openCommandCenter = function() {
    ========================================================================== */
 
 window.switchDesktopTab = function(tabName) {
-  if (tabName === 'wardmap' || tabName === 'address') tabName = 'track';
+  if (tabName === 'wardmap' || tabName === 'address' || tabName === 'transit') tabName = 'report';
   appState.activeDesktopTab = tabName;
 
-  const tabs = ['report', 'track', 'wallet', 'community', 'transit', 'rules-dir'];
+  const tabs = ['report', 'track', 'wallet', 'community', 'rules-dir'];
   tabs.forEach(t => {
     const panel = document.getElementById(`dt-tab-${t}`);
     const btn = document.getElementById(`btn-tab-${t}`);
@@ -943,7 +943,6 @@ window.switchDesktopTab = function(tabName) {
       'track': 'Track Complaint',
       'wallet': 'Civic Wallet & Ledger',
       'community': 'Community Incident Feed',
-      'transit': 'Transit Flow & Friction',
       'rules-dir': 'Rules, SLAs & Helplines'
     };
     breadcrumb.textContent = tabLabels[tabName] || tabName;
@@ -952,7 +951,6 @@ window.switchDesktopTab = function(tabName) {
   if (tabName === 'wallet') renderCivicWallet();
   else if (tabName === 'track') renderDesktopPortal();
   else if (tabName === 'community') renderCommunityIncidentFeed();
-  else if (tabName === 'transit') renderTransitFriction();
 };
 
 function renderDesktopPortal() {
@@ -1043,6 +1041,19 @@ window.selectDesktopCategory = function(el, catId) {
   document.querySelectorAll('.dt-cat-card').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   appState.selectedIssueType = catId;
+
+  const customSection = document.getElementById('dt-custom-issue-section');
+  const customInput = document.getElementById('dt-custom-issue-input');
+  if (customSection) {
+    if (catId === 'others') {
+      customSection.style.display = 'block';
+      if (customInput) {
+        setTimeout(() => customInput.focus(), 60);
+      }
+    } else {
+      customSection.style.display = 'none';
+    }
+  }
 };
 
 window.toggleDtDepositMethod = function(method) {
@@ -1084,7 +1095,21 @@ window.handleDesktopSubmitComplaint = function(e) {
   e.preventDefault();
   const location = document.getElementById('dt-location-input')?.value.trim() || "CG Road, Navrangpura";
   const note = document.getElementById('dt-description-input')?.value.trim() || "Hazard observed by citizen";
-  const typeConfig = window.GUJARAT_CIVIC_DATA.issueTypes.find(t => t.id === appState.selectedIssueType) || window.GUJARAT_CIVIC_DATA.issueTypes[0];
+  const customIssue = (appState.selectedIssueType === 'others')
+    ? (document.getElementById('dt-custom-issue-input')?.value.trim() || '')
+    : '';
+
+  let typeConfig = window.GUJARAT_CIVIC_DATA.issueTypes.find(t => t.id === appState.selectedIssueType) || window.GUJARAT_CIVIC_DATA.issueTypes[0];
+  if (appState.selectedIssueType === 'others') {
+    const customTitle = customIssue || 'Custom Civic Grievance';
+    typeConfig = {
+      id: 'others',
+      name: customTitle,
+      gujarati: `અન્ય: ${customTitle}`,
+      icon: '📋',
+      dept: 'General Administration & Redressal'
+    };
+  }
 
   const depositSource = document.querySelector('input[name="dt_deposit_source"]:checked')?.value || 'wallet';
   const randomId = Math.floor(10000 + Math.random() * 90000);
@@ -1123,12 +1148,20 @@ window.handleDesktopSubmitComplaint = function(e) {
     });
   }
 
+  const issueTitle = (appState.selectedIssueType === 'others')
+    ? `${typeConfig.name} · ${location}`
+    : `${typeConfig.name} issue · ${location}`;
+
+  const issueNote = (appState.selectedIssueType === 'others' && customIssue)
+    ? `[Problem Category: ${customIssue}] ${note} — ₹50 security deposit held via ${paymentMethodName}. Inspection pending.`
+    : `${note} — ₹50 security deposit held via ${paymentMethodName}. Inspection pending.`;
+
   const newComplaint = {
     id: newTicketId,
     shortId: `${randomId}`,
     citizen: appState.currentUser ? appState.currentUser.name : "Priya Patel",
     citizenPhone: "98250 84920",
-    title: `${typeConfig.name} issue · ${location}`,
+    title: issueTitle,
     type: appState.selectedIssueType || 'streetlight',
     categoryName: typeConfig.name,
     categoryGu: typeConfig.gujarati,
@@ -1151,7 +1184,7 @@ window.handleDesktopSubmitComplaint = function(e) {
     slaDate: "24h Mandatory SLA",
     confirmations: 1,
     assignedCrew: "Pending Assignment",
-    note: `${note} — ₹50 security deposit held via ${paymentMethodName}. Inspection pending.`,
+    note: issueNote,
     steps: [
       { label: "Received", labelGu: "પ્રાપ્ત", date: "Just now", completed: true, active: true },
       { label: "Deposit Held", labelGu: "₹50 ડિપોઝિટ", date: `Paid via ${paymentMethodName}`, completed: true },
@@ -1167,6 +1200,12 @@ window.handleDesktopSubmitComplaint = function(e) {
   saveMasterState();
 
   e.target.reset();
+  const customSec = document.getElementById('dt-custom-issue-section');
+  if (customSec) customSec.style.display = 'none';
+  document.querySelectorAll('.dt-cat-card').forEach(c => c.classList.remove('active'));
+  document.querySelector('.dt-cat-card')?.classList.add('active');
+  appState.selectedIssueType = 'streetlight';
+
   const preview = document.getElementById('dt-photo-preview-tag');
   if (preview) preview.style.display = 'none';
 

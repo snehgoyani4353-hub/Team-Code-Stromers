@@ -28,7 +28,8 @@ const GUJARAT_CIVIC_DATA = {
     { id: "garbage", name: "Garbage", gujarati: "કચરો / ગંદકી", icon: "🗑️", dept: "Solid Waste Management" },
     { id: "waterlogging", name: "Waterlogging", gujarati: "ચોમાસુ પાણી ભરાવ (Monsoon)", icon: "🌊", dept: "Monsoon & Drainage" },
     { id: "brts", name: "BRTS / Bus Stop", gujarati: "બીઆરટીએસ / બસ સ્ટેન્ડ", icon: "🚌", dept: "Transit Authority" },
-    { id: "water", name: "Water Supply", gujarati: "પાણી પુરવઠો", icon: "💧", dept: "Hydraulics & Water Works" }
+    { id: "water", name: "Water Supply", gujarati: "પાણી પુરવઠો", icon: "💧", dept: "Hydraulics & Water Works" },
+    { id: "others", name: "Others", gujarati: "અન્ય સમસ્યા", icon: "📋", dept: "General Administration & Citizen Redressal" }
   ],
 
   // Gujarati / English / Hindi Status Mapping
