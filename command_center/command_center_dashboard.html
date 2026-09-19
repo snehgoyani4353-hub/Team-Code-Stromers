@@ -268,7 +268,7 @@
         <!-- Lane 4: Resolved -->
         <div class="kanban-lane" id="lane-resolved">
           <div class="kanban-lane-header">
-            <span class="lane-title-text"><i class="fa-solid fa-check-double" style="color:#10b981;"></i> 04 Verified & Resolved</span>
+            <span class="lane-title-text"><i class="fa-solid fa-check-double" style="color:#10b981;"></i> 04 Finish & Resolved</span>
             <span class="lane-card-badge" id="badge-resolved">0</span>
           </div>
           <div class="kanban-cards-stack" id="stack-resolved"></div>
@@ -372,8 +372,8 @@
               <strong>Assigned:</strong> ${inc.assignedUnit || 'None'}<br>
               <strong>Reporter:</strong> ${inc.citizen} (Deposit: ${inc.escrowStatus})
             </div>
-            <button onclick="advanceAndRefresh('${inc.id}')" style="width:100%; background:#0284c7; color:white; border:none; padding:6px; border-radius:4px; font-weight:700; cursor:pointer;">
-              Advance Status &rarr;
+            <button onclick="finishAndRefresh('${inc.id}')" style="width:100%; background:#059669; color:white; border:none; padding:7px; border-radius:4px; font-weight:700; cursor:pointer;">
+              ✓ Finish &rarr;
             </button>
           </div>
         `);
@@ -435,10 +435,13 @@
       });
     }
 
-    function advanceAndRefresh(id) {
-      tacticalEngine.advanceIncidentStatus(id);
+    function finishAndRefresh(id) {
+      tacticalEngine.finishIncidentStatus(id);
       renderOperatorKanban();
       renderMarkers();
+    }
+    function advanceAndRefresh(id) {
+      finishAndRefresh(id);
     }
 
     function playDemoSiren() {
@@ -472,7 +475,7 @@
           <div class="kcard-meta">📍 ${inc.locationName} (${inc.city})</div>
           <div class="kcard-actions">
             <span style="font-size:0.72rem; color:#94a3b8;">${inc.assignedUnit ? inc.assignedUnit.split('(')[0] : 'Unassigned'}</span>
-            ${inc.status !== 'resolved' ? `<button onclick="advanceAndRefresh('${inc.id}')" class="btn-advance-ticket">Advance &rarr;</button>` : `<span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Refunded</span>`}
+            ${inc.status !== 'resolved' ? `<button onclick="finishAndRefresh('${inc.id}')" class="btn-advance-ticket btn-finish-ticket" style="background:#059669; border-color:#059669; color:#fff;">✓ Finish &rarr;</button>` : `<span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Finished</span>`}
           </div>
         `;
         lane.appendChild(card);

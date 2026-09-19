@@ -10,7 +10,6 @@ const I18N_DATA = {
     nav_contact: "RULES & CONTACT",
     nav_solutions: "SOLUTIONS",
     nav_services: "SERVICES",
-    nav_command: "🛰️ COMMAND CENTER",
     btn_member_login: "MEMBER LOGIN",
     hero_title: "Civic Engagement &<br>Urban Mobility",
     hero_bullet_1: "Citizen-centered software that turns neighborhood reports into action.",
@@ -22,6 +21,73 @@ const I18N_DATA = {
     dash_back_home: "&larr; Back to Civica Home",
     dash_signed_citizen: "Signed in as Citizen",
     dash_service_badge: "Gujarat Citizen Service",
+    gallery_title: "OUR PROJECT GALLERY & CIVIC INITIATIVES",
+    gallery_subtitle: "Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.",
+    filter_all: "All Projects (All)",
+    filter_transit: "🚍 Smart Transit & BRTS",
+    filter_roads: "🛣️ Roads & Potholes",
+    filter_sanitation: "♻️ Cleanliness & Waste",
+    filter_utilities: "💡 Lighting & Water SCADA",
+    filter_tech: "🖥️ Command & Control",
+    carousel_back: "Back",
+    carousel_front: "Front",
+    banner_rules_title: "📜 Citizen Civic Charter & Emergency Helplines Directory",
+    banner_rules_desc: "Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.",
+    banner_rules_btn: "View Rules, Regulations & Contact Numbers &rarr;",
+    services_heading: "OUR PLATFORM SERVICES",
+    service_title_1: "Civic Feedback Hub",
+    service_desc_1: "Crowdsource neighborhood reports on broken infrastructure, delays, and safety risks.",
+    service_title_2: "Community Dashboards",
+    service_desc_2: "Live maps of civic issues, service SLAs, and neighborhood trendlines.",
+    service_title_3: "Urban Mobility Apps",
+    service_desc_3: "Multimodal routing, delay alerts, and first-to-last-mile commute planning.",
+    service_title_4: "Transit Optimization",
+    service_desc_4: "Demand-responsive scheduling and corridor performance analytics.",
+    service_title_5: "Safety Networks",
+    service_desc_5: "Verified incident sharing and neighborhood alert channels for residents.",
+    service_title_6: "Tactical Command Center",
+    service_desc_6: "Real-time geospatial dispatch, emergency broadcasts, and multi-department triage.",
+    about_heading: "ABOUT US & OUR MISSION",
+    about_intro_text: "Empowering Gujarat's urban future through citizen engagement, resilient public infrastructure, and cutting-edge municipal technology.",
+    mv_mission_tag: "OUR MISSION",
+    mv_mission_title: "Empower Innovators & Urban Infrastructure",
+    mv_mission_desc: "To empower developers, designers, and innovators to build scalable, technology-driven solutions that address critical urban challenges, improve public infrastructure, and enhance the overall quality of life for city residents.",
+    mv_vision_tag: "OUR VISION",
+    mv_vision_title: "Connected, Resilient Urban Ecosystem",
+    mv_vision_desc: "To create a connected, sustainable, and inclusive urban ecosystem where smart technology seamlessly improves everyday life, fosters economic growth, and builds resilient communities for the future.",
+    why_heading: "WHY CHOOSE CIVICA",
+    pillar_title_1: "Citizen-First Design",
+    pillar_desc_1: "Simple reporting, visible progress, ₹50 refundable escrow protection, and real replies from officers.",
+    pillar_title_2: "Urban Intelligence",
+    pillar_desc_2: "We blend open city data with live mobility signals so administrators see problems as neighborhoods feel them.",
+    pillar_title_3: "Trusted Delivery",
+    pillar_desc_3: "Transparent SLAs, audited issue trails, and dedicated municipal success teams keep programs on schedule.",
+    track_heading: "OUR TRACK RECORD",
+    stat_label_1: "NEIGHBORHOODS LIVE",
+    stat_label_2: "ISSUE ACKNOWLEDGEMENT",
+    footer_tagline: "Civic Engagement & Premier Urban Mobility Software.",
+    footer_copy: "&copy; 2026 Civica Civic Systems & Ahmedabad Municipal Corporation. All rights reserved.",
+    auth_modal_title: "Member Portal Sign-In",
+    auth_modal_sub: "Choose your portal role or use a 1-click demo account below",
+    demo_box_title: "1-Click Direct Demo Login",
+    demo_box_sub: "Access full portal features immediately without entering credentials:",
+    demo_role_citizen: "CITIZEN RESIDENT",
+    demo_name_citizen: "Priya Patel (Citizen)",
+    demo_role_officer: "AMC OFFICER",
+    demo_name_officer: "R. Patel (Ward Officer)",
+    demo_role_command: "COMMAND CENTER",
+    demo_name_command: "Cmdr. V. Rathore",
+    auth_tab_citizen: "Citizen Resident",
+    auth_tab_officer: "Municipal Officer",
+    auth_tab_command: "Command Center",
+    auth_btn_google: "Continue with Google / Gmail",
+    auth_divider_or: "or Resident Email",
+    auth_lbl_email: "Resident Email / Phone",
+    auth_lbl_pass: "Password",
+    auth_btn_submit: "Sign In to Citizen Dashboard &rarr;",
+    btn_autofill_demo: "⚡ Auto-Fill Demo Credentials",
+    auth_create_prompt: "New to CIVICA or need a citizen account?",
+    auth_btn_create: "Create New Account",
     tab_track: "🔍 Track Complaint",
     tab_report: "📝 Register Complaint",
     tab_wallet: "👛 Civic Wallet",
@@ -30,32 +96,130 @@ const I18N_DATA = {
     tab_community: "📢 Community Feed",
     tab_transit: "🚍 Transit Flow",
     tab_rules_dir: "📜 Rules & SLAs",
+    dt_report_title: "Register a Civic Complaint",
+    dt_report_sub: "Direct dispatch to AMC & SMC Ward Control Rooms & Rapid Response Units",
+    dt_step1_label: "1. Select Issue Category",
+    dt_step2_label: "2. Exact Incident Location",
+    dt_step3_label: "3. Description & Evidence",
+    dt_cat_streetlight: "Streetlight",
+    dt_cat_streetlight_sub: "Dark pole, faulty fixture",
+    dt_cat_pothole: "Road Pothole",
+    dt_cat_pothole_sub: "Damaged asphalt, road crater",
+    dt_cat_garbage: "Garbage & Waste",
+    dt_cat_garbage_sub: "Uncleared solid waste or bin overflow",
+    dt_cat_waterlogging: "Waterlogging",
+    dt_cat_waterlogging_sub: "Monsoon drain blockage, road flooding",
+    dt_cat_water: "Water Supply",
+    dt_cat_water_sub: "Contamination, burst pipeline, low pressure",
+    dt_cat_others: "Others",
+    dt_cat_others_sub: "Specify custom issue or problem",
+    dt_custom_prompt: "Type Your Specific Problem / Grievance:",
+    dt_custom_badge: "Custom Category",
+    dt_custom_help: "Please type the details of your problem so AMC dispatchers can classify it.",
+    dt_custom_routed: "✓ Routed to Ward Rapid Triage Desk",
+    dt_location_confirmed: "📍 GPS Tagged: Ward 7 Navrangpura (Coordinates confirmed)",
+    btn_attach_photo: "📷 Attach Photo",
+    escrow_pill_label: "🛡️ Anti-Spam Security Escrow",
+    dt_escrow_title: "₹50 Refundable Security Deposit",
+    dt_escrow_desc: "To eliminate prank reports, ₹50 is temporarily held in municipal escrow until AMC inspection verifies real civic issue.",
+    lbl_wallet_bal: "Your Civic Wallet:",
+    dt_wallet_option: "Civic Wallet (Instant)",
+    dt_online_option: "Pay Online (UPI / Paytm / FamPay / Cards)",
+    dt_btn_submit: "Pay ₹50 Escrow & Submit Complaint &rarr;",
     track_page_title: "Track Complaint",
     track_placeholder: "Enter Complaint ID (e.g. 18492, 18501, 18470)",
     track_btn: "TRACK COMPLAINT",
     latest_note_title: "Latest Official Field Note",
     btn_upload_photo: "📷 Upload Inspection Photo",
     btn_reopen: "Reopen Complaint",
-    address_page_title: "My Saved Addresses & Ward Registry",
-    wardmap_page_title: "My Saved Addresses & Ward Registry",
-    btn_share_society: "📤 Share with Society Secretary",
     side_escrow_title: "100% Refundable Escrow Guarantee",
     side_escrow_desc: "₹50 deposit held in municipal escrow to eliminate prank reports. Auto-refunded 100% to wallet upon engineer site verification.",
     side_sms_title: "Real-Time SMS & WhatsApp Alerts",
     side_sms_desc: "Automated status notifications dispatched directly to your mobile in English & Gujarati as field crews progress.",
     side_support_title: "AMC Ward 7 Navrangpura Desk",
     side_support_desc: "Navrangpura Zonal Office • Shift: 08:00 - 16:00<br>Central Helplines: <strong>155303 / 1913</strong>",
+    dt_wallet_header_title: "Civic Wallet & Anti-Spam Escrow",
+    dt_wallet_header_sub: "Transparent municipal deposit holding and instant citizen refund account",
+    dt_btn_add_funds: "+ Add Funds / Top Up",
     floating_ai_btn: "AI Assistant",
     ai_popup_title: "Civica AI Assistant",
     ai_popup_sub: "Gemini & ChatGPT Core • AMC 24x7",
     ai_input_placeholder: "Ask your doubt about tickets, refunds, or AMC...",
-    gallery_title: "OUR PROJECT GALLERY & CIVIC INITIATIVES",
-    gallery_subtitle: "Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.",
-    btn_demo_login: "⚡ DEMO LOGIN",
-    btn_hero_demo: "⚡ Instant Demo Login &rarr;",
-    demo_box_title: "1-Click Direct Demo Login",
-    demo_box_sub: "Access full portal features immediately without entering credentials:",
-    btn_autofill_demo: "⚡ Auto-Fill Demo Credentials"
+    lightbox_metrics_title: "Civic Metrics & Impact",
+    btn_close: "Close",
+    btn_acknowledged: "✓ Acknowledged &rarr;",
+    auth_lbl_corp: "Municipal Corporation",
+    auth_lbl_officer_email: "Officer Gov Email",
+    auth_lbl_pin: "Security PIN / Access Code",
+    auth_btn_officer_submit: "Authenticate Officer Portal &rarr;",
+    auth_command_banner: "🛡️ <strong>Restricted Security Clearance:</strong> Access to Gujarat Integrated Command & Control Centre (ICCC) requires Tier-1 authorization and passcode.",
+    auth_lbl_command_agency: "Command Agency / Station",
+    auth_lbl_command_email: "Commander Official Gov Email",
+    auth_lbl_command_pass: "Command Security Passcode / Key",
+    auth_btn_command_submit: "Authenticate Tactical Command Center &rarr;",
+    btn_autofill_commander: "⚡ Auto-Fill Commander Credentials",
+    wallet_card_label: "Anti-Spam Escrow Balance",
+    wallet_badge_verified: "Verified Citizen",
+    btn_wallet_add: "+ Add Money",
+    btn_wallet_subtext: "₹50 held per complaint &bull; Auto-refunded upon inspection",
+    wallet_guarantee_title: "💡 100% Refundable Civic Security Guarantee",
+    wallet_guarantee_desc: "To prevent fake calls, complaints require a nominal ₹50 security deposit held in municipal escrow. When AMC inspects real issues, ₹50 is instantly refunded to your wallet.",
+    wallet_guarantee_stat: "Over 99.4% of genuine reports refunded within 24 hours.",
+    wallet_ledger_title: "Transaction & Escrow Ledger",
+    feed_page_title: "Community Incident Feed & Voting",
+    feed_page_sub: "Crowdsourced hazard verification and citizen confirmation stream",
+    feed_filter_all: "All Reports",
+    feed_filter_trending: "🔥 Trending",
+    feed_filter_critical: "🚨 Critical",
+    feed_filter_resolved: "✓ Resolved",
+    crowd_reward_title: "🤝 Crowdsource Verification Reward",
+    crowd_reward_desc: "Tap <strong>\"Confirm\"</strong> on any incident you observe in your neighborhood. Confirmations assist AMC dispatchers in prioritizing field units and earn you <strong>+2 Civic Karma</strong>.",
+    rules_tab_title: "Citizen Charter, SLAs & 24x7 Helplines",
+    rules_tab_sub: "Mandatory resolution timelines under Gujarat GPMC Act",
+    rules_btn_open_page: "Open Standalone Page ↗",
+    hotline_amc_title: "AMC Central Control Room (24x7)",
+    hotline_monsoon_title: "Monsoon Flood & Waterlogging",
+    hotline_allindia_title: "All-India Emergency & Police",
+    sla_table_title: "Mandatory SLA Timelines (Gujarat Municipal Corporations Act)",
+    escrow_transparency_title: "🛡️ ₹50 Refundable Security Escrow Transparency",
+    escrow_transparency_desc: "A refundable deposit of ₹50 is temporarily held in municipal escrow when filing a complaint to prevent bot spam and false reports. The entire ₹50 deposit is instantly credited back to your Civica Wallet as soon as the assigned municipal engineer verifies the photo and geo-location on site.",
+    escrow_transparency_stat: "Over 99.4% of all citizen escrow deposits are refunded within 24 hours. Your civic participation is safe and protected.",
+    of_portal_badge: "AMC OFFICER CONSOLE",
+    of_nav_dashboard: "01 Dashboard",
+    of_nav_inbox: "02 Inbox",
+    of_nav_action: "03 Take action",
+    of_nav_notify: "04 Notify & Ratings ⭐",
+    of_nav_reports: "05 Resolution Reports",
+    of_headline_dashboard: "Today in Ward 7, AMC Ahmedabad",
+    of_kpi_open: "Open tickets",
+    of_kpi_due: "Due today",
+    of_kpi_reply: "Need citizen reply",
+    of_kpi_resolved: "Resolved this week",
+    of_priority_queue: "Priority Queue",
+    of_shift_actions: "Shift Actions Checklist",
+    of_add_action: "➕ Add Action",
+    of_inbox_headline: "Review What Citizens Filed",
+    of_action_headline: "Open Complaint & Decide Next Step",
+    of_select_problem_lbl: "📋 Select Problem / Ticket:",
+    of_assign_crew_lbl: "Assign crew",
+    of_status_pipeline_lbl: "Status Pipeline",
+    of_escrow_title: "🛡️ Citizen Anti-Spam Security Escrow",
+    of_escrow_desc: "Citizen deposited ₹50 refundable security escrow. If real hazard, click to verify and immediately refund ₹50 to their wallet.",
+    of_btn_verify_refund: "✅ Verify Real Issue & Refund ₹50",
+    of_btn_flag_fake: "❌ Flag Fake / Prank & Forfeit",
+    of_quick_decide: "Quick Decide",
+    btn_qd_assign: "ASSIGN CREW",
+    btn_qd_progress: "IN PROGRESS",
+    btn_qd_needinfo: "NEED INFO",
+    btn_qd_resolve: "RESOLVE + REFUND",
+    cmd_radar_title: "Live Geospatial Problem Radar & Mobile Fleets",
+    cmd_radar_sub: "Interactive GPS coordinates of active potholes, flooded underpasses, dark streetlights, and dispatched municipal squads.",
+    cmd_kanban_title: "Tactical Triage & Dispatch Kanban",
+    cmd_kanban_sub: "Live tracking of multi-agency field dispatches",
+    cmd_lane_triage: "<i class=\"fa-solid fa-triangle-exclamation\" style=\"color:#ef4444;\"></i> 01 Emergency Triage",
+    cmd_lane_dispatched: "<i class=\"fa-solid fa-truck-fast\" style=\"color:#38bdf8;\"></i> 02 Dispatched & Transit",
+    cmd_lane_onsite: "<i class=\"fa-solid fa-wrench\" style=\"color:#f59e0b;\"></i> 03 On-Site Remediation",
+    cmd_lane_resolved: "<i class=\"fa-solid fa-check-double\" style=\"color:#10b981;\"></i> 04 Finish & Resolved"
   },
   gu: {
     nav_home: "મુખ્ય પેજ",
@@ -63,7 +227,6 @@ const I18N_DATA = {
     nav_contact: "નિયમો અને સંપર્ક",
     nav_solutions: "ઉકેલો",
     nav_services: "સેવાઓ",
-    nav_command: "🛰️ કમાન્ડ સેન્ટર",
     btn_member_login: "સભ્ય પ્રવેશ",
     hero_title: "નાગરિક સહભાગિતા અને<br>શહેરી ગતિશીલતા",
     hero_bullet_1: "નાગરિક-કેન્દ્રિત સિસ્ટમ જે સ્થાનિક ફરિયાદોને તાત્કાલિક ઉકેલમાં ફેરવે છે.",
@@ -75,38 +238,205 @@ const I18N_DATA = {
     dash_back_home: "&larr; મુખ્ય પેજ પર પાછા જાઓ",
     dash_signed_citizen: "નાગરિક તરીકે પ્રવેશ કરેલ છે",
     dash_service_badge: "ગુજરાત નાગરિક સેવા",
+    gallery_title: "અમારી પ્રોજેક્ટ ગેલેરી અને નાગરિક પહેલ",
+    gallery_subtitle: "સમગ્ર ગુજરાતમાં લાઈવ મ્યુનિસિપલ પ્રોજેક્ટ્સ, સ્માર્ટ ટ્રાન્ઝિટ કોરિડોર, ઝડપી રોડ રિપેરિંગ ફ્લીટ અને કમાન્ડ કંટ્રોલ સેન્ટરની કામગીરી જુઓ.",
+    filter_all: "બધા પ્રોજેક્ટ્સ (All)",
+    filter_transit: "🚍 સ્માર્ટ ટ્રાન્ઝિટ અને BRTS",
+    filter_roads: "🛣️ રસ્તા અને ખાડા સમારકામ",
+    filter_sanitation: "♻️ સ્વચ્છતા અને કચરા વ્યવસ્થા",
+    filter_utilities: "💡 લાઇટિંગ અને વોટર SCADA",
+    filter_tech: "🖥️ કમાન્ડ અને કંટ્રોલ સેન્ટર",
+    carousel_back: "પાછળ",
+    carousel_front: "આગળ",
+    banner_rules_title: "📜 નાગરિક સિવિક ચાર્ટર અને ઇમરજન્સી હેલ્પલાઇન ડિરેક્ટરી",
+    banner_rules_desc: "અમારી ફરજિયાત SLA સમયમર્યાદા, ૧૦૦% રિફંડેબલ ₹૫૦ એસ્ક્રો નીતિ વાંચો અને AMC ૨૪x૭ કંટ્રોલ રૂમના સીધા સંપર્ક નંબર મેળવો.",
+    banner_rules_btn: "નિયમો, શરતો અને સંપર્ક નંબરો જુઓ &rarr;",
+    services_heading: "અમારી પ્લેટફોર્મ સેવાઓ",
+    service_title_1: "નાગરિક પ્રતિસાદ કેન્દ્ર",
+    service_desc_1: "તૂટેલા રસ્તા, સ્ટ્રીટલાઇટ કે સફાઈ જેવી સમસ્યાઓ અંગે નાગરિકો દ્વારા સીધો અહેવાલ.",
+    service_title_2: "સામુદાયિક ડેશબોર્ડ",
+    service_desc_2: "નાગરિક ફરિયાદો, નિવારણ સમય અને વોર્ડ પ્રમાણે પારદર્શક લાઈવ નકશા.",
+    service_title_3: "શહેરી મોબિલિટી એપ",
+    service_desc_3: "બસ ટ્રેકિંગ, વિલંબ ચેતવણી અને સરળ જાહેર મુસાફરી આયોજન.",
+    service_title_4: "ટ્રાન્ઝિટ ઑપ્ટિમાઇઝેશન",
+    service_desc_4: "માંગ અનુસાર બસ શેડ્યુલિંગ અને ટ્રાફિક કોરિડોર કામગીરી વિશ્લેષણ.",
+    service_title_5: "સુરક્ષા નેટવર્ક",
+    service_desc_5: "વિસ્તારના રહીશો માટે સુરક્ષા એલર્ટ અને ચકાસાયેલ માહિતી ચેનલો.",
+    service_title_6: "કમાન્ડ એન્ડ કંટ્રોલ સેન્ટર",
+    service_desc_6: "રીયલ-ટાઇમ જીપીએસ ડિસ્પેચ, કટોકટી પ્રસારણ અને તાત્કાલિક ફિલ્ડ ટીમો.",
+    about_heading: "અમારા વિશે અને અમારું મિશન",
+    about_intro_text: "નાગરિક સહભાગિતા, સ્થિતિસ્થાપક જાહેર માળખાકીય સુવિધાઓ અને અદ્યતન મ્યુનિસિપલ ટેકનોલોજી દ્વારા ગુજરાતના શહેરી ભવિષ્યનું નિર્માણ.",
+    mv_mission_tag: "અમારું મિશન",
+    mv_mission_title: "નવીનતાકારો અને શહેરી ઇન્ફ્રાસ્ટ્રક્ચરનું સશક્તિકરણ",
+    mv_mission_desc: "ડેવલપર્સ, ડિઝાઇનર્સ અને નવીનતાકારોને સ્કેલેબલ, ટેકનોલોજી-સંચાલિત ઉકેલો બનાવવા માટે સશક્ત કરવા જે મહત્વપૂર્ણ શહેરી પડકારોનો સામનો કરે, જાહેર ઇન્ફ્રાસ્ટ્રક્ચરમાં સુધારો કરે અને શહેરના રહેવાસીઓના જીવનની એકંદર ગુણવત્તામાં વધારો કરે.",
+    mv_vision_tag: "અમારું વિઝન",
+    mv_vision_title: "સંકળાયેલ, ટકાઉ અને સ્થિતિસ્થાપક શહેરી ઇકોસિસ્ટમ",
+    mv_vision_desc: "એક જોડાયેલ, ટકાઉ અને સર્વસમાવેશક શહેરી ઇકોસિસ્ટમ બનાવવું જ્યાં સ્માર્ટ ટેકનોલોજી રોજિંદા જીવનમાં સરળતાથી સુધારો કરે, આર્થિક વિકાસને પ્રોત્સાહન આપે અને ભવિષ્ય માટે સ્થિતિસ્થાપક સમુદાયોનું નિર્માણ કરે.",
+    why_heading: "સિવિકા શા માટે પસંદ કરવી",
+    pillar_title_1: "નાગરિક-પ્રથમ અભિગમ",
+    pillar_desc_1: "સરળ ફરિયાદ નોંધણી, લાઈવ પ્રગતિ, ₹૫૦ સુરક્ષા એસ્ક્રો રિફંડ અને અધિકારીઓના સીધા જવાબો.",
+    pillar_title_2: "શહેરી ઇન્ટેલિજન્સ",
+    pillar_desc_2: "અમે લાઈવ સેન્સર અને ડેટાનો સમન્વય કરીએ છીએ જેથી અધિકારીઓને સમસ્યાઓ તાત્કાલિક દેખાય.",
+    pillar_title_3: "વિશ્વસનીય અમલીકરણ",
+    pillar_desc_3: "પારદર્શક સમયમર્યાદા, ઓડિટ ટ્રેક અને સમર્પિત મ્યુનિસિપલ ટીમો કામગીરી સમયસર રાખે છે.",
+    track_heading: "અમારો અત્યાર સુધીનો રેકોર્ડ",
+    stat_label_1: "વિસ્તારો સક્રિય",
+    stat_label_2: "સમસ્યા સ્વીકૃતિ દર",
+    footer_tagline: "નાગરિક સહભાગિતા અને અગ્રણી શહેરી મોબિલિટી સોફ્ટવેર.",
+    footer_copy: "&copy; ૨૦૨૬ સિવિકા સિવિક સિસ્ટમ્સ અને અમદાવાદ મ્યુનિસિપલ કોર્પોરેશન. સર્વાધિકાર સુરક્ષિત.",
+    auth_modal_title: "સભ્ય પોર્ટલ પ્રવેશ",
+    auth_modal_sub: "આપની પોર્ટલ ભૂમિકા પસંદ કરો અથવા નીચે આપેલ ૧-ક્લિક ડેમો પસંદ કરો",
+    demo_box_title: "૧-ક્લિક સીધો ડેમો પ્રવેશ (પાસવર્ડ વગર)",
+    demo_box_sub: "પાસવર્ડ વગર સીધા પોર્ટલમાં પ્રવેશવા માટે નીચે આપેલ એકાઉન્ટ પસંદ કરો:",
+    demo_role_citizen: "નાગરિક રહીશ",
+    demo_name_citizen: "પ્રિયા પટેલ (નાગરિક)",
+    demo_role_officer: "AMC અધિકારી",
+    demo_name_officer: "આર. પટેલ (વોર્ડ અધિકારી)",
+    demo_role_command: "કમાન્ડ સેન્ટર",
+    demo_name_command: "કમાન્ડર વી. રાઠોડ",
+    auth_tab_citizen: "નાગરિક રહીશ",
+    auth_tab_officer: "મ્યુનિસિપલ અધિકારી",
+    auth_tab_command: "કમાન્ડ સેન્ટર",
+    auth_btn_google: "ગૂગલ / જીમેલ સાથે ચાલુ રાખો",
+    auth_divider_or: "અથવા ઈમેલ / ફોન નંબર",
+    auth_lbl_email: "રહીશ ઈમેલ અથવા ફોન નંબર",
+    auth_lbl_pass: "પાસવર્ડ",
+    auth_btn_submit: "નાગરિક ડેશબોર્ડમાં પ્રવેશ કરો &rarr;",
+    btn_autofill_demo: "⚡ ડેમો આઈડી/પાસવર્ડ ઓટો-ભરો",
+    auth_create_prompt: "સિવિકામાં નવા છો કે નાગરિક એકાઉન્ટ જોઈએ છે?",
+    auth_btn_create: "નવું એકાઉન્ટ બનાવો",
     tab_track: "🔍 ફરિયાદ ટ્રેક કરો",
     tab_report: "📝 નવી ફરિયાદ નોંધાવો",
     tab_wallet: "👛 નાગરિક વૉલેટ",
+    tab_address: "📍 સાચવેલા સરનામા",
     tab_wardmap: "🗺️ વોર્ડ નકશો",
     tab_community: "📢 નાગરિક ફીડ",
     tab_transit: "🚍 ટ્રાન્ઝિટ વ્યવસ્થા",
     tab_rules_dir: "📜 નિયમો અને ડિરેક્ટરી",
+    dt_report_title: "નવી નાગરિક ફરિયાદ નોંધાવો",
+    dt_report_sub: "AMC અને SMC વોર્ડ કંટ્રોલ રૂમ અને ઝડપી પ્રતિસાદ ટીમોને સીધી મોકલો",
+    dt_step1_label: "૧. સમસ્યાની શ્રેણી પસંદ કરો",
+    dt_step2_label: "૨. ચોક્કસ સ્થળ દાખલ કરો",
+    dt_step3_label: "૩. વિગત અને પુરાવા (ફોટો)",
+    dt_cat_streetlight: "સ્ટ્રીટલાઇટ",
+    dt_cat_streetlight_sub: "બંધ લાઇટ, ખામીયુક્ત થાંભલો",
+    dt_cat_pothole: "રસ્તા પર ખાડો",
+    dt_cat_pothole_sub: "તૂટેલો ડામર, ખાડો",
+    dt_cat_garbage: "કચરો અને સફાઈ",
+    dt_cat_garbage_sub: "ન ઉપાડેલ કચરો, છલકાતી કચરાપેટી",
+    dt_cat_waterlogging: "પાણી ભરાવું",
+    dt_cat_waterlogging_sub: "ચોમાસુ ગટર બ્લોકેજ, જળભરાવ",
+    dt_cat_water: "પીવાનું પાણી",
+    dt_cat_water_sub: "દૂષિત પાણી, પાઇપલાઇન લીકેજ",
+    dt_cat_others: "અન્ય સમસ્યા",
+    dt_cat_others_sub: "વિશેષ સમસ્યા વિગત જણાવો",
+    dt_custom_prompt: "આપની સમસ્યા વિગતવાર લખો:",
+    dt_custom_badge: "કસ્ટમ શ્રેણી",
+    dt_custom_help: "સમસ્યાની વિગત લખો જેથી કંટ્રોલ રૂમ ઝડપથી ટીમ મોકલી શકે.",
+    dt_custom_routed: "✓ વોર્ડ રેપિડ એક્શન ડેસ્કને મોકલાશે",
+    dt_location_confirmed: "📍 GPS ટેગ થયેલ: વોર્ડ ૭ નવરંગપુરા (સ્થળ ચકાસાયેલ)",
+    btn_attach_photo: "📷 ફોટો જોડો",
+    escrow_pill_label: "🛡️ ૧૦૦% રિફંડેબલ એસ્ક્રો ડિપોઝિટ",
+    dt_escrow_title: "₹૫૦ પરતપાત્ર સુરક્ષા ડિપોઝિટ",
+    dt_escrow_desc: "ખોટી ફરિયાદો અટકાવવા ₹૫૦ ડિપોઝિટ રાખવામાં આવે છે. સ્થળ તપાસ બાદ આ રકમ ૧૦૦% આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
+    lbl_wallet_bal: "આપનું નાગરિક વૉલેટ:",
+    dt_wallet_option: "નાગરિક વૉલેટ (તાત્કાલિક)",
+    dt_online_option: "ઓનલાઇન ચુકવણી (UPI / Paytm / FamPay / કાર્ડ)",
+    dt_btn_submit: "₹૫૦ એસ્ક્રો ચૂકવો અને ફરિયાદ નોંધાવો &rarr;",
     track_page_title: "ફરિયાદ ટ્રેક કરો (લાઈવ સ્થિતિ)",
     track_placeholder: "ફરિયાદ આઈડી દાખલ કરો (દા.ત. 18492, 18501)",
     track_btn: "ટ્રેક કરો",
     latest_note_title: "અધિકારીની તાજેતરની નોંધ",
     btn_upload_photo: "📷 તપાસ માટે ફોટો અપલોડ કરો",
     btn_reopen: "ફરિયાદ ફરીથી ખોલો",
-    wardmap_page_title: "વોર્ડ ૭ નાગરિક આરોગ્ય નકશો · લાઈવ વિગત",
-    btn_share_society: "📤 સોસાયટી સેક્રેટરી સાથે શેર કરો",
     side_escrow_title: "૧૦૦% રિફંડેબલ એસ્ક્રો ડિપોઝિટ",
-    side_escrow_desc: "ખોટી ફરિયાદો અટકાવવા ₹50 ની સુરક્ષા ડિપોઝિટ રાખવામાં આવે છે. AMC ટીમ દ્વારા સ્થળ તપાસ થતાં જ ₹50 આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
+    side_escrow_desc: "ખોટી ફરિયાદો અટકાવવા ₹૫૦ ની સુરક્ષા ડિપોઝિટ રાખવામાં આવે છે. AMC ટીમ દ્વારા સ્થળ તપાસ થતાં જ ₹૫૦ આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
     side_sms_title: "SMS અને WhatsApp એલર્ટ",
     side_sms_desc: "ગુજરાતીમાં તાત્કાલિક અપડેટ્સ સક્રિય છે",
     side_support_title: "🏛️ AMC વોર્ડ ૭ કંટ્રોલ રૂમ",
     side_support_desc: "નવરંગપુરા ઝોનલ કચેરી • સમય: ૦૮:૦૦ થી ૧૬:૦૦<br>મધ્યસ્થ હેલ્પલાઇન: 155303 / 1913",
+    dt_wallet_header_title: "નાગરિક વૉલેટ અને એસ્ક્રો ખાતું",
+    dt_wallet_header_sub: "પારદર્શક મ્યુનિસિપલ ડિપોઝિટ સુરક્ષા અને તાત્કાલિક રિફંડ ખાતું",
+    dt_btn_add_funds: "+ નાણાં ઉમેરો / ટોપ-અપ",
     floating_ai_btn: "AI સહાયક",
     ai_popup_title: "સિવિકા AI સહાયક",
     ai_popup_sub: "Gemini & ChatGPT આર્કિટેક્ચર • AMC સેવા",
     ai_input_placeholder: "ફરિયાદ, રિફંડ કે AMC નિયમો વિશે પૂછો...",
-    gallery_title: "અમારી પ્રોજેક્ટ ગેલેરી અને નાગરિક પહેલ",
-    gallery_subtitle: "સમગ્ર ગુજરાતમાં લાઈવ મ્યુનિસિપલ પ્રોજેક્ટ્સ, સ્માર્ટ ટ્રાન્ઝિટ કોરિડોર, ઝડપી રોડ રિપેરિંગ ફ્લીટ અને કમાન્ડ કંટ્રોલ સેન્ટરની કામગીરી જુઓ.",
-    btn_demo_login: "⚡ ડેમો લોગિન",
-    btn_hero_demo: "⚡ સીધો ડેમો પ્રવેશ &rarr;",
-    demo_box_title: "૧-ક્લિક સીધો ડેમો પ્રવેશ (પાસવર્ડ વગર)",
-    demo_box_sub: "પાસવર્ડ વગર સીધા પોર્ટલમાં પ્રવેશવા માટે નીચે આપેલ એકાઉન્ટ પસંદ કરો:",
-    btn_autofill_demo: "⚡ ડેમો આઈડી/પાસવર્ડ ઓટો-ભરો"
+    lightbox_metrics_title: "મ્યુનિસિપલ કામગીરી અને અસર",
+    btn_close: "બંધ કરો",
+    btn_acknowledged: "✓ સ્વીકારેલ &rarr;",
+    auth_lbl_corp: "મહાનગરપાલિકા",
+    auth_lbl_officer_email: "અધિકારી સરકારી ઈમેલ",
+    auth_lbl_pin: "સિક્યુરિટી પિન / એક્સેસ કોડ",
+    auth_btn_officer_submit: "અધિકારી પોર્ટલમાં પ્રવેશ કરો &rarr;",
+    auth_command_banner: "🛡️ <strong>પ્રતિબંધિત સુરક્ષા ક્લિયરન્સ:</strong> ગુજરાત ઇન્ટિગ્રેટેડ કમાન્ડ એન્ડ કંટ્રોલ સેન્ટર (ICCC) માં પ્રવેશ માટે ટાયર-૧ અધિકૃતતા જરૂરી છે.",
+    auth_lbl_command_agency: "કમાન્ડ એજન્સી / સ્ટેશન",
+    auth_lbl_command_email: "કમાન્ડર સત્તાવાર ઈમેલ",
+    auth_lbl_command_pass: "કમાન્ડ સુરક્ષા પાસકોડ / કી",
+    auth_btn_command_submit: "કમાન્ડ સેન્ટરમાં પ્રવેશ કરો &rarr;",
+    btn_autofill_commander: "⚡ કમાન્ડર વિગતો ઓટો-ભરો",
+    wallet_card_label: "એન્ટિ-સ્પામ એસ્ક્રો બેલેન્સ",
+    wallet_badge_verified: "ચકાસાયેલ નાગરિક",
+    btn_wallet_add: "+ નાણાં ઉમેરો",
+    btn_wallet_subtext: "ફરિયાદ દીઠ ₹૫૦ હોલ્ડ &bull; સ્થળ તપાસ બાદ તુરંત રિફંડ",
+    wallet_guarantee_title: "💡 ૧૦૦% રિફંડેબલ નાગરિક સુરક્ષા ગેરંટી",
+    wallet_guarantee_desc: "ખોટી ફરિયાદો અટકાવવા ₹૫૦ ડિપોઝિટ રાખવામાં આવે છે. સાચી સમસ્યાની સ્થળ તપાસ બાદ આ રકમ ૧૦૦% આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
+    wallet_guarantee_stat: "૯૯.૪% થી વધુ સાચા અહેવાલો ૨૪ કલાકમાં રિફંડ કરવામાં આવે છે.",
+    wallet_ledger_title: "વ્યવહાર અને એસ્ક્રો લેજર",
+    feed_page_title: "સામુદાયિક સમસ્યા ફીડ અને મત",
+    feed_page_sub: "નાગરિકો દ્વારા ચકાસણી અને સમર્થન પ્રવાહ",
+    feed_filter_all: "બધા અહેવાલો",
+    feed_filter_trending: "🔥 ટ્રેન્ડિંગ",
+    feed_filter_critical: "🚨 કટોકટી",
+    feed_filter_resolved: "✓ ઉકેલાયેલ",
+    crowd_reward_title: "🤝 નાગરિક ચકાસણી પુરસ્કાર",
+    crowd_reward_desc: "આપના વિસ્તારમાં દેખાતી સમસ્યા પર <strong>\"પુષ્ટિ કરો\"</strong> પર ક્લિક કરો. આનાથી ઝડપી મદદ મળશે અને આપને <strong>+૨ સિવિક કર્મા</strong> મળશે.",
+    rules_tab_title: "નાગરિક અધિકાર પત્ર, SLAs અને ૨૪x૭ હેલ્પલાઇન",
+    rules_tab_sub: "ગુજરાત જીપીએમસી એક્ટ હેઠળ ફરજિયાત સમયમર્યાદા",
+    rules_btn_open_page: "સંપૂર્ણ પેજ ખોલો ↗",
+    hotline_amc_title: "AMC સેન્ટ્રલ કંટ્રોલ રૂમ (૨૪x૭)",
+    hotline_monsoon_title: "ચોમાસુ જળભરાવ હેલ્પલાઇન",
+    hotline_allindia_title: "અખિલ ભારતીય ઇમરજન્સી અને પોલીસ",
+    sla_table_title: "ફરજિયાત SLA સમયમર્યાદા (ગુજરાત મહાનગરપાલિકા કાયદો)",
+    escrow_transparency_title: "🛡️ ₹૫૦ પરતપાત્ર સુરક્ષા એસ્ક્રો પારદર્શિતા",
+    escrow_transparency_desc: "ખોટી ફરિયાદો અટકાવવા ફરિયાદ નોંધાવતી વખતે ₹૫૦ ની ડિપોઝિટ રાખવામાં આવે છે. સ્થળ પર એન્જિનિયર દ્વારા ફોટો અને લોકેશન ચકાસણી થતાં જ આખી રકમ આપના વૉલેટમાં તુરંત રિફંડ થઈ જાય છે.",
+    escrow_transparency_stat: "૯૯.૪% થી વધુ નાગરિક એસ્ક્રો ડિપોઝિટ ૨૪ કલાકમાં રિફંડ થાય છે. આપની નાગરિક સહભાગિતા સંપૂર્ણ સુરક્ષિત છે.",
+    of_portal_badge: "AMC અધિકારી કન્સોલ",
+    of_nav_dashboard: "૦૧ ડેશબોર્ડ",
+    of_nav_inbox: "૦૨ ઇનબૉક્સ",
+    of_nav_action: "૦૩ કાર્યવાહી",
+    of_nav_notify: "૦૪ સૂચના અને રેટિંગ ⭐",
+    of_nav_reports: "૦૫ નિવારણ અહેવાલો",
+    of_headline_dashboard: "આજે વોર્ડ ૭, AMC અમદાવાદ",
+    of_kpi_open: "ખુલ્લી ફરિયાદો",
+    of_kpi_due: "આજની સમયમર્યાદા",
+    of_kpi_reply: "નાગરિક પ્રતિસાદ બાકી",
+    of_kpi_resolved: "આ અઠવાડિયે ઉકેલાયેલ",
+    of_priority_queue: "પ્રાથમિકતા કતાર",
+    of_shift_actions: "શિફ્ટ કાર્યસૂચિ ચેકલિસ્ટ",
+    of_add_action: "➕ કાર્ય ઉમેરો",
+    of_inbox_headline: "નાગરિકો દ્વારા નોંધાયેલ ફરિયાદોની સમીક્ષા",
+    of_action_headline: "ફરિયાદ તપાસો અને આગળનું પગલું નક્કી કરો",
+    of_select_problem_lbl: "📋 સમસ્યા / ટિકિટ પસંદ કરો:",
+    of_assign_crew_lbl: "ટીમ સોંપો",
+    of_status_pipeline_lbl: "સ્થિતિ પાઇપલાઇન",
+    of_escrow_title: "🛡️ નાગરિક એન્ટિ-સ્પામ સુરક્ષા એસ્ક્રો",
+    of_escrow_desc: "નાગરિકે ₹૫૦ ની પરતપાત્ર ડિપોઝિટ જમા કરાવી છે. વાસ્તવિક સમસ્યા હોય તો ચકાસીને તુરંત ₹૫૦ રિફંડ કરો.",
+    of_btn_verify_refund: "✅ સાચી સમસ્યા ચકાસો અને ₹૫૦ રિફંડ કરો",
+    of_btn_flag_fake: "❌ ખોટી ફરિયાદ તરીકે ચિહ્નિત કરો અને જપ્ત કરો",
+    of_quick_decide: "ઝડપી નિર્ણય",
+    btn_qd_assign: "ટીમ સોંપો",
+    btn_qd_progress: "કામ ચાલુ છે",
+    btn_qd_needinfo: "વધુ માહિતી જોઈએ",
+    btn_qd_resolve: "ઉકેલો + રિફંડ કરો",
+    cmd_radar_title: "લાઈવ ભૌગોલિક સમસ્યા રડાર અને મોબાઇલ ફ્લીટ્સ",
+    cmd_radar_sub: "ખાડા, પાણી ભરાવ, બંધ સ્ટ્રીટલાઇટ અને મોકલેલ મ્યુનિસિપલ ટીમોના લાઈવ જીપીએસ કોઓર્ડિનેટ્સ.",
+    cmd_kanban_title: "ટેક્ટિકલ ત્રિયાજ અને ડિસ્પેચ કાનબાન",
+    cmd_kanban_sub: "વિવિધ એજન્સીઓની ફિલ્ડ ટીમોનું લાઈવ ટ્રેકિંગ",
+    cmd_lane_triage: "<i class=\"fa-solid fa-triangle-exclamation\" style=\"color:#ef4444;\"></i> ૦૧ કટોકટી ત્રિયાજ",
+    cmd_lane_dispatched: "<i class=\"fa-solid fa-truck-fast\" style=\"color:#38bdf8;\"></i> ૦૨ રવાના અને માર્ગમાં",
+    cmd_lane_onsite: "<i class=\"fa-solid fa-wrench\" style=\"color:#f59e0b;\"></i> ૦૩ સ્થળ પર સમારકામ",
+    cmd_lane_resolved: "<i class=\"fa-solid fa-check-double\" style=\"color:#10b981;\"></i> ૦૪ પૂર્ણ અને ઉકેલાયેલ"
   },
   hi: {
     nav_home: "मुख्य पृष्ठ",
@@ -114,7 +444,6 @@ const I18N_DATA = {
     nav_contact: "नियम व संपर्क",
     nav_solutions: "समाधान",
     nav_services: "सेवाएं",
-    nav_command: "🛰️ कमांड सेंटर",
     btn_member_login: "सदस्य लॉगिन",
     hero_title: "नागरिक सहभागिता एवं<br>शहरी गतिशीलता",
     hero_bullet_1: "नागरिक-केंद्रित सॉफ्टवेयर जो स्थानीय शिकायतों को त्वरित कार्रवाई में बदलता है।",
@@ -126,38 +455,205 @@ const I18N_DATA = {
     dash_back_home: "&larr; सिविका होम पर वापस जाएं",
     dash_signed_citizen: "नागरिक के रूप में लॉगिन",
     dash_service_badge: "गुजरात नागरिक सेवा",
+    gallery_title: "हमारी परियोजना गैलरी एवं नागरिक पहल",
+    gallery_subtitle: "गुजरात भर में लाइव नगर निगम परियोजनाएं, स्मार्ट ट्रांजिट कॉरिडोर, रैपिड रोड रिपेयरिंग फ्लीट और कमांड कंट्रोल सेंटर संचालन देखें।",
+    filter_all: "सभी परियोजनाएं (All)",
+    filter_transit: "🚍 स्मार्ट ट्रांजिट एवं BRTS",
+    filter_roads: "🛣️ सड़कें एवं गड्ढे मरम्मत",
+    filter_sanitation: "♻️ स्वच्छता एवं कचरा प्रबंधन",
+    filter_utilities: "💡 लाइटिंग व जल SCADA",
+    filter_tech: "🖥️ कमांड एवं कंट्रोल सेंटर",
+    carousel_back: "पीछे",
+    carousel_front: "आगे",
+    banner_rules_title: "📜 नागरिक सिविक चार्टर एवं आपातकालीन हेल्पलाइन निर्देशिका",
+    banner_rules_desc: "हमारी अनिवार्य SLA समयसीमा, 100% रिफंडेबल ₹50 एस्क्रो नीति पढ़ें और AMC 24x7 कंट्रोल रूम के सीधे संपर्क नंबर प्राप्त करें।",
+    banner_rules_btn: "नियम, विनियम व संपर्क नंबर देखें &rarr;",
+    services_heading: "हमारी प्लेटफॉर्म सेवाएं",
+    service_title_1: "नागरिक फीडबैक केंद्र",
+    service_desc_1: "टूटी सड़कों, स्ट्रीटलाइट या स्वच्छता जैसी समस्याओं पर नागरिकों से सीधी रिपोर्ट।",
+    service_title_2: "सामुदायिक डैशबोर्ड",
+    service_desc_2: "नागरिक शिकायतों, निवारण समय और वार्ड स्तर पर लाइव नक्शे।",
+    service_title_3: "शहरी गतिशीलता ऐप",
+    service_desc_3: "बस ट्रैकिंग, विलंब अलर्ट और सुगम सार्वजनिक यात्रा योजना।",
+    service_title_4: "ट्रांजिट अनुकूलन",
+    service_desc_4: "मांग आधारित बस शेड्यूलिंग और ट्रैफिक कॉरिडोर प्रदर्शन विश्लेषण।",
+    service_title_5: "सुरक्षा नेटवर्क",
+    service_desc_5: "क्षेत्र के निवासियों के लिए सुरक्षा अलर्ट और सत्यापित सूचना।",
+    service_title_6: "कमांड एंड कंट्रोल सेंटर",
+    service_desc_6: "रियल-टाइम जीपीएस प्रेषण, आपातकालीन प्रसारण और त्वरित कार्रवाई।",
+    about_heading: "हमारे बारे में एवं हमारा मिशन",
+    about_intro_text: "नागरिक सहभागिता, मजबूत सार्वजनिक बुनियादी ढांचे और अत्याधुनिक नगर निगम प्रौद्योगिकी के माध्यम से गुजरात के शहरी भविष्य को सशक्त बनाना।",
+    mv_mission_tag: "हमारा मिशन",
+    mv_mission_title: "नवाचारियों और शहरी बुनियादी ढांचे का सशक्तिकरण",
+    mv_mission_desc: "डेवलपर्स, डिजाइनरों और नवप्रवर्तकों को स्केलेबल, प्रौद्योगिकी-संचालित समाधान बनाने के लिए सशक्त बनाना जो महत्वपूर्ण शहरी चुनौतियों का समाधान करें, सार्वजनिक बुनियादी ढांचे में सुधार करें और शहर के निवासियों के जीवन की समग्र गुणवत्ता को बढ़ाएं।",
+    mv_vision_tag: "हमारा विजन",
+    mv_vision_title: "जुड़ा हुआ, संधारणीय और लचीला शहरी इकोसिस्टम",
+    mv_vision_desc: "एक कनेक्टेड, टिकाऊ और समावेशी शहरी इकोसिस्टम बनाना जहां स्मार्ट तकनीक रोजमर्रा की जिंदगी को बेहतर बनाए, आर्थिक विकास को बढ़ावा दे और भविष्य के लिए लचीले समुदायों का निर्माण करे।",
+    why_heading: "सिविका क्यों चुनें",
+    pillar_title_1: "नागरिक-प्रथम दृष्टिकोण",
+    pillar_desc_1: "सरल रिपोर्टिंग, लाइव प्रगति, ₹50 सुरक्षा एस्क्रो रिफंड और अधिकारियों से सीधे जवाब।",
+    pillar_title_2: "शहरी इंटेलिजेंस",
+    pillar_desc_2: "हम लाइव सेंसर और डेटा का समन्वय करते हैं ताकि अधिकारियों को समस्याएं तुरंत दिखाई दें।",
+    pillar_title_3: "विश्वसनीय क्रियान्वयन",
+    pillar_desc_3: "पारदर्शी समयसीमा, ऑडिट ट्रैक और समर्पित नगर निगम टीमें कार्यों को समयबद्ध रखती हैं।",
+    track_heading: "हमारा अब तक का रिकॉर्ड",
+    stat_label_1: "सक्रिय क्षेत्र",
+    stat_label_2: "शिकायत स्वीकृति दर",
+    footer_tagline: "नागरिक सहभागिता एवं अग्रणी शहरी गतिशीलता सॉफ्टवेयर।",
+    footer_copy: "&copy; 2026 सिविका सिविक सिस्टम्स एवं अहमदाबाद नगर निगम। सर्वाधिकार सुरक्षित।",
+    auth_modal_title: "सदस्य पोर्टल लॉगिन",
+    auth_modal_sub: "अपनी पोर्टल भूमिका चुनें या नीचे दिए गए 1-क्लिक डेमो का उपयोग करें",
+    demo_box_title: "1-क्लिक सीधा डेमो प्रवेश (बिना पासवर्ड)",
+    demo_box_sub: "बिना पासवर्ड पोर्टल में सीधे प्रवेश के लिए नीचे दिए गए डेमो खाते पर क्लिक करें:",
+    demo_role_citizen: "नागरिक निवासी",
+    demo_name_citizen: "प्रिया पटेल (नागरिक)",
+    demo_role_officer: "AMC अधिकारी",
+    demo_name_officer: "आर. पटेल (वार्ड अधिकारी)",
+    demo_role_command: "कमांड सेंटर",
+    demo_name_command: "कमांडेंट वी. राठौर",
+    auth_tab_citizen: "नागरिक निवासी",
+    auth_tab_officer: "नगर निगम अधिकारी",
+    auth_tab_command: "कमांड सेंटर",
+    auth_btn_google: "गूगल / जीमेल के साथ जारी रखें",
+    auth_divider_or: "अथवा निवासी ईमेल / मोबाइल",
+    auth_lbl_email: "ईमेल अथवा मोबाइल नंबर",
+    auth_lbl_pass: "पासवर्ड",
+    auth_btn_submit: "नागरिक डैशबोर्ड में प्रवेश करें &rarr;",
+    btn_autofill_demo: "⚡ डेमो क्रेडेंशियल्स स्वतः भरें",
+    auth_create_prompt: "सिविका पर नए हैं या नागरिक खाता चाहिए?",
+    auth_btn_create: "नया खाता बनाएं",
     tab_track: "🔍 शिकायत ट्रैक करें",
     tab_report: "📝 नई शिकायत दर्ज करें",
     tab_wallet: "👛 नागरिक वॉलेट",
+    tab_address: "📍 सहेजे गए पते",
     tab_wardmap: "🗺️ वार्ड नक्शा",
     tab_community: "📢 नागरिक फ़ीड",
     tab_transit: "🚍 ट्रांजिट व घर्षण",
     tab_rules_dir: "📜 नियम व निर्देशिका",
+    dt_report_title: "नई नागरिक शिकायत दर्ज करें",
+    dt_report_sub: "AMC एवं SMC वार्ड कंट्रोल रूम और त्वरित प्रतिक्रिया टीमों को सीधा प्रेषण",
+    dt_step1_label: "1. समस्या की श्रेणी चुनें",
+    dt_step2_label: "2. सटीक स्थान दर्ज करें",
+    dt_step3_label: "3. विवरण एवं साक्ष्य (फोटो)",
+    dt_cat_streetlight: "स्ट्रीटलाइट",
+    dt_cat_streetlight_sub: "बंद लाइट, खराब खंभा",
+    dt_cat_pothole: "सड़क का गड्ढा",
+    dt_cat_pothole_sub: "टूटा डामर, सड़क का गड्ढा",
+    dt_cat_garbage: "कचरा एवं सफाई",
+    dt_cat_garbage_sub: "अस्वच्छ कचरा, भरा हुआ डस्टबिन",
+    dt_cat_waterlogging: "जलभराव",
+    dt_cat_waterlogging_sub: "बारिश का पानी, नाली अवरुद्ध",
+    dt_cat_water: "जल आपूर्ति",
+    dt_cat_water_sub: "दूषित पानी, पाइपलाइन रिसाव",
+    dt_cat_others: "अन्य समस्या",
+    dt_cat_others_sub: "अपनी विशेष समस्या दर्ज करें",
+    dt_custom_prompt: "अपनी समस्या विस्तार से लिखें:",
+    dt_custom_badge: "कस्टम श्रेणी",
+    dt_custom_help: "कृपया विवरण लिखें ताकि कंट्रोल रूम उचित टीम भेज सके।",
+    dt_custom_routed: "✓ वार्ड रैपिड एक्शन डेस्क को भेजा जाएगा",
+    dt_location_confirmed: "📍 GPS टैग: वार्ड 7 नवरंगपुरा (सत्यापित)",
+    btn_attach_photo: "📷 फोटो संलग्न करें",
+    escrow_pill_label: "🛡️ 100% रिफंडेबल एस्क्रो मॉडल",
+    dt_escrow_title: "₹50 प्रतिदेय सुरक्षा जमा",
+    dt_escrow_desc: "फर्जी शिकायतों की रोकथाम हेतु ₹50 की सुरक्षा राशि रखी जाती है। स्थल निरीक्षण उपरांत यह राशि तुरंत आपके वॉलेट में 100% वापस कर दी जाती है।",
+    lbl_wallet_bal: "आपका नागरिक वॉलेट:",
+    dt_wallet_option: "नागरिक वॉलेट (त्वरित)",
+    dt_online_option: "ऑनलाइन भुगतान (UPI / Paytm / FamPay / कार्ड)",
+    dt_btn_submit: "₹50 एस्क्रो जमा करें व शिकायत दर्ज करें &rarr;",
     track_page_title: "शिकायत ट्रैक करें (लाइव स्थिति)",
     track_placeholder: "शिकायत आईडी दर्ज करें (उदा. 18492, 18501)",
     track_btn: "ट्रैक करें",
     latest_note_title: "अधिकारी की नवीनतम टिप्पणी",
     btn_upload_photo: "📷 निरीक्षण फोटो अपलोड करें",
     btn_reopen: "शिकायत पुनः खोलें",
-    wardmap_page_title: "वार्ड 7 नागरिक स्वास्थ्य नक्शा · लाइव विवरण",
-    btn_share_society: "📤 सोसायटी सचिव के साथ साझा करें",
     side_escrow_title: "100% रिफंडेबल एस्क्रो मॉडल",
     side_escrow_desc: "फर्जी शिकायतों की रोकथाम हेतु ₹50 की सुरक्षा राशि रखी जाती है। स्थल निरीक्षण उपरांत यह राशि तुरंत आपके वॉलेट में 100% वापस कर दी जाती है।",
     side_sms_title: "SMS व WhatsApp अपडेट",
     side_sms_desc: "रियल-टाइम स्थिति संदेश सक्रिय हैं",
     side_support_title: "🏛️ AMC वार्ड 7 नियंत्रण कक्ष",
     side_support_desc: "नवरंगपुरा जोनल कार्यालय • समय: 08:00 से 16:00<br>केंद्रीय हेल्पलाइन: 155303 / 1913",
+    dt_wallet_header_title: "नागरिक वॉलेट एवं एस्क्रो खाता",
+    dt_wallet_header_sub: "पारदर्शी नगर निगम सुरक्षा जमा एवं त्वरित रिफंड खाता",
+    dt_btn_add_funds: "+ राशि जोड़ें / टॉप-अप",
     floating_ai_btn: "AI सहायक",
     ai_popup_title: "सिविका AI सहायक",
     ai_popup_sub: "Gemini व ChatGPT कोर • AMC 24x7",
     ai_input_placeholder: "शिकायत, रिफंड या नगर निगम नियमों पर सवाल पूछें...",
-    gallery_title: "हमारी परियोजना गैलरी एवं नागरिक पहल",
-    gallery_subtitle: "गुजरात भर में लाइव नगर निगम परियोजनाएं, स्मार्ट ट्रांजिट कॉरिडोर, रैपिड रोड रिपेयरिंग फ्लीट और कमांड कंट्रोल सेंटर संचालन देखें।",
-    btn_demo_login: "⚡ डेमो लॉगिन",
-    btn_hero_demo: "⚡ सीधा डेमो प्रवेश &rarr;",
-    demo_box_title: "1-क्लिक सीधा डेमो प्रवेश (बिना पासवर्ड)",
-    demo_box_sub: "बिना पासवर्ड पोर्टल में सीधे प्रवेश के लिए नीचे दिए गए डेमो खाते पर क्लिक करें:",
-    btn_autofill_demo: "⚡ डेमो क्रेडेंशियल्स स्वतः भरें"
+    lightbox_metrics_title: "नगर निगम संचालन व प्रभाव",
+    btn_close: "बंद करें",
+    btn_acknowledged: "✓ स्वीकृत &rarr;",
+    auth_lbl_corp: "नगर निगम",
+    auth_lbl_officer_email: "अधिकारी सरकारी ईमेल",
+    auth_lbl_pin: "सुरक्षा पिन / एक्सेस कोड",
+    auth_btn_officer_submit: "अधिकारी पोर्टल में प्रवेश करें &rarr;",
+    auth_command_banner: "🛡️ <strong>प्रतिबंधित सुरक्षा मंजूरी:</strong> गुजरात एकीकृत कमांड एवं नियंत्रण केंद्र (ICCC) में प्रवेश के लिए टियर-1 प्राधिकरण आवश्यक है।",
+    auth_lbl_command_agency: "कमांड एजेंसी / स्टेशन",
+    auth_lbl_command_email: "कमांडर आधिकारिक ईमेल",
+    auth_lbl_command_pass: "कमांड सुरक्षा पासकोड / कुंजी",
+    auth_btn_command_submit: "कमांड सेंटर में प्रवेश करें &rarr;",
+    btn_autofill_commander: "⚡ कमांडर विवरण स्वतः भरें",
+    wallet_card_label: "एंटी-स्पैम एस्क्रो बैलेंस",
+    wallet_badge_verified: "सत्यापित नागरिक",
+    btn_wallet_add: "+ राशि जोड़ें",
+    btn_wallet_subtext: "प्रति शिकायत ₹50 होल्ड &bull; स्थल जांच उपरांत तुरंत रिफंड",
+    wallet_guarantee_title: "💡 100% रिफंडेबल नागरिक सुरक्षा गारंटी",
+    wallet_guarantee_desc: "फर्जी शिकायतों की रोकथाम हेतु ₹50 की सुरक्षा राशि रखी जाती है। स्थल निरीक्षण उपरांत यह राशि तुरंत आपके वॉलेट में 100% वापस कर दी जाती है।",
+    wallet_guarantee_stat: "99.4% से अधिक वास्तविक शिकायतों पर 24 घंटे में रिफंड।",
+    wallet_ledger_title: "लेनदेन एवं एस्क्रो लेजर",
+    feed_page_title: "सामुदायिक घटना फ़ीड एवं वोटिंग",
+    feed_page_sub: "नागरिकों द्वारा सत्यापन और पुष्टि धारा",
+    feed_filter_all: "सभी रिपोर्ट",
+    feed_filter_trending: "🔥 ट्रेंडिंग",
+    feed_filter_critical: "🚨 गंभीर",
+    feed_filter_resolved: "✓ हल किया गया",
+    crowd_reward_title: "🤝 नागरिक सत्यापन पुरस्कार",
+    crowd_reward_desc: "अपने क्षेत्र में देखी गई समस्या पर <strong>\"पुष्टि करें\"</strong> दबाएं। इससे त्वरित सहायता मिलती है और आपको <strong>+2 सिविक कर्मा</strong> मिलते हैं।",
+    rules_tab_title: "नागरिक चार्टर, SLAs एवं 24x7 हेल्पलाइन",
+    rules_tab_sub: "गुजरात जीपीएमसी अधिनियम के तहत अनिवार्य समयसीमा",
+    rules_btn_open_page: "अलग पृष्ठ खोलें ↗",
+    hotline_amc_title: "AMC सेंट्रल कंट्रोल रूम (24x7)",
+    hotline_monsoon_title: "मानसून जलभराव हेल्पलाइन",
+    hotline_allindia_title: "अखिल भारतीय आपातकालीन व पुलिस",
+    sla_table_title: "अनिवार्य SLA समयसीमा (गुजरात नगर निगम अधिनियम)",
+    escrow_transparency_title: "🛡️ ₹50 प्रतिदेय सुरक्षा एस्क्रो पारदर्शिता",
+    escrow_transparency_desc: "फर्जी शिकायतों की रोकथाम हेतु शिकायत दर्ज करते समय ₹50 की जमा राशि रखी जाती है। स्थल पर इंजीनियर द्वारा सत्यापन होते ही यह राशि तुरंत आपके वॉलेट में वापस आ जाती है।",
+    escrow_transparency_stat: "99.4% से अधिक एस्क्रो राशि 24 घंटे में वापस होती है। आपकी भागीदारी पूरी तरह सुरक्षित है।",
+    of_portal_badge: "AMC अधिकारी कंसोल",
+    of_nav_dashboard: "01 डैशबोर्ड",
+    of_nav_inbox: "02 इनबॉक्स",
+    of_nav_action: "03 कार्रवाई करें",
+    of_nav_notify: "04 सूचना एवं रेटिंग ⭐",
+    of_nav_reports: "05 समाधान रिपोर्ट",
+    of_headline_dashboard: "आज वार्ड 7, AMC अहमदाबाद",
+    of_kpi_open: "सक्रिय शिकायतें",
+    of_kpi_due: "आज की समयसीमा",
+    of_kpi_reply: "नागरिक जवाब अपेक्षित",
+    of_kpi_resolved: "इस सप्ताह हल किए गए",
+    of_priority_queue: "प्राथमिकता कतार",
+    of_shift_actions: "शिफ्ट कार्यसूची चेकलिस्ट",
+    of_add_action: "➕ कार्य जोड़ें",
+    of_inbox_headline: "नागरिकों द्वारा दर्ज शिकायतों की समीक्षा",
+    of_action_headline: "शिकायत देखें और अगला कदम तय करें",
+    of_select_problem_lbl: "📋 समस्या / टिकट चुनें:",
+    of_assign_crew_lbl: "टीम सौंपें",
+    of_status_pipeline_lbl: "स्थिति पाइपलाइन",
+    of_escrow_title: "🛡️ नागरिक एंटी-स्पैम सुरक्षा एस्क्रो",
+    of_escrow_desc: "नागरिक ने ₹50 की प्रतिदेय सुरक्षा जमा की है। यदि वास्तविक समस्या है तो सत्यापित कर तुरंत ₹50 वापस करें।",
+    of_btn_verify_refund: "✅ वास्तविक समस्या सत्यापित करें और ₹50 रिफंड करें",
+    of_btn_flag_fake: "❌ फर्जी शिकायत के रूप में चिह्नित करें और जब्त करें",
+    of_quick_decide: "त्वरित निर्णय",
+    btn_qd_assign: "टीम सौंपें",
+    btn_qd_progress: "प्रगति पर है",
+    btn_qd_needinfo: "जानकारी चाहिए",
+    btn_qd_resolve: "हल करें + रिफंड करें",
+    cmd_radar_title: "लाइव भू-स्थानिक समस्या रडार और मोबाइल बेड़े",
+    cmd_radar_sub: "गड्ढों, जलभराव, बंद स्ट्रीटलाइटों और तैनात फील्ड टीमों के इंटरैक्टिव जीपीएस निर्देशांक।",
+    cmd_kanban_title: "टैक्टिकल ट्रियाज एवं डिस्पैच कानबान",
+    cmd_kanban_sub: "विभिन्न एजेंसियों की फील्ड टीमों की लाइव ट्रैकिंग",
+    cmd_lane_triage: "<i class=\"fa-solid fa-triangle-exclamation\" style=\"color:#ef4444;\"></i> 01 आपातकालीन ट्रियाज",
+    cmd_lane_dispatched: "<i class=\"fa-solid fa-truck-fast\" style=\"color:#38bdf8;\"></i> 02 रवाना एवं मार्ग में",
+    cmd_lane_onsite: "<i class=\"fa-solid fa-wrench\" style=\"color:#f59e0b;\"></i> 03 स्थल पर मरम्मत",
+    cmd_lane_resolved: "<i class=\"fa-solid fa-check-double\" style=\"color:#10b981;\"></i> 04 पूर्ण एवं हल"
   }
 };
 
@@ -272,6 +768,8 @@ function initMasterState() {
   const savedWallet = localStorage.getItem('civica_wallet');
   const savedAddresses = localStorage.getItem('civica_addresses');
   const savedRatings = localStorage.getItem('civica_citizen_ratings');
+  const savedShiftActions = localStorage.getItem('civica_shift_actions');
+  const savedInboxTickets = localStorage.getItem('civica_inbox_tickets');
 
   if (savedComplaints) {
     try { appState.complaints = JSON.parse(savedComplaints); } catch (e) {}
@@ -284,6 +782,12 @@ function initMasterState() {
   }
   if (savedRatings) {
     try { appState.citizenRatings = JSON.parse(savedRatings); } catch (e) {}
+  }
+  if (savedShiftActions) {
+    try { appState.shiftActions = JSON.parse(savedShiftActions); } catch (e) {}
+  }
+  if (savedInboxTickets) {
+    try { appState.inboxTickets = JSON.parse(savedInboxTickets); } catch (e) {}
   }
   if (!appState.savedAddresses || appState.savedAddresses.length === 0) {
     appState.savedAddresses = [...(window.GUJARAT_CIVIC_DATA?.defaultAddresses || [])];
@@ -300,6 +804,8 @@ function saveMasterState() {
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
   localStorage.setItem('civica_addresses', JSON.stringify(appState.savedAddresses));
   localStorage.setItem('civica_citizen_ratings', JSON.stringify(appState.citizenRatings));
+  localStorage.setItem('civica_shift_actions', JSON.stringify(appState.shiftActions));
+  localStorage.setItem('civica_inbox_tickets', JSON.stringify(appState.inboxTickets));
 }
 
 // Language Switcher (Clean English Default)
@@ -307,6 +813,7 @@ window.setAppLanguage = function(lang = 'en', closeModal = false) {
   if (!I18N_DATA[lang]) lang = 'en';
   appState.language = lang;
   localStorage.setItem('civica_lang', lang);
+  document.documentElement.lang = lang;
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
@@ -323,8 +830,14 @@ window.setAppLanguage = function(lang = 'en', closeModal = false) {
     if (dict[key]) el.placeholder = dict[key];
   });
 
+  // Solutions 3D Carousel Cards Update
+  if (typeof updateSolutionsCarousel === 'function') {
+    updateSolutionsCarousel();
+  }
+
+  // Floating AI Assistant Widget
   const aiBtnLabel = document.getElementById('floating-ai-btn-label');
-  if (aiBtnLabel) aiBtnLabel.textContent = dict.floating_ai_btn || 'AI સહાયક';
+  if (aiBtnLabel) aiBtnLabel.textContent = dict.floating_ai_btn || (lang === 'gu' ? 'AI સહાયક' : lang === 'hi' ? 'AI सहायक' : 'AI Assistant');
 
   const aiTitle = document.getElementById('ai-popup-title-text');
   if (aiTitle) aiTitle.textContent = dict.ai_popup_title;
@@ -337,8 +850,25 @@ window.setAppLanguage = function(lang = 'en', closeModal = false) {
 
   renderFloatingAiChips();
   initFloatingAiGreeting();
-  renderDesktopPortal();
-  renderCivicWallet();
+
+  // Re-render Dynamic Portal Components
+  if (typeof renderDesktopPortal === 'function') renderDesktopPortal();
+  if (typeof renderCivicWallet === 'function') renderCivicWallet();
+  if (typeof renderOfficerDashboard === 'function') renderOfficerDashboard();
+  if (typeof renderOfficerRatingsSection === 'function') renderOfficerRatingsSection();
+  if (typeof renderKanbanBoard === 'function') renderKanbanBoard();
+
+  // Active portal indicator translation
+  const portalLabel = document.getElementById('active-portal-label');
+  if (portalLabel) {
+    if (appState.currentUser && (appState.currentUser.role === 'officer' || appState.currentUser.role === 'admin')) {
+      portalLabel.textContent = lang === 'gu' ? 'AMC અધિકારી કન્સોલ' : lang === 'hi' ? 'AMC अधिकारी कंसोल' : 'AMC Officer Console';
+    } else if (appState.currentUser && appState.currentUser.role === 'command') {
+      portalLabel.textContent = lang === 'gu' ? 'ગુજરાત ICCC કમાન્ડ સેન્ટર' : lang === 'hi' ? 'गुजरात ICCC कमांड सेंटर' : 'ICCC Tactical Command Center';
+    } else {
+      portalLabel.textContent = lang === 'gu' ? 'નાગરિક સેવા પોર્ટલ' : lang === 'hi' ? 'नागरिक सेवा पोर्टल' : 'Citizen Resident Portal';
+    }
+  }
 
   if (closeModal) {
     const langModal = document.getElementById('language-select-modal');
@@ -357,6 +887,9 @@ window.returnToLandingPage = function() {
   document.getElementById('view-dashboards-container').style.display = 'none';
   closeLoginModal();
   updateSessionUI();
+  if (typeof initSolutionsCarousel === 'function') {
+    initSolutionsCarousel();
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -1824,7 +2357,7 @@ window.switchOfficerTab = function(tabKey) {
   });
   document.getElementById(`of-nav-${tabKey}`)?.classList.add('active');
 
-  const subViews = ['dashboard', 'inbox', 'action', 'notify', 'preview', 'reports', 'rules'];
+  const subViews = ['dashboard', 'inbox', 'action', 'notify', 'reports'];
   subViews.forEach(s => {
     const el = document.getElementById(`officer-view-${s}`);
     if (el) el.style.display = (s === tabKey) ? 'block' : 'none';
@@ -1841,9 +2374,7 @@ window.switchOfficerTab = function(tabKey) {
       'inbox': '02 Complaint Inbox',
       'action': '03 Take Action & Escrow',
       'notify': '04 Notify & Ratings (5★)',
-      'preview': '05 Citizen Preview',
-      'reports': '06 Municipal Resolution & Audit Reports',
-      'rules': '07 Officer Rules'
+      'reports': '05 Municipal Resolution & Audit Reports'
     };
     officerBreadcrumb.textContent = officerLabels[tabKey] || tabKey;
   }
@@ -1884,12 +2415,30 @@ function renderOfficerDashboard() {
 
   const shiftList = document.getElementById('of-shift-actions-list');
   if (shiftList) {
-    shiftList.innerHTML = appState.shiftActions.map(action => `
-      <div class="shift-check-item ${action.done ? 'done' : ''}" onclick="toggleShiftAction(${action.id})">
-        <input type="checkbox" ${action.done ? 'checked' : ''} style="cursor:pointer;">
-        <span>· ${action.text}</span>
-      </div>
-    `).join('');
+    shiftList.innerHTML = appState.shiftActions.map(action => {
+      if (appState.editingShiftActionId === action.id) {
+        return `
+          <div class="shift-check-item editing" onclick="event.stopPropagation()">
+            <input type="text" id="shift-edit-input-${action.id}" class="shift-edit-input" value="${String(action.text).replace(/"/g, '&quot;')}" onkeydown="handleShiftEditKey(event, ${action.id})">
+            <div class="shift-edit-actions">
+              <button type="button" class="btn-shift-save" onclick="saveShiftAction(${action.id})" title="Save changes">✓ Save</button>
+              <button type="button" class="btn-shift-cancel" onclick="cancelShiftActionEdit()" title="Cancel editing">✕</button>
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="shift-check-item ${action.done ? 'done' : ''}">
+          <div class="shift-item-main" onclick="toggleShiftAction(${action.id})">
+            <input type="checkbox" ${action.done ? 'checked' : ''} style="cursor:pointer;" onclick="event.stopPropagation(); toggleShiftAction(${action.id})">
+            <span class="shift-item-text">· ${action.text}</span>
+          </div>
+          <button type="button" class="btn-edit-shift" onclick="event.stopPropagation(); startEditShiftAction(${action.id})" title="Edit this checklist action">
+            ✏️ Edit
+          </button>
+        </div>
+      `;
+    }).join('');
   }
 
   renderOfficerInbox(appState.inboxFilter);
@@ -1897,10 +2446,71 @@ function renderOfficerDashboard() {
   renderOfficerNotify(appState.selectedOfficerTicketId);
 }
 
+window.startEditShiftAction = function(actionId) {
+  appState.editingShiftActionId = actionId;
+  renderOfficerDashboard();
+  setTimeout(() => {
+    const input = document.getElementById(`shift-edit-input-${actionId}`);
+    if (input) {
+      input.focus();
+      input.select();
+    }
+  }, 40);
+};
+
+window.saveShiftAction = function(actionId) {
+  const input = document.getElementById(`shift-edit-input-${actionId}`);
+  if (!input) return;
+  const newText = input.value.trim();
+  if (!newText) {
+    showCivicaToast('⚠️ Please enter an action description.');
+    return;
+  }
+  const item = appState.shiftActions.find(a => a.id === actionId);
+  if (item) {
+    item.text = newText;
+    appState.editingShiftActionId = null;
+    saveMasterState();
+    renderOfficerDashboard();
+    showCivicaToast('✅ Shift action checklist updated.');
+  }
+};
+
+window.cancelShiftActionEdit = function() {
+  appState.editingShiftActionId = null;
+  renderOfficerDashboard();
+};
+
+window.handleShiftEditKey = function(event, actionId) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    saveShiftAction(actionId);
+  } else if (event.key === 'Escape') {
+    event.preventDefault();
+    cancelShiftActionEdit();
+  }
+};
+
+window.promptAddNewShiftAction = function() {
+  const text = prompt('Enter new Shift Action item:');
+  if (text && text.trim()) {
+    const newId = Date.now();
+    appState.shiftActions.push({
+      id: newId,
+      text: text.trim(),
+      done: false
+    });
+    saveMasterState();
+    renderOfficerDashboard();
+    showCivicaToast('✅ New shift action added to checklist.');
+  }
+};
+
 window.toggleShiftAction = function(actionId) {
   const item = appState.shiftActions.find(a => a.id === actionId);
   if (item) {
     item.done = !item.done;
+    saveMasterState();
     renderOfficerDashboard();
   }
 };
@@ -1933,6 +2543,8 @@ function renderOfficerInbox(filterCategory = 'assigned_to_me') {
       ? '<span class="deposit-status-badge status-forfeited">❌ Forfeited</span>'
       : '<span class="deposit-status-badge status-held">🛡️ ₹50 Escrow</span>';
 
+    const currentStatus = row.status || (fullTicket ? fullTicket.status : 'new');
+
     return `
       <tr onclick="openOfficerTicket('${row.fullId}')">
         <td><strong>${row.id}</strong></td>
@@ -1940,12 +2552,140 @@ function renderOfficerInbox(filterCategory = 'assigned_to_me') {
         <td>${row.issue}</td>
         <td>${row.place}</td>
         <td>${depBadge}</td>
-        <td><span class="priority-status-pill inprogress">${row.statusLabel}</span></td>
-        <td><button class="btn-inline-action">Inspect &rarr;</button></td>
+        <td>
+          <select class="inbox-status-select status-${currentStatus}" onclick="event.stopPropagation()" onchange="changeOfficerInboxStatus('${row.fullId}', this.value, event)" title="Directly change ticket status">
+            <option value="new" ${currentStatus === 'new' ? 'selected' : ''}>🆕 New</option>
+            <option value="assigned" ${currentStatus === 'assigned' ? 'selected' : ''}>👷 Assigned</option>
+            <option value="in_progress" ${currentStatus === 'in_progress' ? 'selected' : ''}>⚡ In progress</option>
+            <option value="need_info" ${currentStatus === 'need_info' ? 'selected' : ''}>❓ Need info</option>
+            <option value="resolved" ${currentStatus === 'resolved' ? 'selected' : ''}>✅ Resolved</option>
+          </select>
+        </td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button type="button" class="btn-inline-action" onclick="event.stopPropagation(); openOfficerTicket('${row.fullId}')">Inspect &rarr;</button>
+            <button type="button" class="btn-inline-edit-status" onclick="event.stopPropagation(); openOfficerStatusModal('${row.fullId}')" title="Edit status and add remarks">✏️ Edit Status</button>
+          </div>
+        </td>
       </tr>
     `;
   }).join('');
 }
+
+window.changeOfficerInboxStatus = function(fullTicketId, newStatus, event) {
+  if (event && event.stopPropagation) event.stopPropagation();
+  const statusLabels = {
+    'new': 'New',
+    'assigned': 'Assigned',
+    'in_progress': 'In progress',
+    'need_info': 'Need info',
+    'resolved': 'Resolved'
+  };
+  const label = statusLabels[newStatus] || newStatus;
+
+  // 1. Update inbox item
+  const inboxItem = appState.inboxTickets.find(t => t.fullId === fullTicketId || t.id === fullTicketId || (t.fullId && t.fullId.includes(fullTicketId)));
+  if (inboxItem) {
+    inboxItem.status = newStatus;
+    inboxItem.statusLabel = label;
+  }
+
+  // 2. Update master complaints item
+  const ticket = appState.complaints.find(c => c.id === fullTicketId || c.shortId === fullTicketId || (inboxItem && c.id === inboxItem.fullId));
+  if (ticket) {
+    ticket.status = newStatus;
+    ticket.statusLabel = label;
+    if (newStatus === 'resolved') {
+      ticket.stage = 'resolved';
+      if (ticket.depositStatus === 'held') {
+        officerVerifyAndRefundTicket();
+      }
+    } else if (newStatus === 'in_progress') {
+      ticket.stage = 'dispatched';
+    } else if (newStatus === 'assigned') {
+      ticket.stage = 'investigation';
+    }
+  }
+
+  // 3. Update KPIs
+  if (appState.officerKPIs) {
+    appState.officerKPIs.resolvedThisWeek = appState.complaints.filter(c => c.status === 'resolved').length;
+    appState.officerKPIs.openTickets = appState.complaints.filter(c => c.status !== 'resolved').length;
+  }
+
+  saveMasterState();
+  renderOfficerDashboard();
+  renderOfficerInbox(appState.inboxFilter);
+  if (typeof renderDesktopPortal === 'function') renderDesktopPortal();
+  showCivicaToast(`✅ Complaint #${inboxItem ? inboxItem.id : fullTicketId} status updated to ${label}.`);
+};
+
+window.openOfficerStatusModal = function(fullTicketId) {
+  const inboxItem = appState.inboxTickets.find(t => t.fullId === fullTicketId || t.id === fullTicketId || (t.fullId && t.fullId.includes(fullTicketId)));
+  const ticket = appState.complaints.find(c => c.id === fullTicketId || c.shortId === fullTicketId || (inboxItem && c.id === inboxItem.fullId)) || appState.complaints[0];
+
+  const modal = document.getElementById('officer-status-modal-overlay');
+  if (!modal) return;
+
+  const keyInput = document.getElementById('status-modal-ticket-key');
+  if (keyInput) keyInput.value = ticket ? ticket.id : fullTicketId;
+
+  const idEl = document.getElementById('status-modal-ticket-id');
+  if (idEl) idEl.textContent = ticket ? `${ticket.id} (${ticket.shortId || ''})` : fullTicketId;
+
+  const metaEl = document.getElementById('status-modal-ticket-meta');
+  if (metaEl && ticket) {
+    metaEl.textContent = `${ticket.title || ticket.categoryName || 'Issue'} · ${ticket.place || ticket.address || 'Ward 7'} · Citizen ${ticket.citizen || 'Resident'}`;
+  }
+
+  const selectEl = document.getElementById('status-modal-select');
+  const curStatus = (inboxItem && inboxItem.status) || (ticket && ticket.status) || 'new';
+  if (selectEl) {
+    selectEl.value = curStatus;
+    onStatusModalSelectChange(curStatus);
+  }
+
+  const remarksEl = document.getElementById('status-modal-remarks');
+  if (remarksEl) {
+    remarksEl.value = ticket && ticket.note ? ticket.note : '';
+  }
+
+  modal.classList.add('active');
+};
+
+window.closeOfficerStatusModal = function() {
+  const modal = document.getElementById('officer-status-modal-overlay');
+  if (modal) modal.classList.remove('active');
+};
+
+window.onStatusModalSelectChange = function(statusVal) {
+  const notice = document.getElementById('status-modal-escrow-notice');
+  if (notice) {
+    notice.style.display = (statusVal === 'resolved') ? 'block' : 'none';
+  }
+};
+
+window.saveOfficerStatusFromModal = function() {
+  const keyInput = document.getElementById('status-modal-ticket-key');
+  const ticketKey = keyInput ? keyInput.value : null;
+  const selectEl = document.getElementById('status-modal-select');
+  const newStatus = selectEl ? selectEl.value : 'in_progress';
+  const remarksEl = document.getElementById('status-modal-remarks');
+  const remarks = remarksEl ? remarksEl.value.trim() : '';
+
+  if (!ticketKey) {
+    closeOfficerStatusModal();
+    return;
+  }
+
+  if (remarks) {
+    const ticket = appState.complaints.find(c => c.id === ticketKey || c.shortId === ticketKey);
+    if (ticket) ticket.note = remarks;
+  }
+
+  changeOfficerInboxStatus(ticketKey, newStatus);
+  closeOfficerStatusModal();
+};
 
 window.filterOfficerInbox = function(category) {
   renderOfficerInbox(category);
@@ -2213,7 +2953,6 @@ window.sendOfficialOfficerUpdate = function() {
 
     renderDesktopPortal();
     showCivicaToast(`🚀 Notification dispatched to ${ticket.citizen || 'resident'}! Rating request sent.`);
-    switchOfficerTab('preview');
   }
 };
 
@@ -2561,7 +3300,7 @@ function renderKanbanBoard() {
         <div class="kcard-meta">${item.location} · ${item.assignedCrew || 'Unassigned'}</div>
         <div class="kcard-actions">
           <button onclick="openOfficerTicket('${item.id}')" class="btn-advance-ticket">Inspect</button>
-          <button onclick="advanceKanbanCard('${item.id}', '${laneKey}')" class="btn-advance-ticket">Advance &rarr;</button>
+          <button onclick="finishKanbanCard('${item.id}')" class="btn-advance-ticket btn-finish-ticket">✓ Finish &rarr;</button>
         </div>
       `;
       lanes[laneKey].appendChild(card);
@@ -2579,29 +3318,23 @@ window.filterKanbanByDept = function(dept) {
   renderKanbanBoard();
 };
 
-window.advanceKanbanCard = function(ticketId, currentLane) {
+window.finishKanbanCard = function(ticketId) {
   const item = appState.complaints.find(c => c.id === ticketId);
   if (!item) return;
 
-  const sequence = ['backlog', 'investigation', 'dispatched', 'resolved'];
-  const nextIdx = sequence.indexOf(currentLane) + 1;
-
-  if (nextIdx < sequence.length) {
-    item.stage = sequence[nextIdx];
-    if (item.stage === 'dispatched') item.status = 'in_progress';
-    if (item.stage === 'resolved') {
-      item.status = 'resolved';
-      if (item.depositStatus === 'held') {
-        officerVerifyAndRefundTicket();
-      }
-    }
-    saveMasterState();
-    renderKanbanBoard();
-    renderOfficerDashboard();
-    renderDesktopPortal();
-    showCivicaToast(`Advanced ${item.id} to ${item.stage.toUpperCase()}`);
+  item.stage = 'resolved';
+  item.status = 'resolved';
+  if (item.depositStatus === 'held') {
+    officerVerifyAndRefundTicket();
   }
+  saveMasterState();
+  renderKanbanBoard();
+  renderOfficerDashboard();
+  renderDesktopPortal();
+  showCivicaToast(`✅ Ticket ${item.id} moved to FINISH section.`);
 };
+
+window.advanceKanbanCard = window.finishKanbanCard;
 
 window.openDispatchCrewModal = function() {
   const m = document.getElementById('dispatch-modal-overlay');
@@ -2738,12 +3471,28 @@ window.askFloatingAiPrompt = function(promptText) {
 function initFloatingAiGreeting() {
   const thread = document.getElementById('floating-ai-messages');
   if (!thread) return;
+  const lang = appState.language || 'en';
+  const greetings = {
+    en: {
+      title: "Hello! I am Civica AI Assistant.",
+      sub: "Connected live to Ahmedabad Municipal Corporation. Ask any question about tickets, ₹50 refundable escrow deposit, or AMC municipal rules."
+    },
+    gu: {
+      title: "નમસ્તે! હું સિવિકા AI સહાયક છું.",
+      sub: "અમદાવાદ મહાનગરપાલિકા સાથે લાઈવ જોડાયેલ છું. આપની ફરિયાદ, ₹૫૦ રિફંડેબલ એસ્ક્રો ડિપોઝિટ, અથવા મ્યુનિસિપલ નિયમો વિશે કોઈપણ પ્રશ્ન પૂછી શકો છો."
+    },
+    hi: {
+      title: "नमस्ते! मैं सिविका AI सहायक हूँ।",
+      sub: "अहमदाबाद नगर निगम से लाइव जुड़ा हुआ हूँ। अपनी शिकायत, ₹50 प्रतिदेय एस्क्रो सुरक्षा जमा, या नगर निगम नियमों पर कोई भी सवाल पूछें।"
+    }
+  };
+  const g = greetings[lang] || greetings.en;
   thread.innerHTML = `
     <div class="ai-popup-msg-row ai-popup-msg-bot">
       <div class="ai-msg-avatar bot">✨</div>
       <div class="ai-popup-bubble">
-        <strong>નમસ્તે! હું સિવિકા AI સહાયક છું.</strong>
-        <p style="margin:4px 0 0 0;">અમદાવાદ મહાનગરપાલિકા સાથે લાઈવ જોડાયેલ છું. આપની ફરિયાદ, ₹50 રિફંડેબલ એસ્ક્રો ડિપોઝિટ, અથવા મ્યુનિસિપલ નિયમો વિશે કોઈપણ પ્રશ્ન પૂછી શકો છો.</p>
+        <strong>${g.title}</strong>
+        <p style="margin:4px 0 0 0;">${g.sub}</p>
       </div>
     </div>
   `;
@@ -2752,53 +3501,417 @@ function initFloatingAiGreeting() {
 function renderFloatingAiChips() {
   const chipsBar = document.getElementById('floating-ai-chips');
   if (!chipsBar) return;
-  const chips = [
-    { text: "💡 શેરી લાઈટ ક્યારે શરૂ થશે?", prompt: "મને શેરી લાઈટ ફરિયાદ વિશે સ્થિતિ જણાવો." },
-    { text: "🛡️ ₹50 રિફંડ ક્યારે મળશે?", prompt: "મારા ₹50 ક્યારે અને કેવી રીતે પરત મળશે?" },
-    { text: "👷 કયા અધિકારી સોંપાયેલ છે?", prompt: "વોર્ડ ૭ ના કયા અધિકારી આ કામ જોઈ રહ્યા છે?" }
-  ];
+  const lang = appState.language || 'en';
+  const chipSets = {
+    en: [
+      { text: "💡 When will streetlight fix?", prompt: "What is the live status of my streetlight complaint?" },
+      { text: "🛡️ When will ₹50 refund arrive?", prompt: "When and how will my ₹50 escrow deposit be refunded?" },
+      { text: "👷 Which officer is assigned?", prompt: "Which AMC ward officer is supervising this task?" }
+    ],
+    gu: [
+      { text: "💡 શેરી લાઈટ ક્યારે શરૂ થશે?", prompt: "મને શેરી લાઈટ ફરિયાદ વિશે સ્થિતિ જણાવો." },
+      { text: "🛡️ ₹૫૦ રિફંડ ક્યારે મળશે?", prompt: "મારા ₹૫૦ ક્યારે અને કેવી રીતે પરત મળશે?" },
+      { text: "👷 કયા અધિકારી સોંપાયેલ છે?", prompt: "વોર્ડ ૭ ના કયા અધિકારી આ કામ જોઈ રહ્યા છે?" }
+    ],
+    hi: [
+      { text: "💡 स्ट्रीटलाइट कब ठीक होगी?", prompt: "मेरी स्ट्रीटलाइट शिकायत की स्थिति क्या है?" },
+      { text: "🛡️ ₹50 रिफंड कब मिलेगा?", prompt: "मेरा ₹50 एस्क्रो सुरक्षा जमा कब और कैसे वापस मिलेगा?" },
+      { text: "👷 कौन से अधिकारी नियुक्त हैं?", prompt: "वार्ड 7 के कौन से अधिकारी इस कार्य को देख रहे हैं?" }
+    ]
+  };
+  const chips = chipSets[lang] || chipSets.en;
   chipsBar.innerHTML = chips.map(c => `
     <button type="button" class="ai-popup-chip" onclick="askFloatingAiPrompt('${c.prompt}')">${c.text}</button>
   `).join('');
 }
 
-// Gallery Lightbox
-window.filterGallery = function(category) {
-  document.querySelectorAll('.gallery-filter-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === category);
+/* ==========================================================================
+   SOLUTIONS 3D ANIMATED COVERFLOW CAROUSEL & LIGHTBOX CONTROLLER
+   ========================================================================== */
+
+const SOLUTIONS_PROJECTS_DATA = [
+  {
+    index: 0,
+    category: "transit",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Ahmedabad_BRTS.jpg",
+    title: {
+      en: "Electric BRTS Transit Corridors (Janmarg Gujarat)",
+      gu: "ઇલેક્ટ્રિક BRTS ટ્રાન્ઝિટ કોરિડોર (જનમાર્ગ ગુજરાત)",
+      hi: "इलेक्ट्रिक BRTS ट्रांजिट कॉरिडोर (जनमार्ग गुजरात)"
+    },
+    desc: {
+      en: "Surat & Ahmedabad dedicated electric BRTS corridors with GPS real-time bus telemetry, automated frequency controllers, and contactless ticketing.",
+      gu: "સુરત અને અમદાવાદ સમર્પિત ઇલેક્ટ્રિક BRTS કોરિડોર, રીયલ-ટાઇમ જીપીએસ ટ્રેકિંગ, ઓટોમેટેડ ફ્રીક્વન્સી અને કોન્ટેક્ટલેસ ટિકિટિંગ.",
+      hi: "सूरत और अहमदाबाद समर्पित इलेक्ट्रिक BRTS कॉरिडोर, रियल-टाइम जीपीएस बस टेलीमेट्री और संपर्क रहित टिकटिंग प्रणाली।"
+    },
+    catLabel: {
+      en: "Transit & Mobility",
+      gu: "ટ્રાન્ઝિટ અને મોબિલિટી",
+      hi: "ट्रांजिट व गतिशीलता"
+    },
+    sla: {
+      en: "⚡ 99.8% On-Time SLA",
+      gu: "⚡ ૯૯.૮% સમયસર SLA",
+      hi: "⚡ 99.8% समयबद्ध SLA"
+    },
+    stats: {
+      en: "320+ Electric Buses • 120km Dedicated Corridors • 450k Daily Commuters",
+      gu: "૩૨૦+ ઇલેક્ટ્રિક બસો • ૧૨૦ કિમી ડેડિકેટેડ કોરિડોર • ૪.૫ લાખ દૈનિક મુસાફરો",
+      hi: "320+ इलेक्ट्रिक बसें • 120 किमी समर्पित कॉरिडोर • 4.5 लाख दैनिक यात्री"
+    },
+    zone: {
+      en: "AMC Ahmedabad & SMC Surat",
+      gu: "AMC અમદાવાદ અને SMC સુરત",
+      hi: "AMC अहमदाबाद एवं SMC सूरत"
+    },
+    impact: {
+      en: "Reduced commuter travel and waiting times by 34% and carbon emissions by 420 MT/month.",
+      gu: "મુસાફરોનો રાહ જોવાનો સમય ૩૪% ઘટ્યો અને માસિક ૪૨૦ મેટ્રિક ટન કાર્બન ઉત્સર્જન ઘટ્યું.",
+      hi: "यात्रियों के प्रतीक्षा समय में 34% की कमी और प्रति माह 420 मीट्रिक टन कार्बन उत्सर्जन कम हुआ।"
+    }
+  },
+  {
+    index: 1,
+    category: "transit",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Ahmedabad_Inner_Ring_Road_Skyline.jpg",
+    title: {
+      en: "Gujarat Urban Expressway & Ring Road Telemetry",
+      gu: "ગુજરાત અર્બન એક્સપ્રેસવે અને રીંગ રોડ ટેલિમેટ્રી",
+      hi: "गुजरात शहरी एक्सप्रेसवे एवं रिंग रोड टेलीमेट्री"
+    },
+    desc: {
+      en: "AI-managed adaptive traffic signals across Surat Ring Road and SG Highway with optical vehicle flow radar sensors minimizing bottlenecks.",
+      gu: "સુરત રીંગ રોડ અને એસજી હાઇવે પર ટ્રાફિક સિગ્નલ ઓપ્ટિમાઇઝેશન, રડાર સેન્સર્સ અને સરળ વાહન વ્યવહાર.",
+      hi: "सूरत रिंग रोड और एसजी हाईवे पर एआई-प्रबंधित एडेप्टिव ट्रैफिक सिग्नल और निर्बाध वाहन प्रवाह।"
+    },
+    catLabel: {
+      en: "Smart Mobility",
+      gu: "સ્માર્ટ મોબિલિટી",
+      hi: "स्मार्ट गतिशीलता"
+    },
+    sla: {
+      en: "🟢 Live Synchronized Flow",
+      gu: "🟢 લાઈવ સિંક્રનાઇઝ્ડ ટ્રાફિક ફ્લો",
+      hi: "🟢 लाइव सिंक्रोनाइज़्ड ट्रैफिक प्रवाह"
+    },
+    stats: {
+      en: "76 Instrumented Intersections • Dynamic Green Wave • Optical LiDAR Telemetry",
+      gu: "૭૬ સિગ્નલ જંકશન • ડાયનેમિક ગ્રીન વેવ • ઓપ્ટિકલ LiDAR ટેલિમેટ્રી",
+      hi: "76 सिग्नल जंक्शन • डायनेमिक ग्रीन वेव • ऑप्टिकल LiDAR टेलीमेट्री"
+    },
+    zone: {
+      en: "SMC Central Zone & AMC West",
+      gu: "SMC સેન્ટ્રલ ઝોન અને AMC પશ્ચિમ",
+      hi: "SMC सेंट्रल ज़ोन एवं AMC पश्चिम"
+    },
+    impact: {
+      en: "Peak-hour travel delays reduced by 9.4 minutes per cross-city trip.",
+      gu: "પીક અવર્સ દરમિયાન મુસાફરીમાં પ્રતિ ટ્રીપ ૯.૪ મિનિટનો સમય બચ્યો.",
+      hi: "पीक ऑवर्स में यात्रा के समय में प्रति ट्रिप 9.4 मिनट की बचत हुई।"
+    }
+  },
+  {
+    index: 2,
+    category: "roads",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/79/Beauty_of_Surat.jpg",
+    title: {
+      en: "Surat Municipal Pothole Rapid Action Squad",
+      gu: "સુરત મ્યુનિસિપલ ખાડા ઝડપી સમારકામ સ્ક્વોડ",
+      hi: "सूरत नगर निगम गड्ढा त्वरित मरम्मत दल"
+    },
+    desc: {
+      en: "Infrared hot-asphalt repair vans dispatched automatically on geotagged citizen reports across SMC and AMC wards.",
+      gu: "નાગરિકોની જીઓટેગ કરેલી ફરિયાદો પરથી ઇન્ફ્રારેડ હોટ-ડામર રીપેર વાન દ્વારા ત્વરિત ખાડા સમારકામ.",
+      hi: "नागरिकों की जियोटैग रिपोर्ट पर इन्फ्रारेड हॉट-डामर वैन द्वारा तुरंत गड्ढा मरम्मत।"
+    },
+    catLabel: {
+      en: "Roads & Potholes",
+      gu: "રસ્તા અને ખાડા",
+      hi: "सड़कें एवं गड्ढे"
+    },
+    sla: {
+      en: "⏱️ 24h SLA Guarantee",
+      gu: "⏱️ ૨૪ કલાક SLA ગેરંટી",
+      hi: "⏱️ 24 घंटे SLA गारंटी"
+    },
+    stats: {
+      en: "18 Rapid Asphalt Vans • Infrared Surface Bonding • Verified Site Photos",
+      gu: "૧૮ ઝડપી ડામર વાન • ઇન્ફ્રારેડ સરફેસ બોન્ડિંગ • ફોટો ચકાસણી",
+      hi: "18 रैपिड डामर वैन • इन्फ्रारेड सतह बॉन्डिंग • फोटो सत्यापन"
+    },
+    zone: {
+      en: "SMC All 9 Zones & AMC Ward 7",
+      gu: "SMC તમામ ૯ ઝોન અને AMC વોર્ડ ૭",
+      hi: "SMC सभी 9 ज़ोन एवं AMC वार्ड 7"
+    },
+    impact: {
+      en: "Over 98.6% of reported road potholes repaired within the strict 24-hour municipal SLA.",
+      gu: "૯૮.૬% થી વધુ ખાડા નિયત ૨૪ કલાકની મ્યુનિસિપલ સમયમર્યાદામાં પૂરા કરવામાં આવ્યા.",
+      hi: "98.6% से अधिक गड्ढे निर्धारित 24 घंटे की समयसीमा में ठीक किए गए।"
+    }
+  },
+  {
+    index: 3,
+    category: "sanitation",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Surat_Skyline_01.jpg",
+    title: {
+      en: "Surat Smart SWM Fleet (#1 Cleanest City in India)",
+      gu: "સુરત સ્માર્ટ સફાઈ ફ્લીટ (ભારતનું નં. ૧ સ્વચ્છ શહેર)",
+      hi: "सूरत स्मार्ट स्वच्छता बेड़ा (भारत का #1 स्वच्छ शहर)"
+    },
+    desc: {
+      en: "100% route verification and smart bin fill-level ultrasound sensors across Surat and Ahmedabad municipal wards powering cleanest city standards.",
+      gu: "સુરત અને અમદાવાદમાં ૧૦૦% રૂટ વેરિફિકેશન અને સ્માર્ટ ડસ્ટબિન અલ્ટ્રાસાઉન્ડ સેન્સર્સ દ્વારા સ્વચ્છતા મોનિટરિંગ.",
+      hi: "सूरत और अहमदाबाद में 100% रूट सत्यापन और स्मार्ट डस्टबिन अल्ट्रासाउंड सेंसर द्वारा स्वच्छता निगरानी।"
+    },
+    catLabel: {
+      en: "Cleanliness & Waste",
+      gu: "સ્વચ્છતા અને કચરા નિકાલ",
+      hi: "स्वच्छता एवं कचरा निस्तारण"
+    },
+    sla: {
+      en: "♻️ 100% Ward Coverage",
+      gu: "♻️ ૧૦૦% વોર્ડ કવરેજ",
+      hi: "♻️ 100% वार्ड कवरेज"
+    },
+    stats: {
+      en: "1,140 GPS Waste Compactors • Ultrasonic Fill Sensors • 0 Open Dumpsites",
+      gu: "૧,૧૪૦ જીપીએસ કચરા વાહનો • અલ્ટ્રાસોનિક સેન્સર્સ • શૂન્ય ખુલ્લા ડમ્પિંગ સાઇટ્સ",
+      hi: "1,140 जीपीएस कचरा वाहन • अल्ट्रासोनिक सेंसर • शून्य खुले डंपिंग स्थल"
+    },
+    zone: {
+      en: "Surat Municipal Corporation",
+      gu: "સુરત મહાનગરપાલિકા",
+      hi: "सूरत नगर निगम"
+    },
+    impact: {
+      en: "Surat awarded #1 Cleanest City in India under Swachh Survekshan National Rankings.",
+      gu: "સ્વચ્છ સર્વેક્ષણ રાષ્ટ્રીય રેન્કિંગમાં સુરતને ભારતનું નં. ૧ સ્વચ્છ શહેર ઘોષિત કરાયું.",
+      hi: "स्वच्छ सर्वेक्षण राष्ट्रीय रैंकिंग में सूरत को भारत का #1 स्वच्छ शहर घोषित किया गया।"
+    }
+  },
+  {
+    index: 4,
+    category: "utilities",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Surat_at_night.JPG",
+    title: {
+      en: "Smart LED Luminaire & Tapi Riverfront Grid",
+      gu: "સ્માર્ટ એલઈડી લાઇટિંગ અને તાપી રિવરફ્રન્ટ ગ્રીડ",
+      hi: "स्मार्ट एलईडी लाइटिंग एवं तापी रिवरफ्रंट ग्रिड"
+    },
+    desc: {
+      en: "Centralized luminaire monitoring detecting streetlight blackouts along Tapi Riverfront and Dumas Road instantly with automated alerts.",
+      gu: "તાપી રિવરફ્રન્ટ અને ડુમસ રોડ પર બંધ સ્ટ્રીટલાઇટોને તાત્કાલિક શોધવા માટે સેન્ટ્રલાઇઝ્ડ મોનિટરિંગ સિસ્ટમ.",
+      hi: "तापी रिवरफ्रंट और डुमस रोड पर बंद स्ट्रीटलाइटों का स्वचालित पता लगाने के लिए केंद्रीकृत प्रणाली।"
+    },
+    catLabel: {
+      en: "Smart Lighting",
+      gu: "સ્માર્ટ લાઇટિંગ",
+      hi: "स्मार्ट लाइटिंग"
+    },
+    sla: {
+      en: "💡 24h Replacement SLA",
+      gu: "💡 ૨૪ કલાકમાં સમારકામ SLA",
+      hi: "💡 24 घंटे में प्रतिस्थापन SLA"
+    },
+    stats: {
+      en: "64,000 SCADA Light Poles • Optical Dark Spot Detection • ₹50 Escrow Refunded",
+      gu: "૬૪,૦૦૦ SCADA લાઇટ પોલ્સ • ડાર્ક સ્પોટ ડિટેક્શન • ₹૫૦ એસ્ક્રો રિફંડ",
+      hi: "64,000 SCADA लाइट पोल्स • डार्क स्पॉट पहचान • ₹50 एस्क्रो रिफंड"
+    },
+    zone: {
+      en: "Surat Tapi Riverfront & AMC Navrangpura",
+      gu: "સુરત તાપી રિવરફ્રન્ટ અને AMC નવરંગપુરા",
+      hi: "सूरत तापी रिवरफ्रंट एवं AMC नवरंगपुरा"
+    },
+    impact: {
+      en: "Average streetlight blackout response dropped to under 4.2 hours.",
+      gu: "સ્ટ્રીટલાઇટ બંધ થવા પર રિપેરિંગનો સરેરાશ સમય ૪.૨ કલાકથી પણ ઓછો થયો.",
+      hi: "स्ट्रीटलाइट बंद होने पर प्रतिक्रिया का औसत समय घटकर 4.2 घंटे से भी कम हुआ।"
+    }
+  },
+  {
+    index: 5,
+    category: "tech",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Sabarmati_riverfront_and_Atal_Pedestrian_Bridge_01.jpg",
+    title: {
+      en: "Gujarat Integrated Command & Control Centre (ICCC)",
+      gu: "ગુજરાત ઇન્ટિગ્રેટેડ કમાન્ડ એન્ડ કંટ્રોલ સેન્ટર (ICCC)",
+      hi: "गुजरात एकीकृत कमांड एवं नियंत्रण केंद्र (ICCC)"
+    },
+    desc: {
+      en: "24x7 municipal nerve centre orchestrating Surat & Ahmedabad emergency response, CCTV video feeds, and multi-agency field teams.",
+      gu: "૨૪x૭ મ્યુનિસિપલ કંટ્રોલ રૂમ જે સુરત અને અમદાવાદમાં કટોકટી પ્રતિસાદ, સીસીટીવી ફીડ અને ફિલ્ડ ટીમોનું સંચાલન કરે છે.",
+      hi: "24x7 नगर निगम नियंत्रण केंद्र जो आपातकालीन प्रतिक्रिया, सीसीटीवी फ़ीड और फील्ड टीमों का समन्वय करता है।"
+    },
+    catLabel: {
+      en: "Command Centre",
+      gu: "કમાન્ડ સેન્ટર",
+      hi: "कमांड सेंटर"
+    },
+    sla: {
+      en: "🖥️ 24x7 Active Nerve Centre",
+      gu: "🖥️ ૨૪x૭ સક્રિય કંટ્રોલ રૂમ",
+      hi: "🖥️ 24x7 सक्रिय नियंत्रण केंद्र"
+    },
+    stats: {
+      en: "4,500 CCTV Streams • Multi-Agency VHF Repeater • Automated Drone Radar",
+      gu: "૪,૫૦૦ સીસીટીવી કેમેરા • મલ્ટી-એજન્સી વાયરલેસ • ઓટોમેટેડ ડ્રોન રડાર",
+      hi: "4,500 सीसीटीवी कैमरे • मल्टी-एजेंसी वायरलेस • स्वचालित ड्रोन रडार"
+    },
+    zone: {
+      en: "Gujarat State ICCC Network",
+      gu: "ગુજરાત રાજ્ય ICCC નેટવર્ક",
+      hi: "गुजरात राज्य ICCC नेटवर्क"
+    },
+    impact: {
+      en: "Emergency resource mobilization reduced from 22 minutes to 4.5 minutes.",
+      gu: "કટોકટી સમયે સાધનસામગ્રી પહોંચાડવાનો સમય ૨૨ મિનિટથી ઘટીને ૪.૫ મિનિટ થયો.",
+      hi: "आपातकालीन संसाधन जुटाने का समय 22 मिनट से घटकर 4.5 मिनट हुआ।"
+    }
+  }
+];
+
+let currentSolutionIndex = 1;
+
+window.initSolutionsCarousel = function() {
+  const dotsContainer = document.getElementById('solutions-carousel-dots');
+  if (dotsContainer) {
+    dotsContainer.innerHTML = SOLUTIONS_PROJECTS_DATA.map((proj, idx) => `
+      <div class="carousel-dot ${idx === currentSolutionIndex ? 'active' : ''}" onclick="goToSolutionCard(${idx})" title="${typeof proj.title === 'object' ? proj.title.en : proj.title}"></div>
+    `).join('');
+  }
+  updateSolutionsCarousel();
+};
+
+window.updateSolutionsCarousel = function() {
+  const cards = document.querySelectorAll('.solution-3d-card');
+  const total = cards.length;
+  if (total === 0) return;
+
+  const lang = appState.language || 'en';
+
+  cards.forEach((card, idx) => {
+    card.classList.remove('card-active', 'card-left', 'card-right', 'card-hidden-left', 'card-hidden-right');
+
+    let diff = (idx - currentSolutionIndex + total) % total;
+    if (diff > total / 2) diff -= total;
+
+    if (diff === 0) {
+      card.classList.add('card-active');
+    } else if (diff === -1) {
+      card.classList.add('card-left');
+    } else if (diff === 1) {
+      card.classList.add('card-right');
+    } else if (diff < -1) {
+      card.classList.add('card-hidden-left');
+    } else {
+      card.classList.add('card-hidden-right');
+    }
+
+    // Dynamic Language updates for card content
+    const proj = SOLUTIONS_PROJECTS_DATA[idx];
+    if (proj) {
+      const titleEl = card.querySelector('.solution-card-title');
+      const descEl = card.querySelector('.solution-card-desc');
+      const catBadge = card.querySelector('.solution-cat-badge');
+      const slaBadge = card.querySelector('.solution-sla-badge');
+      const inspectLink = card.querySelector('.solution-inspect-link');
+      const hoverHint = card.querySelector('.solution-hover-hint span');
+
+      const pTitle = typeof proj.title === 'object' ? (proj.title[lang] || proj.title.en) : proj.title;
+      const pDesc = typeof proj.desc === 'object' ? (proj.desc[lang] || proj.desc.en) : proj.desc;
+      const pCat = typeof proj.catLabel === 'object' ? (proj.catLabel[lang] || proj.catLabel.en) : proj.catLabel;
+      const pSla = typeof proj.sla === 'object' ? (proj.sla[lang] || proj.sla.en) : proj.sla;
+
+      if (titleEl) titleEl.textContent = pTitle;
+      if (descEl) descEl.textContent = pDesc;
+      if (catBadge) catBadge.textContent = pCat;
+      if (slaBadge) slaBadge.textContent = pSla;
+      if (inspectLink) inspectLink.innerHTML = (lang === 'gu' ? 'વિગતો જુઓ' : lang === 'hi' ? 'विवरण देखें' : 'View Details') + ' &rarr;';
+      if (hoverHint) hoverHint.textContent = lang === 'gu' ? '🔍 વિગત જોવા ક્લિક કરો' : lang === 'hi' ? '🔍 विवरण हेतु क्लिक करें' : '🔍 Click for Details';
+    }
   });
-  document.querySelectorAll('.project-gallery-card').forEach(c => {
-    c.style.display = (category === 'all' || c.dataset.category === category) ? 'flex' : 'none';
+
+  // Update dots
+  const dots = document.querySelectorAll('.carousel-dot');
+  dots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentSolutionIndex);
   });
 };
 
-window.openGalleryLightbox = function(index) {
-  const m = document.getElementById('gallery-lightbox-modal');
-  if (!m) return;
-  const cards = document.querySelectorAll('.project-gallery-card');
-  if (cards && typeof index === 'number' && cards[index]) {
-    const card = cards[index];
-    const img = card.querySelector('.gallery-thumb-img');
-    const title = card.querySelector('.gallery-card-title');
-    const desc = card.querySelector('.gallery-card-desc');
-    const sla = card.querySelector('.gallery-sla-tag');
+window.nextSolutionCard = function() {
+  const total = SOLUTIONS_PROJECTS_DATA.length;
+  currentSolutionIndex = (currentSolutionIndex + 1) % total;
+  updateSolutionsCarousel();
+};
 
-    const mImg = m.querySelector('img');
-    const mTitle = m.querySelector('h3');
-    const mDesc = m.querySelector('p');
-    const mBadge = m.querySelector('span[style*="font-size:0.8rem"]');
+window.prevSolutionCard = function() {
+  const total = SOLUTIONS_PROJECTS_DATA.length;
+  currentSolutionIndex = (currentSolutionIndex - 1 + total) % total;
+  updateSolutionsCarousel();
+};
 
-    if (mImg && img) {
-      mImg.src = img.src;
-      mImg.alt = img.alt || 'Gujarat Civic Project';
-    }
-    if (mTitle && title) mTitle.textContent = title.textContent;
-    if (mDesc && desc) mDesc.textContent = desc.textContent;
-    if (mBadge && sla) mBadge.textContent = sla.textContent;
+window.goToSolutionCard = function(index) {
+  currentSolutionIndex = index;
+  updateSolutionsCarousel();
+};
+
+window.handleSolutionCardClick = function(index) {
+  if (index === currentSolutionIndex) {
+    // Click on active middle card -> reveal full details
+    showSolutionDetails(index);
+  } else {
+    // Click on side card -> animate to middle
+    currentSolutionIndex = index;
+    updateSolutionsCarousel();
   }
+};
+
+window.openActiveSolutionLightbox = function() {
+  showSolutionDetails(currentSolutionIndex);
+};
+
+window.showSolutionDetails = function(index) {
+  const proj = SOLUTIONS_PROJECTS_DATA[index] || SOLUTIONS_PROJECTS_DATA[0];
+  const m = document.getElementById('gallery-lightbox-modal');
+  if (!m || !proj) return;
+
+  const lang = appState.language || 'en';
+  const mImg = document.getElementById('lightbox-img');
+  const mTitle = document.getElementById('lightbox-title');
+  const mDesc = document.getElementById('lightbox-desc');
+  const mSla = document.getElementById('lightbox-sla');
+  const mZone = document.getElementById('lightbox-zone-badge');
+  const mStats = document.getElementById('lightbox-stats');
+  const mImpact = document.getElementById('lightbox-impact');
+  const mCat = document.getElementById('lightbox-cat-badge');
+
+  const pTitle = typeof proj.title === 'object' ? (proj.title[lang] || proj.title.en) : proj.title;
+  const pDesc = typeof proj.desc === 'object' ? (proj.desc[lang] || proj.desc.en) : proj.desc;
+  const pCat = typeof proj.catLabel === 'object' ? (proj.catLabel[lang] || proj.catLabel.en) : proj.catLabel;
+  const pSla = typeof proj.sla === 'object' ? (proj.sla[lang] || proj.sla.en) : proj.sla;
+  const pZone = typeof proj.zone === 'object' ? (proj.zone[lang] || proj.zone.en) : proj.zone;
+  const pStats = typeof proj.stats === 'object' ? (proj.stats[lang] || proj.stats.en) : proj.stats;
+  const pImpact = typeof proj.impact === 'object' ? (proj.impact[lang] || proj.impact.en) : proj.impact;
+
+  if (mImg) {
+    mImg.src = proj.image;
+    mImg.alt = pTitle;
+  }
+  if (mTitle) mTitle.textContent = pTitle;
+  if (mDesc) mDesc.textContent = pDesc;
+  if (mSla) mSla.textContent = pSla;
+  if (mZone) mZone.textContent = `📍 ${pZone}`;
+  if (mStats) mStats.textContent = `📊 ${lang === 'gu' ? 'ટેલિમેટ્રી' : lang === 'hi' ? 'टेलीमेट्री' : 'Telemetry'}: ${pStats}`;
+  if (mImpact) mImpact.textContent = `🌱 ${lang === 'gu' ? 'અસર' : lang === 'hi' ? 'प्रभाव' : 'Impact'}: ${pImpact}`;
+  if (mCat) mCat.textContent = pCat;
+
   m.style.display = 'flex';
   m.classList.add('active');
 };
+
+window.openGalleryLightbox = window.showSolutionDetails;
 
 window.closeGalleryLightbox = function() {
   const m = document.getElementById('gallery-lightbox-modal');
@@ -2807,6 +3920,23 @@ window.closeGalleryLightbox = function() {
     m.classList.remove('active');
   }
 };
+
+window.filterGallery = function(category) {
+  document.querySelectorAll('.gallery-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === category);
+  });
+  if (category === 'all') {
+    updateSolutionsCarousel();
+    return;
+  }
+  const matchIdx = SOLUTIONS_PROJECTS_DATA.findIndex(p => p.category === category);
+  if (matchIdx !== -1) {
+    currentSolutionIndex = matchIdx;
+    updateSolutionsCarousel();
+  }
+};
+
+window.filterSolutionsCarousel = window.filterGallery;
 
 // Global Toast
 function showCivicaToast(message) {
@@ -3398,8 +4528,8 @@ function populateCommandMapMarkers() {
           <strong>Assigned Unit:</strong> ${inc.assignedUnit || (inc.assignedCrew ? inc.assignedCrew.name : 'Awaiting Dispatch')}<br>
           <strong>Escrow Deposit:</strong> ₹50 (${inc.escrowStatus || 'Held'})
         </div>
-        <button onclick="advanceKanbanTicket('${inc.id || inc.shortId}')" style="width:100%; background:#0284c7; color:white; border:none; padding:7px; border-radius:4px; font-weight:700; cursor:pointer;">
-          ⚡ Advance Status / Dispatch &rarr;
+        <button onclick="finishKanbanTicket('${inc.id || inc.shortId}')" style="width:100%; background:#059669; color:white; border:none; padding:7px; border-radius:4px; font-weight:700; cursor:pointer;">
+          ✓ Finish Ticket &rarr;
         </button>
       </div>
     `);
@@ -3460,32 +4590,40 @@ window.exportCommandCenterTelemetry = function() {
   }
 };
 
-window.advanceKanbanTicket = function(ticketId) {
+window.finishKanbanTicket = function(ticketId) {
   if (window.tacticalEngine) {
-    const updated = window.tacticalEngine.advanceIncidentStatus(ticketId);
-    if (updated) {
-      showCivicaToast(`⚡ Incident ${ticketId} advanced to ${updated.status.toUpperCase()}.`);
+    const inc = window.tacticalEngine.incidents.find(i => i.id === ticketId || i.shortId === ticketId);
+    if (inc) {
+      inc.status = 'resolved';
+      inc.escrowStatus = 'refunded';
+      inc.slaHoursRemaining = 0;
+      window.tacticalEngine.emit('incidentUpdated', inc);
+      showCivicaToast(`✅ Incident ${ticketId} status changed to FINISH.`);
       renderKanbanBoard();
       populateCommandMapMarkers();
       return;
     }
   }
 
-  // Fallback state update
-  const comp = (GUJARAT_CIVIC_DATA.complaints || []).find(c => c.id === ticketId || c.shortId === ticketId);
+  // Fallback / Master complaints update
+  const comp = (appState.complaints || []).find(c => c.id === ticketId || c.shortId === ticketId);
   if (comp) {
-    if (comp.status === 'received' || comp.status === 'assigned') {
-      comp.status = 'in_progress';
-      comp.escrowRefundStatus = 'verified_refund_pending';
-    } else if (comp.status === 'in_progress') {
-      comp.status = 'resolved';
-      comp.escrowRefundStatus = 'refunded';
+    comp.status = 'resolved';
+    comp.stage = 'resolved';
+    comp.escrowRefundStatus = 'refunded';
+    if (comp.depositStatus === 'held') {
+      officerVerifyAndRefundTicket();
     }
-    showCivicaToast(`⚡ Ticket ${ticketId} updated to ${comp.status}.`);
+    showCivicaToast(`✅ Incident ${ticketId} moved to FINISH section.`);
+    saveMasterState();
     renderKanbanBoard();
+    renderOfficerDashboard();
+    renderDesktopPortal();
     populateCommandMapMarkers();
   }
 };
+
+window.advanceKanbanTicket = window.finishKanbanTicket;
 
 window.renderKanbanBoard = function() {
   const stacks = {
@@ -3530,11 +4668,11 @@ window.renderKanbanBoard = function() {
           ${assigned.split('(')[0]}
         </span>
         ${laneKey !== 'resolved' ? `
-          <button onclick="advanceKanbanTicket('${inc.id || inc.shortId}')" class="btn-advance-ticket">
-            Advance &rarr;
+          <button onclick="finishKanbanTicket('${inc.id || inc.shortId}')" class="btn-advance-ticket btn-finish-ticket">
+            ✓ Finish &rarr;
           </button>
         ` : `
-          <span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Refunded</span>
+          <span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Finished & Refunded</span>
         `}
       </div>
     `;
@@ -3593,6 +4731,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDesktopPortal();
   renderCivicWallet();
   setAppLanguage(appState.language, false);
+  if (typeof initSolutionsCarousel === 'function') {
+    initSolutionsCarousel();
+  }
 
   const urlParams = new URLSearchParams(window.location.search);
   const demoParam = urlParams.get('demo');
@@ -3611,6 +4752,28 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     returnToLandingPage();
   }
+
+  // Global Smooth Scrolling for all in-page anchor links
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const targetHref = anchor.getAttribute('href');
+    if (targetHref && targetHref.length > 1 && targetHref.startsWith('#')) {
+      const targetElement = document.querySelector(targetHref);
+      if (targetElement) {
+        e.preventDefault();
+        const headerOffset = 115;
+        const targetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: targetTop,
+          behavior: 'smooth'
+        });
+        if (history.pushState) {
+          history.pushState(null, null, targetHref);
+        }
+      }
+    }
+  });
 
   // Escape key closes modals
   document.addEventListener('keydown', (e) => {

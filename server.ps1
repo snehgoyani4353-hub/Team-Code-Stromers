@@ -9,7 +9,10 @@ try {
     exit 1
 }
 
-$baseDir = "c:\Users\Dell\Desktop\hackathon"
+$baseDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Definition }
+if (-not $baseDir -or -not (Test-Path $baseDir)) {
+    $baseDir = (Get-Location).Path
+}
 $citizensDir = Join-Path $baseDir "citizens"
 $adminsDir = Join-Path $baseDir "admins"
 

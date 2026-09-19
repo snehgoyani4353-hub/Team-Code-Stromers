@@ -100,27 +100,22 @@ class CivicaTacticalCommandSystem {
   }
 
   /**
-   * Advance an incident state machine
-   * triage -> dispatched -> on_site -> resolved
+   * Finish an incident state machine
+   * Directly change status to 'resolved' (Finish)
    */
-  advanceIncidentStatus(incidentId) {
+  finishIncidentStatus(incidentId) {
     const inc = this.incidents.find(i => i.id === incidentId || i.shortId === incidentId);
     if (!inc) return null;
 
-    const sequence = ['triage', 'dispatched', 'on_site', 'resolved'];
-    const currIdx = sequence.indexOf(inc.status);
-    if (currIdx < sequence.length - 1) {
-      inc.status = sequence[currIdx + 1];
-      if (inc.status === 'resolved') {
-        inc.escrowStatus = 'refunded';
-        inc.slaHoursRemaining = 0;
-      } else if (inc.status === 'on_site') {
-        inc.escrowStatus = 'verified_refund_pending';
-      }
-      this.emit('incidentUpdated', inc);
-      return inc;
-    }
+    inc.status = 'resolved';
+    inc.escrowStatus = 'refunded';
+    inc.slaHoursRemaining = 0;
+    this.emit('incidentUpdated', inc);
     return inc;
+  }
+
+  advanceIncidentStatus(incidentId) {
+    return this.finishIncidentStatus(incidentId);
   }
 
   /**

@@ -42,11 +42,6 @@
             <button class="lang-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
           </div>
 
-          <!-- 1-Click Direct Demo Login -->
-          <button class="btn-demo-header" onclick="loginAsDemo('citizen')" title="1-Click Direct Demo Login" data-i18n="btn_demo_login">
-            ⚡ DEMO LOGIN
-          </button>
-
           <!-- Member Login -->
           <button class="btn-member-login" id="btn-header-login" onclick="openLoginModal('citizen')" data-i18n="btn_member_login">
             MEMBER LOGIN
@@ -63,7 +58,6 @@
             <li><a href="rules-and-contact.html" class="nav-link" data-i18n="nav_contact">RULES & CONTACT</a></li>
             <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
             <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
-            <li><a href="javascript:void(0)" onclick="openLoginModal('command')" class="nav-link highlight-command">🛰️ COMMAND CENTER</a></li>
           </ul>
         </div>
       </nav>
@@ -106,7 +100,6 @@
 
     <!-- Solutions & Initiatives Gallery -->
     <section id="solutions" class="civica-section solutions-gallery-section">
-      <div class="section-top-brand">C I V I C A</div>
       <h2 class="section-heading-title" data-i18n="gallery_title">OUR PROJECT GALLERY & CIVIC INITIATIVES</h2>
       <p class="gallery-section-intro" data-i18n="gallery_subtitle">
         Explore live municipal projects, intelligent transit corridors, rapid pothole resurfacing fleets, and automated command operations across Gujarat.
@@ -114,120 +107,144 @@
 
       <!-- Category Filter Pills -->
       <div class="gallery-filter-bar">
-        <button class="gallery-filter-btn active" data-filter="all" onclick="filterGallery('all')">All Projects (બધા પ્રોજેક્ટ)</button>
-        <button class="gallery-filter-btn" data-filter="transit" onclick="filterGallery('transit')">🚍 Smart Transit & BRTS</button>
-        <button class="gallery-filter-btn" data-filter="roads" onclick="filterGallery('roads')">🛣️ Roads & Potholes</button>
-        <button class="gallery-filter-btn" data-filter="sanitation" onclick="filterGallery('sanitation')">♻️ Cleanliness & Waste</button>
-        <button class="gallery-filter-btn" data-filter="utilities" onclick="filterGallery('utilities')">💡 Lighting & Water SCADA</button>
-        <button class="gallery-filter-btn" data-filter="tech" onclick="filterGallery('tech')">🖥️ Command & Control</button>
+        <button class="gallery-filter-btn active" data-filter="all" onclick="filterGallery('all')" data-i18n="filter_all">All Projects (બધા પ્રોજેક્ટ)</button>
+        <button class="gallery-filter-btn" data-filter="transit" onclick="filterGallery('transit')" data-i18n="filter_transit">🚍 Smart Transit & BRTS</button>
+        <button class="gallery-filter-btn" data-filter="roads" onclick="filterGallery('roads')" data-i18n="filter_roads">🛣️ Roads & Potholes</button>
+        <button class="gallery-filter-btn" data-filter="sanitation" onclick="filterGallery('sanitation')" data-i18n="filter_sanitation">♻️ Cleanliness & Waste</button>
+        <button class="gallery-filter-btn" data-filter="utilities" onclick="filterGallery('utilities')" data-i18n="filter_utilities">💡 Lighting & Water SCADA</button>
+        <button class="gallery-filter-btn" data-filter="tech" onclick="filterGallery('tech')" data-i18n="filter_tech">🖥️ Command & Control</button>
       </div>
 
-      <!-- Rich Gallery Grid -->
-      <div class="project-gallery-grid">
-        <div class="project-gallery-card" data-category="transit" onclick="openGalleryLightbox(0)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Ahmedabad_BRTS.jpg" alt="Electric BRTS Transit Gujarat" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge">Transit & Mobility</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
+      <!-- 3D Animated Solutions Coverflow Carousel -->
+      <div class="solutions-carousel-wrapper" id="solutions-carousel-container">
+        <!-- Back Navigation Button -->
+        <button type="button" class="carousel-nav-btn btn-prev" onclick="prevSolutionCard()" aria-label="Previous Solution (Back)" title="Back (Previous Project)">
+          <span class="nav-arrow">&#10094;</span>
+          <span class="nav-label" data-i18n="carousel_back">Back</span>
+        </button>
+
+        <!-- 3D Stage Track -->
+        <div class="solutions-carousel-stage" id="solutions-carousel-stage">
+          <!-- Card 0 -->
+          <div class="solution-3d-card" data-index="0" data-category="transit" onclick="handleSolutionCardClick(0)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Ahmedabad_BRTS.jpg" alt="Electric BRTS Transit Gujarat" class="solution-card-img" />
+              <span class="solution-cat-badge">Transit & Mobility</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Electric BRTS Transit Corridors (Janmarg Gujarat)</h3>
+              <p class="solution-card-desc">Surat & Ahmedabad dedicated electric BRTS corridors with GPS real-time bus telemetry and contactless ticketing.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge">⚡ 99.8% On-Time SLA</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
+            </div>
           </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Electric BRTS Transit Corridors (Janmarg Gujarat)</h3>
-            <p class="gallery-card-desc">Surat & Ahmedabad dedicated BRTS corridors with GPS real-time bus telemetry and contactless ticketing.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag">⚡ 99.8% On-Time SLA</span>
-              <span class="gallery-view-link">Details &rarr;</span>
+
+          <!-- Card 1 -->
+          <div class="solution-3d-card" data-index="1" data-category="transit" onclick="handleSolutionCardClick(1)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Ahmedabad_Inner_Ring_Road_Skyline.jpg" alt="Gujarat Urban Expressway" class="solution-card-img" />
+              <span class="solution-cat-badge">Smart Mobility</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Gujarat Urban Expressway & Ring Road Telemetry</h3>
+              <p class="solution-card-desc">AI-managed adaptive traffic signals across Surat Ring Road and SG Highway reducing commuter travel delays.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge">🟢 Live Synchronized Flow</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="solution-3d-card" data-index="2" data-category="roads" onclick="handleSolutionCardClick(2)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Beauty_of_Surat.jpg" alt="Surat Road Resurfacing" class="solution-card-img" />
+              <span class="solution-cat-badge" style="background:rgba(234,88,12,0.9); border-color:rgba(234,88,12,0.5);">Roads & Potholes</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Surat Municipal Pothole Rapid Action Squad</h3>
+              <p class="solution-card-desc">Infrared hot-asphalt repair vans dispatched automatically on geotagged citizen reports across SMC and AMC wards.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge" style="background:#ffedd5; color:#c2410c;">⏱️ 24h SLA Guarantee</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="solution-3d-card" data-index="3" data-category="sanitation" onclick="handleSolutionCardClick(3)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Surat_Skyline_01.jpg" alt="Surat Cleanest City Waste Collection" class="solution-card-img" />
+              <span class="solution-cat-badge" style="background:rgba(22,163,74,0.9); border-color:rgba(22,163,74,0.5);">Cleanliness & Waste</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Surat Smart SWM Fleet (#1 Cleanest City in India)</h3>
+              <p class="solution-card-desc">100% route verification and smart bin fill-level ultrasound sensors across Surat and Ahmedabad municipal wards.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge" style="background:#dcfce7; color:#15803d;">♻️ 100% Ward Coverage</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="solution-3d-card" data-index="4" data-category="utilities" onclick="handleSolutionCardClick(4)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Surat_at_night.JPG" alt="Surat Tapi Smart Lighting" class="solution-card-img" />
+              <span class="solution-cat-badge" style="background:rgba(2,132,199,0.9); border-color:rgba(2,132,199,0.5);">Smart Lighting</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Smart LED Luminaire & Tapi Riverfront Grid</h3>
+              <p class="solution-card-desc">Centralized luminaire monitoring detecting streetlight blackouts along Tapi Riverfront and Dumas Road instantly.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge" style="background:#e0f2fe; color:#0369a1;">💡 24h Replacement SLA</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="solution-3d-card" data-index="5" data-category="tech" onclick="handleSolutionCardClick(5)">
+            <div class="solution-card-media">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Sabarmati_riverfront_and_Atal_Pedestrian_Bridge_01.jpg" alt="Gujarat Integrated Command Centre" class="solution-card-img" />
+              <span class="solution-cat-badge" style="background:rgba(124,58,237,0.9); border-color:rgba(124,58,237,0.5);">Command Centre</span>
+              <div class="solution-hover-hint"><span>🔍 Click for Details</span></div>
+            </div>
+            <div class="solution-card-body">
+              <h3 class="solution-card-title">Gujarat Integrated Command & Control Centre (ICCC)</h3>
+              <p class="solution-card-desc">24x7 municipal nerve centre orchestrating Surat & Ahmedabad emergency response, CCTV video feeds, and field teams.</p>
+              <div class="solution-card-footer">
+                <span class="solution-sla-badge" style="background:#ede9fe; color:#6d28d9;">🖥️ 24x7 Active Nerve Centre</span>
+                <span class="solution-inspect-link">View Details &rarr;</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="project-gallery-card" data-category="transit" onclick="openGalleryLightbox(1)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Ahmedabad_Inner_Ring_Road_Skyline.jpg" alt="Gujarat Urban Expressway" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge">Smart Mobility</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
-          </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Gujarat Urban Expressway & Ring Road Telemetry</h3>
-            <p class="gallery-card-desc">AI-managed adaptive traffic signals across Surat Ring Road and SG Highway reducing commuter travel delays.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag">🟢 Live Synchronized</span>
-              <span class="gallery-view-link">Details &rarr;</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-gallery-card" data-category="roads" onclick="openGalleryLightbox(2)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Beauty_of_Surat.jpg" alt="Surat Road Resurfacing" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge" style="background:#ea580c;">Roads & Potholes</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
-          </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Surat Municipal Pothole Rapid Action Squad</h3>
-            <p class="gallery-card-desc">Infrared hot-asphalt repair vans dispatched automatically on geotagged citizen reports across SMC and AMC wards.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag" style="color:#c2410c;">⏱️ 24h SLA Guarantee</span>
-              <span class="gallery-view-link">Details &rarr;</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-gallery-card" data-category="sanitation" onclick="openGalleryLightbox(3)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Surat_Skyline_01.jpg" alt="Surat Cleanest City Waste Collection" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge" style="background:#16a34a;">Cleanliness & Waste</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
-          </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Surat Smart SWM Fleet (#1 Cleanest City in India)</h3>
-            <p class="gallery-card-desc">100% route verification and smart bin fill-level ultrasound sensors across Surat and Ahmedabad municipal wards.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag" style="color:#15803d;">♻️ 100% Ward Coverage</span>
-              <span class="gallery-view-link">Details &rarr;</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-gallery-card" data-category="utilities" onclick="openGalleryLightbox(4)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Surat_at_night.JPG" alt="Surat Tapi Smart Lighting" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge" style="background:#0284c7;">Smart Lighting</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
-          </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Smart LED Luminaire & Tapi Riverfront Grid</h3>
-            <p class="gallery-card-desc">Centralized luminaire monitoring detecting streetlight blackouts along Tapi Riverfront and Dumas Road instantly.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag" style="color:#0369a1;">💡 24h Replacement SLA</span>
-              <span class="gallery-view-link">Details &rarr;</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-gallery-card" data-category="tech" onclick="openGalleryLightbox(5)">
-          <div class="gallery-card-thumb-wrap">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Sabarmati_riverfront_and_Atal_Pedestrian_Bridge_01.jpg" alt="Gujarat Integrated Command Centre" class="gallery-thumb-img" />
-            <span class="gallery-cat-badge" style="background:#7c3aed;">Command Centre</span>
-            <div class="gallery-hover-overlay"><span class="gallery-zoom-icon">🔍 View Inspection</span></div>
-          </div>
-          <div class="gallery-card-meta">
-            <h3 class="gallery-card-title">Gujarat Integrated Command & Control Centre (ICCC)</h3>
-            <p class="gallery-card-desc">24x7 municipal nerve centre orchestrating Surat & Ahmedabad emergency response, CCTV video feeds, and field teams.</p>
-            <div class="gallery-card-footer">
-              <span class="gallery-sla-tag" style="color:#6d28d9;">🖥️ 24x7 Active Nerve Centre</span>
-              <span class="gallery-view-link">Details &rarr;</span>
-            </div>
-          </div>
-        </div>
+        <!-- Front Navigation Button -->
+        <button type="button" class="carousel-nav-btn btn-next" onclick="nextSolutionCard()" aria-label="Next Solution (Front)" title="Front (Next Project)">
+          <span class="nav-label" data-i18n="carousel_front">Front</span>
+          <span class="nav-arrow">&#10095;</span>
+        </button>
       </div>
+
+      <!-- Carousel Pagination Dots -->
+      <div class="solutions-carousel-dots" id="solutions-carousel-dots"></div>
 
       <!-- Callout Banner to Rules & Contacts -->
       <div class="gallery-rules-banner">
         <div class="gallery-rules-banner-text">
-          <h3>📜 Citizen Civic Charter & Emergency Helplines Directory</h3>
-          <p>Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.</p>
+          <h3 data-i18n="banner_rules_title">📜 Citizen Civic Charter & Emergency Helplines Directory</h3>
+          <p data-i18n="banner_rules_desc">Read about our mandatory SLA timelines, 100% refundable ₹50 escrow policy, and get direct contact numbers for AMC 24x7 control rooms and zonal offices.</p>
         </div>
-        <a href="rules-and-contact.html" class="btn-gallery-rules-action">
+        <a href="rules-and-contact.html" class="btn-gallery-rules-action" data-i18n="banner_rules_btn">
           View Rules, Regulations & Contact Numbers &rarr;
         </a>
       </div>
@@ -236,35 +253,83 @@
     <!-- Services -->
     <section id="services" class="civica-section platform-services-section">
       <div class="section-top-brand">C I V I C A</div>
-      <h2 class="section-heading-title">OUR PLATFORM SERVICES</h2>
+      <h2 class="section-heading-title" data-i18n="services_heading">OUR PLATFORM SERVICES</h2>
       <div class="services-two-col-grid">
-        <div class="service-item-card"><div class="service-num-badge">01</div><div class="service-content"><h4 class="service-title">Civic Feedback Hub</h4><p class="service-desc">Crowdsource neighborhood reports on broken infrastructure, delays, and safety risks.</p></div></div>
-        <div class="service-item-card"><div class="service-num-badge">02</div><div class="service-content"><h4 class="service-title">Community Dashboards</h4><p class="service-desc">Live maps of civic issues, service SLAs, and neighborhood trendlines.</p></div></div>
-        <div class="service-item-card"><div class="service-num-badge">03</div><div class="service-content"><h4 class="service-title">Urban Mobility Apps</h4><p class="service-desc">Multimodal routing, delay alerts, and first-to-last-mile commute planning.</p></div></div>
-        <div class="service-item-card"><div class="service-num-badge">04</div><div class="service-content"><h4 class="service-title">Transit Optimization</h4><p class="service-desc">Demand-responsive scheduling and corridor performance analytics.</p></div></div>
-        <div class="service-item-card"><div class="service-num-badge">05</div><div class="service-content"><h4 class="service-title">Safety Networks</h4><p class="service-desc">Verified incident sharing and neighborhood alert channels for residents.</p></div></div>
-        <div class="service-item-card"><div class="service-num-badge">06</div><div class="service-content"><h4 class="service-title">Tactical Command Center</h4><p class="service-desc">Real-time geospatial dispatch, emergency broadcasts, and multi-department triage.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">01</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_1">Civic Feedback Hub</h4><p class="service-desc" data-i18n="service_desc_1">Crowdsource neighborhood reports on broken infrastructure, delays, and safety risks.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">02</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_2">Community Dashboards</h4><p class="service-desc" data-i18n="service_desc_2">Live maps of civic issues, service SLAs, and neighborhood trendlines.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">03</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_3">Urban Mobility Apps</h4><p class="service-desc" data-i18n="service_desc_3">Multimodal routing, delay alerts, and first-to-last-mile commute planning.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">04</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_4">Transit Optimization</h4><p class="service-desc" data-i18n="service_desc_4">Demand-responsive scheduling and corridor performance analytics.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">05</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_5">Safety Networks</h4><p class="service-desc" data-i18n="service_desc_5">Verified incident sharing and neighborhood alert channels for residents.</p></div></div>
+        <div class="service-item-card"><div class="service-num-badge">06</div><div class="service-content"><h4 class="service-title" data-i18n="service_title_6">Tactical Command Center</h4><p class="service-desc" data-i18n="service_desc_6">Real-time geospatial dispatch, emergency broadcasts, and multi-department triage.</p></div></div>
       </div>
     </section>
 
-    <!-- Why Choose Civica -->
+    <!-- About Us & Why Choose Civica -->
     <section id="why-choose" class="civica-section why-choose-section">
       <div class="section-top-brand">C I V I C A</div>
-      <h2 class="section-heading-title">WHY CHOOSE CIVICA</h2>
+      <h2 class="section-heading-title" data-i18n="about_heading">ABOUT US & OUR MISSION</h2>
+      <p class="about-section-intro" data-i18n="about_intro_text">
+        Empowering Gujarat's urban future through citizen engagement, resilient public infrastructure, and cutting-edge municipal technology.
+      </p>
+
+      <!-- Mission & Vision Dual Showcase Cards -->
+      <div class="mission-vision-container">
+        <!-- Mission Card -->
+        <div class="mv-card mission-card">
+          <div class="mv-card-header">
+            <div class="mv-icon-badge mission-badge">🎯</div>
+            <div class="mv-tag-label" data-i18n="mv_mission_tag">OUR MISSION</div>
+          </div>
+          <h3 class="mv-card-title" data-i18n="mv_mission_title">Empower Innovators & Urban Infrastructure</h3>
+          <p class="mv-card-text" data-i18n="mv_mission_desc">
+            To empower developers, designers, and innovators to build scalable, technology-driven solutions that address critical urban challenges, improve public infrastructure, and enhance the overall quality of life for city residents.
+          </p>
+          <div class="mv-card-pills">
+            <span class="mv-pill">🚀 Scalable Tech</span>
+            <span class="mv-pill">🏗️ Public Infrastructure</span>
+            <span class="mv-pill">✨ Citizen Quality of Life</span>
+          </div>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="mv-card vision-card">
+          <div class="mv-card-header">
+            <div class="mv-icon-badge vision-badge">🌟</div>
+            <div class="mv-tag-label" data-i18n="mv_vision_tag">OUR VISION</div>
+          </div>
+          <h3 class="mv-card-title" data-i18n="mv_vision_title">Connected, Resilient Urban Ecosystem</h3>
+          <p class="mv-card-text" data-i18n="mv_vision_desc">
+            To create a connected, sustainable, and inclusive urban ecosystem where smart technology seamlessly improves everyday life, fosters economic growth, and builds resilient communities for the future.
+          </p>
+          <div class="mv-card-pills">
+            <span class="mv-pill">🌱 Sustainable Ecosystem</span>
+            <span class="mv-pill">📊 Economic Growth</span>
+            <span class="mv-pill">🤝 Resilient Communities</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Value Pillars Title -->
+      <div class="why-subheading-divider">
+        <span class="divider-line"></span>
+        <h3 class="why-subheading-title" data-i18n="why_heading">WHY CHOOSE CIVICA</h3>
+        <span class="divider-line"></span>
+      </div>
+
       <div class="pillars-three-grid">
-        <div class="pillar-card"><div class="pillar-num-circle">01</div><h3 class="pillar-title">Citizen-First Design</h3><p class="pillar-desc">Simple reporting, visible progress, ₹50 refundable escrow protection, and real replies from officers.</p></div>
-        <div class="pillar-card"><div class="pillar-num-circle">02</div><h3 class="pillar-title">Urban Intelligence</h3><p class="pillar-desc">We blend open city data with live mobility signals so administrators see problems as neighborhoods feel them.</p></div>
-        <div class="pillar-card"><div class="pillar-num-circle">03</div><h3 class="pillar-title">Trusted Delivery</h3><p class="pillar-desc">Transparent SLAs, audited issue trails, and dedicated municipal success teams keep programs on schedule.</p></div>
+        <div class="pillar-card"><div class="pillar-num-circle">01</div><h3 class="pillar-title" data-i18n="pillar_title_1">Citizen-First Design</h3><p class="pillar-desc" data-i18n="pillar_desc_1">Simple reporting, visible progress, ₹50 refundable escrow protection, and real replies from officers.</p></div>
+        <div class="pillar-card"><div class="pillar-num-circle">02</div><h3 class="pillar-title" data-i18n="pillar_title_2">Urban Intelligence</h3><p class="pillar-desc" data-i18n="pillar_desc_2">We blend open city data with live mobility signals so administrators see problems as neighborhoods feel them.</p></div>
+        <div class="pillar-card"><div class="pillar-num-circle">03</div><h3 class="pillar-title" data-i18n="pillar_title_3">Trusted Delivery</h3><p class="pillar-desc" data-i18n="pillar_desc_3">Transparent SLAs, audited issue trails, and dedicated municipal success teams keep programs on schedule.</p></div>
       </div>
     </section>
 
     <!-- Track Record -->
     <section class="civica-section track-record-section">
       <div class="section-top-brand">C I V I C A</div>
-      <h2 class="section-heading-title">OUR TRACK RECORD</h2>
+      <h2 class="section-heading-title" data-i18n="track_heading">OUR TRACK RECORD</h2>
       <div class="track-record-grid">
-        <div class="record-box"><div class="record-top-gold-bar"></div><div class="record-stat-number">120+</div><div class="record-stat-label">NEIGHBORHOODS LIVE</div></div>
-        <div class="record-box"><div class="record-top-gold-bar"></div><div class="record-stat-number">98%</div><div class="record-stat-label">ISSUE ACKNOWLEDGEMENT</div></div>
+        <div class="record-box"><div class="record-top-gold-bar"></div><div class="record-stat-number">120+</div><div class="record-stat-label" data-i18n="stat_label_1">NEIGHBORHOODS LIVE</div></div>
+        <div class="record-box"><div class="record-top-gold-bar"></div><div class="record-stat-number">98%</div><div class="record-stat-label" data-i18n="stat_label_2">ISSUE ACKNOWLEDGEMENT</div></div>
       </div>
     </section>
 
@@ -273,16 +338,16 @@
       <div class="footer-container">
         <div>
           <div class="footer-logo">C I V I C A</div>
-          <p class="footer-tagline">Civic Engagement & Premier Urban Mobility Software.</p>
-          <p class="footer-copy">&copy; 2026 Civica Civic Systems & Ahmedabad Municipal Corporation. All rights reserved.</p>
+          <p class="footer-tagline" data-i18n="footer_tagline">Civic Engagement & Premier Urban Mobility Software.</p>
+          <p class="footer-copy" data-i18n="footer_copy">&copy; 2026 Civica Civic Systems & Ahmedabad Municipal Corporation. All rights reserved.</p>
         </div>
         <div class="footer-right">
           <ul class="footer-nav">
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#why-choose">ABOUT US</a></li>
-            <li><a href="#solutions">SOLUTIONS</a></li>
-            <li><a href="#services">SERVICES</a></li>
-            <li><a href="rules-and-contact.html" style="color:var(--civica-gold);">RULES & CONTACT</a></li>
+            <li><a href="#home" data-i18n="nav_home">HOME</a></li>
+            <li><a href="#why-choose" data-i18n="nav_about">ABOUT US</a></li>
+            <li><a href="#solutions" data-i18n="nav_solutions">SOLUTIONS</a></li>
+            <li><a href="#services" data-i18n="nav_services">SERVICES</a></li>
+            <li><a href="rules-and-contact.html" style="color:var(--civica-gold);" data-i18n="nav_contact">RULES & CONTACT</a></li>
           </ul>
         </div>
       </div>
@@ -299,8 +364,8 @@
       
       <div class="auth-header">
         <div class="auth-brand">C I V I C A</div>
-        <h3>Member Portal Sign-In</h3>
-        <p>Choose your portal role or use a 1-click demo account below</p>
+        <h3 data-i18n="auth_modal_title">Member Portal Sign-In</h3>
+        <p data-i18n="auth_modal_sub">Choose your portal role or use a 1-click demo account below</p>
       </div>
 
       <!-- 1-Click Instant Demo Accounts -->
@@ -314,18 +379,18 @@
         </div>
         <div class="demo-buttons-row" style="grid-template-columns: repeat(3, 1fr);">
           <button type="button" class="btn-demo-card" onclick="loginAsDemo('citizen')">
-            <span class="demo-role-badge">CITIZEN RESIDENT</span>
-            <div class="demo-card-name">Priya Patel (Citizen)</div>
+            <span class="demo-role-badge" data-i18n="demo_role_citizen">CITIZEN RESIDENT</span>
+            <div class="demo-card-name" data-i18n="demo_name_citizen">Priya Patel (Citizen)</div>
             <div class="demo-card-meta">Ward 7 • ₹150 Wallet • 1-Click &rarr;</div>
           </button>
           <button type="button" class="btn-demo-card" onclick="loginAsDemo('officer')">
-            <span class="demo-role-badge officer">AMC OFFICER</span>
-            <div class="demo-card-name">R. Patel (Ward Officer)</div>
+            <span class="demo-role-badge officer" data-i18n="demo_role_officer">AMC OFFICER</span>
+            <div class="demo-card-name" data-i18n="demo_name_officer">R. Patel (Ward Officer)</div>
             <div class="demo-card-meta">Ward 7 Lead • Live Tickets • 1-Click &rarr;</div>
           </button>
           <button type="button" class="btn-demo-card" onclick="loginAsDemo('command')">
-            <span class="demo-role-badge" style="background:#4f46e5; color:#c7d2fe;">COMMAND CENTER</span>
-            <div class="demo-card-name">Cmdr. V. Rathore</div>
+            <span class="demo-role-badge" style="background:#4f46e5; color:#c7d2fe;" data-i18n="demo_role_command">COMMAND CENTER</span>
+            <div class="demo-card-name" data-i18n="demo_name_command">Cmdr. V. Rathore</div>
             <div class="demo-card-meta">State ICCC Chief • 1-Click &rarr;</div>
           </button>
         </div>
@@ -334,13 +399,13 @@
       <!-- Role Tabs -->
       <div class="auth-role-tabs">
         <button class="role-tab-btn active" id="tab-role-citizen" onclick="switchAuthRole('citizen')">
-          <i class="fa-solid fa-user"></i> Citizen Resident
+          <i class="fa-solid fa-user"></i> <span data-i18n="auth_tab_citizen">Citizen Resident</span>
         </button>
         <button class="role-tab-btn" id="tab-role-admin" onclick="switchAuthRole('admin')">
-          <i class="fa-solid fa-shield"></i> Municipal Officer
+          <i class="fa-solid fa-shield"></i> <span data-i18n="auth_tab_officer">Municipal Officer</span>
         </button>
         <button class="role-tab-btn" id="tab-role-command" onclick="switchAuthRole('command')">
-          <i class="fa-solid fa-satellite-dish"></i> Command Center
+          <i class="fa-solid fa-satellite-dish"></i> <span data-i18n="auth_tab_command">Command Center</span>
         </button>
       </div>
 
@@ -354,29 +419,29 @@
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
             </svg>
-            <span>Continue with Google / Gmail</span>
+            <span data-i18n="auth_btn_google">Continue with Google / Gmail</span>
           </button>
         </div>
 
-        <div class="auth-divider"><span>or Resident Email</span></div>
+        <div class="auth-divider"><span data-i18n="auth_divider_or">or Resident Email</span></div>
 
         <form onsubmit="handleCitizenFormLogin(event)">
           <div class="auth-field">
-            <label for="citizen-email">Resident Email / Phone</label>
+            <label for="citizen-email" data-i18n="auth_lbl_email">Resident Email / Phone</label>
             <input type="email" id="citizen-email" placeholder="priya.patel@gmail.com" required>
           </div>
           <div class="auth-field">
-            <label for="citizen-pass">Password</label>
+            <label for="citizen-pass" data-i18n="auth_lbl_pass">Password</label>
             <input type="password" id="citizen-pass" placeholder="••••••••" required>
           </div>
-          <button type="submit" class="btn-auth-submit">Sign In to Citizen Dashboard &rarr;</button>
-          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('citizen')">⚡ Auto-Fill Demo Credentials</button>
+          <button type="submit" class="btn-auth-submit" data-i18n="auth_btn_submit">Sign In to Citizen Dashboard &rarr;</button>
+          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('citizen')" data-i18n="btn_autofill_demo">⚡ Auto-Fill Demo Credentials</button>
 
           <!-- CREATE NEW ACCOUNT OPTION (AS REQUESTED) -->
           <div class="auth-create-account-box">
-            <span class="create-acc-text">New to CIVICA or need a citizen account?</span>
+            <span class="create-acc-text" data-i18n="auth_create_prompt">New to CIVICA or need a citizen account?</span>
             <button type="button" class="btn-open-signup-wizard" onclick="openSignupModal()">
-              <i class="fa-solid fa-user-plus"></i> Create New Account
+              <i class="fa-solid fa-user-plus"></i> <span data-i18n="auth_btn_create">Create New Account</span>
             </button>
           </div>
         </form>
@@ -386,7 +451,7 @@
       <div class="auth-form-body" id="auth-form-admin" style="display:none;">
         <form onsubmit="handleAdminFormLogin(event)">
           <div class="auth-field">
-            <label for="admin-city-select">Municipal Corporation</label>
+            <label for="admin-city-select" data-i18n="auth_lbl_corp">Municipal Corporation</label>
             <select id="admin-city-select" class="auth-select">
               <option value="AMC">AMC Ahmedabad (અમદાવાદ મહાનગરપાલિકા)</option>
               <option value="SMC">SMC Surat (સુરત મહાનગરપાલિકા)</option>
@@ -396,26 +461,26 @@
             </select>
           </div>
           <div class="auth-field">
-            <label for="admin-email">Officer Gov Email</label>
+            <label for="admin-email" data-i18n="auth_lbl_officer_email">Officer Gov Email</label>
             <input type="email" id="admin-email" placeholder="officer@amc.gujarat.gov.in" required>
           </div>
           <div class="auth-field">
-            <label for="admin-token">Security PIN / Access Code</label>
+            <label for="admin-token" data-i18n="auth_lbl_pin">Security PIN / Access Code</label>
             <input type="password" id="admin-token" placeholder="2026" required>
           </div>
-          <button type="submit" class="btn-auth-submit">Authenticate Officer Portal &rarr;</button>
-          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('officer')">⚡ Auto-Fill Demo Credentials</button>
+          <button type="submit" class="btn-auth-submit" data-i18n="auth_btn_officer_submit">Authenticate Officer Portal &rarr;</button>
+          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('officer')" data-i18n="btn_autofill_demo">⚡ Auto-Fill Demo Credentials</button>
         </form>
       </div>
 
       <!-- Command Center Login Form (Password Protected) -->
       <div class="auth-form-body" id="auth-form-command" style="display:none;">
-        <div style="background:rgba(99,102,241,0.1); border:1px solid #6366f1; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px; font-size:0.8rem; color:#c7d2fe;">
+        <div style="background:rgba(99,102,241,0.1); border:1px solid #6366f1; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px; font-size:0.8rem; color:#c7d2fe;" data-i18n="auth_command_banner">
           🛡️ <strong>Restricted Security Clearance:</strong> Access to Gujarat Integrated Command & Control Centre (ICCC) requires Tier-1 authorization and passcode.
         </div>
         <form onsubmit="handleCommandFormLogin(event)">
           <div class="auth-field">
-            <label for="command-agency-select">Command Agency / Station</label>
+            <label for="command-agency-select" data-i18n="auth_lbl_command_agency">Command Agency / Station</label>
             <select id="command-agency-select" class="auth-select">
               <option value="ICCC-GNC">Gujarat State ICCC War Room (Gandhinagar)</option>
               <option value="AMC-CTRL">AMC Central Command Room (Ahmedabad)</option>
@@ -425,17 +490,17 @@
             </select>
           </div>
           <div class="auth-field">
-            <label for="command-email">Commander Official Gov Email</label>
+            <label for="command-email" data-i18n="auth_lbl_command_email">Commander Official Gov Email</label>
             <input type="email" id="command-email" placeholder="commander.rathore@iccc.gujarat.gov.in" required>
           </div>
           <div class="auth-field">
-            <label for="command-token">Command Security Passcode / Key</label>
+            <label for="command-token" data-i18n="auth_lbl_command_pass">Command Security Passcode / Key</label>
             <input type="password" id="command-token" placeholder="••••••••" required>
           </div>
-          <button type="submit" class="btn-auth-submit" style="background:linear-gradient(135deg, #4f46e5, #0284c7);">
+          <button type="submit" class="btn-auth-submit" style="background:linear-gradient(135deg, #4f46e5, #0284c7);" data-i18n="auth_btn_command_submit">
             Authenticate Tactical Command Center &rarr;
           </button>
-          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('command')">⚡ Auto-Fill Commander Credentials</button>
+          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('command')" data-i18n="btn_autofill_commander">⚡ Auto-Fill Commander Credentials</button>
         </form>
       </div>
     </div>
@@ -723,37 +788,37 @@
             <!-- Tab 1: Register / File Civic Complaint with ₹50 Refundable Escrow -->
             <div id="dt-tab-report" class="desktop-tab-panel active">
               <div class="desktop-header-area">
-                <h1 class="desktop-page-title">Register a Civic Complaint</h1>
-                <p class="desktop-page-subtitle">Direct dispatch to AMC & SMC Ward Control Rooms & Rapid Response Units</p>
+                <h1 class="desktop-page-title" data-i18n="dt_report_title">Register a Civic Complaint</h1>
+                <p class="desktop-page-subtitle" data-i18n="dt_report_sub">Direct dispatch to AMC & SMC Ward Control Rooms & Rapid Response Units</p>
               </div>
 
               <form id="desktop-report-form" onsubmit="handleDesktopSubmitComplaint(event)">
                 <div class="form-section-card">
-                  <label class="section-card-title">1. Select Issue Category</label>
+                  <label class="section-card-title" data-i18n="dt_step1_label">1. Select Issue Category</label>
                   <div class="desktop-category-grid">
                     <div class="dt-cat-card active" onclick="selectDesktopCategory(this, 'streetlight')">
                       <span class="dt-cat-icon">💡</span>
-                      <div class="dt-cat-info"><strong>Streetlight</strong><span>Dark pole, faulty fixture</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_streetlight">Streetlight</strong><span data-i18n="dt_cat_streetlight_sub">Dark pole, faulty fixture</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'pothole')">
                       <span class="dt-cat-icon">🚧</span>
-                      <div class="dt-cat-info"><strong>Road Pothole</strong><span>Damaged asphalt, road crater</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_pothole">Road Pothole</strong><span data-i18n="dt_cat_pothole_sub">Damaged asphalt, road crater</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'garbage')">
                       <span class="dt-cat-icon">🗑️</span>
-                      <div class="dt-cat-info"><strong>Garbage & Waste</strong><span>Uncleared solid waste or bin overflow</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_garbage">Garbage & Waste</strong><span data-i18n="dt_cat_garbage_sub">Uncleared solid waste or bin overflow</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'waterlogging')">
                       <span class="dt-cat-icon">🌊</span>
-                      <div class="dt-cat-info"><strong>Waterlogging</strong><span>Monsoon drain blockage, road flooding</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_waterlogging">Waterlogging</strong><span data-i18n="dt_cat_waterlogging_sub">Monsoon drain blockage, road flooding</span></div>
                     </div>
                     <div class="dt-cat-card" onclick="selectDesktopCategory(this, 'water')">
                       <span class="dt-cat-icon">💧</span>
-                      <div class="dt-cat-info"><strong>Water Supply</strong><span>Contamination, burst pipeline, low pressure</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_water">Water Supply</strong><span data-i18n="dt_cat_water_sub">Contamination, burst pipeline, low pressure</span></div>
                     </div>
                     <div class="dt-cat-card" id="dt-cat-card-others" onclick="selectDesktopCategory(this, 'others')">
                       <span class="dt-cat-icon">📋</span>
-                      <div class="dt-cat-info"><strong>Others</strong><span>Specify custom issue or problem</span></div>
+                      <div class="dt-cat-info"><strong data-i18n="dt_cat_others">Others</strong><span data-i18n="dt_cat_others_sub">Specify custom issue or problem</span></div>
                     </div>
                   </div>
 
@@ -761,30 +826,30 @@
                   <div id="dt-custom-issue-section" style="display:none; margin-top:16px; padding:18px 20px; background:#f0f9ff; border:1.5px solid #0284c7; border-radius:var(--radius-md); box-shadow:0 4px 14px rgba(2,132,199,0.08); animation:fadeIn 0.3s ease;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
                       <label for="dt-custom-issue-input" style="font-size:0.92rem; font-weight:700; color:var(--civica-navy); display:flex; align-items:center; gap:8px;">
-                        <span>✍️</span> <span>Type Your Specific Problem / Grievance:</span>
+                        <span>✍️</span> <span data-i18n="dt_custom_prompt">Type Your Specific Problem / Grievance:</span>
                       </label>
-                      <span style="font-size:0.75rem; color:#0284c7; background:#e0f2fe; padding:3px 10px; border-radius:12px; font-weight:600;">Custom Category</span>
+                      <span style="font-size:0.75rem; color:#0284c7; background:#e0f2fe; padding:3px 10px; border-radius:12px; font-weight:600;" data-i18n="dt_custom_badge">Custom Category</span>
                     </div>
                     <input type="text" id="dt-custom-issue-input" class="dt-web-input" placeholder="e.g. Broken pavement slab, stray animal menace, tree branch hazard, park maintenance..." style="background:#ffffff; border:1.5px solid #7dd3fc; font-size:0.9rem; padding:12px 14px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.75rem; color:#0369a1;">
-                      <span>Please type the details of your problem so AMC dispatchers can classify it.</span>
-                      <span style="color:#059669; font-weight:600;">✓ Routed to Ward Rapid Triage Desk</span>
+                      <span data-i18n="dt_custom_help">Please type the details of your problem so AMC dispatchers can classify it.</span>
+                      <span style="color:#059669; font-weight:600;" data-i18n="dt_custom_routed">✓ Routed to Ward Rapid Triage Desk</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-two-col-grid">
                   <div class="form-section-card">
-                    <label class="section-card-title">2. Exact Incident Location</label>
+                    <label class="section-card-title" data-i18n="dt_step2_label">2. Exact Incident Location</label>
                     <input type="text" id="dt-location-input" class="dt-web-input" placeholder="e.g. CG Road, opposite Municipal Market" value="CG Road, near Law Garden" required>
-                    <div style="font-size:0.75rem; color:#0284c7; margin-top:8px;">📍 GPS Tagged: Ward 7 Navrangpura (Coordinates confirmed)</div>
+                    <div style="font-size:0.75rem; color:#0284c7; margin-top:8px;" data-i18n="dt_location_confirmed">📍 GPS Tagged: Ward 7 Navrangpura (Coordinates confirmed)</div>
                   </div>
 
                   <div class="form-section-card">
-                    <label class="section-card-title">3. Description & Evidence</label>
+                    <label class="section-card-title" data-i18n="dt_step3_label">3. Description & Evidence</label>
                     <textarea id="dt-description-input" class="dt-web-textarea" rows="3" placeholder="Describe the hazard, landmark, and current condition..." required></textarea>
                     <div style="margin-top:8px;">
-                      <button type="button" class="btn-hero-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="document.getElementById('dt-file-input').click()">📷 Attach Photo</button>
+                      <button type="button" class="btn-hero-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="document.getElementById('dt-file-input').click()"><span data-i18n="btn_attach_photo">📷 Attach Photo</span></button>
                       <input type="file" id="dt-file-input" style="display:none;" onchange="handleDesktopFileSelect(this)">
                       <span id="dt-photo-preview-tag" style="display:none; font-size:0.75rem; color:#166534; font-weight:700; margin-left:8px;"></span>
                     </div>
@@ -795,12 +860,12 @@
                 <div class="form-section-card escrow-highlight-card">
                   <div class="escrow-header-row">
                     <div>
-                      <span class="escrow-badge-pill">🛡️ Anti-Spam Security Escrow</span>
-                      <h3 style="margin:6px 0 2px 0; color:var(--civica-navy); font-size:1.1rem;">₹50 Refundable Security Deposit</h3>
-                      <p style="margin:0; font-size:0.82rem; color:#475569;">To eliminate prank reports, ₹50 is temporarily held in municipal escrow until AMC inspection verifies real civic issue.</p>
+                      <span class="escrow-badge-pill" data-i18n="escrow_pill_label">🛡️ Anti-Spam Security Escrow</span>
+                      <h3 style="margin:6px 0 2px 0; color:var(--civica-navy); font-size:1.1rem;" data-i18n="dt_escrow_title">₹50 Refundable Security Deposit</h3>
+                      <p style="margin:0; font-size:0.82rem; color:#475569;" data-i18n="dt_escrow_desc">To eliminate prank reports, ₹50 is temporarily held in municipal escrow until AMC inspection verifies real civic issue.</p>
                     </div>
                     <div style="text-align:right;">
-                      <span style="font-size:0.75rem; color:#64748b;">Your Civic Wallet:</span>
+                      <span style="font-size:0.75rem; color:#64748b;" data-i18n="lbl_wallet_bal">Your Civic Wallet:</span>
                       <strong id="dt-report-wallet-val" style="display:block; font-size:1.2rem; color:var(--civica-navy);">₹150.00</strong>
                     </div>
                   </div>
@@ -811,7 +876,7 @@
                       <span class="method-custom-radio"></span>
                       <span class="method-ico">👛</span>
                       <div>
-                        <strong>Civic Wallet (Instant)</strong>
+                        <strong data-i18n="dt_wallet_option">Civic Wallet (Instant)</strong>
                         <span id="dt-wallet-pay-status" style="color:#10b981; font-size:0.75rem; font-weight:700;">Balance Sufficient (₹150.00)</span>
                       </div>
                     </label>
@@ -820,7 +885,7 @@
                       <span class="method-custom-radio"></span>
                       <span class="method-ico">💳</span>
                       <div>
-                        <strong>Pay Online (UPI / Paytm / FamPay / Cards)</strong>
+                        <strong data-i18n="dt_online_option">Pay Online (UPI / Paytm / FamPay / Cards)</strong>
                         <span style="color:#64748b; font-size:0.75rem;">Instant gateway checkout</span>
                       </div>
                     </label>
@@ -838,7 +903,7 @@
 
                 <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
                   <button type="submit" id="btn-dt-submit-report" class="btn-hero-primary" style="font-size:0.95rem; padding:12px 28px;">
-                    Pay ₹50 Escrow & Submit Complaint →
+                    <span data-i18n="dt_btn_submit">Pay ₹50 Escrow & Submit Complaint &rarr;</span>
                   </button>
                 </div>
               </form>
@@ -946,40 +1011,40 @@
               <div class="desktop-header-area">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <div>
-                    <h1 class="desktop-page-title">Civic Wallet & Anti-Spam Escrow</h1>
-                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Transparent municipal deposit holding and instant citizen refund account</p>
+                    <h1 class="desktop-page-title" data-i18n="dt_wallet_header_title">Civic Wallet & Anti-Spam Escrow</h1>
+                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;" data-i18n="dt_wallet_header_sub">Transparent municipal deposit holding and instant citizen refund account</p>
                   </div>
-                  <button class="btn-hero-primary" onclick="openWalletTopupModal()">+ Add Funds / Top Up</button>
+                  <button class="btn-hero-primary" onclick="openWalletTopupModal()" data-i18n="dt_btn_add_funds">+ Add Funds / Top Up</button>
                 </div>
               </div>
 
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-bottom:20px;">
                 <div class="civic-wallet-card">
                   <div class="wallet-card-header">
-                    <div class="wallet-title-area"><span class="wallet-shield-ico">🛡️</span><span class="wallet-label">Anti-Spam Escrow Balance</span></div>
-                    <span class="wallet-badge-verified">Verified Citizen</span>
+                    <div class="wallet-title-area"><span class="wallet-shield-ico">🛡️</span><span class="wallet-label" data-i18n="wallet_card_label">Anti-Spam Escrow Balance</span></div>
+                    <span class="wallet-badge-verified" data-i18n="wallet_badge_verified">Verified Citizen</span>
                   </div>
                   <div class="wallet-balance-row">
                     <span class="wallet-currency">₹</span>
                     <span class="wallet-amount" id="dt-wallet-balance-val">150.00</span>
                   </div>
                   <div class="wallet-actions-row">
-                    <button class="btn-wallet-add" onclick="openWalletTopupModal()">+ Add Money</button>
-                    <span class="btn-wallet-subtext">₹50 held per complaint &bull; Auto-refunded upon inspection</span>
+                    <button class="btn-wallet-add" onclick="openWalletTopupModal()" data-i18n="btn_wallet_add">+ Add Money</button>
+                    <span class="btn-wallet-subtext" data-i18n="btn_wallet_subtext">₹50 held per complaint &bull; Auto-refunded upon inspection</span>
                   </div>
                 </div>
 
                 <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); padding:18px;">
-                  <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">💡 100% Refundable Civic Security Guarantee</strong>
-                  <p style="font-size:0.85rem; color:#334155; line-height:1.5; margin:0 0 8px 0;">
+                  <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;" data-i18n="wallet_guarantee_title">💡 100% Refundable Civic Security Guarantee</strong>
+                  <p style="font-size:0.85rem; color:#334155; line-height:1.5; margin:0 0 8px 0;" data-i18n="wallet_guarantee_desc">
                     To prevent fake calls, complaints require a nominal ₹50 security deposit held in municipal escrow. When AMC inspects real issues, ₹50 is instantly refunded to your wallet.
                   </p>
-                  <div style="font-size:0.75rem; color:#15803d; font-weight:700;">Over 99.4% of genuine reports refunded within 24 hours.</div>
+                  <div style="font-size:0.75rem; color:#15803d; font-weight:700;" data-i18n="wallet_guarantee_stat">Over 99.4% of genuine reports refunded within 24 hours.</div>
                 </div>
               </div>
 
               <div class="active-ticket-detail-card" style="margin-top:0;">
-                <h3 class="dt-section-heading">Transaction & Escrow Ledger</h3>
+                <h3 class="dt-section-heading" data-i18n="wallet_ledger_title">Transaction & Escrow Ledger</h3>
                 <div class="dt-table-responsive">
                   <table class="dt-web-table">
                     <thead><tr><th>Date</th><th>Tx ID</th><th>Reference Issue</th><th>Type</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead>
@@ -994,14 +1059,14 @@
               <div class="desktop-header-area">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                   <div>
-                    <h1 class="desktop-page-title">Community Incident Feed & Voting</h1>
-                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Crowdsourced hazard verification and citizen confirmation stream</p>
+                    <h1 class="desktop-page-title" data-i18n="feed_page_title">Community Incident Feed & Voting</h1>
+                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;" data-i18n="feed_page_sub">Crowdsourced hazard verification and citizen confirmation stream</p>
                   </div>
                   <div style="display:flex; gap:6px;">
-                    <button class="inbox-filter-btn feed-filter-btn active" data-filter="all" onclick="filterCommunityFeed('all')">All Reports</button>
-                    <button class="inbox-filter-btn feed-filter-btn" data-filter="trending" onclick="filterCommunityFeed('trending')">🔥 Trending</button>
-                    <button class="inbox-filter-btn feed-filter-btn" data-filter="critical" onclick="filterCommunityFeed('critical')">🚨 Critical</button>
-                    <button class="inbox-filter-btn feed-filter-btn" data-filter="resolved" onclick="filterCommunityFeed('resolved')">✓ Resolved</button>
+                    <button class="inbox-filter-btn feed-filter-btn active" data-filter="all" onclick="filterCommunityFeed('all')" data-i18n="feed_filter_all">All Reports</button>
+                    <button class="inbox-filter-btn feed-filter-btn" data-filter="trending" onclick="filterCommunityFeed('trending')" data-i18n="feed_filter_trending">🔥 Trending</button>
+                    <button class="inbox-filter-btn feed-filter-btn" data-filter="critical" onclick="filterCommunityFeed('critical')" data-i18n="feed_filter_critical">🚨 Critical</button>
+                    <button class="inbox-filter-btn feed-filter-btn" data-filter="resolved" onclick="filterCommunityFeed('resolved')" data-i18n="feed_filter_resolved">✓ Resolved</button>
                   </div>
                 </div>
               </div>
@@ -1009,8 +1074,8 @@
               <div class="community-feed-grid">
                 <div id="community-incidents-list" style="display:flex; flex-direction:column; gap:12px;"></div>
                 <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:var(--radius-md); padding:18px;">
-                  <strong style="color:var(--civica-navy); font-size:0.95rem; display:block; margin-bottom:6px;">🤝 Crowdsource Verification Reward</strong>
-                  <p style="font-size:0.82rem; color:#475569; line-height:1.5;">
+                  <strong style="color:var(--civica-navy); font-size:0.95rem; display:block; margin-bottom:6px;" data-i18n="crowd_reward_title">🤝 Crowdsource Verification Reward</strong>
+                  <p style="font-size:0.82rem; color:#475569; line-height:1.5;" data-i18n="crowd_reward_desc">
                     Tap <strong>"Confirm"</strong> on any incident you observe in your neighborhood. Confirmations assist AMC dispatchers in prioritizing field units and earn you <strong>+2 Civic Karma</strong>.
                   </p>
                 </div>
@@ -1022,10 +1087,10 @@
               <div class="desktop-header-area">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <div>
-                    <h1 class="desktop-page-title">Citizen Charter, SLAs & 24x7 Helplines</h1>
-                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;">Mandatory resolution timelines under Gujarat GPMC Act</p>
+                    <h1 class="desktop-page-title" data-i18n="rules_tab_title">Citizen Charter, SLAs & 24x7 Helplines</h1>
+                    <p style="color:#64748b; font-size:0.88rem; margin-top:4px;" data-i18n="rules_tab_sub">Mandatory resolution timelines under Gujarat GPMC Act</p>
                   </div>
-                  <a href="rules-and-contact.html" target="_blank" class="btn-hero-primary" style="font-size:0.82rem; padding:8px 16px;">
+                  <a href="rules-and-contact.html" target="_blank" class="btn-hero-primary" style="font-size:0.82rem; padding:8px 16px;" data-i18n="rules_btn_open_page">
                     Open Standalone Page ↗
                   </a>
                 </div>
@@ -1036,28 +1101,28 @@
                 <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
                   <span style="font-size:1.8rem;">📞</span>
                   <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">155303</div>
-                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">AMC Central Control Room (24x7)</div>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;" data-i18n="hotline_amc_title">AMC Central Control Room (24x7)</div>
                   <a href="tel:155303" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 155303</a>
                 </div>
 
                 <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
                   <span style="font-size:1.8rem;">🌧️</span>
                   <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">1913</div>
-                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">Monsoon Flood & Waterlogging</div>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;" data-i18n="hotline_monsoon_title">Monsoon Flood & Waterlogging</div>
                   <a href="tel:1913" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 1913</a>
                 </div>
 
                 <div style="background:#ffffff; border:1.5px solid var(--civica-gold); border-radius:var(--radius-md); padding:18px; text-align:center;">
                   <span style="font-size:1.8rem;">🚨</span>
                   <div style="font-family:var(--font-serif); font-size:1.5rem; font-weight:800; color:var(--civica-navy);">112</div>
-                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">All-India Emergency & Police</div>
+                  <div style="font-size:0.82rem; font-weight:700; margin-top:2px;" data-i18n="hotline_allindia_title">All-India Emergency & Police</div>
                   <a href="tel:112" class="btn-hero-primary" style="margin-top:10px; width:100%; justify-content:center; padding:7px; font-size:0.8rem;">Call 112</a>
                 </div>
               </div>
 
               <!-- Embedded SLA Table -->
               <div class="active-ticket-detail-card" style="margin-top:0; margin-bottom:20px;">
-                <h3 class="dt-section-heading">Mandatory SLA Timelines (Gujarat Municipal Corporations Act)</h3>
+                <h3 class="dt-section-heading" data-i18n="sla_table_title">Mandatory SLA Timelines (Gujarat Municipal Corporations Act)</h3>
                 <div class="dt-table-responsive">
                   <table class="dt-web-table">
                     <thead><tr><th>Civic Category</th><th>SLA Guarantee</th><th>Assigned Unit</th><th>Escalation Level</th></tr></thead>
@@ -1074,12 +1139,12 @@
 
               <!-- Escrow Guarantee Card -->
               <div style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:var(--radius-md); padding:20px;">
-                <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;">🛡️ ₹50 Refundable Security Escrow Transparency</strong>
-                <p style="font-size:0.88rem; color:#334155; line-height:1.6; margin:0 0 10px 0;">
+                <strong style="color:#166534; font-size:1rem; display:block; margin-bottom:6px;" data-i18n="escrow_transparency_title">🛡️ ₹50 Refundable Security Escrow Transparency</strong>
+                <p style="font-size:0.88rem; color:#334155; line-height:1.6; margin:0 0 10px 0;" data-i18n="escrow_transparency_desc">
                   A refundable deposit of ₹50 is temporarily held in municipal escrow when filing a complaint to prevent bot spam and false reports.
                   The entire ₹50 deposit is instantly credited back to your Civica Wallet as soon as the assigned municipal engineer verifies the photo and geo-location on site.
                 </p>
-                <div style="font-size:0.8rem; color:#15803d; font-weight:700;">Over 99.4% of all citizen escrow deposits are refunded within 24 hours. Your civic participation is safe and protected.</div>
+                <div style="font-size:0.8rem; color:#15803d; font-weight:700;" data-i18n="escrow_transparency_stat">Over 99.4% of all citizen escrow deposits are refunded within 24 hours. Your civic participation is safe and protected.</div>
               </div>
             </div>
 
@@ -1095,7 +1160,7 @@
         <!-- Sleek SaaS Breadcrumb & Status Sub-Banner -->
         <div class="portal-sub-banner officer-sub-banner">
           <div class="sub-banner-left">
-            <span class="portal-badge-chip officer">AMC OFFICER CONSOLE</span>
+            <span class="portal-badge-chip officer" data-i18n="of_portal_badge">AMC OFFICER CONSOLE</span>
             <span class="breadcrumb-item">Ward 7 West Zone</span>
             <span class="breadcrumb-sep">/</span>
             <span class="breadcrumb-item active" id="officer-breadcrumb-tab">01 Dashboard</span>
@@ -1118,13 +1183,11 @@
                 <div class="profile-ward">AMC Ward 7 · West Zone</div>
               </div>
               <nav class="sidebar-nav">
-                <button class="sidebar-nav-item active" id="of-nav-dashboard" onclick="switchOfficerTab('dashboard')">01 Dashboard</button>
-                <button class="sidebar-nav-item" id="of-nav-inbox" onclick="switchOfficerTab('inbox')">02 Inbox <span class="inbox-badge-count">6</span></button>
-                <button class="sidebar-nav-item" id="of-nav-action" onclick="switchOfficerTab('action')">03 Take action</button>
-                <button class="sidebar-nav-item" id="of-nav-notify" onclick="switchOfficerTab('notify')">04 Notify & Ratings ⭐</button>
-                <button class="sidebar-nav-item" id="of-nav-preview" onclick="switchOfficerTab('preview')">05 Citizen preview</button>
-                <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')">06 Resolution Reports</button>
-                <button class="sidebar-nav-item" id="of-nav-rules" onclick="switchOfficerTab('rules')">07 Officer rules</button>
+                <button class="sidebar-nav-item active" id="of-nav-dashboard" onclick="switchOfficerTab('dashboard')" data-i18n="of_nav_dashboard">01 Dashboard</button>
+                <button class="sidebar-nav-item" id="of-nav-inbox" onclick="switchOfficerTab('inbox')"><span data-i18n="of_nav_inbox">02 Inbox</span> <span class="inbox-badge-count">6</span></button>
+                <button class="sidebar-nav-item" id="of-nav-action" onclick="switchOfficerTab('action')" data-i18n="of_nav_action">03 Take action</button>
+                <button class="sidebar-nav-item" id="of-nav-notify" onclick="switchOfficerTab('notify')" data-i18n="of_nav_notify">04 Notify & Ratings ⭐</button>
+                <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')" data-i18n="of_nav_reports">05 Resolution Reports</button>
               </nav>
             </div>
             <div class="sidebar-footer-box">
@@ -1141,25 +1204,30 @@
               <div class="officer-header-row">
                 <div>
                   <div class="sub-screen-indicator">01 OFFICER DASHBOARD</div>
-                  <h1 class="officer-headline">Today in Ward 7, AMC Ahmedabad</h1>
+                  <h1 class="officer-headline" data-i18n="of_headline_dashboard">Today in Ward 7, AMC Ahmedabad</h1>
                 </div>
                 <div style="display:flex; gap:8px;">
                   <button class="btn-shift-refresh" onclick="showCivicaToast('Feed synchronized with AMC central database.')">🔄 Live Feed</button>
                 </div>
               </div>
               <div class="officer-kpis-grid">
-                <div class="officer-kpi-card" onclick="switchOfficerTab('inbox')"><div class="kpi-num" id="of-kpi-open">28</div><div class="kpi-label">Open tickets</div></div>
-                <div class="officer-kpi-card highlight-due" onclick="filterOfficerInbox('sla_risk')"><div class="kpi-num" id="of-kpi-due">9</div><div class="kpi-label">Due today</div></div>
-                <div class="officer-kpi-card" onclick="switchOfficerTab('notify')"><div class="kpi-num" id="of-kpi-reply">6</div><div class="kpi-label">Need citizen reply</div></div>
-                <div class="officer-kpi-card highlight-resolved" onclick="switchOfficerTab('reports')"><div class="kpi-num" id="of-kpi-resolved">14</div><div class="kpi-label">Resolved this week</div></div>
+                <div class="officer-kpi-card" onclick="switchOfficerTab('inbox')"><div class="kpi-num" id="of-kpi-open">28</div><div class="kpi-label" data-i18n="of_kpi_open">Open tickets</div></div>
+                <div class="officer-kpi-card highlight-due" onclick="filterOfficerInbox('sla_risk')"><div class="kpi-num" id="of-kpi-due">9</div><div class="kpi-label" data-i18n="of_kpi_due">Due today</div></div>
+                <div class="officer-kpi-card" onclick="switchOfficerTab('notify')"><div class="kpi-num" id="of-kpi-reply">6</div><div class="kpi-label" data-i18n="of_kpi_reply">Need citizen reply</div></div>
+                <div class="officer-kpi-card highlight-resolved" onclick="switchOfficerTab('reports')"><div class="kpi-num" id="of-kpi-resolved">14</div><div class="kpi-label" data-i18n="of_kpi_resolved">Resolved this week</div></div>
               </div>
               <div class="dashboard-two-col-layout">
                 <div class="priority-queue-card">
-                  <div class="card-section-title">Priority Queue</div>
+                  <div class="card-section-title" data-i18n="of_priority_queue">Priority Queue</div>
                   <div class="priority-list-stack" id="of-priority-queue-list"></div>
                 </div>
                 <div class="shift-actions-card">
-                  <div class="card-section-title">Shift Actions Checklist</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:8px;">
+                    <div class="card-section-title" style="margin-bottom:0;" data-i18n="of_shift_actions">Shift Actions Checklist</div>
+                    <button type="button" class="btn-add-shift-action" onclick="promptAddNewShiftAction()" title="Add new shift action item" data-i18n="of_add_action">
+                      <span>➕</span> Add Action
+                    </button>
+                  </div>
                   <div class="shift-actions-checklist" id="of-shift-actions-list"></div>
                 </div>
               </div>
@@ -1168,7 +1236,7 @@
             <!-- 02 Inbox -->
             <div id="officer-view-inbox" class="officer-sub-view" style="display:none;">
               <div class="officer-header-row">
-                <div><div class="sub-screen-indicator">02 COMPLAINT INBOX</div><h1 class="officer-headline">Review What Citizens Filed</h1></div>
+                <div><div class="sub-screen-indicator">02 COMPLAINT INBOX</div><h1 class="officer-headline" data-i18n="of_inbox_headline">Review What Citizens Filed</h1></div>
               </div>
               <div class="inbox-filter-bar">
                 <button class="inbox-filter-btn active" data-filter="all" onclick="filterOfficerInbox('all')">All</button>
@@ -1188,13 +1256,13 @@
             <!-- 03 Take Action with Escrow Verification & Refund -->
             <div id="officer-view-action" class="officer-sub-view" style="display:none;">
               <div class="officer-header-row">
-                <div><div class="sub-screen-indicator">03 TAKE ACTION</div><h1 class="officer-headline">Open Complaint & Decide Next Step</h1></div>
+                <div><div class="sub-screen-indicator">03 TAKE ACTION</div><h1 class="officer-headline" data-i18n="of_action_headline">Open Complaint & Decide Next Step</h1></div>
               </div>
               <div class="take-action-two-col">
                 <div class="action-details-card">
                   <div class="action-ticket-header">
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
-                      <span style="font-size:0.75rem; font-weight:800; color:var(--civica-gold-dark); text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap;">📋 Select Problem / Ticket:</span>
+                      <span style="font-size:0.75rem; font-weight:800; color:var(--civica-gold-dark); text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap;" data-i18n="of_select_problem_lbl">📋 Select Problem / Ticket:</span>
                       <select id="act-ticket-dropdown" class="officer-ticket-select-menu" onchange="handleOfficerProblemDropdownChange(this.value)">
                         <option value="GJ-AMC-2026-18492" selected>GJ-AMC-2026-18492 — Streetlight out (Ketan Shah)</option>
                         <option value="GJ-AMC-2026-18501">GJ-AMC-2026-18501 — Severe Monsoon Waterlogging (Priya Patel)</option>
@@ -1209,7 +1277,7 @@
                   </div>
                   <div class="action-table-rows">
                     <div class="action-row-item">
-                      <div class="action-row-label">Assign crew</div>
+                      <div class="action-row-label" data-i18n="of_assign_crew_lbl">Assign crew</div>
                       <div class="action-row-value">
                         <select id="act-crew-select" class="officer-field-select" onchange="handleCrewAssignment(this.value)">
                           <option value="Team 01 · Firebase Rapid Response — Emergency HAZMAT & Fire Rescue Unit">🔥 Team 01 · Firebase Rapid Response — Emergency HAZMAT & Fire Rescue Unit</option>
@@ -1235,23 +1303,23 @@
                         </select>
                       </div>
                     </div>
-                    <div class="action-row-item"><div class="action-row-label">Status Pipeline</div><div class="action-row-value"><div class="status-pipeline-text">New &rarr; Assigned &rarr; In progress &rarr; Resolved</div></div></div>
+                    <div class="action-row-item"><div class="action-row-label" data-i18n="of_status_pipeline_lbl">Status Pipeline</div><div class="action-row-value"><div class="status-pipeline-text">New &rarr; Assigned &rarr; In progress &rarr; Resolved</div></div></div>
                   </div>
 
                   <!-- Anti-Spam Escrow Inspection & Refund Action Panel -->
                   <div class="officer-escrow-box">
                     <div class="escrow-box-header">
-                      <strong>🛡️ Citizen Anti-Spam Security Escrow</strong>
+                      <strong data-i18n="of_escrow_title">🛡️ Citizen Anti-Spam Security Escrow</strong>
                       <span class="deposit-status-badge status-held" id="officer-escrow-badge">₹50 Held in Escrow</span>
                     </div>
-                    <p style="font-size:0.78rem; color:#475569; margin:0 0 8px 0;">
+                    <p style="font-size:0.78rem; color:#475569; margin:0 0 8px 0;" data-i18n="of_escrow_desc">
                       Citizen deposited ₹50 refundable security escrow. If real hazard, click to verify and immediately refund ₹50 to their wallet.
                     </p>
                     <div class="escrow-box-actions" id="officer-escrow-actions">
-                      <button type="button" class="btn-officer-refund" onclick="officerVerifyAndRefundTicket()">
+                      <button type="button" class="btn-officer-refund" onclick="officerVerifyAndRefundTicket()" data-i18n="of_btn_verify_refund">
                         ✅ Verify Real Issue & Refund ₹50
                       </button>
-                      <button type="button" class="btn-officer-forfeit" onclick="officerForfeitDeposit()">
+                      <button type="button" class="btn-officer-forfeit" onclick="officerForfeitDeposit()" data-i18n="of_btn_flag_fake">
                         ❌ Flag Fake / Prank & Forfeit
                       </button>
                     </div>
@@ -1259,12 +1327,12 @@
                 </div>
 
                 <div class="quick-decide-card">
-                  <div class="card-section-title">Quick Decide</div>
+                  <div class="card-section-title" data-i18n="of_quick_decide">Quick Decide</div>
                   <div class="quick-decide-buttons-stack">
-                    <button class="btn-qd-navy" onclick="officerQuickDecide('assign')">ASSIGN CREW</button>
-                    <button class="btn-qd-blue" onclick="officerQuickDecide('in_progress')">IN PROGRESS</button>
-                    <button class="btn-qd-gold" onclick="officerQuickDecide('need_info')">NEED INFO</button>
-                    <button class="btn-qd-green" onclick="officerQuickDecide('resolved')">RESOLVE + REFUND</button>
+                    <button class="btn-qd-navy" onclick="officerQuickDecide('assign')" data-i18n="btn_qd_assign">ASSIGN CREW</button>
+                    <button class="btn-qd-blue" onclick="officerQuickDecide('in_progress')" data-i18n="btn_qd_progress">IN PROGRESS</button>
+                    <button class="btn-qd-gold" onclick="officerQuickDecide('need_info')" data-i18n="btn_qd_needinfo">NEED INFO</button>
+                    <button class="btn-qd-green" onclick="officerQuickDecide('resolved')" data-i18n="btn_qd_resolve">RESOLVE + REFUND</button>
                   </div>
                 </div>
               </div>
@@ -1491,20 +1559,11 @@
               </div>
             </div>
 
-            <!-- 05 Preview -->
-            <div id="officer-view-preview" class="officer-sub-view" style="display:none;">
-              <div class="officer-header-row"><div><div class="sub-screen-indicator">05 PREVIEW</div><h1 class="officer-headline">Citizen Tracking Screen Mirror</h1></div></div>
-              <div class="citizen-received-preview-card">
-                <div class="preview-card-header"><span style="font-size:0.8rem; font-weight:700;">Resident Mobile View</span><span class="ticket-status-pill status-inprogress">IN PROGRESS</span></div>
-                <div class="preview-note-body"><p id="live-received-note-text">AMC Ward 7 inspected the pole near Law Garden. Replacement fixture arrives 19 Sep. — R. Patel</p></div>
-              </div>
-            </div>
-
-            <!-- 06 Municipal Resolution & SLA Audit Reports Generator -->
+            <!-- 05 Municipal Resolution & SLA Audit Reports Generator -->
             <div id="officer-view-reports" class="officer-sub-view" style="display:none;">
               <div class="officer-header-row">
                 <div>
-                  <div class="sub-screen-indicator">06 EXECUTIVE RESOLUTION & AUDIT REPORTS</div>
+                  <div class="sub-screen-indicator">05 EXECUTIVE RESOLUTION & AUDIT REPORTS</div>
                   <h1 class="officer-headline">Civic Grievance Resolution & SLA Audit Console</h1>
                   <p class="officer-subheadline" style="color: #64748b; font-size: 0.9rem; margin-top: 4px;">
                     Generate date-to-date performance reports, track officer resolution speed, monitor citizen complaints, and export official municipal audits.
@@ -1724,16 +1783,6 @@
               </div>
             </div>
 
-            <!-- 07 Officer Rules -->
-            <div id="officer-view-rules" class="officer-sub-view" style="display:none;">
-              <div class="officer-header-row"><div><div class="sub-screen-indicator">07 OFFICER RULES</div><h1 class="officer-headline">Municipal Action Standards</h1></div></div>
-              <div class="officer-rules-six-grid">
-                <div class="rule-box-item"><div class="rule-idx">01</div><h3 style="font-size:1rem; font-weight:700;">Read First</h3><p style="font-size:0.82rem; color:#475569;">Open photo and GPS coordinates before changing ticket status.</p></div>
-                <div class="rule-box-item"><div class="rule-idx">02</div><h3 style="font-size:1rem; font-weight:700;">Own Ticket</h3><p style="font-size:0.82rem; color:#475569;">Assign a named crew. No unowned open tickets.</p></div>
-                <div class="rule-box-item"><div class="rule-idx">03</div><h3 style="font-size:1rem; font-weight:700;">Refund Fairly</h3><p style="font-size:0.82rem; color:#475569;">Release ₹50 refund to citizen wallet immediately upon verifying genuine issue.</p></div>
-              </div>
-            </div>
-
           </main>
         </div>
       </div>
@@ -1829,10 +1878,10 @@
         <div class="tactical-map-card">
           <div class="map-card-header">
             <div>
-              <h3 style="font-family:var(--font-heading); font-size:1.25rem; margin:0 0 4px 0; color:#ffffff;">
+              <h3 style="font-family:var(--font-heading); font-size:1.25rem; margin:0 0 4px 0; color:#ffffff;" data-i18n="cmd_radar_title">
                 Live Geospatial Problem Radar & Mobile Fleets
               </h3>
-              <p style="font-size:0.8rem; color:#94a3b8; margin:0;">
+              <p style="font-size:0.8rem; color:#94a3b8; margin:0;" data-i18n="cmd_radar_sub">
                 Interactive GPS coordinates of active potholes, flooded underpasses, dark streetlights, and dispatched municipal squads.
               </p>
             </div>
@@ -1867,10 +1916,10 @@
         <!-- Kanban 4-Lane Triage Board -->
         <div style="margin-top:36px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-            <h3 style="font-family:var(--font-heading); font-size:1.3rem; margin:0; color:#ffffff;">
+            <h3 style="font-family:var(--font-heading); font-size:1.3rem; margin:0; color:#ffffff;" data-i18n="cmd_kanban_title">
               Tactical Triage & Dispatch Kanban
             </h3>
-            <span style="font-size:0.8rem; color:#94a3b8;">
+            <span style="font-size:0.8rem; color:#94a3b8;" data-i18n="cmd_kanban_sub">
               Live tracking of multi-agency field dispatches
             </span>
           </div>
@@ -1878,7 +1927,7 @@
           <div class="kanban-grid-4col" id="cmd-kanban-board">
             <div class="kanban-lane">
               <div class="kanban-lane-header">
-                <span class="lane-title-text"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> 01 Emergency Triage</span>
+                <span class="lane-title-text" data-i18n="cmd_lane_triage"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> 01 Emergency Triage</span>
                 <span class="lane-card-badge" id="cmd-badge-triage">0</span>
               </div>
               <div class="kanban-cards-stack" id="cmd-stack-triage"></div>
@@ -1886,7 +1935,7 @@
 
             <div class="kanban-lane">
               <div class="kanban-lane-header">
-                <span class="lane-title-text"><i class="fa-solid fa-truck-fast" style="color:#38bdf8;"></i> 02 Dispatched & Transit</span>
+                <span class="lane-title-text" data-i18n="cmd_lane_dispatched"><i class="fa-solid fa-truck-fast" style="color:#38bdf8;"></i> 02 Dispatched & Transit</span>
                 <span class="lane-card-badge" id="cmd-badge-dispatched">0</span>
               </div>
               <div class="kanban-cards-stack" id="cmd-stack-dispatched"></div>
@@ -1894,7 +1943,7 @@
 
             <div class="kanban-lane">
               <div class="kanban-lane-header">
-                <span class="lane-title-text"><i class="fa-solid fa-wrench" style="color:#f59e0b;"></i> 03 On-Site Remediation</span>
+                <span class="lane-title-text" data-i18n="cmd_lane_onsite"><i class="fa-solid fa-wrench" style="color:#f59e0b;"></i> 03 On-Site Remediation</span>
                 <span class="lane-card-badge" id="cmd-badge-on_site">0</span>
               </div>
               <div class="kanban-cards-stack" id="cmd-stack-on_site"></div>
@@ -1902,7 +1951,7 @@
 
             <div class="kanban-lane">
               <div class="kanban-lane-header">
-                <span class="lane-title-text"><i class="fa-solid fa-check-double" style="color:#10b981;"></i> 04 Verified & Resolved</span>
+                <span class="lane-title-text" data-i18n="cmd_lane_resolved"><i class="fa-solid fa-check-double" style="color:#10b981;"></i> 04 Finish & Resolved</span>
                 <span class="lane-card-badge" id="cmd-badge-resolved">0</span>
               </div>
               <div class="kanban-cards-stack" id="cmd-stack-resolved"></div>
@@ -1948,6 +1997,53 @@
     </div>
   </div>
 
+  <!-- Change Complaint Status Modal for Officer Inbox -->
+  <div class="civica-auth-overlay" id="officer-status-modal-overlay" role="dialog" aria-modal="true">
+    <div class="auth-modal-card" style="max-width:500px;">
+      <button type="button" class="auth-close-btn" onclick="closeOfficerStatusModal()">&times;</button>
+      <div class="auth-header">
+        <div class="auth-brand" style="color:#0284c7;">⚙️ AMC OFFICER CONSOLE</div>
+        <h3 id="status-modal-title">Edit Complaint Status</h3>
+        <p id="status-modal-sub">Update workflow stage, record resolution notes & process escrow</p>
+      </div>
+      
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+        <div style="font-size:0.75rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Selected Complaint</div>
+        <div style="font-weight:700; color:var(--civica-navy); font-size:0.95rem; margin-top:2px;" id="status-modal-ticket-id">GJ-AMC-2026-18492</div>
+        <div style="font-size:0.85rem; color:#334155; margin-top:3px;" id="status-modal-ticket-meta">Streetlight out · CG Road · Citizen K. Shah</div>
+      </div>
+
+      <div class="auth-field">
+        <label for="status-modal-select">Change Status To</label>
+        <select id="status-modal-select" class="auth-select" onchange="onStatusModalSelectChange(this.value)">
+          <option value="new">🆕 New (Received)</option>
+          <option value="assigned">👷 Assigned to Field Unit</option>
+          <option value="in_progress">⚡ In Progress (Work Underway)</option>
+          <option value="need_info">❓ Need Info (Citizen Clarification)</option>
+          <option value="resolved">✅ Resolved (Issue Closed & Escrow Refunded)</option>
+        </select>
+      </div>
+
+      <div id="status-modal-escrow-notice" style="display:none; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:10px 12px; margin-bottom:14px; font-size:0.8rem; color:#065f46; font-weight:600;">
+        🛡️ Setting to Resolved marks the hazard genuine and automatically refunds the ₹50 deposit back to the citizen's Civic Wallet.
+      </div>
+
+      <div class="auth-field">
+        <label for="status-modal-remarks">Officer Resolution / Action Remarks</label>
+        <input type="text" id="status-modal-remarks" class="auth-select" placeholder="e.g. Field unit repaired luminaire; fully operational.">
+      </div>
+
+      <input type="hidden" id="status-modal-ticket-key" value="">
+
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <button type="button" class="btn-clear-filter" style="flex:1;" onclick="closeOfficerStatusModal()">Cancel</button>
+        <button type="button" class="btn-hero-primary" style="flex:1.5; justify-content:center;" onclick="saveOfficerStatusFromModal()">
+          ✓ Update Status
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Emergency Broadcast Modal -->
   <div class="civica-auth-overlay" id="broadcast-modal-overlay" role="dialog" aria-modal="true">
     <div class="auth-modal-card" style="max-width:480px;">
@@ -1967,20 +2063,35 @@
     </div>
   </div>
 
-  <!-- Project Gallery Lightbox -->
+  <!-- Project Gallery Lightbox / Full Details Modal -->
   <div class="civica-auth-overlay" id="gallery-lightbox-modal" role="dialog" aria-modal="true" onclick="if(event.target===this)closeGalleryLightbox()">
-    <div class="auth-modal-card" style="max-width:640px; padding:0; overflow:hidden;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Cable_Bridge_Surat_India.jpg" alt="Surat Cable-Stayed Bridge, Gujarat" style="width:100%; height:320px; object-fit:cover; display:block;">
-      <div style="padding:22px;">
-        <h3 style="font-family:var(--font-serif); font-size:1.3rem; color:var(--civica-navy); margin-bottom:6px;">Surat Cable-Stayed Bridge & Gujarat Civic Operations</h3>
-        <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-bottom:16px;">
+    <div class="auth-modal-card" style="max-width:680px; padding:0; overflow:hidden; border-radius:16px;">
+      <div style="position:relative; height:320px; overflow:hidden; background:#0f172a;">
+        <img id="lightbox-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Cable_Bridge_Surat_India.jpg" alt="Gujarat Civic Project" style="width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0%);">
+        <button type="button" class="auth-close-btn" onclick="closeGalleryLightbox()" style="top:14px; right:14px; background:rgba(0,0,0,0.6); color:white; border-radius:50%; width:34px; height:34px; display:flex; align-items:center; justify-content:center;">&times;</button>
+        <span id="lightbox-zone-badge" style="position:absolute; bottom:14px; left:16px; background:rgba(12,26,47,0.88); backdrop-filter:blur(8px); color:var(--civica-gold-light); padding:5px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; border:1px solid rgba(197,160,89,0.4);">📍 Gujarat Municipal Operations</span>
+      </div>
+      <div style="padding:24px 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; gap:12px; flex-wrap:wrap;">
+          <div>
+            <span id="lightbox-cat-badge" style="font-size:0.72rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.06em;">Civic Infrastructure</span>
+            <h3 id="lightbox-title" style="font-family:var(--font-serif); font-size:1.35rem; color:var(--civica-navy); margin:4px 0 0 0; line-height:1.3;">Surat Cable-Stayed Bridge & Gujarat Civic Operations</h3>
+          </div>
+          <span id="lightbox-sla" style="font-size:0.8rem; font-weight:700; color:#166534; background:#dcfce7; padding:5px 12px; border-radius:6px; white-space:nowrap;">⚡ 99.8% On-Time SLA</span>
+        </div>
+        <p id="lightbox-desc" style="font-size:0.9rem; color:#475569; line-height:1.6; margin-bottom:16px;">
           Iconic Pandit Deendayal Upadhyay Bridge over Tapti River in Surat, connected with real-time municipal telemetry, smart mobility sensors, and rapid emergency dispatch units across Gujarat.
         </p>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.8rem; font-weight:700; color:#166534; background:#dcfce7; padding:4px 10px; border-radius:var(--radius-sm);">
-            ⚡ Gujarat Smart City Operations
-          </span>
-          <button class="btn-hero-primary" onclick="closeGalleryLightbox()">Close &rarr;</button>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:20px;">
+          <div style="font-size:0.72rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px;">Civic Metrics & Impact</div>
+          <div id="lightbox-stats" style="font-weight:700; color:var(--civica-navy); font-size:0.85rem; margin-bottom:4px;">320+ Electric Buses • 120km Dedicated Corridors</div>
+          <div id="lightbox-impact" style="font-size:0.8rem; color:#15803d; font-weight:600;">Reduced commuter delays and carbon emissions.</div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn-clear-filter" onclick="closeGalleryLightbox()">Close</button>
+          <button type="button" class="btn-hero-primary" onclick="closeGalleryLightbox(); showCivicaToast('Project inspection telemetry synchronized.');">
+            ✓ Acknowledged &rarr;
+          </button>
         </div>
       </div>
     </div>
