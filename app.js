@@ -288,6 +288,7 @@ window.returnToLandingPage = function() {
 window.openLoginModal = function(initialRole = 'citizen') {
   const overlay = document.getElementById('auth-modal-overlay');
   if (overlay) {
+    overlay.style.display = 'flex';
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -298,6 +299,7 @@ window.closeLoginModal = function() {
   const overlay = document.getElementById('auth-modal-overlay');
   if (overlay) {
     overlay.classList.remove('active');
+    overlay.style.display = 'none';
     document.body.style.overflow = '';
   }
 };
@@ -877,8 +879,6 @@ window.switchDashboardMode = function(mode) {
   const subviews = {
     'citizen-desktop': document.getElementById('subview-citizen-desktop'),
     'officer': document.getElementById('subview-officer'),
-    'command-center': document.getElementById('subview-command-center')
-  };
     'command-center': document.getElementById('subview-command-center')
   };
 
