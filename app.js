@@ -1667,10 +1667,14 @@ window.switchOfficerTab = function(tabKey) {
       'action': '03 Take Action & Escrow',
       'notify': '04 Notify Citizen',
       'preview': '05 Citizen Preview',
-      'reports': '06 Ward Audit',
+      'reports': '06 Municipal Resolution & Audit Reports',
       'rules': '07 Officer Rules'
     };
     officerBreadcrumb.textContent = officerLabels[tabKey] || tabKey;
+  }
+
+  if (tabKey === 'reports') {
+    initResolutionAuditReports();
   }
 };
 
@@ -2339,18 +2343,493 @@ function showCivicaToast(message) {
   }, 4000);
 }
 
+/* ==========================================================================
+   EXECUTIVE RESOLUTION & AUDIT REPORTS CONTROLLER
+   ========================================================================== */
+
+window.currentFilteredAuditReports = [];
+
+window.initResolutionAuditReports = function() {
+  const startInput = document.getElementById('rep-filter-start-date');
+  const endInput = document.getElementById('rep-filter-end-date');
+  
+  if (startInput && !startInput.value) {
+    startInput.value = '2026-08-20';
+  }
+  if (endInput && !endInput.value) {
+    endInput.value = '2026-09-19';
+  }
+  
+  applyReportFilters();
+};
+
+window.setReportDatePreset = function(presetKey) {
+  const startInput = document.getElementById('rep-filter-start-date');
+  const endInput = document.getElementById('rep-filter-end-date');
+  if (!startInput || !endInput) return;
+
+  const todayStr = '2026-09-19';
+  let startStr = '2026-08-20';
+
+  if (presetKey === 'today') {
+    startStr = '2026-09-18';
+  } else if (presetKey === '7days') {
+    startStr = '2026-09-12';
+  } else if (presetKey === '30days') {
+    startStr = '2026-08-20';
+  } else if (presetKey === 'quarter') {
+    startStr = '2026-07-01';
+  } else if (presetKey === 'all') {
+    startStr = '2026-06-01';
+  }
+
+  startInput.value = startStr;
+  endInput.value = todayStr;
+
+  document.querySelectorAll('#rep-date-preset-chips .date-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-preset') === presetKey);
+  });
+
+  applyReportFilters();
+};
+
+window.onReportDateInputChange = function() {
+  document.querySelectorAll('#rep-date-preset-chips .date-chip').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  applyReportFilters();
+};
+
+window.resetReportFilters = function() {
+  const startInput = document.getElementById('rep-filter-start-date');
+  const endInput = document.getElementById('rep-filter-end-date');
+  const corpSelect = document.getElementById('rep-filter-corp');
+  const deptSelect = document.getElementById('rep-filter-dept');
+  const statusSelect = document.getElementById('rep-filter-status');
+  const officerSelect = document.getElementById('rep-filter-officer');
+  const searchInput = document.getElementById('rep-filter-search');
+
+  if (startInput) startInput.value = '2026-08-20';
+  if (endInput) endInput.value = '2026-09-19';
+  if (corpSelect) corpSelect.value = 'all';
+  if (deptSelect) deptSelect.value = 'all';
+  if (statusSelect) statusSelect.value = 'resolved';
+  if (officerSelect) officerSelect.value = 'all';
+  if (searchInput) searchInput.value = '';
+
+  document.querySelectorAll('#rep-date-preset-chips .date-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-preset') === '30days');
+  });
+
+  applyReportFilters();
+  showCivicaToast('🔄 Report filters reset to default 30-day window.');
+};
+
+window.applyReportFilters = function() {
+  const reports = (window.GUJARAT_CIVIC_DATA && window.GUJARAT_CIVIC_DATA.resolutionAuditReports) || [];
+  const startInput = document.getElementById('rep-filter-start-date');
+  const endInput = document.getElementById('rep-filter-end-date');
+  const corpSelect = document.getElementById('rep-filter-corp');
+  const deptSelect = document.getElementById('rep-filter-dept');
+  const statusSelect = document.getElementById('rep-filter-status');
+  const officerSelect = document.getElementById('rep-filter-officer');
+  const searchInput = document.getElementById('rep-filter-search');
+
+  const startDate = startInput ? startInput.value : '2026-06-01';
+  const endDate = endInput ? endInput.value : '2026-09-19';
+  const corp = corpSelect ? corpSelect.value : 'all';
+  const dept = deptSelect ? deptSelect.value : 'all';
+  const status = statusSelect ? statusSelect.value : 'all';
+  const officer = officerSelect ? officerSelect.value : 'all';
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+  const filtered = reports.filter(item => {
+    // Date range checking against filedDateOnly or resolvedDateOnly
+    const itemDate = item.resolvedDateOnly || item.filedDateOnly;
+    if (startDate && itemDate < startDate) return false;
+    if (endDate && itemDate > endDate) return false;
+
+    // Corporation
+    if (corp !== 'all' && item.corpCode !== corp) return false;
+
+    // Department
+    if (dept !== 'all' && item.department !== dept) return false;
+
+    // Status
+    if (status === 'resolved' && item.status !== 'resolved') return false;
+    if (status === 'in_progress' && item.status !== 'in_progress') return false;
+    if (status === 'sla_breach' && item.status !== 'sla_breach' && item.slaStatus !== 'breached') return false;
+
+    // Officer
+    if (officer !== 'all' && (!item.solvedBy || !item.solvedBy.toLowerCase().includes(officer.toLowerCase()))) return false;
+
+    // Free text search
+    if (query) {
+      const matchSearch = (
+        (item.id && item.id.toLowerCase().includes(query)) ||
+        (item.shortId && item.shortId.toLowerCase().includes(query)) ||
+        (item.title && item.title.toLowerCase().includes(query)) ||
+        (item.citizenName && item.citizenName.toLowerCase().includes(query)) ||
+        (item.location && item.location.toLowerCase().includes(query)) ||
+        (item.solvedBy && item.solvedBy.toLowerCase().includes(query)) ||
+        (item.resolutionSummary && item.resolutionSummary.toLowerCase().includes(query))
+      );
+      if (!matchSearch) return false;
+    }
+
+    return true;
+  });
+
+  window.currentFilteredAuditReports = filtered;
+
+  // Calculate Metrics
+  const totalRaised = filtered.length;
+  const resolvedItems = filtered.filter(i => i.status === 'resolved');
+  const totalSolved = resolvedItems.length;
+  const solveRate = totalRaised > 0 ? Math.round((totalSolved / totalRaised) * 100) : 0;
+
+  const times = resolvedItems.filter(i => typeof i.timeTakenMinutes === 'number').map(i => i.timeTakenMinutes);
+  const avgMinutes = times.length > 0 ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : 0;
+  const avgH = Math.floor(avgMinutes / 60);
+  const avgM = avgMinutes % 60;
+
+  const fastestMinutes = times.length > 0 ? Math.min(...times) : 0;
+  const fastH = Math.floor(fastestMinutes / 60);
+  const fastM = fastestMinutes % 60;
+
+  const onTimeItems = resolvedItems.filter(i => i.slaStatus === 'within_sla');
+  const slaCompliance = resolvedItems.length > 0 ? Math.round((onTimeItems.length / resolvedItems.length) * 100) : 100;
+
+  const ratings = resolvedItems.filter(i => typeof i.citizenRating === 'number').map(i => i.citizenRating);
+  const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : '5.0';
+
+  // Update KPI Cards
+  const kpiRaised = document.getElementById('rep-kpi-total-filed');
+  const kpiRange = document.getElementById('rep-kpi-range-label');
+  const kpiSolved = document.getElementById('rep-kpi-total-solved');
+  const kpiSolveRate = document.getElementById('rep-kpi-solve-rate');
+  const kpiAvgTime = document.getElementById('rep-kpi-avg-time');
+  const kpiFastest = document.getElementById('rep-kpi-fastest-time');
+  const kpiSla = document.getElementById('rep-kpi-sla-compliance');
+  const kpiRating = document.getElementById('rep-kpi-citizen-rating');
+
+  if (kpiRaised) kpiRaised.textContent = totalRaised;
+  if (kpiRange) kpiRange.textContent = `${startDate} → ${endDate}`;
+  if (kpiSolved) kpiSolved.textContent = totalSolved;
+  if (kpiSolveRate) kpiSolveRate.textContent = `${solveRate}% resolution rate`;
+  if (kpiAvgTime) kpiAvgTime.textContent = times.length > 0 ? `${avgH}h ${avgM.toString().padStart(2, '0')}m` : '—';
+  if (kpiFastest) kpiFastest.textContent = times.length > 0 ? `${fastH}h ${fastM.toString().padStart(2, '0')}m` : '—';
+  if (kpiSla) kpiSla.textContent = `${slaCompliance}%`;
+  if (kpiRating) kpiRating.textContent = `${avgRating} / 5 ⭐`;
+
+  // Render Department Breakdown
+  renderDepartmentBreakdown(resolvedItems);
+
+  // Render Officer Leaderboard
+  renderOfficerLeaderboard(resolvedItems);
+
+  // Render Table
+  renderAuditTable(filtered, totalSolved);
+};
+
+function renderDepartmentBreakdown(resolvedItems) {
+  const container = document.getElementById('rep-dept-breakdown-list');
+  if (!container) return;
+
+  if (resolvedItems.length === 0) {
+    container.innerHTML = '<div style="padding:16px; color:#64748b; font-size:0.88rem; text-align:center;">No resolved complaints in this date range.</div>';
+    return;
+  }
+
+  const deptMap = {};
+  resolvedItems.forEach(item => {
+    const d = item.department || 'General Civic';
+    if (!deptMap[d]) {
+      deptMap[d] = {
+        name: d,
+        icon: item.categoryIcon || '🏛️',
+        solvedCount: 0,
+        totalMinutes: 0,
+        onTimeCount: 0
+      };
+    }
+    deptMap[d].solvedCount++;
+    if (typeof item.timeTakenMinutes === 'number') {
+      deptMap[d].totalMinutes += item.timeTakenMinutes;
+    }
+    if (item.slaStatus === 'within_sla') {
+      deptMap[d].onTimeCount++;
+    }
+  });
+
+  const deptList = Object.values(deptMap).sort((a, b) => b.solvedCount - a.solvedCount);
+  const maxSolved = Math.max(...deptList.map(d => d.solvedCount), 1);
+
+  container.innerHTML = deptList.map(dept => {
+    const avgM = dept.solvedCount > 0 ? Math.round(dept.totalMinutes / dept.solvedCount) : 0;
+    const avgHStr = `${Math.floor(avgM / 60)}h ${(avgM % 60).toString().padStart(2, '0')}m`;
+    const pct = Math.round((dept.solvedCount / maxSolved) * 100);
+    const slaRate = Math.round((dept.onTimeCount / dept.solvedCount) * 100);
+
+    return `
+      <div class="dept-perf-row">
+        <div class="dept-perf-header">
+          <div class="dept-name-box">
+            <span class="dept-icon">${dept.icon}</span>
+            <span class="dept-title">${dept.name}</span>
+          </div>
+          <div class="dept-stats-box">
+            <span class="dept-stat-solved"><strong>${dept.solvedCount}</strong> solved</span>
+            <span class="dept-stat-time">⚡ Avg: ${avgHStr}</span>
+            <span class="dept-stat-sla">${slaRate}% on-time</span>
+          </div>
+        </div>
+        <div class="dept-progress-track">
+          <div class="dept-progress-fill" style="width: ${pct}%;"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderOfficerLeaderboard(resolvedItems) {
+  const container = document.getElementById('rep-officer-leaderboard-list');
+  if (!container) return;
+
+  if (resolvedItems.length === 0) {
+    container.innerHTML = '<div style="padding:16px; color:#64748b; font-size:0.88rem; text-align:center;">No officer resolutions found in this period.</div>';
+    return;
+  }
+
+  const officerMap = {};
+  resolvedItems.forEach(item => {
+    const name = item.solvedBy || 'Unassigned Crew';
+    if (!officerMap[name]) {
+      officerMap[name] = {
+        name: name,
+        designation: item.solvedByDesignation || 'Municipal Officer',
+        solvedCount: 0,
+        totalMinutes: 0
+      };
+    }
+    officerMap[name].solvedCount++;
+    if (typeof item.timeTakenMinutes === 'number') {
+      officerMap[name].totalMinutes += item.timeTakenMinutes;
+    }
+  });
+
+  const sortedOfficers = Object.values(officerMap).sort((a, b) => b.solvedCount - a.solvedCount);
+
+  container.innerHTML = sortedOfficers.map((ofc, idx) => {
+    const initials = ofc.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const avgM = ofc.solvedCount > 0 ? Math.round(ofc.totalMinutes / ofc.solvedCount) : 0;
+    const avgSpeedStr = `${Math.floor(avgM / 60)}h ${(avgM % 60).toString().padStart(2, '0')}m`;
+
+    return `
+      <div class="officer-leader-card">
+        <div class="officer-leader-left">
+          <div class="officer-rank-pill ${idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : ''}">#${idx + 1}</div>
+          <div class="officer-avatar-chip">${initials}</div>
+          <div>
+            <div class="officer-card-name">${ofc.name}</div>
+            <div class="officer-card-role">${ofc.designation}</div>
+          </div>
+        </div>
+        <div class="officer-leader-right">
+          <div class="officer-solved-badge">✅ ${ofc.solvedCount} Solved</div>
+          <div class="officer-speed-tag">⏱️ Avg ${avgSpeedStr}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderAuditTable(filtered, totalSolved) {
+  const subtitle = document.getElementById('rep-table-count-subtitle');
+  if (subtitle) {
+    subtitle.textContent = `Showing ${filtered.length} complaints (${totalSolved} resolved by admins & corporation)`;
+  }
+
+  const tbody = document.getElementById('rep-audit-tbody');
+  if (!tbody) return;
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="10" style="text-align:center; padding: 48px 24px; color:#64748b;">
+          <div style="font-size:2rem; margin-bottom:8px;">🔍</div>
+          <h3 style="font-size:1.1rem; color:#1e293b; margin:0 0 6px 0;">No Complaints Found</h3>
+          <p style="font-size:0.85rem; color:#64748b; margin:0 0 16px 0;">No complaints match the specified date range and filters. Try widening the dates or clearing filters.</p>
+          <button type="button" class="btn-clear-filter" style="margin:0 auto;" onclick="resetReportFilters()">Reset Filters to 30 Days</button>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(item => {
+    const isResolved = item.status === 'resolved';
+    const isSlaBreach = item.status === 'sla_breach' || item.slaStatus === 'breached';
+
+    const statusBadge = isResolved
+      ? '<span class="ticket-status-pill status-resolved">RESOLVED</span>'
+      : isSlaBreach
+      ? '<span class="ticket-status-pill status-needinfo">SLA RISK</span>'
+      : '<span class="ticket-status-pill status-inprogress">IN PROGRESS</span>';
+
+    const timeChip = isResolved
+      ? `<span class="rep-duration-chip ${item.slaStatus === 'within_sla' ? 'chip-green' : 'chip-red'}">⚡ ${item.timeTakenFormatted}</span>
+         <div style="font-size:0.7rem; font-weight:700; color:${item.slaStatus === 'within_sla' ? '#059669' : '#dc2626'}; margin-top:2px;">
+           ${item.slaStatus === 'within_sla' ? '● Within SLA' : '▲ Breached'} (${item.slaTargetHours}h target)
+         </div>`
+      : `<span class="rep-duration-chip chip-amber">⏳ ${item.timeTakenFormatted}</span>`;
+
+    const depositBadge = item.depositStatus === 'refunded'
+      ? '<span class="deposit-status-badge status-refunded">✅ ₹50 Refunded</span>'
+      : '<span class="deposit-status-badge status-held">🔒 ₹50 Held</span>';
+
+    return `
+      <tr>
+        <td>
+          <span class="rep-ticket-id" title="Click to inspect ticket" onclick="openOfficerTicket('${item.id}')">${item.id}</span>
+        </td>
+        <td>
+          <div style="display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:1.2rem;">${item.categoryIcon}</span>
+            <div>
+              <strong style="color:#0f172a; font-size:0.85rem;">${item.categoryName}</strong>
+              <div style="font-size:0.75rem; color:#64748b; line-height:1.3; margin-top:2px;">${item.title}</div>
+              <div style="font-size:0.72rem; color:#3b82f6; margin-top:1px;">📍 ${item.location} · ${item.corporation}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style="font-size:0.85rem; font-weight:700; color:#0f172a;">${item.citizenName}</div>
+          <div style="font-size:0.74rem; color:#64748b;">${item.citizenPhone}</div>
+          <div style="font-size:0.72rem; color:#475569;">${item.ward}</div>
+        </td>
+        <td>
+          <span style="font-size:0.8rem; font-weight:600; color:#334155; white-space:nowrap;">${item.filedDateFormatted}</span>
+        </td>
+        <td>
+          <div style="font-size:0.85rem; font-weight:700; color:#0f172a;">${item.solvedBy}</div>
+          <div style="font-size:0.74rem; color:#64748b;">${item.solvedByDesignation}</div>
+          <div style="font-size:0.72rem; color:#3b82f6;">${item.department}</div>
+        </td>
+        <td>
+          <span style="font-size:0.8rem; font-weight:600; color:#334155; white-space:nowrap;">${item.resolvedDateFormatted}</span>
+        </td>
+        <td>
+          ${timeChip}
+        </td>
+        <td>
+          <p class="rep-summary-text">${item.resolutionSummary}</p>
+        </td>
+        <td>
+          ${depositBadge}
+        </td>
+        <td>
+          ${statusBadge}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.exportAuditReportCSV = function() {
+  const items = window.currentFilteredAuditReports || [];
+  if (items.length === 0) {
+    showCivicaToast('⚠️ No records to export. Please adjust filters.');
+    return;
+  }
+
+  const headers = [
+    "Complaint ID",
+    "Category",
+    "Department",
+    "Corporation",
+    "Ward",
+    "Location",
+    "Citizen Name",
+    "Citizen Phone",
+    "Date Raised",
+    "Solved By (Admin/Officer)",
+    "Officer Designation",
+    "Date Solved",
+    "Time Taken to Solve",
+    "SLA Status",
+    "SLA Target (Hours)",
+    "Resolution Summary",
+    "Security Deposit Status",
+    "Status"
+  ];
+
+  const rows = items.map(item => [
+    `"${item.id}"`,
+    `"${item.categoryName}"`,
+    `"${item.department}"`,
+    `"${item.corporation}"`,
+    `"${item.ward}"`,
+    `"${(item.location || '').replace(/"/g, '""')}"`,
+    `"${item.citizenName}"`,
+    `"${item.citizenPhone}"`,
+    `"${item.filedDateFormatted}"`,
+    `"${item.solvedBy}"`,
+    `"${item.solvedByDesignation}"`,
+    `"${item.resolvedDateFormatted}"`,
+    `"${item.timeTakenFormatted}"`,
+    `"${item.slaStatus}"`,
+    `"${item.slaTargetHours}"`,
+    `"${(item.resolutionSummary || '').replace(/"/g, '""')}"`,
+    `"${item.depositStatus}"`,
+    `"${item.status}"`
+  ]);
+
+  const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const dateStr = new Date().toISOString().split("T")[0];
+  link.setAttribute("href", url);
+  link.setAttribute("download", `Gujarat_Civic_Resolution_Audit_Report_${dateStr}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  showCivicaToast(`📥 CSV Audit Report exported successfully (${items.length} complaints).`);
+};
+
+window.printOfficialAuditReport = function() {
+  showCivicaToast('🖨️ Preparing official printable municipal resolution audit report...');
+  setTimeout(() => {
+    window.print();
+  }, 400);
+};
+
 // Global DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   initMasterState();
   renderOfficerDashboard();
+  initResolutionAuditReports();
   renderDesktopPortal();
   renderCivicWallet();
   setAppLanguage(appState.language, false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const demoParam = urlParams.get('demo');
+  const tabParam = urlParams.get('tab');
   if (demoParam) {
     loginAsDemo(demoParam);
+    if (tabParam) {
+      setTimeout(() => {
+        if (demoParam === 'officer' || demoParam === 'admin') {
+          switchOfficerTab(tabParam);
+        } else if (demoParam === 'citizen') {
+          switchDesktopTab(tabParam);
+        }
+      }, 150);
+    }
   } else {
     returnToLandingPage();
   }

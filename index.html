@@ -1079,7 +1079,7 @@
                 <button class="sidebar-nav-item" id="of-nav-action" onclick="switchOfficerTab('action')">03 Take action</button>
                 <button class="sidebar-nav-item" id="of-nav-notify" onclick="switchOfficerTab('notify')">04 Notify citizen</button>
                 <button class="sidebar-nav-item" id="of-nav-preview" onclick="switchOfficerTab('preview')">05 Citizen preview</button>
-                <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')">06 Ward reports</button>
+                <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')">06 Resolution Reports</button>
                 <button class="sidebar-nav-item" id="of-nav-rules" onclick="switchOfficerTab('rules')">07 Officer rules</button>
               </nav>
             </div>
@@ -1243,14 +1243,227 @@
               </div>
             </div>
 
-            <!-- 06 Ward Reports -->
+            <!-- 06 Municipal Resolution & SLA Audit Reports Generator -->
             <div id="officer-view-reports" class="officer-sub-view" style="display:none;">
-              <div class="officer-header-row"><div><div class="sub-screen-indicator">06 WARD REPORTS</div><h1 class="officer-headline">Ward 7 Weekly Audit</h1></div></div>
-              <div class="ward-reports-four-grid">
-                <div class="report-box-card"><h3 style="font-size:1rem; font-weight:700;">This Week Ward 7</h3><div>41 filed &bull; 33 resolved &bull; 8 open &bull; 98% acknowledged</div></div>
-                <div class="report-box-card"><h3 style="font-size:1rem; font-weight:700;">Top Issues</h3><div>Streetlights 14 &bull; Potholes 9 &bull; Waterlogging 7</div></div>
-                <div class="report-box-card"><h3 style="font-size:1rem; font-weight:700;">Citizen Updates Sent</h3><div>52 Gujarati messages &bull; 40 WhatsApp &bull; 12 SMS</div></div>
-                <div class="report-box-card alert-box"><h3 style="font-size:1rem; font-weight:700;">SLA Watch</h3><div>2 tickets near breach — assigned to Crew 14</div></div>
+              <div class="officer-header-row">
+                <div>
+                  <div class="sub-screen-indicator">06 EXECUTIVE RESOLUTION & AUDIT REPORTS</div>
+                  <h1 class="officer-headline">Civic Grievance Resolution & SLA Audit Console</h1>
+                  <p class="officer-subheadline" style="color: #64748b; font-size: 0.9rem; margin-top: 4px;">
+                    Generate date-to-date performance reports, track officer resolution speed, monitor citizen complaints, and export official municipal audits.
+                  </p>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                  <button type="button" class="btn-report-action btn-export-secondary" onclick="exportAuditReportCSV()">
+                    📥 Export CSV
+                  </button>
+                  <button type="button" class="btn-report-action btn-export-primary" onclick="printOfficialAuditReport()">
+                    🖨️ Print Audit PDF
+                  </button>
+                </div>
+              </div>
+
+              <!-- Date-to-Date Filter Console -->
+              <div class="report-filter-console-card">
+                <div class="report-filter-header">
+                  <span class="filter-title">🗓️ Date Range & Municipal Department Filters</span>
+                  <div class="quick-date-chips" id="rep-date-preset-chips">
+                    <button type="button" class="date-chip" data-preset="today" onclick="setReportDatePreset('today')">Today</button>
+                    <button type="button" class="date-chip" data-preset="7days" onclick="setReportDatePreset('7days')">Last 7 Days</button>
+                    <button type="button" class="date-chip active" data-preset="30days" onclick="setReportDatePreset('30days')">Last 30 Days</button>
+                    <button type="button" class="date-chip" data-preset="quarter" onclick="setReportDatePreset('quarter')">This Quarter</button>
+                    <button type="button" class="date-chip" data-preset="all" onclick="setReportDatePreset('all')">All Time</button>
+                  </div>
+                </div>
+
+                <div class="report-filter-grid">
+                  <div class="filter-field">
+                    <label for="rep-filter-start-date">From Date</label>
+                    <input type="date" id="rep-filter-start-date" class="rep-input-date" onchange="onReportDateInputChange()">
+                  </div>
+                  <div class="filter-field">
+                    <label for="rep-filter-end-date">To Date</label>
+                    <input type="date" id="rep-filter-end-date" class="rep-input-date" onchange="onReportDateInputChange()">
+                  </div>
+                  <div class="filter-field">
+                    <label for="rep-filter-corp">Corporation / Zone</label>
+                    <select id="rep-filter-corp" class="rep-select" onchange="applyReportFilters()">
+                      <option value="all">All Municipal Corporations</option>
+                      <option value="AMC">AMC Ahmedabad (West Zone / Ward 7)</option>
+                      <option value="SMC">SMC Surat (Central / Athwa / Varachha)</option>
+                      <option value="VMC">VMC Vadodara (Central Zone)</option>
+                      <option value="RMC">RMC Rajkot (West Zone)</option>
+                      <option value="GMC">GMC Gandhinagar (Sector Zone)</option>
+                    </select>
+                  </div>
+                  <div class="filter-field">
+                    <label for="rep-filter-dept">Department / Category</label>
+                    <select id="rep-filter-dept" class="rep-select" onchange="applyReportFilters()">
+                      <option value="all">All Civic Departments</option>
+                      <option value="Light & Electrical">💡 Light & Electrical (Streetlights)</option>
+                      <option value="Public Works & Roads">🚧 Public Works & Roads (Potholes)</option>
+                      <option value="Solid Waste Management">🗑️ Solid Waste Management (Garbage)</option>
+                      <option value="Monsoon & Drainage">🌊 Monsoon & Drainage (Waterlogging)</option>
+                      <option value="Hydraulics & Water Works">💧 Hydraulics & Water Works (Supply)</option>
+                      <option value="Transit Authority">🚌 Transit Authority (BRTS / Metro)</option>
+                    </select>
+                  </div>
+                  <div class="filter-field">
+                    <label for="rep-filter-status">Resolution Status</label>
+                    <select id="rep-filter-status" class="rep-select" onchange="applyReportFilters()">
+                      <option value="all">All Statuses (Solved + Active)</option>
+                      <option value="resolved" selected>✅ Solved / Resolved Only</option>
+                      <option value="in_progress">⚡ In Progress / Dispatched</option>
+                      <option value="sla_breach">⚠️ SLA Risk / Breached</option>
+                    </select>
+                  </div>
+                  <div class="filter-field">
+                    <label for="rep-filter-officer">Solved By Admin / Officer</label>
+                    <select id="rep-filter-officer" class="rep-select" onchange="applyReportFilters()">
+                      <option value="all">All Officers & Field Crews</option>
+                      <option value="R. Patel">R. Patel (Ward 7 Officer)</option>
+                      <option value="Rajesh Parmar">Rajesh Parmar (Sr. Commissioner)</option>
+                      <option value="Mahesh Solanki">Mahesh Solanki (Chief Road Engineer)</option>
+                      <option value="Sunita Desai">Sunita Desai (Health & Sanitation)</option>
+                      <option value="Farida Sheikh">Farida Sheikh (Emergency Director)</option>
+                      <option value="Crew 14">Crew 14 (Electrical Rapid Squad)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="report-filter-bottom-bar">
+                  <div class="report-search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="rep-filter-search" placeholder="Search by Ticket ID, Citizen name, Officer, Landmark..." oninput="applyReportFilters()">
+                  </div>
+                  <div class="filter-actions-group">
+                    <button type="button" class="btn-clear-filter" onclick="resetReportFilters()">Clear Filters</button>
+                    <button type="button" class="btn-generate-report" onclick="applyReportFilters()">📊 Generate Audit Report</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Real-Time Dynamic KPI Summary for Selected Range -->
+              <div class="report-kpi-summary-grid">
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon blue">📋</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-total-filed">0</div>
+                    <div class="rep-kpi-label">Complaints Raised</div>
+                    <div class="rep-kpi-subtext" id="rep-kpi-range-label">In selected date range</div>
+                  </div>
+                </div>
+
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon green">✅</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-total-solved">0</div>
+                    <div class="rep-kpi-label">Complaints Solved</div>
+                    <div class="rep-kpi-subtext" id="rep-kpi-solve-rate">0% resolution rate</div>
+                  </div>
+                </div>
+
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon gold">⏱️</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-avg-time">0h 00m</div>
+                    <div class="rep-kpi-label">Avg. Time to Solve (MTTR)</div>
+                    <div class="rep-kpi-subtext" id="rep-kpi-sla-comparison">Target: 6.0 hrs SLA</div>
+                  </div>
+                </div>
+
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon purple">⚡</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-fastest-time">0h 00m</div>
+                    <div class="rep-kpi-label">Fastest Resolution</div>
+                    <div class="rep-kpi-subtext">Rapid response unit</div>
+                  </div>
+                </div>
+
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon emerald">🎯</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-sla-compliance">0%</div>
+                    <div class="rep-kpi-label">SLA Compliance Rate</div>
+                    <div class="rep-kpi-subtext">On-time resolutions</div>
+                  </div>
+                </div>
+
+                <div class="rep-kpi-card">
+                  <div class="rep-kpi-icon amber">⭐</div>
+                  <div class="rep-kpi-content">
+                    <div class="rep-kpi-value" id="rep-kpi-citizen-rating">0.0 / 5</div>
+                    <div class="rep-kpi-label">Citizen Satisfaction</div>
+                    <div class="rep-kpi-subtext">Verified resident feedback</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Two Column Analytics Breakdown -->
+              <div class="report-analytics-grid">
+                <div class="report-panel-card">
+                  <div class="report-panel-header">
+                    <div>
+                      <h3 class="report-panel-title">🏛️ Department Resolution Speed & Output</h3>
+                      <p style="font-size:0.8rem; color:#64748b; margin:2px 0 0 0;">Complaints solved and average resolution time per municipal wing</p>
+                    </div>
+                    <span class="report-panel-tag">Municipal Wings</span>
+                  </div>
+                  <div class="dept-performance-list" id="rep-dept-breakdown-list">
+                    <!-- Dynamic department breakdown populated by JS -->
+                  </div>
+                </div>
+
+                <div class="report-panel-card">
+                  <div class="report-panel-header">
+                    <div>
+                      <h3 class="report-panel-title">🏆 Officer & Admin Resolution Leaderboard</h3>
+                      <p style="font-size:0.8rem; color:#64748b; margin:2px 0 0 0;">Performance and time-to-solve by assigned officer</p>
+                    </div>
+                    <span class="report-panel-tag">Verified Solvers</span>
+                  </div>
+                  <div class="officer-leaderboard-list" id="rep-officer-leaderboard-list">
+                    <!-- Dynamic officer leaderboard populated by JS -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Detailed Resolution Audit Table -->
+              <div class="report-table-card">
+                <div class="report-table-header">
+                  <div>
+                    <h3 class="report-table-title">Detailed Civic Grievance & Resolution Ledger</h3>
+                    <p class="report-table-subtitle" id="rep-table-count-subtitle">Showing 0 complaints matching criteria</p>
+                  </div>
+                  <div class="table-legend-pills">
+                    <span class="legend-pill green">● Within SLA</span>
+                    <span class="legend-pill red">● Breached SLA</span>
+                    <span class="legend-pill blue">● Escrow ₹50 Refunded</span>
+                  </div>
+                </div>
+
+                <div class="report-table-container">
+                  <table class="report-audit-table" id="rep-audit-table">
+                    <thead>
+                      <tr>
+                        <th>Complaint ID</th>
+                        <th>Category & Issue</th>
+                        <th>Raised By (Citizen)</th>
+                        <th>Date Raised</th>
+                        <th>Solved By (Admin/Officer)</th>
+                        <th>Date Solved</th>
+                        <th>Time Taken to Solve</th>
+                        <th>Resolution Summary</th>
+                        <th>Deposit Refund</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="rep-audit-tbody">
+                      <!-- Dynamic rows rendered here -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
