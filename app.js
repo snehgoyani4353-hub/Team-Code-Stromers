@@ -791,27 +791,45 @@ window.handleLogout = function() {
 function updateSessionUI() {
   const btnHeaderLogin = document.getElementById('btn-header-login');
   const dashSessionUserText = document.getElementById('dash-session-user-text');
-  const pillCommand = document.getElementById('pill-command-center');
+  const activePill = document.getElementById('active-portal-pill-display');
+  const activeIcon = document.getElementById('active-portal-icon');
+  const activeLabel = document.getElementById('active-portal-label');
 
   if (appState.currentUser) {
+    const role = appState.currentUser.role;
+
     if (btnHeaderLogin) {
       btnHeaderLogin.textContent = 'ENTER DASHBOARD ⚡';
       btnHeaderLogin.onclick = () => {
-        if (appState.currentUser.role === 'command') {
+        if (role === 'command') {
           switchDashboardMode('command-center');
-        } else if (appState.currentUser.role === 'officer') {
+        } else if (role === 'officer') {
           switchDashboardMode('officer');
         } else {
           switchDashboardMode('citizen-desktop');
         }
       };
     }
+
     if (dashSessionUserText) {
       dashSessionUserText.textContent = `${appState.currentUser.name}`;
     }
-    if (pillCommand) {
-      // Command Center pill is only shown if authenticated as Commander from login page
-      pillCommand.style.display = (appState.currentUser.role === 'command') ? 'inline-flex' : 'none';
+
+    // Update the locked active portal badge display
+    if (activePill && activeIcon && activeLabel) {
+      if (role === 'command') {
+        activePill.className = 'active-portal-pill command';
+        activeIcon.className = 'fa-solid fa-satellite-dish';
+        activeLabel.textContent = 'Tactical Command Center (ICCC)';
+      } else if (role === 'officer') {
+        activePill.className = 'active-portal-pill officer';
+        activeIcon.className = 'fa-solid fa-user-shield';
+        activeLabel.textContent = 'Municipal Officer Portal (AMC)';
+      } else {
+        activePill.className = 'active-portal-pill citizen';
+        activeIcon.className = 'fa-solid fa-user-check';
+        activeLabel.textContent = 'Citizen Resident Portal';
+      }
     }
   } else {
     if (btnHeaderLogin) {
@@ -821,27 +839,34 @@ function updateSessionUI() {
     if (dashSessionUserText) {
       dashSessionUserText.textContent = 'Guest Session · Live System';
     }
-    if (pillCommand) {
-      pillCommand.style.display = 'none';
+    if (activePill && activeIcon && activeLabel) {
+      activePill.className = 'active-portal-pill citizen';
+      activeIcon.className = 'fa-solid fa-user-check';
+      activeLabel.textContent = 'Citizen Resident Portal';
     }
   }
 }
 
 /**
- * Switch between Citizen Desktop, Municipal Officer (switches without password as requested).
- * Command Center can ONLY be operated from the login page.
+ * Dashboard Mode Controller - Switching dashboards is DISABLED inside all 3 dashboards.
+ * Users must Sign Out and authenticate with the respective role from the login page.
  */
 window.switchDashboardMode = function(mode) {
-  // Enforce: Command center can be operated from login page only!
-  if (mode === 'command-center' && (!appState.currentUser || appState.currentUser.role !== 'command')) {
-    showCivicaToast('🔒 Command Center restricted: Please authenticate from the login page with commander credentials.');
-    openLoginModal('command');
-    return;
-  }
+  // If user is already authenticated in an active session, strictly lock them to their dashboard
+  if (appState.currentUser) {
+    const userRole = appState.currentUser.role;
+    const allowedMode = (userRole === 'command') ? 'command-center' 
+      : (userRole === 'officer' || userRole === 'admin') ? 'officer' 
+      : 'citizen-desktop';
 
-  // If user is switching between citizen and officer, allow seamless switch without password
-  if (!appState.currentUser) {
-    loginAsDemo(mode === 'officer' ? 'officer' : 'citizen');
+    if (mode !== allowedMode) {
+      showCivicaToast(`🔒 Dashboard Switching Disabled: Authenticated as ${userRole.toUpperCase()}. Please Sign Out to access another dashboard.`);
+      return;
+    }
+  } else {
+    // If not logged in yet, prompt login modal for the requested role
+    openLoginModal(mode === 'command-center' ? 'command' : mode === 'officer' ? 'officer' : 'citizen');
+    return;
   }
 
   appState.currentView = mode;
@@ -849,14 +874,11 @@ window.switchDashboardMode = function(mode) {
   document.getElementById('view-landing').style.display = 'none';
   document.getElementById('view-dashboards-container').style.display = 'block';
 
-  // Mode buttons in top bar (Citizen Portal <-> Municipal Officer)
-  document.querySelectorAll('.dash-mode-pill').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.mode === mode);
-  });
-
   const subviews = {
     'citizen-desktop': document.getElementById('subview-citizen-desktop'),
     'officer': document.getElementById('subview-officer'),
+    'command-center': document.getElementById('subview-command-center')
+  };
     'command-center': document.getElementById('subview-command-center')
   };
 
@@ -887,7 +909,11 @@ window.switchDashboardMode = function(mode) {
 };
 
 window.openCommandCenter = function() {
-  switchDashboardMode('command-center');
+  if (appState.currentUser?.role === 'command') {
+    switchDashboardMode('command-center');
+  } else {
+    openLoginModal('command');
+  }
 };
 
 /* ==========================================================================
@@ -1672,7 +1698,8 @@ window.recordCommuterPulse = function(type) {
 
 window.switchOfficerTab = function(tabKey) {
   if (tabKey === 'command') {
-    switchDashboardMode('command-center');
+    showCivicaToast('🔒 Role Restricted: Command Center requires separate Tier-1 ICCC login.');
+    openLoginModal('command');
     return;
   }
 

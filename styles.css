@@ -1042,9 +1042,43 @@ input, select, textarea { font-family: inherit; }
   font-weight: 800;
 }
 
-.dash-mode-pill.command-pill.active {
-  background: #38bdf8;
-  color: #0c1a2f;
+.dash-active-portal-badge {
+  display: flex;
+  align-items: center;
+}
+
+.active-portal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(30, 41, 59, 0.85);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.active-portal-pill.citizen {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.active-portal-pill.officer {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: #0284c7;
+  color: #38bdf8;
+}
+
+.active-portal-pill.command {
+  background: rgba(99, 102, 241, 0.22);
+  border-color: #6366f1;
+  color: #a5b4fc;
 }
 
 .dash-user-badge {

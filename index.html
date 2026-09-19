@@ -656,17 +656,12 @@
           <span class="dash-brand-title">CIVICA ગુજરાત &bull; Operational Hub</span>
         </div>
 
-        <!-- Universal Mode Switcher: Citizen Dashboard <-> Officer Portal (Command Center operated via Login Page only) -->
-        <div class="dash-mode-switcher-pills">
-          <button class="dash-mode-pill active" data-mode="citizen-desktop" onclick="switchDashboardMode('citizen-desktop')">
-            <i class="fa-solid fa-user-check"></i> <span>Citizen Portal</span>
-          </button>
-          <button class="dash-mode-pill" data-mode="officer" onclick="switchDashboardMode('officer')">
-            <i class="fa-solid fa-user-shield"></i> <span>Municipal Officer</span>
-          </button>
-          <button class="dash-mode-pill command-pill" id="pill-command-center" data-mode="command-center" onclick="switchDashboardMode('command-center')" style="display:none;">
-            <i class="fa-solid fa-satellite-dish"></i> <span>Command Center 🛰️</span>
-          </button>
+        <!-- Locked Active Portal Badge: Dashboard switching disabled inside all 3 dashboards (Login Page Role Required) -->
+        <div class="dash-active-portal-badge" id="dash-active-portal-badge">
+          <span class="active-portal-pill citizen" id="active-portal-pill-display">
+            <i class="fa-solid fa-user-check" id="active-portal-icon"></i>
+            <span id="active-portal-label">Citizen Resident Portal</span>
+          </span>
         </div>
 
         <div style="display:flex; align-items:center; gap:12px;">
