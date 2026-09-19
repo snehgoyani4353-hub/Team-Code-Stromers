@@ -135,4 +135,4 @@ Team-Code-Stromers/
 - Divy Gadhiya
 - Raj Virani
 - Bhavesh Suthar 
-*Built for innovation in civic technology and municipal urban governance.*
+-                      Built for innovation in civic technology and municipal urban governance.
