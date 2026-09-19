@@ -1984,6 +1984,24 @@ input, select, textarea { font-family: inherit; }
 .action-table-rows { display: flex; flex-direction: column; gap: 14px; }
 .action-row-item { display: grid; grid-template-columns: 140px 1fr; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
 .action-row-label { font-weight: 700; font-size: 0.88rem; color: var(--civica-navy); }
+.officer-ticket-select-menu {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid var(--civica-gold);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--civica-navy);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(197, 160, 89, 0.15);
+  transition: all 0.2s ease;
+}
+.officer-ticket-select-menu:focus, .officer-ticket-select-menu:hover {
+  border-color: var(--civica-gold-dark);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.25);
+}
 .officer-field-select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border-dark); border-radius: var(--radius-sm); font-size: 0.88rem; }
 .status-pipeline-text { font-size: 0.84rem; color: #0369a1; font-weight: 700; }
 .btn-inline-action { font-size: 0.84rem; font-weight: 700; color: var(--civica-navy); cursor: pointer; }

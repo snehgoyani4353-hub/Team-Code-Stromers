@@ -1193,7 +1193,17 @@
               <div class="take-action-two-col">
                 <div class="action-details-card">
                   <div class="action-ticket-header">
-                    <div class="action-ticket-id" id="act-ticket-id">GJ-AMC-2026-18492</div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+                      <span style="font-size:0.75rem; font-weight:800; color:var(--civica-gold-dark); text-transform:uppercase; letter-spacing:0.06em; white-space:nowrap;">📋 Select Problem / Ticket:</span>
+                      <select id="act-ticket-dropdown" class="officer-ticket-select-menu" onchange="handleOfficerProblemDropdownChange(this.value)">
+                        <option value="GJ-AMC-2026-18492" selected>GJ-AMC-2026-18492 — Streetlight out (Ketan Shah)</option>
+                        <option value="GJ-AMC-2026-18501">GJ-AMC-2026-18501 — Severe Monsoon Waterlogging (Priya Patel)</option>
+                        <option value="GJ-AMC-2026-18470">GJ-AMC-2026-18470 — Hazardous Deep Pothole (Aarav Mehta)</option>
+                        <option value="GJ-AMC-2026-18520">GJ-AMC-2026-18520 — Contaminated Water Pipeline Breach (Meera Desai)</option>
+                        <option value="GJ-AMC-2026-18535">GJ-AMC-2026-18535 — Commercial Garbage Dumper Overflow (Harsh Vardhan)</option>
+                      </select>
+                    </div>
+                    <div class="action-ticket-id" id="act-ticket-id" style="display:none;">GJ-AMC-2026-18492</div>
                     <h2 class="action-ticket-title" id="act-ticket-title">Streetlight out — CG Road, Navrangpura</h2>
                     <div class="action-ticket-meta" id="act-ticket-meta">Citizen K. Shah · Ward 7 · SLA 20 Sep</div>
                   </div>
@@ -1202,9 +1212,26 @@
                       <div class="action-row-label">Assign crew</div>
                       <div class="action-row-value">
                         <select id="act-crew-select" class="officer-field-select" onchange="handleCrewAssignment(this.value)">
-                          <option value="Street Lighting Crew 14 — West Zone" selected>Street Lighting Crew 14 — West Zone</option>
-                          <option value="Road Maintenance Unit #3">Road Maintenance Unit #3</option>
-                          <option value="Dewatering Pump Unit Alpha">Dewatering Pump Unit Alpha</option>
+                          <option value="Team 01 · Firebase Rapid Response — Emergency HAZMAT & Fire Rescue Unit">🔥 Team 01 · Firebase Rapid Response — Emergency HAZMAT & Fire Rescue Unit</option>
+                          <option value="Team 02 · Water Base Hydraulics — High-Pressure Pipeline & Main Breach Squad">💧 Team 02 · Water Base Hydraulics — High-Pressure Pipeline & Main Breach Squad</option>
+                          <option value="Team 03 · Water Base Dewatering — Monsoon Heavy Submersible Pump Fleet">🌊 Team 03 · Water Base Dewatering — Monsoon Heavy Submersible Pump Fleet</option>
+                          <option value="Team 04 · Water Base Purity — Potable Supply Testing & Chlorination Wing">🚰 Team 04 · Water Base Purity — Potable Supply Testing & Chlorination Wing</option>
+                          <option value="Team 05 · Electrical Base Lights — Streetlight Mast & Aerial Bucket Team" selected>💡 Team 05 · Electrical Base Lights — Streetlight Mast & Aerial Bucket Team</option>
+                          <option value="Team 06 · Electrical Base Grid — High-Voltage Transformer & Feeder Crew">⚡ Team 06 · Electrical Base Grid — High-Voltage Transformer & Feeder Crew</option>
+                          <option value="Team 07 · Asphalt Base Resurfacing — Infrared Asphalt Paver & Road Repair Unit">🚧 Team 07 · Asphalt Base Resurfacing — Infrared Asphalt Paver & Road Repair Unit</option>
+                          <option value="Team 08 · Pothole Base Compactor — Rapid Cold-Mix Pothole Tamp Unit">🚜 Team 08 · Pothole Base Compactor — Rapid Cold-Mix Pothole Tamp Unit</option>
+                          <option value="Team 09 · Solid Waste Base Clean — Heavy Hydraulic Compactor & Ward Bin Squad">🗑️ Team 09 · Solid Waste Base Clean — Heavy Hydraulic Compactor & Ward Bin Squad</option>
+                          <option value="Team 10 · Biohazard Base Toxins — Chemical Containment & Industrial Leachate Unit">☣️ Team 10 · Biohazard Base Toxins — Chemical Containment & Industrial Leachate Unit</option>
+                          <option value="Team 11 · Drainage Base Desilt — Deep Sewer Line & Silt Extraction Unit">🌧️ Team 11 · Drainage Base Desilt — Deep Sewer Line & Silt Extraction Unit</option>
+                          <option value="Team 12 · Tree & Forestry Base — Hydraulic Crane & Fallen Branch Clearance Unit">🌳 Team 12 · Tree & Forestry Base — Hydraulic Crane & Fallen Branch Clearance Unit</option>
+                          <option value="Team 13 · Health & Vector Base — Dengue Larvicide & Thermal Smoke Fogging Wing">🏥 Team 13 · Health & Vector Base — Dengue Larvicide & Thermal Smoke Fogging Wing</option>
+                          <option value="Team 14 · Animal Control Base — Veterinary Ambulance & Stray Rescue Unit">🐾 Team 14 · Animal Control Base — Veterinary Ambulance & Stray Rescue Unit</option>
+                          <option value="Team 15 · Transit Base BRTS — Dedicated Corridor & Bus Shelter Maintenance">🚌 Team 15 · Transit Base BRTS — Dedicated Corridor & Bus Shelter Maintenance</option>
+                          <option value="Team 16 · Traffic Telemetry Base — Smart Signal & Optical Sensor Electronics">🚦 Team 16 · Traffic Telemetry Base — Smart Signal & Optical Sensor Electronics</option>
+                          <option value="Team 17 · Demolition Base Encroach — Heavy Bulldozer & Structural Clearance Unit">🏗️ Team 17 · Demolition Base Encroach — Heavy Bulldozer & Structural Clearance Unit</option>
+                          <option value="Team 18 · Night Shift Emergency Base — 24x7 Night Flying Rapid Intervention Squad">🚨 Team 18 · Night Shift Emergency Base — 24x7 Night Flying Rapid Intervention Squad</option>
+                          <option value="Team 19 · Escrow Audit Base — Anti-Spam Field Verification & Inspection Unit">🛡️ Team 19 · Escrow Audit Base — Anti-Spam Field Verification & Inspection Unit</option>
+                          <option value="Team 20 · Aerial Drone Base — Tactical LiDAR Radar & GIS Mapping Unit">🛰️ Team 20 · Aerial Drone Base — Tactical LiDAR Radar & GIS Mapping Unit</option>
                         </select>
                       </div>
                     </div>

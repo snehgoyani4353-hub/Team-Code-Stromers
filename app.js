@@ -1959,16 +1959,58 @@ window.openOfficerTicket = function(fullTicketId) {
   switchOfficerTab('action');
 };
 
+window.handleOfficerProblemDropdownChange = function(ticketId) {
+  appState.selectedOfficerTicketId = ticketId;
+  appState.selectedOfficerTicket = appState.complaints.find(c => c.id === ticketId) || appState.complaints[0];
+  renderOfficerTakeAction(ticketId);
+  renderOfficerNotify(ticketId);
+  showCivicaToast(`Switched problem to ${ticketId}`);
+};
+
 function renderOfficerTakeAction(ticketId) {
   const ticket = appState.complaints.find(c => c.id === ticketId) || appState.complaints[0];
   if (!ticket) return;
 
-  document.getElementById('act-ticket-id').textContent = ticket.id;
-  document.getElementById('act-ticket-title').textContent = ticket.title;
-  document.getElementById('act-ticket-meta').textContent = `Citizen ${ticket.citizen || 'K. Shah'} · Ward 7 · SLA ${ticket.slaDate || '20 Sep'}`;
+  // Sync / Populate Problem Dropdown Menu
+  const ticketDropdown = document.getElementById('act-ticket-dropdown');
+  if (ticketDropdown) {
+    if (ticketDropdown.options.length !== appState.complaints.length) {
+      ticketDropdown.innerHTML = appState.complaints.map(c => `
+        <option value="${c.id}">${c.id} — ${c.title || c.categoryName} (${c.citizen || 'Citizen'})</option>
+      `).join('');
+    }
+    ticketDropdown.value = ticket.id;
+  }
+
+  const actTicketId = document.getElementById('act-ticket-id');
+  if (actTicketId) actTicketId.textContent = ticket.id;
+
+  const actTicketTitle = document.getElementById('act-ticket-title');
+  if (actTicketTitle) actTicketTitle.textContent = ticket.title;
+
+  const actTicketMeta = document.getElementById('act-ticket-meta');
+  if (actTicketMeta) actTicketMeta.textContent = `Citizen ${ticket.citizen || 'K. Shah'} · ${ticket.ward || 'Ward 7'} · SLA ${ticket.slaDate || '20 Sep'}`;
 
   const crewSelect = document.getElementById('act-crew-select');
-  if (crewSelect && ticket.assignedCrew) crewSelect.value = ticket.assignedCrew;
+  if (crewSelect) {
+    if (ticket.assignedCrew) {
+      let matched = false;
+      for (let i = 0; i < crewSelect.options.length; i++) {
+        if (crewSelect.options[i].value === ticket.assignedCrew ||
+            crewSelect.options[i].value.toLowerCase().includes(ticket.assignedCrew.toLowerCase()) ||
+            ticket.assignedCrew.toLowerCase().includes(crewSelect.options[i].value.toLowerCase())) {
+          crewSelect.selectedIndex = i;
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        autoSelectCrewByType(crewSelect, ticket.type);
+      }
+    } else {
+      autoSelectCrewByType(crewSelect, ticket.type);
+    }
+  }
 
   const escrowBadge = document.getElementById('officer-escrow-badge');
   const escrowActions = document.getElementById('officer-escrow-actions');
@@ -1986,6 +2028,25 @@ function renderOfficerTakeAction(ticketId) {
       escrowBadge.className = 'deposit-status-badge status-held';
       escrowBadge.innerHTML = '🛡️ ₹50 Held in Escrow';
       if (escrowActions) escrowActions.style.display = 'grid';
+    }
+  }
+}
+
+function autoSelectCrewByType(selectEl, ticketType) {
+  const typeMap = {
+    'streetlight': 'Team 05',
+    'pothole': 'Team 08',
+    'garbage': 'Team 09',
+    'waterlogging': 'Team 03',
+    'water': 'Team 02',
+    'brts': 'Team 15',
+    'others': 'Team 01'
+  };
+  const prefix = typeMap[ticketType] || 'Team 01';
+  for (let i = 0; i < selectEl.options.length; i++) {
+    if (selectEl.options[i].value.startsWith(prefix)) {
+      selectEl.selectedIndex = i;
+      break;
     }
   }
 }
