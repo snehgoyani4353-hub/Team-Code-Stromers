@@ -910,7 +910,31 @@
                   <p class="note-box-text" id="dt-ticket-note">AMC electrical crew inspected the pole near Law Garden crossing. Replacement fixture arrives 19 Sep. You will get a notification when the light is back on. — R. Patel</p>
                 </div>
 
-                <div class="desktop-ticket-actions">
+                <!-- Citizen Rating for Municipal Officer Response (Rate 1 to 5 Stars) -->
+                <div class="citizen-feedback-rating-box" style="margin-top:14px; background:#fffbeb; border:1.5px solid #fef08a; border-radius:var(--radius-md); padding:16px 18px; box-shadow:0 2px 8px rgba(245,158,11,0.06);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <strong style="color:#854d0e; font-size:0.88rem; display:flex; align-items:center; gap:6px;">
+                      <span>⭐</span> Rate Officer R. Patel's Response & Communication
+                    </strong>
+                    <span id="citizen-rate-status-tag" style="font-size:0.75rem; color:#a16207; font-weight:700;">Rate 1 to 5 Stars</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                    <div class="star-rating-interactive" id="citizen-star-selector">
+                      <span class="star-btn active" onclick="setCitizenRatingScore(1)">★</span>
+                      <span class="star-btn active" onclick="setCitizenRatingScore(2)">★</span>
+                      <span class="star-btn active" onclick="setCitizenRatingScore(3)">★</span>
+                      <span class="star-btn active" onclick="setCitizenRatingScore(4)">★</span>
+                      <span class="star-btn active" onclick="setCitizenRatingScore(5)">★</span>
+                    </div>
+                    <span id="citizen-star-score-display" style="font-weight:700; color:#b45309; font-size:0.9rem;">5 / 5 (Excellent Service)</span>
+                  </div>
+                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <input type="text" id="citizen-rating-comment-input" class="dt-web-input" placeholder="Share your feedback on AMC's speed & resolution (optional)..." value="Very prompt update from Officer R. Patel. Fixture replacement was well-communicated." style="flex:1; font-size:0.85rem; padding:8px 12px; background:#ffffff; min-width:200px;">
+                    <button type="button" class="btn-hero-primary" style="padding:8px 16px; font-size:0.82rem; white-space:nowrap; background:#d97706; border-color:#b45309;" onclick="submitCitizenRatingFromTrack()">Submit Rating (1–5) ⭐</button>
+                  </div>
+                </div>
+
+                <div class="desktop-ticket-actions" style="margin-top:14px;">
                   <button class="btn-hero-primary" style="padding:8px 16px; font-size:0.85rem;" onclick="showCivicaToast('📷 Inspection photo docket opened.')">📷 Upload Photo</button>
                   <button class="btn-action-reopen" id="btn-reopen-ticket" style="display:none;" onclick="reopenTicket()">Reopen Complaint</button>
                 </div>
@@ -1097,7 +1121,7 @@
                 <button class="sidebar-nav-item active" id="of-nav-dashboard" onclick="switchOfficerTab('dashboard')">01 Dashboard</button>
                 <button class="sidebar-nav-item" id="of-nav-inbox" onclick="switchOfficerTab('inbox')">02 Inbox <span class="inbox-badge-count">6</span></button>
                 <button class="sidebar-nav-item" id="of-nav-action" onclick="switchOfficerTab('action')">03 Take action</button>
-                <button class="sidebar-nav-item" id="of-nav-notify" onclick="switchOfficerTab('notify')">04 Notify citizen</button>
+                <button class="sidebar-nav-item" id="of-nav-notify" onclick="switchOfficerTab('notify')">04 Notify & Ratings ⭐</button>
                 <button class="sidebar-nav-item" id="of-nav-preview" onclick="switchOfficerTab('preview')">05 Citizen preview</button>
                 <button class="sidebar-nav-item" id="of-nav-reports" onclick="switchOfficerTab('reports')">06 Resolution Reports</button>
                 <button class="sidebar-nav-item" id="of-nav-rules" onclick="switchOfficerTab('rules')">07 Officer rules</button>
@@ -1219,36 +1243,222 @@
               </div>
             </div>
 
-            <!-- 04 Notify Citizen -->
+            <!-- 04 Notify Citizen & Citizen Ratings Hub -->
             <div id="officer-view-notify" class="officer-sub-view" style="display:none;">
               <div class="officer-header-row">
-                <div><div class="sub-screen-indicator">04 REPORT TO CITIZEN</div><h1 class="officer-headline">Send Official Update to Resident</h1></div>
+                <div>
+                  <div class="sub-screen-indicator">04 CITIZEN COMMUNICATION & PERFORMANCE RATINGS</div>
+                  <h1 class="officer-headline">Notify Citizens & Resident 5-Star Ratings</h1>
+                  <p style="color:#64748b; font-size:0.85rem; margin-top:2px;">Dispatch official ward alerts, progress advisories, and track citizen satisfaction ratings (out of 5)</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="ratings-score-badge">
+                    <span>⭐</span>
+                    <span id="officer-hub-score-display">4.8 / 5.0</span>
+                    <span style="font-size:0.75rem; opacity:0.85; font-weight:600;">(<span id="officer-hub-count-display">52</span> Ratings)</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Top: Composer & Templates -->
               <div class="notify-two-col-layout">
                 <div class="message-composer-card">
-                  <h3 class="composer-title" id="notify-recipient-title">Message to K. Shah</h3>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <h3 class="composer-title" id="notify-recipient-title" style="margin:0;">Message to Resident</h3>
+                    <span class="ticket-status-pill status-inprogress" id="notify-channel-badge">📱 SMS & In-App Alert</span>
+                  </div>
+
+                  <!-- Recipient Selector -->
                   <div style="margin-bottom:12px;">
-                    <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Language</label>
-                    <div class="language-pill-group">
-                      <button class="lang-pill active" id="pill-lang-gu" onclick="switchNotifyLanguage('gu')">ગુજરાતી</button>
-                      <button class="lang-pill" id="pill-lang-en" onclick="switchNotifyLanguage('en')">English</button>
+                    <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Target Citizen / Resident</label>
+                    <select id="notify-citizen-target-select" class="dt-web-input" style="font-size:0.85rem; padding:8px 12px; background:#fff;" onchange="handleNotifyRecipientChange(this.value)">
+                      <option value="GJ-AMC-2026-18492">Ketan Shah · GJ-AMC-2026-18492 (Streetlight)</option>
+                      <option value="GJ-AMC-2026-18501">Priya Patel · GJ-AMC-2026-18501 (Waterlogging)</option>
+                      <option value="GJ-AMC-2026-18470">Aarav Mehta · GJ-AMC-2026-18470 (Garbage & Waste)</option>
+                      <option value="GJ-AMC-2026-18520">Meera Desai · GJ-AMC-2026-18520 (Water Supply)</option>
+                      <option value="broadcast_all">📢 Broadcast to All Ward 7 Registered Residents</option>
+                    </select>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+                    <div>
+                      <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Language</label>
+                      <div class="language-pill-group">
+                        <button class="lang-pill active" id="pill-lang-gu" onclick="switchNotifyLanguage('gu')">ગુજરાતી</button>
+                        <button class="lang-pill" id="pill-lang-en" onclick="switchNotifyLanguage('en')">English</button>
+                      </div>
+                    </div>
+                    <div>
+                      <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Dispatch Channel</label>
+                      <select id="notify-channel-select" class="dt-web-input" style="font-size:0.82rem; padding:6px 10px; background:#fff;">
+                        <option value="sms_app">📱 SMS & Civic App Push</option>
+                        <option value="whatsapp">💬 WhatsApp Municipal Bot</option>
+                        <option value="broadcast">📢 Ward 7 Resident Broadcast</option>
+                      </select>
                     </div>
                   </div>
+
                   <div style="margin-bottom:14px;">
-                    <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Message Text</label>
-                    <textarea id="notify-msg-textarea" class="notify-textarea" rows="5"></textarea>
+                    <label style="display:block; font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:4px;">Message Text & Citizen Rating Request</label>
+                    <textarea id="notify-msg-textarea" class="notify-textarea" rows="4" placeholder="Enter official update..."></textarea>
                   </div>
-                  <button class="btn-hero-primary" style="width:100%; justify-content:center;" onclick="sendOfficialOfficerUpdate()">
-                    Send Official Update to Resident &rarr;
+                  <button class="btn-hero-primary" style="width:100%; justify-content:center; gap:8px;" onclick="sendOfficialOfficerUpdate()">
+                    <span>🚀</span> Send Official Update & Request Rating &rarr;
                   </button>
                 </div>
+
                 <div class="ready-reports-card">
-                  <div class="card-section-title">Ready Report Templates</div>
+                  <div class="card-section-title">Ready Advisory Templates</div>
                   <div class="ready-templates-list">
                     <div class="ready-template-item" onclick="applyReadyTemplate('work_started')"><strong>Work started</strong><p>Crew reached the site</p></div>
                     <div class="ready-template-item active-template" onclick="applyReadyTemplate('parts_ordered')"><strong>Parts ordered</strong><p>Expected 19 Sep</p></div>
                     <div class="ready-template-item" onclick="applyReadyTemplate('need_photo')"><strong>Need photo</strong><p>Request night pole image</p></div>
-                    <div class="ready-template-item" onclick="applyReadyTemplate('resolved')"><strong>Resolved</strong><p>Verified working</p></div>
+                    <div class="ready-template-item" onclick="applyReadyTemplate('resolved')"><strong>Resolved & Verified</strong><p>Issue closed, rate service</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NEW SECTION: Citizen 5-Star Satisfaction & Rating Evaluation Hub -->
+              <div class="officer-ratings-hub" id="officer-ratings-hub-section">
+                <div class="ratings-header-bar">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:1.4rem;">⭐</span>
+                      <h2 style="font-size:1.25rem; font-weight:800; color:var(--civica-navy); margin:0;">
+                        Citizen 5-Star Ratings & Satisfaction Hub
+                      </h2>
+                    </div>
+                    <p style="color:#64748b; font-size:0.85rem; margin:4px 0 0 0;">
+                      Verified feedback and scores out of 5 submitted by citizens evaluating municipal officer responsiveness and resolution quality.
+                    </p>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="badge-ward-rank" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; padding:6px 12px; border-radius:20px; font-size:0.8rem; font-weight:700;">
+                      🏆 Rank #1 in West Zone (98.2% Satisfaction)
+                    </span>
+                  </div>
+                </div>
+
+                <!-- KPI Scorecards -->
+                <div class="ratings-kpi-grid">
+                  <div class="ratings-kpi-card">
+                    <div class="ratings-kpi-val" style="color:#b45309;" id="kpi-avg-rating">4.8 <span style="font-size:1rem;">/ 5</span></div>
+                    <div class="ratings-kpi-label">Average Citizen Rating</div>
+                  </div>
+                  <div class="ratings-kpi-card">
+                    <div class="ratings-kpi-val" id="kpi-total-ratings">52</div>
+                    <div class="ratings-kpi-label">Total Verified Ratings</div>
+                  </div>
+                  <div class="ratings-kpi-card">
+                    <div class="ratings-kpi-val" style="color:#059669;" id="kpi-fivestar-pct">86%</div>
+                    <div class="ratings-kpi-label">5-Star Excellence Share</div>
+                  </div>
+                  <div class="ratings-kpi-card">
+                    <div class="ratings-kpi-val" style="color:#0284c7;" id="kpi-sla-satisfaction">98.2%</div>
+                    <div class="ratings-kpi-label">SLA Compliance Rating</div>
+                  </div>
+                </div>
+
+                <!-- Main Content Grid: Simulator + Distribution vs Live Feed -->
+                <div class="ratings-main-grid">
+                  <!-- Left: Star Distribution + Citizen Simulator -->
+                  <div style="display:flex; flex-direction:column; gap:20px;">
+                    <!-- Star Breakdown -->
+                    <div class="star-bars-box">
+                      <h4 style="font-size:0.9rem; font-weight:700; color:var(--civica-navy); margin-bottom:14px;">
+                        Rating Distribution Breakdown (Out of 5)
+                      </h4>
+                      <div class="star-bar-row">
+                        <span style="width:55px; font-weight:600; color:#334155;">5 Stars</span>
+                        <div class="star-bar-track"><div class="star-bar-fill" id="bar-star-5" style="width:86%;"></div></div>
+                        <span style="width:35px; text-align:right; font-weight:700; color:#0f172a;" id="count-star-5">45</span>
+                      </div>
+                      <div class="star-bar-row">
+                        <span style="width:55px; font-weight:600; color:#334155;">4 Stars</span>
+                        <div class="star-bar-track"><div class="star-bar-fill" id="bar-star-4" style="width:10%;"></div></div>
+                        <span style="width:35px; text-align:right; font-weight:700; color:#0f172a;" id="count-star-4">5</span>
+                      </div>
+                      <div class="star-bar-row">
+                        <span style="width:55px; font-weight:600; color:#334155;">3 Stars</span>
+                        <div class="star-bar-track"><div class="star-bar-fill" id="bar-star-3" style="width:4%;"></div></div>
+                        <span style="width:35px; text-align:right; font-weight:700; color:#0f172a;" id="count-star-3">2</span>
+                      </div>
+                      <div class="star-bar-row">
+                        <span style="width:55px; font-weight:600; color:#334155;">2 Stars</span>
+                        <div class="star-bar-track"><div class="star-bar-fill" id="bar-star-2" style="width:0%;"></div></div>
+                        <span style="width:35px; text-align:right; font-weight:700; color:#0f172a;" id="count-star-2">0</span>
+                      </div>
+                      <div class="star-bar-row">
+                        <span style="width:55px; font-weight:600; color:#334155;">1 Star</span>
+                        <div class="star-bar-track"><div class="star-bar-fill" id="bar-star-1" style="width:0%;"></div></div>
+                        <span style="width:35px; text-align:right; font-weight:700; color:#0f172a;" id="count-star-1">0</span>
+                      </div>
+                    </div>
+
+                    <!-- Simulator Box -->
+                    <div style="background:#fffbeb; border:1.5px dashed #f59e0b; border-radius:var(--radius-md); padding:20px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 style="font-size:0.92rem; font-weight:800; color:#78350f; margin:0; display:flex; align-items:center; gap:6px;">
+                          <span>✍️</span> Submit / Simulate Citizen Rating (1–5)
+                        </h4>
+                        <span style="font-size:0.75rem; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:10px; font-weight:700;">Live Interactive</span>
+                      </div>
+                      <p style="font-size:0.78rem; color:#92400e; margin-bottom:12px;">
+                        Select a citizen, choose a star rating from 1 to 5, and submit feedback to see it update this section live.
+                      </p>
+
+                      <div style="margin-bottom:12px;">
+                        <label style="font-size:0.75rem; font-weight:700; color:#78350f; display:block; margin-bottom:4px;">Citizen Name & Locality</label>
+                        <select id="sim-citizen-select" class="dt-web-input" style="background:#fff; font-size:0.85rem; padding:8px 10px;">
+                          <option value="Priya Patel · Navrangpura Ward 7">Priya Patel · Navrangpura Ward 7</option>
+                          <option value="Ketan Shah · CG Road Law Garden">Ketan Shah · CG Road Law Garden</option>
+                          <option value="Aarav Mehta · Mithakhali 6 Roads">Aarav Mehta · Mithakhali 6 Roads</option>
+                          <option value="Meera Desai · Stadium Cross Road">Meera Desai · Stadium Cross Road</option>
+                          <option value="Harsh Vardhan · Gulbai Tekra">Harsh Vardhan · Gulbai Tekra</option>
+                        </select>
+                      </div>
+
+                      <div style="margin-bottom:12px;">
+                        <label style="font-size:0.75rem; font-weight:700; color:#78350f; display:block; margin-bottom:4px;">Select Star Rating (out of 5)</label>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                          <div class="star-rating-interactive" id="officer-sim-stars">
+                            <span class="star-btn active" data-val="1" onclick="setOfficerSimStar(1)">★</span>
+                            <span class="star-btn active" data-val="2" onclick="setOfficerSimStar(2)">★</span>
+                            <span class="star-btn active" data-val="3" onclick="setOfficerSimStar(3)">★</span>
+                            <span class="star-btn active" data-val="4" onclick="setOfficerSimStar(4)">★</span>
+                            <span class="star-btn active" data-val="5" onclick="setOfficerSimStar(5)">★</span>
+                          </div>
+                          <strong id="officer-sim-score-text" style="color:#b45309; font-size:0.95rem;">5 / 5 (Exceptional)</strong>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:14px;">
+                        <label style="font-size:0.75rem; font-weight:700; color:#78350f; display:block; margin-bottom:4px;">Citizen Feedback Review</label>
+                        <input type="text" id="officer-sim-comment" class="dt-web-input" placeholder="e.g. Prompt update received, streetlight is working fine now!" value="Rapid response from Officer R. Patel. Notification kept us informed throughout." style="background:#fff; font-size:0.85rem; padding:8px 12px;">
+                      </div>
+
+                      <button type="button" class="btn-hero-primary" style="width:100%; justify-content:center; background:#d97706; border-color:#b45309; font-size:0.88rem;" onclick="submitOfficerSimRating()">
+                        ⭐ Submit Citizen Rating to Portal &rarr;
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Right: Live Citizen Ratings Feed -->
+                  <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                      <h4 style="font-size:0.95rem; font-weight:700; color:var(--civica-navy); margin:0;">
+                        Live Citizen Reviews & Star Ratings Feed
+                      </h4>
+                      <div style="display:flex; gap:6px;">
+                        <button class="inbox-filter-btn active" id="btn-filter-rate-all" onclick="filterOfficerRatings('all')">All</button>
+                        <button class="inbox-filter-btn" id="btn-filter-rate-5" onclick="filterOfficerRatings(5)">5 ★</button>
+                        <button class="inbox-filter-btn" id="btn-filter-rate-4" onclick="filterOfficerRatings(4)">4 ★</button>
+                      </div>
+                    </div>
+
+                    <div class="citizen-reviews-list" id="officer-reviews-container">
+                      <!-- Rendered by JS -->
+                    </div>
                   </div>
                 </div>
               </div>

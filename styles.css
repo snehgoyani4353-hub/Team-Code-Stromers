@@ -4058,4 +4058,178 @@ input, select, textarea { font-family: inherit; }
   background: #bae6fd;
 }
 
+/* ==========================================================================
+   OFFICER CITIZEN NOTIFICATION & 5-STAR RATINGS HUB
+   ========================================================================== */
+.officer-ratings-hub {
+  margin-top: 26px;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-sm);
+}
+.ratings-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 22px;
+}
+.ratings-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1.5px solid #f59e0b;
+  padding: 6px 16px;
+  border-radius: 30px;
+  color: #78350f;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+.ratings-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.ratings-kpi-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  text-align: center;
+}
+.ratings-kpi-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--civica-navy);
+}
+.ratings-kpi-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.ratings-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+}
+.star-bars-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+.star-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+.star-bar-track {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.star-bar-fill {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.star-rating-interactive {
+  display: inline-flex;
+  gap: 6px;
+}
+.star-btn {
+  font-size: 1.6rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+  user-select: none;
+}
+.star-btn:hover, .star-btn.active {
+  color: #f59e0b;
+  transform: scale(1.16);
+}
+.citizen-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.citizen-review-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.citizen-review-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.review-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.review-citizen-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.citizen-avatar-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.star-badge-gold {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef08a;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.review-quote-text {
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.review-footer-tag {
+  font-size: 0.74rem;
+  color: #64748b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 

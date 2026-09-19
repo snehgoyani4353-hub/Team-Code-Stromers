@@ -161,6 +161,69 @@ const I18N_DATA = {
   }
 };
 
+const DEFAULT_CITIZEN_RATINGS = [
+  {
+    id: 'RAT-501',
+    citizen: 'Priya Patel',
+    ward: 'Ward 7 · Navrangpura',
+    stars: 5,
+    ticketId: 'GJ-AMC-2026-18501',
+    notificationId: 'NOTIF-102',
+    serviceType: 'Waterlogging & Jetting',
+    comment: 'Water receded completely within 45 minutes of the jetting truck arriving. Officer R. Patel kept us updated on WhatsApp. Outstanding efficiency!',
+    timestamp: '42 mins ago',
+    verifiedResident: true
+  },
+  {
+    id: 'RAT-502',
+    citizen: 'Ketan Shah',
+    ward: 'Ward 7 · Law Garden',
+    stars: 5,
+    ticketId: 'GJ-AMC-2026-18492',
+    notificationId: 'NOTIF-101',
+    serviceType: 'Streetlight Maintenance',
+    comment: 'Prompt inspection and SMS alert received. Transparent communication about part arrival and dark spot eliminated.',
+    timestamp: '2 hours ago',
+    verifiedResident: true
+  },
+  {
+    id: 'RAT-503',
+    citizen: 'Aarav Mehta',
+    ward: 'Ward 7 · Mithakhali',
+    stars: 4,
+    ticketId: 'GJ-AMC-2026-18470',
+    notificationId: 'NOTIF-103',
+    serviceType: 'Solid Waste Clearing',
+    comment: 'Waste cleared cleanly and ₹50 escrow refunded instantly. Very happy with the automated verification process.',
+    timestamp: 'Yesterday',
+    verifiedResident: true
+  },
+  {
+    id: 'RAT-504',
+    citizen: 'Meera Desai',
+    ward: 'Ward 7 · CG Road',
+    stars: 5,
+    ticketId: 'GJ-AMC-2026-18520',
+    notificationId: 'NOTIF-104',
+    serviceType: 'Electrical Repair',
+    comment: 'Great initiative by AMC. Direct alerts make citizens feel heard and accountable. Full 5 stars!',
+    timestamp: 'Yesterday',
+    verifiedResident: true
+  },
+  {
+    id: 'RAT-505',
+    citizen: 'Harsh Vardhan',
+    ward: 'Ward 7 · Stadium Road',
+    stars: 5,
+    ticketId: 'GJ-AMC-2026-18535',
+    notificationId: 'NOTIF-105',
+    serviceType: 'Pothole Resurfacing',
+    comment: 'Cold mix patch laid down before morning rush hour. Smooth driving restored.',
+    timestamp: '2 days ago',
+    verifiedResident: true
+  }
+];
+
 let appState = {
   currentView: 'landing', // 'landing' | 'citizen-desktop' | 'officer'
   currentUser: null,
@@ -183,7 +246,11 @@ let appState = {
   inboxTickets: [...window.GUJARAT_CIVIC_DATA.inboxTickets],
   savedAddresses: [...(window.GUJARAT_CIVIC_DATA?.defaultAddresses || [])],
   selectedIssueType: 'streetlight',
-  heatmapVisible: false
+  heatmapVisible: false,
+  simRatingVal: 5,
+  citizenTrackRatingScore: 5,
+  ratingsFilter: 'all',
+  citizenRatings: [...DEFAULT_CITIZEN_RATINGS]
 };
 
 // Map Engine Global
@@ -204,6 +271,7 @@ function initMasterState() {
   const savedComplaints = localStorage.getItem('civica_complaints');
   const savedWallet = localStorage.getItem('civica_wallet');
   const savedAddresses = localStorage.getItem('civica_addresses');
+  const savedRatings = localStorage.getItem('civica_citizen_ratings');
 
   if (savedComplaints) {
     try { appState.complaints = JSON.parse(savedComplaints); } catch (e) {}
@@ -214,8 +282,14 @@ function initMasterState() {
   if (savedAddresses) {
     try { appState.savedAddresses = JSON.parse(savedAddresses); } catch (e) {}
   }
+  if (savedRatings) {
+    try { appState.citizenRatings = JSON.parse(savedRatings); } catch (e) {}
+  }
   if (!appState.savedAddresses || appState.savedAddresses.length === 0) {
     appState.savedAddresses = [...(window.GUJARAT_CIVIC_DATA?.defaultAddresses || [])];
+  }
+  if (!appState.citizenRatings || appState.citizenRatings.length === 0) {
+    appState.citizenRatings = [...DEFAULT_CITIZEN_RATINGS];
   }
 
   appState.selectedOfficerTicket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
@@ -225,6 +299,7 @@ function saveMasterState() {
   localStorage.setItem('civica_complaints', JSON.stringify(appState.complaints));
   localStorage.setItem('civica_wallet', JSON.stringify(appState.citizenWallet));
   localStorage.setItem('civica_addresses', JSON.stringify(appState.savedAddresses));
+  localStorage.setItem('civica_citizen_ratings', JSON.stringify(appState.citizenRatings));
 }
 
 // Language Switcher (Clean English Default)
@@ -1765,7 +1840,7 @@ window.switchOfficerTab = function(tabKey) {
       'dashboard': '01 Today\'s Shift',
       'inbox': '02 Complaint Inbox',
       'action': '03 Take Action & Escrow',
-      'notify': '04 Notify Citizen',
+      'notify': '04 Notify & Ratings (5★)',
       'preview': '05 Citizen Preview',
       'reports': '06 Municipal Resolution & Audit Reports',
       'rules': '07 Officer Rules'
@@ -1775,6 +1850,9 @@ window.switchOfficerTab = function(tabKey) {
 
   if (tabKey === 'reports') {
     initResolutionAuditReports();
+  } else if (tabKey === 'notify') {
+    renderOfficerNotify(appState.selectedOfficerTicketId);
+    renderOfficerRatingsSection();
   }
 };
 
@@ -1998,11 +2076,36 @@ window.officerQuickDecide = function(decision) {
   renderDesktopPortal();
 };
 
+window.handleNotifyRecipientChange = function(targetVal) {
+  if (targetVal === 'broadcast_all') {
+    const titleEl = document.getElementById('notify-recipient-title');
+    if (titleEl) titleEl.textContent = 'Broadcast Alert to All Ward 7 Citizens';
+    const channelBadge = document.getElementById('notify-channel-badge');
+    if (channelBadge) channelBadge.textContent = '📢 Ward-wide Broadcast Push';
+    const msgBox = document.getElementById('notify-msg-textarea');
+    if (msgBox) msgBox.value = 'AMC Ward 7 Advisory: Scheduled preventive maintenance across electrical feeders today from 14:00 to 16:00. Please rate AMC communication upon restoration.';
+    return;
+  }
+  appState.selectedOfficerTicketId = targetVal;
+  renderOfficerNotify(targetVal);
+};
+
 function renderOfficerNotify(ticketId) {
   const ticket = appState.complaints.find(c => c.id === ticketId) || appState.complaints[0];
   if (!ticket) return;
-  document.getElementById('notify-recipient-title').textContent = `Message to ${ticket.citizen || 'K. Shah'}`;
+
+  const titleEl = document.getElementById('notify-recipient-title');
+  if (titleEl) titleEl.textContent = `Message to ${ticket.citizen || 'K. Shah'}`;
+
+  const targetSelect = document.getElementById('notify-citizen-target-select');
+  if (targetSelect && ticket.id) {
+    if (targetSelect.querySelector(`option[value="${ticket.id}"]`)) {
+      targetSelect.value = ticket.id;
+    }
+  }
+
   applyReadyTemplate(appState.activeTemplateKey);
+  renderOfficerRatingsSection();
 }
 
 window.switchNotifyLanguage = function(lang) {
@@ -2031,18 +2134,236 @@ window.applyReadyTemplate = function(templateKey) {
 
 window.sendOfficialOfficerUpdate = function() {
   const msg = document.getElementById('notify-msg-textarea')?.value.trim();
-  if (!msg) return;
+  if (!msg) {
+    alert('Please enter an official notification message for the citizen.');
+    return;
+  }
 
-  const ticket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId);
+  const ticket = appState.complaints.find(c => c.id === appState.selectedOfficerTicketId) || appState.complaints[0];
   if (ticket) {
     ticket.note = msg;
     saveMasterState();
-    document.getElementById('live-received-note-text').textContent = msg;
+
+    const livePreview = document.getElementById('live-received-note-text');
+    if (livePreview) livePreview.textContent = msg;
+
+    const dtTicketNote = document.getElementById('dt-ticket-note');
+    if (dtTicketNote) dtTicketNote.textContent = msg;
+
     renderDesktopPortal();
-    showCivicaToast(`સત્તાવાર અપડેટ મોકલાયું! Notification dispatched.`);
+    showCivicaToast(`🚀 Notification dispatched to ${ticket.citizen || 'resident'}! Rating request sent.`);
     switchOfficerTab('preview');
   }
 };
+
+/* ==========================================================================
+   OFFICER CITIZEN 5-STAR RATINGS HUB CONTROLLERS
+   ========================================================================== */
+
+window.setOfficerSimStar = function(val) {
+  appState.simRatingVal = val;
+  const starLabels = {
+    1: '1 / 5 (Needs Improvement)',
+    2: '2 / 5 (Below Average)',
+    3: '3 / 5 (Satisfactory)',
+    4: '4 / 5 (Very Good)',
+    5: '5 / 5 (Exceptional)'
+  };
+  const scoreTxt = document.getElementById('officer-sim-score-text');
+  if (scoreTxt) scoreTxt.textContent = starLabels[val] || `${val} / 5`;
+
+  const starBtns = document.querySelectorAll('#officer-sim-stars .star-btn');
+  starBtns.forEach((btn) => {
+    const btnVal = Number(btn.getAttribute('data-val') || 0);
+    btn.classList.toggle('active', btnVal <= val);
+  });
+};
+
+window.submitOfficerSimRating = function() {
+  const citizenMeta = document.getElementById('sim-citizen-select')?.value || 'Priya Patel · Navrangpura Ward 7';
+  const parts = citizenMeta.split(' · ');
+  const citizenName = parts[0] || 'Resident';
+  const wardName = parts[1] || 'Ward 7';
+  const stars = appState.simRatingVal || 5;
+  const comment = document.getElementById('officer-sim-comment')?.value.trim() || 'Prompt municipal communication and fast field resolution!';
+
+  const newRating = {
+    id: `RAT-${Math.floor(100 + Math.random() * 900)}`,
+    citizen: citizenName,
+    ward: wardName,
+    stars: stars,
+    ticketId: appState.selectedOfficerTicketId || 'GJ-AMC-2026-18492',
+    notificationId: `NOTIF-${Math.floor(100 + Math.random() * 900)}`,
+    serviceType: 'Officer Response & Resolution',
+    comment: comment,
+    timestamp: 'Just now',
+    verifiedResident: true
+  };
+
+  if (!appState.citizenRatings) appState.citizenRatings = [];
+  appState.citizenRatings.unshift(newRating);
+  saveMasterState();
+
+  renderOfficerRatingsSection();
+  showCivicaToast(`⭐ Rating of ${stars}/5 recorded from ${citizenName}!`);
+};
+
+window.setCitizenRatingScore = function(score) {
+  appState.citizenTrackRatingScore = score;
+  const labels = {
+    1: '1 / 5 (Poor)',
+    2: '2 / 5 (Fair)',
+    3: '3 / 5 (Good)',
+    4: '4 / 5 (Very Good)',
+    5: '5 / 5 (Excellent Service)'
+  };
+  const disp = document.getElementById('citizen-star-score-display');
+  if (disp) disp.textContent = labels[score] || `${score} / 5`;
+
+  const starBtns = document.querySelectorAll('#citizen-star-selector .star-btn');
+  starBtns.forEach((btn, idx) => {
+    btn.classList.toggle('active', idx < score);
+  });
+};
+
+window.submitCitizenRatingFromTrack = function() {
+  const score = appState.citizenTrackRatingScore || 5;
+  const comment = document.getElementById('citizen-rating-comment-input')?.value.trim() || 'Very prompt update from Officer R. Patel. Fixture replacement was well-communicated.';
+  const citizenName = appState.currentUser ? appState.currentUser.name : 'Priya Patel';
+
+  const newRating = {
+    id: `RAT-${Math.floor(100 + Math.random() * 900)}`,
+    citizen: citizenName,
+    ward: 'Ward 7 · Navrangpura',
+    stars: score,
+    ticketId: appState.selectedOfficerTicketId || 'GJ-AMC-2026-18492',
+    notificationId: 'NOTIF-OFFICIAL',
+    serviceType: 'Field Engineering & Resolution',
+    comment: comment,
+    timestamp: 'Just now',
+    verifiedResident: true
+  };
+
+  if (!appState.citizenRatings) appState.citizenRatings = [];
+  appState.citizenRatings.unshift(newRating);
+  saveMasterState();
+
+  const statusTag = document.getElementById('citizen-rate-status-tag');
+  if (statusTag) {
+    statusTag.textContent = `✓ Rating of ${score}/5 Submitted to Officer!`;
+    statusTag.style.color = '#059669';
+  }
+  showCivicaToast(`⭐ Thank you! Your rating of ${score}/5 was submitted to Officer R. Patel.`);
+  renderOfficerRatingsSection();
+};
+
+window.filterOfficerRatings = function(starFilter) {
+  appState.ratingsFilter = starFilter;
+  document.querySelectorAll('#officer-ratings-hub-section .inbox-filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  if (starFilter === 'all') {
+    document.getElementById('btn-filter-rate-all')?.classList.add('active');
+  } else if (Number(starFilter) === 5) {
+    document.getElementById('btn-filter-rate-5')?.classList.add('active');
+  } else if (Number(starFilter) === 4) {
+    document.getElementById('btn-filter-rate-4')?.classList.add('active');
+  }
+  renderRatingsFeed(starFilter);
+};
+
+window.renderOfficerRatingsSection = function() {
+  if (!appState.citizenRatings || appState.citizenRatings.length === 0) {
+    appState.citizenRatings = [...DEFAULT_CITIZEN_RATINGS];
+  }
+
+  const ratings = appState.citizenRatings;
+  const total = ratings.length;
+  if (total === 0) return;
+
+  const sum = ratings.reduce((acc, r) => acc + Number(r.stars), 0);
+  const avg = (sum / total).toFixed(1);
+
+  const count5 = ratings.filter(r => Number(r.stars) === 5).length;
+  const count4 = ratings.filter(r => Number(r.stars) === 4).length;
+  const count3 = ratings.filter(r => Number(r.stars) === 3).length;
+  const count2 = ratings.filter(r => Number(r.stars) === 2).length;
+  const count1 = ratings.filter(r => Number(r.stars) === 1).length;
+
+  const pct5 = Math.round((count5 / total) * 100);
+  const pct4 = Math.round((count4 / total) * 100);
+  const pct3 = Math.round((count3 / total) * 100);
+  const pct2 = Math.round((count2 / total) * 100);
+  const pct1 = Math.round((count1 / total) * 100);
+
+  // Update Scorecards
+  const hubScore = document.getElementById('officer-hub-score-display');
+  if (hubScore) hubScore.textContent = `${avg} / 5.0`;
+  const hubCount = document.getElementById('officer-hub-count-display');
+  if (hubCount) hubCount.textContent = total;
+
+  const kpiAvg = document.getElementById('kpi-avg-rating');
+  if (kpiAvg) kpiAvg.innerHTML = `${avg} <span style="font-size:1rem;">/ 5</span>`;
+  const kpiTotal = document.getElementById('kpi-total-ratings');
+  if (kpiTotal) kpiTotal.textContent = total;
+  const kpi5 = document.getElementById('kpi-fivestar-pct');
+  if (kpi5) kpi5.textContent = `${pct5}%`;
+
+  // Update Bars
+  const b5 = document.getElementById('bar-star-5'); if (b5) b5.style.width = `${pct5}%`;
+  const b4 = document.getElementById('bar-star-4'); if (b4) b4.style.width = `${pct4}%`;
+  const b3 = document.getElementById('bar-star-3'); if (b3) b3.style.width = `${pct3}%`;
+  const b2 = document.getElementById('bar-star-2'); if (b2) b2.style.width = `${pct2}%`;
+  const b1 = document.getElementById('bar-star-1'); if (b1) b1.style.width = `${pct1}%`;
+
+  const c5 = document.getElementById('count-star-5'); if (c5) c5.textContent = count5;
+  const c4 = document.getElementById('count-star-4'); if (c4) c4.textContent = count4;
+  const c3 = document.getElementById('count-star-3'); if (c3) c3.textContent = count3;
+  const c2 = document.getElementById('count-star-2'); if (c2) c2.textContent = count2;
+  const c1 = document.getElementById('count-star-1'); if (c1) c1.textContent = count1;
+
+  // Render Reviews List
+  renderRatingsFeed(appState.ratingsFilter || 'all');
+};
+
+function renderRatingsFeed(filter) {
+  const container = document.getElementById('officer-reviews-container');
+  if (!container) return;
+
+  let list = appState.citizenRatings || [];
+  if (filter && filter !== 'all') {
+    list = list.filter(r => Number(r.stars) === Number(filter));
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = '<div style="padding:20px; text-align:center; color:#64748b;">No reviews found for this filter.</div>';
+    return;
+  }
+
+  container.innerHTML = list.map(item => {
+    const starStr = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+    const initials = item.citizen.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    return `
+      <div class="citizen-review-item">
+        <div class="review-top-row">
+          <div class="review-citizen-meta">
+            <div class="citizen-avatar-pill">${initials}</div>
+            <div>
+              <strong style="color:var(--civica-navy); font-size:0.9rem;">${item.citizen}</strong>
+              <div style="font-size:0.72rem; color:#64748b;">${item.ward || 'Ward 7'} · <span style="color:#059669; font-weight:600;">✓ Verified Resident</span></div>
+            </div>
+          </div>
+          <span class="star-badge-gold">${starStr} ${item.stars} / 5</span>
+        </div>
+        <p class="review-quote-text">"${item.comment}"</p>
+        <div class="review-footer-tag">
+          <span>Ticket: <strong>${item.ticketId}</strong> · ${item.serviceType || 'Municipal Service'}</span>
+          <span>${item.timestamp}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
 
 /* ==========================================================================
    COMMAND CENTER & GEOSPATIAL DISPATCH TERMINAL CONTROLLERS
@@ -3207,6 +3528,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMasterState();
   renderOfficerDashboard();
   initResolutionAuditReports();
+  renderOfficerRatingsSection();
   renderDesktopPortal();
   renderCivicWallet();
   setAppLanguage(appState.language, false);
