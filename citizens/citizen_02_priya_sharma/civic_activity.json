@@ -1,0 +1,37 @@
+﻿{
+    "activeBadges":  [
+                         "Civic Champion",
+                         "Monsoon Hero",
+                         "Top Upvoter"
+                     ],
+    "citizenName":  "Priya Sharma",
+    "citizenId":  "CIT-002",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 04 - Athwa",
+    "cryptographicVerificationHash":  "68f3e7ba17114679b4d0985671c04515",
+    "verifiedComplaintsCount":  7,
+    "totalCommunityUpvotes":  72,
+    "civicReputationScore":  "99.5%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  350,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  350,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

@@ -1,0 +1,39 @@
+﻿{
+    "currentShiftLog":  [
+                            {
+                                "time":  "08:15 IST",
+                                "status":  "Completed",
+                                "action":  "Shift Handover \u0026 Digital Radio Frequency Sync (Channel 14)"
+                            },
+                            {
+                                "time":  "09:30 IST",
+                                "status":  "Authorized",
+                                "action":  "Approved Rapid Fleet Mobilization for Subway Inundation Drainage"
+                            },
+                            {
+                                "time":  "11:00 IST",
+                                "status":  "Approved",
+                                "action":  "Verified Citizen Photographic Evidence and released ₹50 Escrow Refund on 8 Resolved Tickets"
+                            },
+                            {
+                                "time":  "13:45 IST",
+                                "status":  "Synchronized",
+                                "action":  "Mid-Shift Tactical Review with Central Command Center Operator"
+                            }
+                        ],
+    "badgeNumber":  "SMC-COMM-01",
+    "officerName":  "Rajesh Parmar",
+    "dispatchClearance":  "Tier 1",
+    "assignedRapidUnits":  [
+                               "Crew 14 (Electrical)",
+                               "Unit 08 (Cold-Mix Patcher)",
+                               "Tractor Suction Alpha"
+                           ],
+    "slaComplianceScore":  "98.6%",
+    "totalDispatchesAuthorized":  342,
+    "officerId":  "ADM-001",
+    "digitalSignature":  "07a553b4b7464e99a8ba6ed6d0cbea99",
+    "department":  "Central Admin \u0026 Operations",
+    "biometricTerminalId":  "SMC-TER-HQ-092",
+    "designation":  "Senior Ward Commissioner"
+}

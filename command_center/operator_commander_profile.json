@@ -1,0 +1,38 @@
+{
+  "operatorId": "CMD-ICCC-001",
+  "fullName": "Commander Vikramaditya Rathore",
+  "designation": "Chief Tactical Incident Commander & State Operations Director",
+  "department": "Integrated Command & Control Centre (ICCC) — Gujarat Smart Cities Mission",
+  "clearanceLevel": "Tier 1 - Executive Multi-Agency Dispatch Authority",
+  "jurisdiction": "Statewide Municipal Grid (AMC, SMC, VMC, RMC, GMC)",
+  "officialEmail": "commander.rathore@iccc.gujarat.gov.in",
+  "emergencyHotline": "+91 79 2325 0001",
+  "badgeNumber": "GUJ-ICCC-TACTICAL-01",
+  "deskStation": "Tactical Operations Console 01, Central ICCC War Room, Sector 7, Gandhinagar",
+  "shiftTimings": "24x7 Strategic Rotation (Shift Alpha Commander: 06:00 - 18:00 IST)",
+  "radioCallsign": "GUJARAT-COMMAND-EAGLE-1",
+  "biometricStatus": "Verified Multi-Factor Hardware Security Key & Iris Protocol Active",
+  "activeSupervisedAgencies": [
+    "Ahmedabad Municipal Corporation (AMC) Rapid Works Wing",
+    "Surat Municipal Corporation (SMC) Emergency Cell",
+    "Vadodara Municipal Corporation (VMC) Hydraulics Squad",
+    "Rajkot Municipal Corporation (RMC) Highway Fleet",
+    "Gujarat State Disaster Management Authority (GSDMA)",
+    "Gujarat Metro Rail & BRTS Transit Control Grid"
+  ],
+  "authorizedProtocols": [
+    "PROTOCOL-RED-01: Citywide Subway & Underpass Flood Dewatering Dispatch",
+    "PROTOCOL-AMBER-02: Rapid Asphalt Cold-Mix Patching Fleet Mobilization",
+    "PROTOCOL-BLUE-03: High-Voltage Streetlight & Substation Fault Isolation",
+    "PROTOCOL-GREEN-04: Automated Anti-Spam Citizen Escrow Verification & Immediate ₹50 Refund",
+    "PROTOCOL-EMERG-05: Civil Broadcast Ticker Push across State Mobile Terminals"
+  ],
+  "performanceMetrics": {
+    "lifetimeDispatches": 14280,
+    "currentShiftActiveIncidents": 18,
+    "averageDispatchLatencySeconds": 42.6,
+    "slaComplianceRate": "98.7%",
+    "activeFleetsTracked": 34,
+    "incidentResolutionVelocity": "3.4 hrs MTTR"
+  }
+}

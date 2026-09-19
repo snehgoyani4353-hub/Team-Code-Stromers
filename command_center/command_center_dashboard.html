@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander Vikramaditya Rathore — Integrated Tactical Command Center | CIVICA Gujarat</title>
+  <meta name="description" content="Dedicated high-density operational console for Gujarat Integrated Command and Control Centre (ICCC). Live geospatial incident triage, emergency fleet telemetry, and automated citizen escrow refunds.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    body {
+      background: #060913;
+      color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .operator-header-bar {
+      background: rgba(10, 15, 29, 0.95);
+      border-bottom: 1px solid #1e293b;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
+    .commander-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .commander-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+    }
+    .status-pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnim 2s infinite;
+    }
+    @keyframes pulseAnim {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .standalone-map {
+      height: 520px;
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+      background: #080d1a;
+    }
+    .telemetry-ticker-bar {
+      background: #0b1329;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .ticker-stream {
+      color: #38bdf8;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 70%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Tactical Header -->
+  <header class="operator-header-bar">
+    <div class="commander-badge">
+      <div class="commander-avatar">VR</div>
+      <div>
+        <div style="font-weight:800; font-size:1.05rem; display:flex; align-items:center; gap:8px;">
+          Commander Vikramaditya Rathore
+          <span style="font-size:0.7rem; background:#1e1b4b; color:#a5b4fc; border:1px solid #6366f1; padding:2px 8px; border-radius:4px;">TACTICAL CHIEF</span>
+        </div>
+        <div style="font-size:0.78rem; color:#94a3b8;">
+          <span class="status-pulse-dot"></span> State ICCC Console 01 &bull; Clearance Tier 1 &bull; VHF 144.600 MHz
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div id="tactical-clock" style="font-family:monospace; font-size:0.95rem; color:#38bdf8; background:#0f172a; padding:6px 14px; border-radius:6px; border:1px solid #1e293b;">
+        --:--:-- IST
+      </div>
+      <button onclick="tacticalEngine.exportTelemetryCSV()" class="btn-map-ctl" style="background:#0284c7; color:white; border-color:#0284c7;">
+        <i class="fa-solid fa-file-arrow-down"></i> Export Telemetry CSV
+      </button>
+      <a href="../index.html" class="btn-map-ctl" style="background:#1e293b; text-decoration:none;">
+        &larr; Return to Central Hub
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="command-center-container" style="max-width: 1440px; margin: 0 auto;">
+
+    <!-- Top KPI Grid -->
+    <div class="command-kpi-grid">
+      <div class="command-kpi-card">
+        <div class="kpi-head-row">
+          <span class="kpi-title-sub">Active State Incidents</span>
+          <span style="color:#ef4444; font-size:1.2rem;">🚨</span>
+        </div>
+        <div class="kpi-stat-huge" id="stat-active-incidents">12</div>
+        <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">Across 5 Municipal Corporations</div>
+      </div>
+
+      <div class="command-kpi-card">
+        <div class="kpi-head-row">
+          <span class="kpi-title-sub">Rapid Fleets Dispatched</span>
+          <span style="color:#38bdf8; font-size:1.2rem;">🚒</span>
+        </div>
+        <div class="kpi-stat-huge" style="color:#38bdf8;" id="stat-fleets-deployed">6</div>
+        <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">Dewatering, asphalt & electrical vans</div>
+      </div>
+
+      <div class="command-kpi-card">
+        <div class="kpi-head-row">
+          <span class="kpi-title-sub">Average Resolution Velocity</span>
+          <span style="color:#10b981; font-size:1.2rem;">⚡</span>
+        </div>
+        <div class="kpi-stat-huge" style="color:#10b981;">3.4 hrs</div>
+        <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">Target: &lt; 6.0 hrs SLA Standard</div>
+      </div>
+
+      <div class="command-kpi-card">
+        <div class="kpi-head-row">
+          <span class="kpi-title-sub">Escrow Deposits Refunded</span>
+          <span style="color:#f59e0b; font-size:1.2rem;">🛡️</span>
+        </div>
+        <div class="kpi-stat-huge" style="color:#f59e0b;">99.4%</div>
+        <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">Zero false penalty rate</div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Stream Ticker -->
+    <div class="telemetry-ticker-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="color:#10b981; font-weight:800;">● LIVE TELEMETRY</span>
+      </div>
+      <div class="ticker-stream" id="ticker-text">
+        Connecting to Gujarat Smart City ICCC MQTT broker... Sensor telemetry online.
+      </div>
+      <div style="color:#94a3b8; font-size:0.75rem;">
+        REFRESH: 4s
+      </div>
+    </div>
+
+    <!-- Tactical Geospatial Map Card -->
+    <div class="tactical-map-card">
+      <div class="map-card-header">
+        <div>
+          <h2 style="font-family:'Outfit', sans-serif; font-size:1.3rem; margin:0 0 4px 0; color:#ffffff;">
+            Geospatial Radar & Real-Time Incident Matrix
+          </h2>
+          <p style="font-size:0.8rem; color:#94a3b8; margin:0;">
+            Real-time GPS positioning of civic hazards, road potholes, waterlogging, and responding municipal crews.
+          </p>
+        </div>
+
+        <div class="map-controls-group">
+          <!-- City Focus Selector -->
+          <select id="operator-city-select" onchange="switchOperatorCity(this.value)" class="btn-map-ctl" style="outline:none; cursor:pointer;">
+            <option value="AMC">Ahmedabad (AMC)</option>
+            <option value="SMC">Surat (SMC)</option>
+            <option value="VMC">Vadodara (VMC)</option>
+            <option value="RMC">Rajkot (RMC)</option>
+            <option value="GMC">Gandhinagar (GMC)</option>
+          </select>
+
+          <!-- Category Filter Toggles -->
+          <div class="map-layer-toggles">
+            <label style="cursor:pointer;"><input type="checkbox" checked onchange="toggleCategoryLayer('waterlogging', this.checked)"> 🌊 Flood</label>
+            <label style="cursor:pointer;"><input type="checkbox" checked onchange="toggleCategoryLayer('pothole', this.checked)"> 🚧 Roads</label>
+            <label style="cursor:pointer;"><input type="checkbox" checked onchange="toggleCategoryLayer('streetlight', this.checked)"> 💡 Light</label>
+            <label style="cursor:pointer;"><input type="checkbox" checked onchange="toggleCategoryLayer('fleets', this.checked)"> 🚒 Fleets</label>
+          </div>
+
+          <button onclick="playDemoSiren()" class="btn-map-ctl" style="background:#dc2626; color:white; border-color:#dc2626;" title="Test Emergency Siren Audio">
+            🚨 Test Siren
+          </button>
+        </div>
+      </div>
+
+      <!-- Map Container -->
+      <div id="operator-map" class="standalone-map"></div>
+    </div>
+
+    <!-- 4-Lane Kanban Triage Board -->
+    <div style="margin-top:36px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-family:'Outfit', sans-serif; font-size:1.35rem; margin:0; color:#ffffff;">
+          Multi-Corporation Incident Triage & Dispatch Kanban
+        </h2>
+        <span style="font-size:0.8rem; color:#94a3b8;">
+          Auto-dispatches nearest municipal crew upon SLA escalation
+        </span>
+      </div>
+
+      <div class="kanban-grid-4col" id="kanban-container">
+        <!-- Lane 1: Triage -->
+        <div class="kanban-lane" id="lane-triage">
+          <div class="kanban-lane-header">
+            <span class="lane-title-text"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> 01 Emergency Triage</span>
+            <span class="lane-card-badge" id="badge-triage">0</span>
+          </div>
+          <div class="kanban-cards-stack" id="stack-triage"></div>
+        </div>
+
+        <!-- Lane 2: Dispatched -->
+        <div class="kanban-lane" id="lane-dispatched">
+          <div class="kanban-lane-header">
+            <span class="lane-title-text"><i class="fa-solid fa-truck-fast" style="color:#38bdf8;"></i> 02 Dispatched & Transit</span>
+            <span class="lane-card-badge" id="badge-dispatched">0</span>
+          </div>
+          <div class="kanban-cards-stack" id="stack-dispatched"></div>
+        </div>
+
+        <!-- Lane 3: On-Site -->
+        <div class="kanban-lane" id="lane-on_site">
+          <div class="kanban-lane-header">
+            <span class="lane-title-text"><i class="fa-solid fa-wrench" style="color:#f59e0b;"></i> 03 On-Site Remediation</span>
+            <span class="lane-card-badge" id="badge-on_site">0</span>
+          </div>
+          <div class="kanban-cards-stack" id="stack-on_site"></div>
+        </div>
+
+        <!-- Lane 4: Resolved -->
+        <div class="kanban-lane" id="lane-resolved">
+          <div class="kanban-lane-header">
+            <span class="lane-title-text"><i class="fa-solid fa-check-double" style="color:#10b981;"></i> 04 Verified & Resolved</span>
+            <span class="lane-card-badge" id="badge-resolved">0</span>
+          </div>
+          <div class="kanban-cards-stack" id="stack-resolved"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Leaflet and Tactical Engine Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="command_system.js"></script>
+
+  <script>
+    let mapInstance = null;
+    let incidentMarkers = [];
+    let fleetMarkers = [];
+
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false });
+      const clockEl = document.getElementById('tactical-clock');
+      if (clockEl) clockEl.textContent = `${timeStr} IST`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Initialize Standalone Operator Console
+    window.addEventListener('DOMContentLoaded', async () => {
+      await tacticalEngine.initialize();
+      initOperatorMap();
+      renderOperatorKanban();
+
+      // Listen to telemetry updates
+      tacticalEngine.on('telemetryTick', (data) => {
+        const ticker = document.getElementById('ticker-text');
+        if (ticker) {
+          ticker.textContent = `[${new Date().toLocaleTimeString()}] Telemetry Sync: ${data.activeIncidents} active incidents | ${data.fleetsInTransit} units en route | Multi-agency VHF repeater active`;
+        }
+        updateFleetPositions();
+      });
+
+      tacticalEngine.on('incidentUpdated', () => {
+        renderOperatorKanban();
+        renderMarkers();
+      });
+    });
+
+    function initOperatorMap() {
+      const amcCoords = [23.0375, 72.5625];
+      mapInstance = L.map('operator-map', {
+        center: amcCoords,
+        zoom: 13,
+        zoomControl: true
+      });
+
+      // Dark tactical tile layer
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(mapInstance);
+
+      renderMarkers();
+    }
+
+    function renderMarkers() {
+      incidentMarkers.forEach(m => mapInstance.removeLayer(m));
+      incidentMarkers = [];
+
+      tacticalEngine.incidents.forEach(inc => {
+        const catIcons = {
+          waterlogging: '🌊',
+          pothole: '🚧',
+          streetlight: '💡',
+          garbage: '🗑️',
+          water: '💧',
+          brts: '🚌'
+        };
+        const iconSymbol = catIcons[inc.category] || '⚠️';
+        const sevColor = inc.severity === 'critical' ? '#ef4444' : inc.severity === 'high' ? '#f59e0b' : '#38bdf8';
+
+        const customIcon = L.divIcon({
+          className: 'custom-radar-pin',
+          html: `<div style="background:${sevColor}; width:32px; height:32px; border-radius:50%; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 0 12px ${sevColor}; cursor:pointer;">${iconSymbol}</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+
+        const marker = L.marker(inc.coords, { icon: customIcon }).addTo(mapInstance);
+        marker.bindPopup(`
+          <div style="color:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; min-width:240px; padding:4px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:800; color:#0284c7; margin-bottom:4px;">
+              <span>${inc.id}</span>
+              <span style="text-transform:uppercase; color:${sevColor};">${inc.severity}</span>
+            </div>
+            <h4 style="margin:0 0 6px 0; font-size:0.95rem; line-height:1.3;">${inc.title}</h4>
+            <p style="margin:0 0 8px 0; font-size:0.8rem; color:#475569;">📍 ${inc.locationName}</p>
+            <div style="font-size:0.75rem; background:#f1f5f9; padding:6px; border-radius:4px; margin-bottom:8px;">
+              <strong>Assigned:</strong> ${inc.assignedUnit || 'None'}<br>
+              <strong>Reporter:</strong> ${inc.citizen} (Deposit: ${inc.escrowStatus})
+            </div>
+            <button onclick="advanceAndRefresh('${inc.id}')" style="width:100%; background:#0284c7; color:white; border:none; padding:6px; border-radius:4px; font-weight:700; cursor:pointer;">
+              Advance Status &rarr;
+            </button>
+          </div>
+        `);
+        incidentMarkers.push(marker);
+      });
+
+      // Render fleet vehicle markers
+      renderFleetMarkers();
+    }
+
+    function renderFleetMarkers() {
+      fleetMarkers.forEach(m => mapInstance.removeLayer(m));
+      fleetMarkers = [];
+
+      tacticalEngine.fleets.forEach(flt => {
+        const fleetIcon = L.divIcon({
+          className: 'fleet-pin',
+          html: `<div style="background:#10b981; width:30px; height:30px; border-radius:6px; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 0 10px #10b981;">🚒</div>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+        const marker = L.marker(flt.currentCoords, { icon: fleetIcon }).addTo(mapInstance);
+        marker.bindPopup(`
+          <div style="color:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; min-width:220px;">
+            <strong style="color:#10b981;">${flt.callsign}</strong> (${flt.vehicleType})<br>
+            <small>Lead: ${flt.crewLead} (${flt.phone})</small><br>
+            <small>Status: ${flt.status.toUpperCase()} | Fuel: ${flt.fuelLevelPct}%</small>
+          </div>
+        `);
+        fleetMarkers.push(marker);
+      });
+    }
+
+    function updateFleetPositions() {
+      if (!mapInstance || fleetMarkers.length === 0) return;
+      tacticalEngine.fleets.forEach((flt, idx) => {
+        if (fleetMarkers[idx]) {
+          fleetMarkers[idx].setLatLng(flt.currentCoords);
+        }
+      });
+    }
+
+    function switchOperatorCity(cityId) {
+      const city = tacticalEngine.cityCenters[cityId];
+      if (city && mapInstance) {
+        mapInstance.flyTo(city.coords, city.zoom, { duration: 1.5 });
+      }
+    }
+
+    function toggleCategoryLayer(cat, visible) {
+      tacticalEngine.incidents.forEach((inc, idx) => {
+        if (inc.category === cat && incidentMarkers[idx]) {
+          if (visible) {
+            incidentMarkers[idx].addTo(mapInstance);
+          } else {
+            mapInstance.removeLayer(incidentMarkers[idx]);
+          }
+        }
+      });
+    }
+
+    function advanceAndRefresh(id) {
+      tacticalEngine.advanceIncidentStatus(id);
+      renderOperatorKanban();
+      renderMarkers();
+    }
+
+    function playDemoSiren() {
+      tacticalEngine.playTacticalAlertTone('critical');
+    }
+
+    function renderOperatorKanban() {
+      const lanes = {
+        triage: document.getElementById('stack-triage'),
+        dispatched: document.getElementById('stack-dispatched'),
+        on_site: document.getElementById('stack-on_site'),
+        resolved: document.getElementById('stack-resolved')
+      };
+      if (!lanes.triage) return;
+
+      Object.values(lanes).forEach(l => l.innerHTML = '');
+      const counts = { triage: 0, dispatched: 0, on_site: 0, resolved: 0 };
+
+      tacticalEngine.incidents.forEach(inc => {
+        const lane = lanes[inc.status] || lanes.triage;
+        counts[inc.status] = (counts[inc.status] || 0) + 1;
+
+        const card = document.createElement('div');
+        card.className = 'kanban-card-item';
+        card.innerHTML = `
+          <div class="kcard-top">
+            <span class="kcard-id">${inc.shortId || inc.id}</span>
+            <span class="kcard-urgency urgency-${inc.severity}">${inc.severity}</span>
+          </div>
+          <div class="kcard-title">${inc.title}</div>
+          <div class="kcard-meta">📍 ${inc.locationName} (${inc.city})</div>
+          <div class="kcard-actions">
+            <span style="font-size:0.72rem; color:#94a3b8;">${inc.assignedUnit ? inc.assignedUnit.split('(')[0] : 'Unassigned'}</span>
+            ${inc.status !== 'resolved' ? `<button onclick="advanceAndRefresh('${inc.id}')" class="btn-advance-ticket">Advance &rarr;</button>` : `<span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Refunded</span>`}
+          </div>
+        `;
+        lane.appendChild(card);
+      });
+
+      ['triage', 'dispatched', 'on_site', 'resolved'].forEach(s => {
+        const b = document.getElementById(`badge-${s}`);
+        if (b) b.textContent = counts[s] || 0;
+      });
+
+      const actEl = document.getElementById('stat-active-incidents');
+      if (actEl) actEl.textContent = (counts.triage + counts.dispatched + counts.on_site);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿{
+    "activeBadges":  [
+                         "Civic Hero",
+                         "Drainage Master",
+                         "Solar Ward Monitor"
+                     ],
+    "citizenName":  "Manish Trivedi",
+    "citizenId":  "CIT-015",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 13 - Dindoli",
+    "cryptographicVerificationHash":  "5389cbbcb2994814b7a1d6666feb1a84",
+    "verifiedComplaintsCount":  8,
+    "totalCommunityUpvotes":  82,
+    "civicReputationScore":  "99.3%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  400,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  400,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

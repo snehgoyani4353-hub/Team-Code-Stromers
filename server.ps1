@@ -97,6 +97,16 @@ while ($listener.IsListening) {
             continue
         }
 
+        # API: Command Center Telemetry & Operator
+        if ($rawUrl -eq "/api/command-center" -and $method -eq "GET") {
+            $cmdDir = Join-Path $baseDir "command_center"
+            $opProfile = Get-Content (Join-Path $cmdDir "operator_commander_profile.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+            $incidents = Get-Content (Join-Path $cmdDir "tactical_incidents.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+            $fleets = Get-Content (Join-Path $cmdDir "fleet_units.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+            Send-JsonResponse $response @{ success = $true; operator = $opProfile; incidents = $incidents; fleets = $fleets }
+            continue
+        }
+
         # API: Verify OTP
         if ($rawUrl -eq "/api/verify-otp" -and $method -eq "POST") {
             $reader = New-Object System.IO.StreamReader($request.InputStream, $request.ContentEncoding)

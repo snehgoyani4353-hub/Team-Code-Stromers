@@ -1,0 +1,36 @@
+﻿{
+    "activeBadges":  [
+                         "Green Ward Advocate",
+                         "Water Quality Guard"
+                     ],
+    "citizenName":  "Kavita Reddy",
+    "citizenId":  "CIT-012",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 05 - Majura",
+    "cryptographicVerificationHash":  "e52ff68720dc477e84d27e22b2a647aa",
+    "verifiedComplaintsCount":  5,
+    "totalCommunityUpvotes":  51,
+    "civicReputationScore":  "98.4%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  250,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  250,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

@@ -1,0 +1,36 @@
+﻿{
+    "activeBadges":  [
+                         "Community Anchor",
+                         "Pothole Hunter"
+                     ],
+    "citizenName":  "Vikram Singh",
+    "citizenId":  "CIT-005",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 15 - Udhna",
+    "cryptographicVerificationHash":  "26e96d2cd1a046afba6ddc78942fa609",
+    "verifiedComplaintsCount":  5,
+    "totalCommunityUpvotes":  42,
+    "civicReputationScore":  "97.4%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  250,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  250,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

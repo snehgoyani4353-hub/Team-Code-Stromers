@@ -1,0 +1,36 @@
+﻿{
+    "activeBadges":  [
+                         "Civic Contributor",
+                         "Road Safety Advocate"
+                     ],
+    "citizenName":  "Karan Mehta",
+    "citizenId":  "CIT-007",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 08 - Limbayat",
+    "cryptographicVerificationHash":  "ae59664491e64017abc4dc3956f6d071",
+    "verifiedComplaintsCount":  3,
+    "totalCommunityUpvotes":  29,
+    "civicReputationScore":  "95.2%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  150,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  150,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

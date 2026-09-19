@@ -1,0 +1,36 @@
+﻿{
+    "activeBadges":  [
+                         "Transit Champion",
+                         "Monsoon Alert Scout"
+                     ],
+    "citizenName":  "Sneha Kulkarni",
+    "citizenId":  "CIT-008",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 11 - Adajan",
+    "cryptographicVerificationHash":  "cf53de429cd842b3922583019d613e8b",
+    "verifiedComplaintsCount":  8,
+    "totalCommunityUpvotes":  79,
+    "civicReputationScore":  "99.4%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  400,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  400,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

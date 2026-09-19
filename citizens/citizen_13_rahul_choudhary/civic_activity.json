@@ -1,0 +1,36 @@
+﻿{
+    "activeBadges":  [
+                         "Civic Helper",
+                         "Streetlight Tracker"
+                     ],
+    "citizenName":  "Rahul Choudhary",
+    "citizenId":  "CIT-013",
+    "recentActivityFeed":  [
+                               {
+                                   "date":  "2026-09-18",
+                                   "description":  "Upvoted Pothole Resurfacing report on Main Avenue (+5 Karma)",
+                                   "type":  "upvote"
+                               },
+                               {
+                                   "date":  "2026-09-17",
+                                   "description":  "Streetlight repair verified by ward municipal engineer. ₹50 security deposit refunded.",
+                                   "type":  "complaint_verified"
+                               },
+                               {
+                                   "date":  "2026-09-14",
+                                   "description":  "Participated in Ward Participatory Budgeting Poll for Monsoon Canal Desilting (+20 Karma)",
+                                   "type":  "ward_poll"
+                               }
+                           ],
+    "assignedWard":  "Ward 10 - Althan",
+    "cryptographicVerificationHash":  "2d8f19946f444cb2973a38eb76b17070",
+    "verifiedComplaintsCount":  4,
+    "totalCommunityUpvotes":  38,
+    "civicReputationScore":  "96.5%",
+    "antiSpamDepositAudit":  {
+                                 "totalDepositsHeld":  200,
+                                 "averageRefundLatencyHours":  4.2,
+                                 "totalRefundsReleased":  200,
+                                 "refundSuccessRate":  "100.0%"
+                             }
+}

@@ -1,0 +1,39 @@
+﻿{
+    "currentShiftLog":  [
+                            {
+                                "time":  "08:15 IST",
+                                "status":  "Completed",
+                                "action":  "Shift Handover \u0026 Digital Radio Frequency Sync (Channel 14)"
+                            },
+                            {
+                                "time":  "09:30 IST",
+                                "status":  "Authorized",
+                                "action":  "Approved Rapid Fleet Mobilization for Subway Inundation Drainage"
+                            },
+                            {
+                                "time":  "11:00 IST",
+                                "status":  "Approved",
+                                "action":  "Verified Citizen Photographic Evidence and released ₹50 Escrow Refund on 8 Resolved Tickets"
+                            },
+                            {
+                                "time":  "13:45 IST",
+                                "status":  "Synchronized",
+                                "action":  "Mid-Shift Tactical Review with Central Command Center Operator"
+                            }
+                        ],
+    "badgeNumber":  "SMC-HLTH-02",
+    "officerName":  "Sunita Desai",
+    "dispatchClearance":  "Tier 2",
+    "assignedRapidUnits":  [
+                               "Crew 14 (Electrical)",
+                               "Unit 08 (Cold-Mix Patcher)",
+                               "Tractor Suction Alpha"
+                           ],
+    "slaComplianceScore":  "97.8%",
+    "totalDispatchesAuthorized":  289,
+    "officerId":  "ADM-002",
+    "digitalSignature":  "d0f3d80632144972ba6cdc8946f08022",
+    "department":  "Public Health \u0026 Waste",
+    "biometricTerminalId":  "SMC-TER-HQ-092",
+    "designation":  "Executive Health \u0026 Sanitation Officer"
+}

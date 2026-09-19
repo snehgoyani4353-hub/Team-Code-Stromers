@@ -716,15 +716,15 @@ window.loginAsDemo = function(role = 'citizen') {
     switchDashboardMode('officer');
   } else if (role === 'command') {
     appState.currentUser = {
-      role: 'officer',
-      name: 'R. Patel (Municipal Officer)',
-      email: 'officer.amc@gujarat.gov.in',
-      avatar: 'RP',
+      role: 'command',
+      name: 'Cmdr. Vikramaditya Rathore (ICCC Chief)',
+      email: 'commander.rathore@iccc.gujarat.gov.in',
+      avatar: 'VR',
       cityId: 'AMC'
     };
     saveMasterState();
     closeLoginModal();
-    switchDashboardMode('officer');
+    switchDashboardMode('command-center');
   } else {
     appState.currentUser = {
       role: 'citizen',
@@ -853,7 +853,7 @@ window.switchDashboardMode = function(mode) {
 };
 
 window.openCommandCenter = function() {
-  switchDashboardMode('officer');
+  switchDashboardMode('command-center');
 };
 
 /* ==========================================================================
@@ -2800,12 +2800,307 @@ window.exportAuditReportCSV = function() {
   showCivicaToast(`📥 CSV Audit Report exported successfully (${items.length} complaints).`);
 };
 
-window.printOfficialAuditReport = function() {
-  showCivicaToast('🖨️ Preparing official printable municipal resolution audit report...');
-  setTimeout(() => {
-    window.print();
-  }, 400);
+/* ==========================================================================
+   COMMAND CENTER: GEOSPATIAL RADAR, TELEMETRY & TACTICAL DISPATCH CONTROLLERS
+   ========================================================================== */
+
+let commandMapInstance = null;
+let commandIncidentMarkers = [];
+let commandFleetMarkers = [];
+let commandVisibleLayers = {
+  waterlogging: true,
+  pothole: true,
+  streetlight: true,
+  garbage: true,
+  fleets: true
 };
+
+const GUJARAT_CITY_COORDS = {
+  'AMC': { name: 'AMC Ahmedabad', coords: [23.0375, 72.5625], zoom: 13 },
+  'SMC': { name: 'SMC Surat', coords: [21.1702, 72.8311], zoom: 13 },
+  'VMC': { name: 'VMC Vadodara', coords: [22.3072, 73.1812], zoom: 13 },
+  'RMC': { name: 'RMC Rajkot', coords: [22.3039, 70.8022], zoom: 13 },
+  'GMC': { name: 'GMC Gandhinagar', coords: [23.2156, 72.6369], zoom: 13 }
+};
+
+window.initTacticalMap = function() {
+  const mapEl = document.getElementById('map');
+  if (!mapEl) return;
+
+  // Initialize tactical engine if available
+  if (window.tacticalEngine && !window.tacticalEngine.operatorProfile) {
+    window.tacticalEngine.initialize().then(() => {
+      renderKanbanBoard();
+      populateCommandMapMarkers();
+    });
+  }
+
+  if (!commandMapInstance) {
+    commandMapInstance = L.map('map', {
+      center: [23.0375, 72.5625],
+      zoom: 13,
+      zoomControl: true
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(commandMapInstance);
+  }
+
+  // Force Leaflet recalculation for dynamic tabs
+  setTimeout(() => {
+    if (commandMapInstance) {
+      commandMapInstance.invalidateSize();
+      populateCommandMapMarkers();
+    }
+  }, 250);
+
+  startCommandCenterTicker();
+};
+
+function populateCommandMapMarkers() {
+  if (!commandMapInstance) return;
+
+  // Clear existing
+  commandIncidentMarkers.forEach(m => commandMapInstance.removeLayer(m));
+  commandIncidentMarkers = [];
+  commandFleetMarkers.forEach(m => commandMapInstance.removeLayer(m));
+  commandFleetMarkers = [];
+
+  const incidents = (window.tacticalEngine && window.tacticalEngine.incidents.length > 0)
+    ? window.tacticalEngine.incidents
+    : (GUJARAT_CIVIC_DATA.complaints || []);
+
+  const catIcons = {
+    waterlogging: '🌊',
+    pothole: '🚧',
+    streetlight: '💡',
+    garbage: '🗑️',
+    water: '💧',
+    brts: '🚌'
+  };
+
+  incidents.forEach(inc => {
+    const coords = inc.coords || (inc.location && inc.location.coords) || [23.0375, 72.5625];
+    const category = inc.category || 'pothole';
+    if (!commandVisibleLayers[category]) return;
+
+    const iconSymbol = catIcons[category] || '⚠️';
+    const sev = inc.severity || 'routine';
+    const sevColor = sev === 'critical' ? '#ef4444' : sev === 'high' ? '#f59e0b' : '#38bdf8';
+
+    const pinIcon = L.divIcon({
+      className: 'custom-tactical-pin',
+      html: `
+        <div style="background:${sevColor}; width:32px; height:32px; border-radius:50%; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 0 12px ${sevColor}; cursor:pointer; position:relative;">
+          ${iconSymbol}
+          <span style="position:absolute; top:-2px; right:-2px; width:8px; height:8px; background:white; border-radius:50%;"></span>
+        </div>
+      `,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+
+    const marker = L.marker(coords, { icon: pinIcon }).addTo(commandMapInstance);
+    marker.bindPopup(`
+      <div style="color:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; min-width:240px; padding:4px;">
+        <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:800; color:#0284c7; margin-bottom:4px;">
+          <span>${inc.id || inc.fullId}</span>
+          <span style="text-transform:uppercase; color:${sevColor}; font-weight:800;">${sev}</span>
+        </div>
+        <h4 style="margin:0 0 6px 0; font-size:0.95rem; line-height:1.3;">${inc.title || (inc.category + ' Issue')}</h4>
+        <p style="margin:0 0 8px 0; font-size:0.8rem; color:#475569;">📍 ${inc.locationName || (inc.location ? inc.location.address : 'Gujarat')}</p>
+        <div style="font-size:0.75rem; background:#f1f5f9; padding:6px; border-radius:4px; margin-bottom:8px;">
+          <strong>Assigned Unit:</strong> ${inc.assignedUnit || (inc.assignedCrew ? inc.assignedCrew.name : 'Awaiting Dispatch')}<br>
+          <strong>Escrow Deposit:</strong> ₹50 (${inc.escrowStatus || 'Held'})
+        </div>
+        <button onclick="advanceKanbanTicket('${inc.id || inc.shortId}')" style="width:100%; background:#0284c7; color:white; border:none; padding:7px; border-radius:4px; font-weight:700; cursor:pointer;">
+          ⚡ Advance Status / Dispatch &rarr;
+        </button>
+      </div>
+    `);
+    commandIncidentMarkers.push(marker);
+  });
+
+  // Fleets layer
+  if (commandVisibleLayers.fleets && window.tacticalEngine && window.tacticalEngine.fleets) {
+    window.tacticalEngine.fleets.forEach(flt => {
+      const fleetIcon = L.divIcon({
+        className: 'fleet-tactical-pin',
+        html: `<div style="background:#10b981; width:28px; height:28px; border-radius:6px; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 0 10px #10b981;">🚒</div>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14]
+      });
+      const marker = L.marker(flt.currentCoords, { icon: fleetIcon }).addTo(commandMapInstance);
+      marker.bindPopup(`
+        <div style="color:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; min-width:210px;">
+          <strong style="color:#10b981;">${flt.callsign}</strong><br>
+          <small>${flt.vehicleType}</small><br>
+          <small>Lead: ${flt.crewLead} (${flt.phone})</small><br>
+          <small>Status: ${flt.status.toUpperCase()} | Fuel: ${flt.fuelLevelPct}%</small>
+        </div>
+      `);
+      commandFleetMarkers.push(marker);
+    });
+  }
+}
+
+window.focusCommandMapCity = function(cityId) {
+  const city = GUJARAT_CITY_COORDS[cityId];
+  if (city && commandMapInstance) {
+    commandMapInstance.flyTo(city.coords, city.zoom, { duration: 1.5 });
+    showCivicaToast(`🛰️ Command radar focused on ${city.name}.`);
+  }
+};
+
+window.filterCommandMapLayer = function(layerName, isVisible) {
+  commandVisibleLayers[layerName] = isVisible;
+  populateCommandMapMarkers();
+};
+
+window.playTacticalSiren = function() {
+  if (window.tacticalEngine) {
+    window.tacticalEngine.playTacticalAlertTone('critical');
+    showCivicaToast('🚨 Tactical Emergency Siren triggered.');
+  } else {
+    showCivicaToast('🚨 Emergency alert sounded across command channels.');
+  }
+};
+
+window.exportCommandCenterTelemetry = function() {
+  if (window.tacticalEngine) {
+    window.tacticalEngine.exportTelemetryCSV();
+    showCivicaToast('📥 Tactical Telemetry CSV exported successfully.');
+  } else {
+    exportAuditReportCSV();
+  }
+};
+
+window.advanceKanbanTicket = function(ticketId) {
+  if (window.tacticalEngine) {
+    const updated = window.tacticalEngine.advanceIncidentStatus(ticketId);
+    if (updated) {
+      showCivicaToast(`⚡ Incident ${ticketId} advanced to ${updated.status.toUpperCase()}.`);
+      renderKanbanBoard();
+      populateCommandMapMarkers();
+      return;
+    }
+  }
+
+  // Fallback state update
+  const comp = (GUJARAT_CIVIC_DATA.complaints || []).find(c => c.id === ticketId || c.shortId === ticketId);
+  if (comp) {
+    if (comp.status === 'received' || comp.status === 'assigned') {
+      comp.status = 'in_progress';
+      comp.escrowRefundStatus = 'verified_refund_pending';
+    } else if (comp.status === 'in_progress') {
+      comp.status = 'resolved';
+      comp.escrowRefundStatus = 'refunded';
+    }
+    showCivicaToast(`⚡ Ticket ${ticketId} updated to ${comp.status}.`);
+    renderKanbanBoard();
+    populateCommandMapMarkers();
+  }
+};
+
+window.renderKanbanBoard = function() {
+  const stacks = {
+    triage: document.getElementById('cmd-stack-triage'),
+    dispatched: document.getElementById('cmd-stack-dispatched'),
+    on_site: document.getElementById('cmd-stack-on_site'),
+    resolved: document.getElementById('cmd-stack-resolved')
+  };
+  if (!stacks.triage) return;
+
+  Object.values(stacks).forEach(s => s.innerHTML = '');
+  const counts = { triage: 0, dispatched: 0, on_site: 0, resolved: 0 };
+
+  const incidents = (window.tacticalEngine && window.tacticalEngine.incidents.length > 0)
+    ? window.tacticalEngine.incidents
+    : (GUJARAT_CIVIC_DATA.complaints || []);
+
+  incidents.forEach(inc => {
+    let laneKey = inc.status || 'triage';
+    if (laneKey === 'new' || laneKey === 'received' || laneKey === 'assigned') laneKey = 'triage';
+    if (laneKey === 'in_progress') laneKey = 'dispatched';
+
+    if (!stacks[laneKey]) laneKey = 'triage';
+    counts[laneKey] = (counts[laneKey] || 0) + 1;
+
+    const card = document.createElement('div');
+    card.className = 'kanban-card-item';
+    const sev = inc.severity || 'routine';
+    const title = inc.title || `${inc.category} Issue`;
+    const loc = inc.locationName || (inc.location ? inc.location.address : 'Gujarat');
+    const assigned = inc.assignedUnit || (inc.assignedCrew ? inc.assignedCrew.name : 'Pending Dispatch');
+
+    card.innerHTML = `
+      <div class="kcard-top">
+        <span class="kcard-id">${inc.shortId || inc.id}</span>
+        <span class="kcard-urgency urgency-${sev}">${sev}</span>
+      </div>
+      <div class="kcard-title">${title}</div>
+      <div class="kcard-meta">📍 ${loc}</div>
+      <div class="kcard-actions">
+        <span style="font-size:0.72rem; color:#94a3b8; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${assigned.split('(')[0]}
+        </span>
+        ${laneKey !== 'resolved' ? `
+          <button onclick="advanceKanbanTicket('${inc.id || inc.shortId}')" class="btn-advance-ticket">
+            Advance &rarr;
+          </button>
+        ` : `
+          <span style="color:#10b981; font-weight:700; font-size:0.75rem;">✓ Refunded</span>
+        `}
+      </div>
+    `;
+    stacks[laneKey].appendChild(card);
+  });
+
+  ['triage', 'dispatched', 'on_site', 'resolved'].forEach(k => {
+    const badge = document.getElementById(`cmd-badge-${k}`);
+    if (badge) badge.textContent = counts[k] || 0;
+  });
+
+  const actKpi = document.getElementById('cmd-kpi-active-incidents');
+  if (actKpi) actKpi.textContent = (counts.triage + counts.dispatched + counts.on_site);
+
+  const fltKpi = document.getElementById('cmd-kpi-fleets-deployed');
+  if (fltKpi) fltKpi.textContent = counts.dispatched + counts.on_site;
+};
+
+function startCommandCenterTicker() {
+  const clockEl = document.getElementById('dash-command-clock');
+  if (clockEl) {
+    setInterval(() => {
+      const now = new Date();
+      clockEl.textContent = `${now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false })} IST`;
+    }, 1000);
+  }
+
+  const tickerEl = document.getElementById('cmd-ticker-text');
+  if (tickerEl && !window._tickerRunning) {
+    window._tickerRunning = true;
+    const telemetrySamples = [
+      "Mithakhali subway rain siphon: 3,200 LPM discharge rate • Flow nominal.",
+      "CG Road feeder pillar #42: Lineman team on-site with replacement 90W LED units.",
+      "Surat Cable Bridge strain telemetry: 1.45G vibration load • Deck within deflection limit.",
+      "Vadodara RC Dutt Road underpass: Tractor suction unit Alpha clearing branch obstruction.",
+      "Automated Escrow Refund Engine: ₹50 security deposit credited to 8 verified complaints."
+    ];
+    let sampleIdx = 0;
+    setInterval(() => {
+      sampleIdx = (sampleIdx + 1) % telemetrySamples.length;
+      if (tickerEl) {
+        tickerEl.textContent = `[${new Date().toLocaleTimeString('en-IN', { hour12: false })}] ${telemetrySamples[sampleIdx]}`;
+      }
+    }, 4500);
+  }
+}
+
+
 
 // Global DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
