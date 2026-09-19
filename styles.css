@@ -886,7 +886,7 @@ input, select, textarea { font-family: inherit; }
 
 .auth-role-tabs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   background: #f1f5f9;
   padding: 4px;
   border-radius: var(--radius-sm);

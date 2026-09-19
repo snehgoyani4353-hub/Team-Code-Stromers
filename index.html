@@ -63,7 +63,7 @@
             <li><a href="rules-and-contact.html" class="nav-link" data-i18n="nav_contact">RULES & CONTACT</a></li>
             <li><a href="#solutions" class="nav-link" data-i18n="nav_solutions">SOLUTIONS</a></li>
             <li><a href="#services" class="nav-link" data-i18n="nav_services">SERVICES</a></li>
-            <li><a href="javascript:void(0)" onclick="switchDashboardMode('command-center')" class="nav-link highlight-command">🛰️ COMMAND CENTER</a></li>
+            <li><a href="javascript:void(0)" onclick="openLoginModal('command')" class="nav-link highlight-command">🛰️ COMMAND CENTER</a></li>
           </ul>
         </div>
       </nav>
@@ -312,16 +312,21 @@
             <p class="demo-box-sub" data-i18n="demo_box_sub">Access full portal features immediately without entering credentials:</p>
           </div>
         </div>
-        <div class="demo-buttons-row">
+        <div class="demo-buttons-row" style="grid-template-columns: repeat(3, 1fr);">
           <button type="button" class="btn-demo-card" onclick="loginAsDemo('citizen')">
             <span class="demo-role-badge">CITIZEN RESIDENT</span>
             <div class="demo-card-name">Priya Patel (Citizen)</div>
-            <div class="demo-card-meta">Ward 7 • ₹150 Wallet • 1-Click Login &rarr;</div>
+            <div class="demo-card-meta">Ward 7 • ₹150 Wallet • 1-Click &rarr;</div>
           </button>
           <button type="button" class="btn-demo-card" onclick="loginAsDemo('officer')">
             <span class="demo-role-badge officer">AMC OFFICER</span>
             <div class="demo-card-name">R. Patel (Ward Officer)</div>
-            <div class="demo-card-meta">Ward 7 Lead • Live Tickets • 1-Click Login &rarr;</div>
+            <div class="demo-card-meta">Ward 7 Lead • Live Tickets • 1-Click &rarr;</div>
+          </button>
+          <button type="button" class="btn-demo-card" onclick="loginAsDemo('command')">
+            <span class="demo-role-badge" style="background:#4f46e5; color:#c7d2fe;">COMMAND CENTER</span>
+            <div class="demo-card-name">Cmdr. V. Rathore</div>
+            <div class="demo-card-meta">State ICCC Chief • 1-Click &rarr;</div>
           </button>
         </div>
       </div>
@@ -333,6 +338,9 @@
         </button>
         <button class="role-tab-btn" id="tab-role-admin" onclick="switchAuthRole('admin')">
           <i class="fa-solid fa-shield"></i> Municipal Officer
+        </button>
+        <button class="role-tab-btn" id="tab-role-command" onclick="switchAuthRole('command')">
+          <i class="fa-solid fa-satellite-dish"></i> Command Center
         </button>
       </div>
 
@@ -397,6 +405,37 @@
           </div>
           <button type="submit" class="btn-auth-submit">Authenticate Officer Portal &rarr;</button>
           <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('officer')">⚡ Auto-Fill Demo Credentials</button>
+        </form>
+      </div>
+
+      <!-- Command Center Login Form (Password Protected) -->
+      <div class="auth-form-body" id="auth-form-command" style="display:none;">
+        <div style="background:rgba(99,102,241,0.1); border:1px solid #6366f1; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px; font-size:0.8rem; color:#c7d2fe;">
+          🛡️ <strong>Restricted Security Clearance:</strong> Access to Gujarat Integrated Command & Control Centre (ICCC) requires Tier-1 authorization and passcode.
+        </div>
+        <form onsubmit="handleCommandFormLogin(event)">
+          <div class="auth-field">
+            <label for="command-agency-select">Command Agency / Station</label>
+            <select id="command-agency-select" class="auth-select">
+              <option value="ICCC-GNC">Gujarat State ICCC War Room (Gandhinagar)</option>
+              <option value="AMC-CTRL">AMC Central Command Room (Ahmedabad)</option>
+              <option value="SMC-CTRL">SMC Emergency Operations Center (Surat)</option>
+              <option value="VMC-CTRL">VMC Integrated Control Hub (Vadodara)</option>
+              <option value="RMC-CTRL">RMC Smart Mobility Control (Rajkot)</option>
+            </select>
+          </div>
+          <div class="auth-field">
+            <label for="command-email">Commander Official Gov Email</label>
+            <input type="email" id="command-email" placeholder="commander.rathore@iccc.gujarat.gov.in" required>
+          </div>
+          <div class="auth-field">
+            <label for="command-token">Command Security Passcode / Key</label>
+            <input type="password" id="command-token" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-auth-submit" style="background:linear-gradient(135deg, #4f46e5, #0284c7);">
+            Authenticate Tactical Command Center &rarr;
+          </button>
+          <button type="button" class="btn-autofill-demo" onclick="fillDemoCredentials('command')">⚡ Auto-Fill Commander Credentials</button>
         </form>
       </div>
     </div>
@@ -617,7 +656,7 @@
           <span class="dash-brand-title">CIVICA ગુજરાત &bull; Operational Hub</span>
         </div>
 
-        <!-- Universal Mode Switcher: Citizen Dashboard <-> Officer Portal <-> Command Center -->
+        <!-- Universal Mode Switcher: Citizen Dashboard <-> Officer Portal (Command Center operated via Login Page only) -->
         <div class="dash-mode-switcher-pills">
           <button class="dash-mode-pill active" data-mode="citizen-desktop" onclick="switchDashboardMode('citizen-desktop')">
             <i class="fa-solid fa-user-check"></i> <span>Citizen Portal</span>
@@ -625,7 +664,7 @@
           <button class="dash-mode-pill" data-mode="officer" onclick="switchDashboardMode('officer')">
             <i class="fa-solid fa-user-shield"></i> <span>Municipal Officer</span>
           </button>
-          <button class="dash-mode-pill command-pill" data-mode="command-center" onclick="switchDashboardMode('command-center')">
+          <button class="dash-mode-pill command-pill" id="pill-command-center" data-mode="command-center" onclick="switchDashboardMode('command-center')" style="display:none;">
             <i class="fa-solid fa-satellite-dish"></i> <span>Command Center 🛰️</span>
           </button>
         </div>

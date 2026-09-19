@@ -680,25 +680,25 @@ window.loginDirectlyAsAdmin = function(adminId) {
 window.switchAuthRole = function(role) {
   const citizenTab = document.getElementById('tab-role-citizen');
   const adminTab = document.getElementById('tab-role-admin');
+  const commandTab = document.getElementById('tab-role-command');
   const citizenForm = document.getElementById('auth-form-citizen');
   const adminForm = document.getElementById('auth-form-admin');
+  const commandForm = document.getElementById('auth-form-command');
 
-  if (role === 'admin' || role === 'officer') {
-    citizenTab?.classList.remove('active');
+  [citizenTab, adminTab, commandTab].forEach(t => t?.classList.remove('active'));
+  [citizenForm, adminForm, commandForm].forEach(f => {
+    if (f) { f.style.display = 'none'; f.classList.remove('active'); }
+  });
+
+  if (role === 'command') {
+    commandTab?.classList.add('active');
+    if (commandForm) { commandForm.style.display = 'block'; commandForm.classList.add('active'); }
+  } else if (role === 'admin' || role === 'officer') {
     adminTab?.classList.add('active');
-    if (citizenForm) citizenForm.style.display = 'none';
-    if (adminForm) {
-      adminForm.style.display = 'block';
-      adminForm.classList.add('active');
-    }
+    if (adminForm) { adminForm.style.display = 'block'; adminForm.classList.add('active'); }
   } else {
-    adminTab?.classList.remove('active');
     citizenTab?.classList.add('active');
-    if (adminForm) adminForm.style.display = 'none';
-    if (citizenForm) {
-      citizenForm.style.display = 'block';
-      citizenForm.classList.add('active');
-    }
+    if (citizenForm) { citizenForm.style.display = 'block'; citizenForm.classList.add('active'); }
   }
 };
 
@@ -746,7 +746,12 @@ window.loginWithGoogle = function() {
 };
 
 window.fillDemoCredentials = function(role = 'citizen') {
-  if (role === 'officer' || role === 'admin') {
+  if (role === 'command') {
+    const cmdEmail = document.getElementById('command-email');
+    const cmdToken = document.getElementById('command-token');
+    if (cmdEmail) cmdEmail.value = 'commander.rathore@iccc.gujarat.gov.in';
+    if (cmdToken) cmdToken.value = '2026';
+  } else if (role === 'officer' || role === 'admin') {
     document.getElementById('admin-city-select').value = 'AMC';
     document.getElementById('admin-email').value = 'officer@amc.gujarat.gov.in';
     document.getElementById('admin-token').value = '2026';
@@ -767,6 +772,16 @@ window.handleAdminFormLogin = function(e) {
   loginAsDemo('officer');
 };
 
+window.handleCommandFormLogin = function(e) {
+  if (e) e.preventDefault();
+  const token = document.getElementById('command-token')?.value?.trim();
+  if (token && token !== '2026' && token !== 'COMMAND2026') {
+    showCivicaToast('❌ Invalid Command Passcode. Demo Key is 2026.');
+    return;
+  }
+  loginAsDemo('command');
+};
+
 window.handleLogout = function() {
   appState.currentUser = null;
   returnToLandingPage();
@@ -776,12 +791,15 @@ window.handleLogout = function() {
 function updateSessionUI() {
   const btnHeaderLogin = document.getElementById('btn-header-login');
   const dashSessionUserText = document.getElementById('dash-session-user-text');
+  const pillCommand = document.getElementById('pill-command-center');
 
   if (appState.currentUser) {
     if (btnHeaderLogin) {
       btnHeaderLogin.textContent = 'ENTER DASHBOARD ⚡';
       btnHeaderLogin.onclick = () => {
-        if (appState.currentUser.role === 'officer') {
+        if (appState.currentUser.role === 'command') {
+          switchDashboardMode('command-center');
+        } else if (appState.currentUser.role === 'officer') {
           switchDashboardMode('officer');
         } else {
           switchDashboardMode('citizen-desktop');
@@ -791,6 +809,10 @@ function updateSessionUI() {
     if (dashSessionUserText) {
       dashSessionUserText.textContent = `${appState.currentUser.name}`;
     }
+    if (pillCommand) {
+      // Command Center pill is only shown if authenticated as Commander from login page
+      pillCommand.style.display = (appState.currentUser.role === 'command') ? 'inline-flex' : 'none';
+    }
   } else {
     if (btnHeaderLogin) {
       btnHeaderLogin.textContent = 'MEMBER LOGIN';
@@ -799,15 +821,27 @@ function updateSessionUI() {
     if (dashSessionUserText) {
       dashSessionUserText.textContent = 'Guest Session · Live System';
     }
+    if (pillCommand) {
+      pillCommand.style.display = 'none';
+    }
   }
 }
 
 /**
- * Switch between Citizen Desktop, Municipal Officer, or Command Center
+ * Switch between Citizen Desktop, Municipal Officer (switches without password as requested).
+ * Command Center can ONLY be operated from the login page.
  */
 window.switchDashboardMode = function(mode) {
+  // Enforce: Command center can be operated from login page only!
+  if (mode === 'command-center' && (!appState.currentUser || appState.currentUser.role !== 'command')) {
+    showCivicaToast('🔒 Command Center restricted: Please authenticate from the login page with commander credentials.');
+    openLoginModal('command');
+    return;
+  }
+
+  // If user is switching between citizen and officer, allow seamless switch without password
   if (!appState.currentUser) {
-    loginAsDemo(mode === 'officer' ? 'officer' : mode === 'command-center' ? 'command' : 'citizen');
+    loginAsDemo(mode === 'officer' ? 'officer' : 'citizen');
   }
 
   appState.currentView = mode;
@@ -815,7 +849,7 @@ window.switchDashboardMode = function(mode) {
   document.getElementById('view-landing').style.display = 'none';
   document.getElementById('view-dashboards-container').style.display = 'block';
 
-  // Mode buttons in top bar
+  // Mode buttons in top bar (Citizen Portal <-> Municipal Officer)
   document.querySelectorAll('.dash-mode-pill').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mode === mode);
   });
